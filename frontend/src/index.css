@@ -95,6 +95,10 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         transition: background-color 0.4s ease, color 0.4s ease;
+        /* Defensive guard: never allow accidental horizontal scrolling on any
+           page/breakpoint. Vertical scrolling propagates to the viewport, so
+           Lenis and the fixed header are unaffected. */
+        overflow-x: hidden;
     }
     ::selection {
         background: var(--weha-teal);
@@ -216,7 +220,8 @@
         border: 1px solid var(--weha-border);
         border-radius: 10px;
         padding: 0.8rem 0.95rem;
-        font-size: 0.95rem;
+        /* 16px minimum prevents iOS Safari from auto-zooming on focus. */
+        font-size: 1rem;
         color: var(--weha-text);
         transition: border-color 0.2s ease, box-shadow 0.2s ease;
         outline: none;

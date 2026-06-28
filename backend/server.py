@@ -179,6 +179,10 @@ async def get_availability(
         {"slot_iso_utc": {"$in": iso_keys}}, {"_id": 0, "slot_iso_utc": 1}
     )
     booked = {doc["slot_iso_utc"] async for doc in booked_cursor}
+    booking_cursor = db.booking_requests.find(
+        {"slot_iso_utc": {"$in": iso_keys}}, {"_id": 0, "slot_iso_utc": 1}
+    )
+    booked |= {doc["slot_iso_utc"] async for doc in booking_cursor}
 
     return [
         Slot(label=s["label"], iso_utc=s["iso_utc"], taken=(s["iso_utc"] in booked))
@@ -294,6 +298,132 @@ async def create_calculator_lead(input: CalculatorLeadCreate):
 @api_router.get("/calculator-leads", response_model=List[CalculatorLead])
 async def get_calculator_leads():
     items = await db.calculator_leads.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
+    for it in items:
+        if isinstance(it.get('created_at'), str):
+            it['created_at'] = datetime.fromisoformat(it['created_at'])
+    return items
+
+
+# --- Contact messages (Contact page audit-request form) ----------------------
+# Mirrors functions/api/contact-messages.js so the form works in this dev/preview
+# environment (where /api routes to FastAPI instead of the Cloudflare Function).
+class ContactMessageCreate(BaseModel):
+    name: str
+    company: Optional[str] = None
+    country: Optional[str] = None
+    industry: Optional[str] = None
+    process: Optional[str] = None
+    contact_method: Optional[str] = None
+    email: Optional[str] = None
+    source: Optional[str] = None
+
+
+class ContactMessage(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name: str
+    company: Optional[str] = None
+    country: Optional[str] = None
+    industry: Optional[str] = None
+    process: Optional[str] = None
+    contact_method: Optional[str] = None
+    email: Optional[str] = None
+    source: Optional[str] = None
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+
+@api_router.post("/contact-messages", response_model=ContactMessage)
+async def create_contact_message(input: ContactMessageCreate):
+    # Same validation order as the Cloudflare function.
+    validate_name(input.name)
+    validate_company(input.company, required=True)
+    validate_email(input.email, required=False)
+    validate_free_text(input.process, "the process you want to fix")
+
+    obj = ContactMessage(**input.model_dump())
+    doc = obj.model_dump()
+    doc['created_at'] = doc['created_at'].isoformat()
+    await db.contact_messages.insert_one(doc)
+    return obj
+
+
+@api_router.get("/contact-messages", response_model=List[ContactMessage])
+async def get_contact_messages():
+    items = await db.contact_messages.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
+    for it in items:
+        if isinstance(it.get('created_at'), str):
+            it['created_at'] = datetime.fromisoformat(it['created_at'])
+    return items
+
+
+# --- Booking requests (Book a Free Audit modal) ------------------------------
+# Mirrors functions/api/booking-requests.js so the booking modal works in this
+# dev/preview environment. Slots are de-duplicated against both audit_requests
+# and booking_requests so /availability stays accurate.
+class BookingRequestCreate(BaseModel):
+    name: str
+    company: Optional[str] = None
+    country: Optional[str] = None
+    industry: Optional[str] = None
+    process: Optional[str] = None
+    contact_method: Optional[str] = None
+    email: Optional[str] = None
+    slot_iso_utc: Optional[str] = None
+    timezone: Optional[str] = None
+    source: Optional[str] = None
+
+
+class BookingRequest(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name: str
+    company: Optional[str] = None
+    country: Optional[str] = None
+    industry: Optional[str] = None
+    process: Optional[str] = None
+    contact_method: Optional[str] = None
+    email: Optional[str] = None
+    slot_iso_utc: Optional[str] = None
+    timezone: Optional[str] = None
+    source: Optional[str] = None
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+
+@api_router.post("/booking-requests", response_model=BookingRequest)
+async def create_booking_request(input: BookingRequestCreate):
+    validate_name(input.name)
+    validate_company(input.company, required=True)
+    validate_email(input.email, required=False)
+    validate_free_text(input.process, "the process you want to fix")
+
+    if input.slot_iso_utc:
+        if input.timezone and input.timezone not in ALLOWED_TIMEZONES:
+            raise HTTPException(status_code=422, detail="Unsupported timezone.")
+        try:
+            slot_dt = datetime.fromisoformat(input.slot_iso_utc.replace("Z", "+00:00"))
+        except Exception:
+            raise HTTPException(status_code=422, detail="Invalid slot_iso_utc format.")
+        if slot_dt <= datetime.now(timezone.utc):
+            raise HTTPException(status_code=422, detail="Selected slot is in the past.")
+        # Prevent double-booking across both the audit and booking collections.
+        taken = await db.audit_requests.find_one({"slot_iso_utc": input.slot_iso_utc}, {"_id": 1})
+        if not taken:
+            taken = await db.booking_requests.find_one({"slot_iso_utc": input.slot_iso_utc}, {"_id": 1})
+        if taken:
+            raise HTTPException(status_code=409, detail="That slot was just taken. Please pick another.")
+
+    obj = BookingRequest(**input.model_dump())
+    doc = obj.model_dump()
+    doc['created_at'] = doc['created_at'].isoformat()
+    await db.booking_requests.insert_one(doc)
+    return obj
+
+
+@api_router.get("/booking-requests", response_model=List[BookingRequest])
+async def get_booking_requests():
+    items = await db.booking_requests.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
     for it in items:
         if isinstance(it.get('created_at'), str):
             it['created_at'] = datetime.fromisoformat(it['created_at'])
