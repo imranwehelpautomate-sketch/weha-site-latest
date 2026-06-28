@@ -2,6 +2,47 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Static prerendering (SEO / LLM crawlability)
+
+This SPA is prerendered to static HTML at build time with
+[`react-snap`](https://github.com/stereobooster/react-snap), so crawlers and LLMs
+receive fully formed HTML for every route without executing JavaScript.
+
+- `yarn build` runs `craco build`, then the `postbuild` step
+  (`node scripts/prerender.js`) prerenders every route listed under the
+  `reactSnap` block in `package.json`:
+  `/`, `/services`, `/work`, `/about`, `/contact`, `/resources`,
+  `/resources/workbooks`, `/resources/workflow-automations`, `/resources/ebooks`.
+- Each route is written to `build/<route>/index.html` containing the rendered
+  page content (not just an empty `#root`). On the client, `src/index.js`
+  uses `hydrateRoot` when prerendered markup is present and `createRoot`
+  otherwise.
+- Per page `<title>`, meta description, canonical, OpenGraph/Twitter tags and
+  JSON-LD are rendered by `src/components/Seo.jsx` (React 19 native head
+  hoisting). The base `public/index.html` intentionally ships no `<title>` or
+  description so each prerendered page has exactly one of each.
+
+### Chromium for prerendering
+
+`react-snap` drives a headless Chromium via puppeteer.
+
+- On Cloudflare Pages, leave `PUPPETEER_EXECUTABLE_PATH` unset; puppeteer uses
+  the Chromium it downloads at install time.
+- In a container or local build that already has a system Chromium, set
+  `PUPPETEER_EXECUTABLE_PATH` (for example `/root/bin/chromium`) and the wrapper
+  in `scripts/prerender.js` will use it.
+
+If a build environment cannot provide any Chromium, the `postbuild` step can be
+skipped and the plain `build/` output still deploys as a normal SPA (with the
+Cloudflare Pages `_redirects` SPA fallback), just without static prerendering.
+
+### Cloudflare Pages routing
+
+`public/_redirects` contains `/*  /index.html  200`. Cloudflare Pages serves an
+existing static file first, so the prerendered per route `index.html` files are
+returned directly; only paths with no matching file fall back to the app shell.
+
+
 ## Available Scripts
 
 In the project directory, you can run:

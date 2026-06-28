@@ -10,6 +10,7 @@ import IntegrationStrip from "@/components/IntegrationStrip";
 import ScrollSection from "@/components/ScrollSection";
 import Seo from "@/components/Seo";
 import { useBooking } from "@/context/BookingContext";
+import { ORG, SITE, breadcrumb, graph } from "@/lib/seoSchemas";
 
 const pains = [
   "I copy the same data between three different tools every single day.",
@@ -90,18 +91,17 @@ export default function Home() {
         title=""
         description="We Help Automate (WeHA) turns your messiest manual workflows into AI systems that run themselves, built in days, not months. Book a free AI Audit."
         path="/"
-        jsonLd={{
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          name: "We Help Automate",
-          alternateName: "WeHA",
-          url: "https://www.wehelpautomate.com",
-          email: "hi@wehelpautomate.com",
-          description:
-            "AI automation for SMBs. We turn your messiest manual workflows into systems that run themselves, built in days, not months.",
-          areaServed: "Worldwide",
-          sameAs: ["https://www.linkedin.com/company/we-help-automate"],
-        }}
+        jsonLd={graph([
+          ORG,
+          {
+            "@type": "WebSite",
+            "@id": `${SITE}/#website`,
+            url: SITE,
+            name: "We Help Automate",
+            publisher: { "@id": `${SITE}/#organization` },
+          },
+          breadcrumb([{ name: "Home", path: "/" }]),
+        ])}
       />
       {/* HERO - over the live floating tech network */}
       <section ref={heroRef} className="relative min-h-[88svh] flex items-center pointer-events-none overflow-hidden">

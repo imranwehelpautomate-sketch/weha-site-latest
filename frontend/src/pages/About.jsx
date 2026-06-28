@@ -7,6 +7,7 @@ import Magnetic from "@/components/Magnetic";
 import Seo from "@/components/Seo";
 import { Linkedin } from "lucide-react";
 import { PLAYBOOK_URL } from "@/lib/resourceLinks";
+import { ORG, SITE, breadcrumb, graph } from "@/lib/seoSchemas";
 
 const ASSET = (p) => `${process.env.PUBLIC_URL || ""}${p}`;
 
@@ -54,9 +55,29 @@ export default function About() {
   return (
     <div data-testid="about-page" className="overflow-x-hidden">
       <Seo
-        title="About WeHA - the people behind your automation"
-        description="WeHA is an AI automation studio built by two operators who'd rather you spend time on what matters. We build practical systems on the tools you already use, and hand them over."
+        title="About WeHA"
+        description="Meet WeHA, an AI automation studio built by two operators. We build practical systems on the tools you already use, and hand them over to you."
         path="/about"
+        jsonLd={graph([
+          ORG,
+          {
+            "@type": "Person",
+            name: "Imran Shaikh",
+            jobTitle: "Co-Founder",
+            worksFor: { "@id": `${SITE}/#organization` },
+          },
+          {
+            "@type": "Person",
+            name: "Selena Thomas",
+            jobTitle: "Co-Founder & COO",
+            worksFor: { "@id": `${SITE}/#organization` },
+            sameAs: ["https://www.linkedin.com/in/selena-thomas-9839472b8/"],
+          },
+          breadcrumb([
+            { name: "Home", path: "/" },
+            { name: "About", path: "/about" },
+          ]),
+        ])}
       />
       <PageHero
         kicker="About"

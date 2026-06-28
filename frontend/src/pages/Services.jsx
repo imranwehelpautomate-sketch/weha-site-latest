@@ -8,6 +8,7 @@ import LeadCalculator from "@/components/LeadCalculator";
 import Seo from "@/components/Seo";
 import { ArrowRight } from "lucide-react";
 import { useBooking } from "@/context/BookingContext";
+import { ORG, SITE, breadcrumb, faqPage, graph } from "@/lib/seoSchemas";
 import {
   Accordion,
   AccordionContent,
@@ -144,9 +145,48 @@ export default function Services() {
   return (
     <div data-testid="services-page" className="overflow-x-hidden">
       <Seo
-        title="Services - Deterministic automation, Agentic AI & AI Transformation Consulting"
-        description="WeHA helps you work smarter three ways: deterministic tool-to-tool automation, autonomous AI agents, and advisory AI transformation consulting. Built on the tools you already use."
+        title="AI Automation Services"
+        description="Three ways WeHA helps you work smarter: deterministic tool to tool automation, autonomous AI agents, and advisory AI transformation consulting."
         path="/services"
+        jsonLd={graph([
+          ORG,
+          {
+            "@type": "ItemList",
+            name: "WeHA AI automation services",
+            itemListElement: [
+              {
+                name: "Deterministic AI Solutions",
+                description:
+                  "Rule based, reliable automations that move data and trigger actions between the apps you already use.",
+              },
+              {
+                name: "Autonomous Agentic AI Solutions",
+                description:
+                  "Custom AI agents that read, decide, and complete multi step tasks that need judgment, end to end.",
+              },
+              {
+                name: "AI Transformation Consulting",
+                description:
+                  "Advisory only. A clear roadmap for where AI fits, what to automate first, and how to sequence it.",
+              },
+            ].map((s, i) => ({
+              "@type": "ListItem",
+              position: i + 1,
+              item: {
+                "@type": "Service",
+                name: s.name,
+                description: s.description,
+                serviceType: s.name,
+                provider: { "@id": `${SITE}/#organization` },
+              },
+            })),
+          },
+          faqPage(faqs),
+          breadcrumb([
+            { name: "Home", path: "/" },
+            { name: "Services", path: "/services" },
+          ]),
+        ])}
       />
       <PageHero
         kicker="Services"

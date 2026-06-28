@@ -1,30 +1,22 @@
 [
   {
-    "content": "Part A fix: add PLAYBOOK_URL constant to resourceLinks.js",
+    "content": "Part 1: react-snap prerender (postbuild wrapper, config, hydrate pattern) - verified 9 routes prerendered",
     "status": "completed"
   },
   {
-    "content": "Part A fix: PageHero supports formSubheading + formDownloadUrl + rightSlot; PlaybookLeadForm honors downloadUrl in full mode",
+    "content": "Part 2: rewrite index.html/llms.txt/sitemap.xml, confirm robots.txt",
     "status": "completed"
   },
   {
-    "content": "Part A fix: wire Resources + About hero forms to playbook magnet (distinct sources, correct copy)",
+    "content": "Part 3: per-page meta + JSON-LD on all 9 routes",
     "status": "completed"
   },
   {
-    "content": "Part B: build shared LeadCalculator.jsx (gated popup -> POST -> reveal, recompute without re-gate)",
+    "content": "Part 4: hygiene (noindex audit, manifest, _redirects, alt text, lang)",
     "status": "completed"
   },
   {
-    "content": "Part B: Services hero -> Automation ROI Calculator (source=calculator:services)",
-    "status": "completed"
-  },
-  {
-    "content": "Part B: Work hero -> Time Saved Calculator (source=calculator:work)",
-    "status": "completed"
-  },
-  {
-    "content": "Verify compile, screenshot all 4 pages, then test via testing agent",
+    "content": "Final verification: em-dashes, og:image, robots sitemap URL, build artifacts",
     "status": "in_progress"
   }
 ]

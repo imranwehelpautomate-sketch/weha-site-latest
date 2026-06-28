@@ -8,6 +8,7 @@ import ScrollSection from "@/components/ScrollSection";
 import Seo from "@/components/Seo";
 import ResourceDownloadModal from "@/components/ResourceDownloadModal";
 import { DRIVE } from "@/lib/resourceLinks";
+import { SITE, breadcrumb, graph } from "@/lib/seoSchemas";
 
 const items = [
   {
@@ -54,8 +55,28 @@ export default function ResourceWorkflows() {
     <div data-testid="resource-workflows-page" className="overflow-x-hidden">
       <Seo
         title="Free Workflow Automations"
-        description="Free, ready-to-import n8n workflow automation templates you can plug into your own stack in minutes. Each download includes the template plus a setup guide."
+        description="Free, ready to import n8n workflow automation templates you can plug into your own stack in minutes. Each download includes the template plus a setup guide."
         path="/resources/workflow-automations"
+        jsonLd={graph([
+          {
+            "@type": "CollectionPage",
+            name: "Free Workflow Automations",
+            url: `${SITE}/resources/workflow-automations`,
+            mainEntity: {
+              "@type": "ItemList",
+              itemListElement: items.map((it, i) => ({
+                "@type": "ListItem",
+                position: i + 1,
+                item: { "@type": "CreativeWork", name: it.title, description: it.desc },
+              })),
+            },
+          },
+          breadcrumb([
+            { name: "Home", path: "/" },
+            { name: "Resources", path: "/resources" },
+            { name: "Workflow Automations", path: "/resources/workflow-automations" },
+          ]),
+        ])}
       />
       <PageHero
         kicker="Resources / Workflow Automations"

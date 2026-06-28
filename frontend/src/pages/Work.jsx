@@ -7,6 +7,7 @@ import IntegrationStrip from "@/components/IntegrationStrip";
 import LeadCalculator from "@/components/LeadCalculator";
 import Seo from "@/components/Seo";
 import { Sparkles, Check } from "lucide-react";
+import { ORG, SITE, breadcrumb, graph } from "@/lib/seoSchemas";
 
 /* ------------------------------------------------------------------ *
  * Time Saved Calculator (Work hero).
@@ -248,9 +249,30 @@ export default function Work() {
   return (
     <div data-testid="work-page" className="overflow-x-hidden">
       <Seo
-        title="Work, anonymized automation builds"
-        description="A look at automation systems we have designed and shipped: automated SEO and content engines, inbound and outbound lead generation, proposal automation, and AI recruitment pipelines. Built on the tools you already use, with a human in the loop where it matters. Client names stay private."
+        title="Our Work"
+        description="Automation systems WeHA has designed and shipped: SEO and content engines, lead generation, proposal automation, and AI recruitment pipelines."
         path="/work"
+        jsonLd={graph([
+          ORG,
+          {
+            "@type": "ItemList",
+            name: "WeHA automation case studies",
+            itemListElement: caseStudies.map((s, i) => ({
+              "@type": "ListItem",
+              position: i + 1,
+              item: {
+                "@type": "CreativeWork",
+                name: s.title,
+                abstract: s.problem,
+                creator: { "@id": `${SITE}/#organization` },
+              },
+            })),
+          },
+          breadcrumb([
+            { name: "Home", path: "/" },
+            { name: "Work", path: "/work" },
+          ]),
+        ])}
       />
 
       <PageHero

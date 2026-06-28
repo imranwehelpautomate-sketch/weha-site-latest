@@ -1,0 +1,5 @@
+# Cloudflare Pages SPA fallback for client-side routing.
+# Prerendered routes (react-snap) ship their own /<route>/index.html and are
+# served as static files first; this 200 rewrite only catches paths that have
+# no matching static file, so deep links still resolve to the app shell.
+/*    /index.html   200

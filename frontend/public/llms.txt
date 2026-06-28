@@ -1,38 +1,45 @@
 # We Help Automate (WeHA)
 
-> Compliance-grade AI automation for SMBs. WeHA turns messy, time-consuming manual
-> workflows into reliable, documented, auditable systems — built in days, not months.
-> Operating across the UAE (Dubai), Australia and Singapore.
+> We Help Automate (WeHA) is an AI automation studio that turns manual workflows
+> into systems that run themselves. Built on the tools you already use, delivered
+> in days not months, and fully owned by you with no lock-in. We serve businesses
+> of any kind, anywhere.
 
 ## About
 
-- Founder background: a decade in cybersecurity / stopping breaches, so every
-  automation is built with IAM-grade data permissions and full auditability.
-- Compliant with UAE PDPL, the Australia Privacy Act, and Singapore PDPA.
-- No black-box automations — every system is documented and owned by the client.
+- Founded by two operators: an AI systems builder and a COO.
+- Practical and vendor neutral. We build on the tools you already run, not on
+  tools we want to sell you.
+- Every system is documented and handed over, so your team stays in control.
 
 ## Services
 
-- Lead capture & qualification automation (WhatsApp + email + CRM).
-- Workflow & document automation (n8n / Make + Claude + your existing tools).
-- Custom AI systems mapped to one workflow at a time.
+- Deterministic AI Solutions: rule based, reliable automations across n8n, Make,
+  Zapier, and Google Workspace.
+- Autonomous Agentic AI Solutions: custom AI agents that read, decide, and
+  complete multi step tasks end to end.
+- AI Transformation Consulting: advisory only. A clear roadmap for where AI fits
+  and what to automate first.
 
-## Verticals
+## Approach
 
-- Real Estate, Freight Forwarding, Accounting Firms, Mortgage & Finance,
-  Events & Exhibitions, Fintech.
+- Build on the tools you already use, with no forced migrations.
+- Keep a human in the loop wherever judgment matters.
+- Hand over full ownership and documentation. No black boxes, no lock-in.
 
 ## Key pages
 
 - Home: https://www.wehelpautomate.com/
 - Services: https://www.wehelpautomate.com/services
-- Work (case examples): https://www.wehelpautomate.com/work
+- Work: https://www.wehelpautomate.com/work
 - About: https://www.wehelpautomate.com/about
-- Contact / book a free AI audit: https://www.wehelpautomate.com/contact
-- Resources (workbooks, workflow automations, eBooks): https://www.wehelpautomate.com/resources
-- WeHA AI (assistant for AI & automation questions): https://www.wehelpautomate.com/weha-ai
+- Contact: https://www.wehelpautomate.com/contact
+- Resources: https://www.wehelpautomate.com/resources
+- Workbooks: https://www.wehelpautomate.com/resources/workbooks
+- Workflow Automations: https://www.wehelpautomate.com/resources/workflow-automations
+- eBooks: https://www.wehelpautomate.com/resources/ebooks
 
 ## Contact
 
 - Email: hi@wehelpautomate.com
-- Offer: free 60-minute AI Audit mapping your top 3 automatable workflows.
+- Offer: free 60 minute AI Audit mapping your top automatable workflows.

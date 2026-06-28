@@ -8,6 +8,7 @@ import ScrollSection from "@/components/ScrollSection";
 import Seo from "@/components/Seo";
 import ResourceDownloadModal from "@/components/ResourceDownloadModal";
 import { DRIVE } from "@/lib/resourceLinks";
+import { SITE, breadcrumb, graph } from "@/lib/seoSchemas";
 
 const items = [
   {
@@ -52,6 +53,26 @@ export default function ResourceEbooks() {
         title="Free eBooks"
         description="Free WeHA eBooks: practical guides on automating any business, what to automate first, and how to keep control of the tools you already own."
         path="/resources/ebooks"
+        jsonLd={graph([
+          {
+            "@type": "CollectionPage",
+            name: "Free eBooks",
+            url: `${SITE}/resources/ebooks`,
+            mainEntity: {
+              "@type": "ItemList",
+              itemListElement: items.map((it, i) => ({
+                "@type": "ListItem",
+                position: i + 1,
+                item: { "@type": "CreativeWork", name: it.title, description: it.desc },
+              })),
+            },
+          },
+          breadcrumb([
+            { name: "Home", path: "/" },
+            { name: "Resources", path: "/resources" },
+            { name: "eBooks", path: "/resources/ebooks" },
+          ]),
+        ])}
       />
       <PageHero
         kicker="Resources / eBooks"

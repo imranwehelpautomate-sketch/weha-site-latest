@@ -8,6 +8,7 @@ import ScrollSection from "@/components/ScrollSection";
 import Seo from "@/components/Seo";
 import ResourceDownloadModal from "@/components/ResourceDownloadModal";
 import { DRIVE } from "@/lib/resourceLinks";
+import { SITE, breadcrumb, graph } from "@/lib/seoSchemas";
 
 const items = [
   {
@@ -56,6 +57,26 @@ export default function ResourceWorkbooks() {
         title="Free Workbooks"
         description="Free printable WeHA workbooks to map, score, and prioritize the manual workflows worth automating first."
         path="/resources/workbooks"
+        jsonLd={graph([
+          {
+            "@type": "CollectionPage",
+            name: "Free Workbooks",
+            url: `${SITE}/resources/workbooks`,
+            mainEntity: {
+              "@type": "ItemList",
+              itemListElement: items.map((it, i) => ({
+                "@type": "ListItem",
+                position: i + 1,
+                item: { "@type": "CreativeWork", name: it.title, description: it.desc },
+              })),
+            },
+          },
+          breadcrumb([
+            { name: "Home", path: "/" },
+            { name: "Resources", path: "/resources" },
+            { name: "Workbooks", path: "/resources/workbooks" },
+          ]),
+        ])}
       />
       <PageHero
         kicker="Resources / Workbooks"

@@ -7,6 +7,7 @@ import ScrollSection from "@/components/ScrollSection";
 import Seo from "@/components/Seo";
 import { submitContactMessage } from "@/lib/api";
 import { checkContactFields, isHoneypotTripped } from "@/lib/spamGuard";
+import { ORG, SITE, breadcrumb, faqPage, graph } from "@/lib/seoSchemas";
 import {
   Accordion,
   AccordionContent,
@@ -82,9 +83,24 @@ export default function Contact() {
   return (
     <div data-testid="contact-page" className="overflow-x-hidden">
       <Seo
-        title="Contact, book a free 60 minute AI Audit"
-        description="Book a free 60 minute AI Audit with WeHA. We map your most painful manual workflows and show you what one automation would look like, live, for your business."
+        title="Contact, book a free AI Audit"
+        description="Book a free 60 minute AI Audit with WeHA. We map your most painful manual workflows and show you what one automation would look like, live."
         path="/contact"
+        jsonLd={graph([
+          {
+            ...ORG,
+            contactPoint: {
+              "@type": "ContactPoint",
+              email: "hi@wehelpautomate.com",
+              contactType: "customer service",
+            },
+          },
+          faqPage(faqs),
+          breadcrumb([
+            { name: "Home", path: "/" },
+            { name: "Contact", path: "/contact" },
+          ]),
+        ])}
       />
       <PageHero
         kicker="Contact"
