@@ -75,9 +75,9 @@ export default function Footer() {
           <div>
             <p className="text-xs font-semibold tracking-widest uppercase text-weha-faint mb-4">Where we work</p>
             <ul className="space-y-3 text-weha-muted">
-              <li>Remote-first</li>
-              <li>SMBs worldwide</li>
-              <li>Any time zone</li>
+              <li className="leading-relaxed">
+                We Work Amanora Crest, 4th floor, Amanora Town Centre, Amanora Park Town, Hadapsar, Pune, Maharashtra 411028.
+              </li>
             </ul>
             <a
               href="mailto:hello@wehelpautomate.com"
