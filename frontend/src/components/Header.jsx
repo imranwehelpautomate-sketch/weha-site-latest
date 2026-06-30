@@ -101,7 +101,7 @@ function ResourcesMenu() {
             className="absolute left-1/2 top-full z-50 w-[330px] -translate-x-1/2 pt-3"
             data-testid="resources-dropdown"
           >
-            <div className="rounded-xl border border-weha-border bg-weha-bg/95 p-2 shadow-lg backdrop-blur-xl">
+            <div className="rounded-xl border border-weha-border bg-weha-bg p-2 shadow-xl">
               {RESOURCE_CHILDREN.map((c) => {
                 const Icon = c.icon;
                 return (

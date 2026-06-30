@@ -11,10 +11,23 @@
 
 const ALLOWED_TIMEZONES = new Set([
   "Asia/Dubai",
-  "Australia/Sydney",
-  "Asia/Singapore",
   "Asia/Kolkata",
+  "Asia/Singapore",
+  // United States
   "America/New_York",
+  "America/Chicago",
+  "America/Denver",
+  "America/Phoenix",
+  "America/Los_Angeles",
+  "America/Anchorage",
+  "Pacific/Honolulu",
+  // Australia
+  "Australia/Sydney",
+  "Australia/Brisbane",
+  "Australia/Adelaide",
+  "Australia/Darwin",
+  "Australia/Perth",
+  "Australia/Hobart",
 ]);
 
 const BUSINESS_START_HOUR = 9; // local time

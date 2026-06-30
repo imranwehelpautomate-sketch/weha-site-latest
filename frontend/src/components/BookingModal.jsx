@@ -7,21 +7,37 @@ import { fetchAvailability, submitBookingRequest } from "@/lib/api";
 import { validateName, validateEmail, validateCompany, validateFreeText, isHoneypotTripped } from "@/lib/spamGuard";
 
 const TIMEZONES = [
-  { label: "🇦🇪 UAE · GST",          value: "Asia/Dubai" },
-  { label: "🇦🇺 Australia · AEST",   value: "Australia/Sydney" },
-  { label: "🇸🇬 Singapore · SGT",    value: "Asia/Singapore" },
-  { label: "🇮🇳 India · IST",        value: "Asia/Kolkata" },
-  { label: "🇺🇸 United States · ET", value: "America/New_York" },
+  { label: "🇦🇪 UAE · GST",                 value: "Asia/Dubai" },
+  { label: "🇮🇳 India · IST",               value: "Asia/Kolkata" },
+  { label: "🇸🇬 Singapore · SGT",           value: "Asia/Singapore" },
+  // United States
+  { label: "🇺🇸 US Eastern · ET",           value: "America/New_York" },
+  { label: "🇺🇸 US Central · CT",           value: "America/Chicago" },
+  { label: "🇺🇸 US Mountain · MT",          value: "America/Denver" },
+  { label: "🇺🇸 US Arizona · MST",          value: "America/Phoenix" },
+  { label: "🇺🇸 US Pacific · PT",           value: "America/Los_Angeles" },
+  { label: "🇺🇸 US Alaska · AKT",           value: "America/Anchorage" },
+  { label: "🇺🇸 US Hawaii · HST",           value: "Pacific/Honolulu" },
+  // Australia
+  { label: "🇦🇺 Australia (Sydney) · AEST",     value: "Australia/Sydney" },
+  { label: "🇦🇺 Australia (Brisbane) · AEST",   value: "Australia/Brisbane" },
+  { label: "🇦🇺 Australia (Adelaide) · ACST",   value: "Australia/Adelaide" },
+  { label: "🇦🇺 Australia (Darwin) · ACST",     value: "Australia/Darwin" },
+  { label: "🇦🇺 Australia (Perth) · AWST",      value: "Australia/Perth" },
+  { label: "🇦🇺 Australia (Hobart) · AEDT",     value: "Australia/Hobart" },
 ];
+
+const TZ_VALUES = new Set(TIMEZONES.map((z) => z.value));
 
 // Detect user's tz from browser and map to one of our supported zones
 function guessDefaultTz() {
   try {
     const sys = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
-    if (TIMEZONES.find(z => z.value === sys)) return sys;
-    if (/Australia|Pacific\/Auckland/i.test(sys)) return "Australia/Sydney";
+    if (TZ_VALUES.has(sys)) return sys;
+    if (/Australia/i.test(sys)) return "Australia/Sydney";
     if (/India|Asia\/Calcutta/i.test(sys)) return "Asia/Kolkata";
-    if (/America\//i.test(sys)) return "America/New_York";
+    if (/America\/|US\//i.test(sys)) return "America/New_York";
+    if (/Pacific\/Honolulu/i.test(sys)) return "Pacific/Honolulu";
     if (/Asia\/Singapore|Asia\/Kuala_Lumpur/i.test(sys)) return "Asia/Singapore";
     if (/Asia\/(Dubai|Muscat|Abu_Dhabi)/i.test(sys)) return "Asia/Dubai";
   } catch (e) { /* fall through to default */ }

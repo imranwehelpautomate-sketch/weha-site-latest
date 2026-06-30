@@ -74,11 +74,24 @@ SLOT_MINUTES = 30
 WORK_DAYS = {0, 1, 2, 3, 4}  # Mon..Fri
 
 ALLOWED_TIMEZONES = {
-    "Asia/Dubai",         # UAE
-    "Australia/Sydney",   # AU
-    "Asia/Singapore",     # SG
-    "Asia/Kolkata",       # India
-    "America/New_York",   # US
+    "Asia/Dubai",            # UAE · GST
+    "Asia/Kolkata",          # India · IST
+    "Asia/Singapore",        # Singapore · SGT
+    # United States
+    "America/New_York",      # US Eastern · ET
+    "America/Chicago",       # US Central · CT
+    "America/Denver",        # US Mountain · MT
+    "America/Phoenix",       # US Arizona · MST (no DST)
+    "America/Los_Angeles",   # US Pacific · PT
+    "America/Anchorage",     # US Alaska · AKT
+    "Pacific/Honolulu",      # US Hawaii · HST
+    # Australia
+    "Australia/Sydney",      # AEST/AEDT
+    "Australia/Brisbane",    # AEST (no DST)
+    "Australia/Adelaide",    # ACST/ACDT
+    "Australia/Darwin",      # ACST (no DST)
+    "Australia/Perth",       # AWST
+    "Australia/Hobart",      # AEDT (Tasmania)
 }
 
 
