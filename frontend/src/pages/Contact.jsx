@@ -40,9 +40,10 @@ const OFFICE = {
   address: "A 401 Marvel Isola Undri, Pune - 411 060",
   email: "hi@wehelpautomate.com",
   phone: "+91 79722 95436",
+  whatsapp: "+91 81808 61084",
   coords: { lat: 18.464100, lng: 73.914443 },
 };
-const PHONE_DIGITS = OFFICE.phone.replace(/\D/g, "");
+const WHATSAPP_DIGITS = OFFICE.whatsapp.replace(/\D/g, "");
 const MAP_EMBED_SRC = `https://maps.google.com/maps?q=${OFFICE.coords.lat},${OFFICE.coords.lng}&t=&z=16&ie=UTF8&iwloc=&output=embed`;
 
 export default function Contact() {
@@ -183,7 +184,7 @@ export default function Contact() {
                     </div>
 
                     <button type="submit" disabled={submitting} className="btn-teal w-full justify-center disabled:opacity-60" data-testid="submit-audit">
-                      {submitting ? "Sending…" : "Request My Free Audit"} <ArrowRight size={16} />
+                      {submitting ? "Sending…" : "Send to WeHA"} <ArrowRight size={16} />
                     </button>
 
                     <p className="text-sm text-weha-muted leading-relaxed pt-1">
@@ -200,13 +201,13 @@ export default function Contact() {
               <div className="space-y-8">
                 <div className="space-y-4">
                   <a
-                    href={`https://wa.me/${PHONE_DIGITS}`}
+                    href={`https://wa.me/${WHATSAPP_DIGITS}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 text-weha-text hover:text-weha-teal transition-colors"
                     data-testid="contact-whatsapp"
                   >
-                    <MessageCircle size={18} className="text-weha-teal" /> WhatsApp, {OFFICE.phone}
+                    <MessageCircle size={18} className="text-weha-teal" /> WhatsApp, {OFFICE.whatsapp}
                   </a>
                   <a
                     href="https://www.linkedin.com/in/selena-thomas-9839472b8/"
