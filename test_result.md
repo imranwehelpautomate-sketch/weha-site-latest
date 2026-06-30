@@ -341,8 +341,8 @@ backend:
 
 test_plan:
   current_focus:
+    - "Add Google Tag Manager (GTM-MFQWXSRN)"
     - "Surface API/validation errors inline on all 5 forms (shared submitForm helper)"
-    - "Add Privacy Policy + Terms of Service pages (footer-only links)"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
@@ -356,6 +356,21 @@ agent_communication:
       message: "BUG FIX — Mobile menu had no opaque background on mobile devices: header bar (top 64px) stayed transparent when scrollY=0 so the 3D network chips bled through the top edge of the open menu. Fixed in src/components/Header.jsx by (1) forcing header to solid bg-weha-bg when mobile menu is open and (2) adding explicit z-40 to the mobile menu panel for cross-browser stacking stability. Please verify on mobile viewport (e.g. 390x844): opening the mobile menu must show a fully opaque background — light cream (#f7f6f2) in light mode, dark (#171614) in dark mode — with NO 3D network chips/text visible through the menu area (including the top header bar). Also confirm tapping a nav link closes the menu and navigates. Toggle theme button and 'Book a Free Audit' CTA inside the menu should still work."
 
 frontend:
+  - task: "Add Google Tag Manager (GTM-MFQWXSRN)"
+    implemented: true
+    working: true
+    file: "frontend/public/index.html"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Added Google Tag Manager container GTM-MFQWXSRN. The GTM <head> snippet is placed high in <head> (immediately after the charset+viewport meta, before theme-color, so charset stays first for valid encoding) and the GTM (noscript) iframe immediately after the opening <body> tag, per the user's provided code. Verified via curl that the served HTML contains GTM-MFQWXSRN twice (head script + noscript). VERIFY (frontend): on page load, window.dataLayer exists and contains a 'gtm.js' event; a network request to https://www.googletagmanager.com/gtm.js?id=GTM-MFQWXSRN is made; the noscript iframe to googletagmanager.com/ns.html?id=GTM-MFQWXSRN is present in the DOM. No visual/design change expected; the site should render normally with no console errors introduced by GTM."
+        - working: true
+          agent: "testing"
+          comment: "✅ COMPREHENSIVE GTM VERIFICATION COMPLETE - ALL TESTS PASSED. Desktop viewport 1920x900. HOME PAGE LOAD: (1) ✅ window.dataLayer exists and is an array with 3 events: {'gtm.start': 1782835183113, 'event': 'gtm.js', 'gtm.uniqueEventId': 3}, {'event': 'gtm.dom', 'gtm.uniqueEventId': 4}, {'event': 'gtm.load', 'gtm.uniqueEventId': 5}. Contains required 'gtm.js' event with gtm.start timestamp. (2) ✅ GTM script tag found in DOM with src='https://www.googletagmanager.com/gtm.js?id=GTM-MFQWXSRN'. (3) ✅ Network request to 'https://www.googletagmanager.com/gtm.js?id=GTM-MFQWXSRN' successfully made (captured in 45 total network requests). (4) ✅ GTM noscript iframe with src='https://www.googletagmanager.com/ns.html?id=GTM-MFQWXSRN' IS PRESENT in the served HTML source (verified via page.content()). Note: The noscript iframe is not visible in the DOM when JavaScript is enabled - this is EXPECTED behavior as noscript content only renders when JS is disabled. (5) ✅ Page renders normally: Hero element exists with text 'Your business probablyruns on 47 manual steps.Let'', Nav element exists. (6) ✅ ZERO GTM-related console errors (7 total console messages, none related to GTM). NAVIGATION TEST: (7) ✅ Navigated to /contact page successfully. (8) ✅ window.dataLayer persists on /contact (exists, is array, length=3). (9) ✅ ZERO GTM-related console errors on /contact. Screenshot captured showing home page rendering correctly with hero/nav visible. OVERALL: Google Tag Manager (GTM-MFQWXSRN) is CORRECTLY installed and working on the WeHA site."
+
   - task: "Surface API/validation errors inline on all 5 forms (shared submitForm helper)"
     implemented: true
     working: "NA"
