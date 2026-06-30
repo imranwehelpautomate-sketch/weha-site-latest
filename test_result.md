@@ -341,6 +341,7 @@ backend:
 
 test_plan:
   current_focus:
+    - "Add Privacy Policy + Terms of Service pages (footer-only links)"
     - "Mobile header CTA one-line + smaller mobile nav fonts + contact form completion + contact copy/WhatsApp updates"
   stuck_tasks: []
   test_all: false
@@ -355,6 +356,18 @@ agent_communication:
       message: "BUG FIX — Mobile menu had no opaque background on mobile devices: header bar (top 64px) stayed transparent when scrollY=0 so the 3D network chips bled through the top edge of the open menu. Fixed in src/components/Header.jsx by (1) forcing header to solid bg-weha-bg when mobile menu is open and (2) adding explicit z-40 to the mobile menu panel for cross-browser stacking stability. Please verify on mobile viewport (e.g. 390x844): opening the mobile menu must show a fully opaque background — light cream (#f7f6f2) in light mode, dark (#171614) in dark mode — with NO 3D network chips/text visible through the menu area (including the top header bar). Also confirm tapping a nav link closes the menu and navigates. Toggle theme button and 'Book a Free Audit' CTA inside the menu should still work."
 
 frontend:
+  - task: "Add Privacy Policy + Terms of Service pages (footer-only links)"
+    implemented: true
+    working: "NA"
+    file: "frontend/src/pages/PrivacyPolicy.jsx, frontend/src/pages/TermsOfService.jsx, frontend/src/App.js, frontend/src/components/Footer.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Added two new legal pages from user-provided text files, matching the site design (PageHero + ScrollSection + Seo). Routes: /privacy-policy (PrivacyPolicy.jsx) and /terms-of-service (TermsOfService.jsx) registered in App.js. Links added ONLY to the footer bottom bar (data-testid=footer-privacy -> /privacy-policy, data-testid=footer-terms -> /terms-of-service); NOT added to the main nav (Header) per the user request. The old 'Remote-first · Worldwide' text in the footer bottom bar was replaced by these two legal links. Content is verbatim from the attached files. NOTE for user: the Privacy Policy intro text references 'leftclick.ai' (verbatim from the source file) which appears to be a leftover and may need correcting to wehelpautomate.com. VERIFY (frontend): (1) Footer shows 'Privacy Policy' and 'Terms of Service' links; clicking each navigates to the respective page which renders the title (Privacy Policy / Terms of Service) + numbered sections + a Contact section with a mailto:imran@wehelpautomate.com link. (2) The main top nav (Header) does NOT contain Privacy/Terms links. (3) Direct navigation to /privacy-policy and /terms-of-service renders the pages (deep-link)."
+
   - task: "Mobile header CTA one-line + smaller mobile nav fonts + contact form completion + contact copy/WhatsApp updates"
     implemented: true
     working: "NA"

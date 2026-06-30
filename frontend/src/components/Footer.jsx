@@ -84,7 +84,22 @@ export default function Footer() {
 
         <div className="mt-14 pt-6 border-t border-weha-border flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
           <p className="text-sm text-weha-faint">© {new Date().getFullYear()} We Help Automate. All rights reserved.</p>
-          <p className="text-sm text-weha-faint">Remote-first · Worldwide</p>
+          <div className="flex items-center gap-5">
+            <Link
+              to="/privacy-policy"
+              data-testid="footer-privacy"
+              className="text-sm text-weha-faint hover:text-weha-teal transition-colors"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              to="/terms-of-service"
+              data-testid="footer-terms"
+              className="text-sm text-weha-faint hover:text-weha-teal transition-colors"
+            >
+              Terms of Service
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

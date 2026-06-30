@@ -21,6 +21,8 @@ import Resources from "@/pages/Resources";
 import ResourceWorkbooks from "@/pages/ResourceWorkbooks";
 import ResourceWorkflows from "@/pages/ResourceWorkflows";
 import ResourceEbooks from "@/pages/ResourceEbooks";
+import PrivacyPolicy from "@/pages/PrivacyPolicy";
+import TermsOfService from "@/pages/TermsOfService";
 
 function scrollTop() {
   if (window.__lenis) window.__lenis.scrollTo(0, { immediate: true });
@@ -56,6 +58,8 @@ function AnimatedRoutes() {
           <Route path="/resources/workbooks" element={<ResourceWorkbooks />} />
           <Route path="/resources/workflow-automations" element={<ResourceWorkflows />} />
           <Route path="/resources/ebooks" element={<ResourceEbooks />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
         </Routes>
       </motion.main>
     </AnimatePresence>
