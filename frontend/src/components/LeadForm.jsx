@@ -9,13 +9,15 @@ export default function LeadForm({ heading = "Book your free AI Audit", testid =
   const [form, setForm] = useState(initial);
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  const [error, setError] = useState("");
 
   const update = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    setError("");
     if (!form.name.trim() || !form.company.trim() || !form.process.trim()) {
-      toast.error("Please add your name, company, and what you'd like to automate.");
+      setError("Please add your name, company, and what you'd like to automate.");
       return;
     }
     setSubmitting(true);
@@ -31,7 +33,7 @@ export default function LeadForm({ heading = "Book your free AI Audit", testid =
       toast.success("Request received — we'll reply within 24 hours.");
       setForm(initial);
     } catch (err) {
-      toast.error("Something went wrong. Email hello@wehelpautomate.com");
+      setError(err.message);
     } finally {
       setSubmitting(false);
     }
@@ -74,6 +76,11 @@ export default function LeadForm({ heading = "Book your free AI Audit", testid =
             <label className="weha-label" htmlFor={`${testid}-process`}>What do you want to automate?</label>
             <textarea id={`${testid}-process`} rows={3} className="weha-input resize-none" value={form.process} onChange={update("process")} placeholder="e.g. WhatsApp lead routing, RFQ-to-quote…" data-testid={`${testid}-process`} />
           </div>
+          {error && (
+            <p role="alert" data-testid={`${testid}-error`} className="text-sm font-medium text-red-600 dark:text-red-400">
+              {error}
+            </p>
+          )}
           <button type="submit" disabled={submitting} className="btn-teal w-full justify-center disabled:opacity-60" data-cursor="hover" data-testid={`${testid}-submit`}>
             {submitting ? "Sending…" : "Request My Free Audit"} <ArrowRight size={16} />
           </button>

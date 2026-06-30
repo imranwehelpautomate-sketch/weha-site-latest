@@ -51,6 +51,7 @@ export default function Contact() {
   const [hp, setHp] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  const [error, setError] = useState("");
 
   const update = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
@@ -58,6 +59,7 @@ export default function Contact() {
     e.preventDefault();
     // Honeypot: silently drop bot submissions.
     if (isHoneypotTripped(hp)) return;
+    setError("");
     const spamError = checkContactFields({
       name: form.name,
       company: form.company,
@@ -65,7 +67,7 @@ export default function Contact() {
       process: form.process,
     });
     if (spamError) {
-      toast.error(spamError);
+      setError(spamError);
       return;
     }
     setSubmitting(true);
@@ -75,7 +77,7 @@ export default function Contact() {
       toast.success("Request received. We'll reply within 24 hours.");
       setForm(initial);
     } catch (err) {
-      toast.error("Something went wrong. Please email hi@wehelpautomate.com");
+      setError(err.message);
     } finally {
       setSubmitting(false);
     }
@@ -182,6 +184,12 @@ export default function Contact() {
                         <option>LinkedIn</option>
                       </select>
                     </div>
+
+                    {error && (
+                      <p role="alert" data-testid="contact-error" className="text-sm font-medium text-red-600 dark:text-red-400">
+                        {error}
+                      </p>
+                    )}
 
                     <button type="submit" disabled={submitting} className="btn-teal w-full justify-center disabled:opacity-60" data-testid="submit-audit">
                       {submitting ? "Sending…" : "Send to WeHA"} <ArrowRight size={16} />

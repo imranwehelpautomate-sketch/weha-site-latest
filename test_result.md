@@ -341,8 +341,8 @@ backend:
 
 test_plan:
   current_focus:
+    - "Surface API/validation errors inline on all 5 forms (shared submitForm helper)"
     - "Add Privacy Policy + Terms of Service pages (footer-only links)"
-    - "Mobile header CTA one-line + smaller mobile nav fonts + contact form completion + contact copy/WhatsApp updates"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
@@ -356,6 +356,18 @@ agent_communication:
       message: "BUG FIX — Mobile menu had no opaque background on mobile devices: header bar (top 64px) stayed transparent when scrollY=0 so the 3D network chips bled through the top edge of the open menu. Fixed in src/components/Header.jsx by (1) forcing header to solid bg-weha-bg when mobile menu is open and (2) adding explicit z-40 to the mobile menu panel for cross-browser stacking stability. Please verify on mobile viewport (e.g. 390x844): opening the mobile menu must show a fully opaque background — light cream (#f7f6f2) in light mode, dark (#171614) in dark mode — with NO 3D network chips/text visible through the menu area (including the top header bar). Also confirm tapping a nav link closes the menu and navigates. Toggle theme button and 'Book a Free Audit' CTA inside the menu should still work."
 
 frontend:
+  - task: "Surface API/validation errors inline on all 5 forms (shared submitForm helper)"
+    implemented: true
+    working: "NA"
+    file: "frontend/src/lib/submitForm.js, frontend/src/lib/api.js, frontend/src/pages/Contact.jsx, frontend/src/components/BookingModal.jsx, frontend/src/components/PlaybookLeadForm.jsx, frontend/src/components/LeadForm.jsx, frontend/src/components/ValueCalculator.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "ROOT-CAUSE FIX for the recurring 'submit does nothing / button freezes' reports. The backend returns HTTP 422 {detail} on bad input; previously the frontend only surfaced errors as easily-missed sonner toasts, so users perceived 'nothing happens'. NEW shared helper src/lib/submitForm.js: fetch-based POST, parses JSON, on non-2xx throws Error(data.detail || data.error || 'Something went wrong, please check your details and try again.'); also throws the same fallback on network failure so the button never stays stuck. api.js submit functions (submitAuditRequest/submitBookingRequest/submitContactMessage/submitPlaybookLead/submitCalculatorLead) now delegate to submitForm; fetchAvailability stays axios GET. All 5 forms updated: (a) added an inline error state + a visible red error element (role=alert) near the submit button; (b) on submit, existing spamGuard validators (or LeadForm's existing empty-field check) run first and, on failure, set the inline error and block before sending (no rule changes); (c) catch sets error to err.message (the server detail); (d) finally always re-enables the button (setSubmitting(false)). Error testids: contact-error, booking-error, <testid>-error (playbook/lead), <testid>-gate-error (calculator). Removed now-unused toast import from BookingModal; success toasts unchanged. Design unchanged except the added error text. VERIFY (frontend, preview): for each form, submitting clearly-bad input (e.g. too-short 'process' / blank required field) shows a VISIBLE inline error near the button AND the button returns to clickable (not stuck on 'Sending…/Booking…/Calculating…'); valid data still reaches the success state. Forms: Contact (/contact submit-audit -> contact-error / contact-success), Booking modal (booking-submit -> booking-error / booking-success), Playbook lead form (on resources or hero), Home LeadForm, ValueCalculator gate (services/home)."
+
   - task: "Add Privacy Policy + Terms of Service pages (footer-only links)"
     implemented: true
     working: "NA"

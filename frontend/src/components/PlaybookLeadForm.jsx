@@ -33,6 +33,7 @@ export default function PlaybookLeadForm({
   const [hp, setHp] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  const [error, setError] = useState("");
 
   // A provided downloadUrl always wins (used by the hero playbook magnet so the
   // real PDF is delivered instead of the placeholder).
@@ -46,11 +47,12 @@ export default function PlaybookLeadForm({
     // Honeypot: silently drop bot submissions.
     if (isHoneypotTripped(hp)) return;
 
+    setError("");
     const spamError = minimal
       ? (validateName(form.name) || validateEmail(form.email))
       : (validateName(form.name) || validateCompany(form.company) || validateEmail(form.email));
     if (spamError) {
-      toast.error(spamError);
+      setError(spamError);
       return;
     }
 
@@ -67,8 +69,7 @@ export default function PlaybookLeadForm({
       if (fileUrl) window.open(fileUrl, "_blank", "noopener,noreferrer");
       if (onSuccess) onSuccess();
     } catch (err) {
-      const msg = err?.response?.data?.detail || "Something went wrong. Email hello@wehelpautomate.com";
-      toast.error(msg);
+      setError(err.message);
     } finally {
       setSubmitting(false);
     }
@@ -230,6 +231,12 @@ export default function PlaybookLeadForm({
                 </select>
               </div>
             </>
+          )}
+
+          {error && (
+            <p role="alert" data-testid={`${testid}-error`} className="text-sm font-medium text-red-600 dark:text-red-400">
+              {error}
+            </p>
           )}
 
           <button

@@ -117,8 +117,7 @@ export default function ValueCalculator({
       setResultOpen(true);
       toast.success("Thanks. Here is your estimate.");
     } catch (err2) {
-      const msg = err2?.response?.data?.detail || "Something went wrong. Please try again.";
-      setError(msg);
+      setError(err2.message);
     } finally {
       setSubmitting(false);
     }

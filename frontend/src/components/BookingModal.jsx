@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 import { ArrowRight, Calendar as CalendarIcon, Clock, Globe, Check, Loader2 } from "lucide-react";
-import { toast } from "sonner";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Calendar } from "@/components/ui/calendar";
 import { fetchAvailability, submitBookingRequest } from "@/lib/api";
@@ -72,6 +71,7 @@ export default function BookingModal({ open, onOpenChange }) {
   const [form, setForm] = useState(initialForm);
   const [hp, setHp] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   // Reset state every time the modal opens
   useEffect(() => {
@@ -81,6 +81,7 @@ export default function BookingModal({ open, onOpenChange }) {
       setSlots([]);
       setSelectedSlot(null);
       setForm(initialForm);
+      setError("");
     }
   }, [open]);
 
@@ -111,13 +112,14 @@ export default function BookingModal({ open, onOpenChange }) {
     e?.preventDefault?.();
     // Honeypot: silently drop bot submissions.
     if (isHoneypotTripped(hp)) return;
+    setError("");
     const spamError =
       validateName(form.name) ||
       validateCompany(form.company) ||
       validateEmail(form.email) ||
       validateFreeText(form.process, "the process you want to fix");
     if (spamError) {
-      toast.error(spamError);
+      setError(spamError);
       return;
     }
     setSubmitting(true);
@@ -130,8 +132,7 @@ export default function BookingModal({ open, onOpenChange }) {
       });
       setStep(3);
     } catch (err) {
-      const detail = err?.response?.data?.detail;
-      toast.error(detail || "Something went wrong. Please email hello@wehelpautomate.com");
+      setError(err.message);
     } finally {
       setSubmitting(false);
     }
@@ -402,6 +403,12 @@ export default function BookingModal({ open, onOpenChange }) {
                       <option>LinkedIn</option>
                     </select>
                   </div>
+
+                  {error && (
+                    <p role="alert" data-testid="booking-error" className="text-sm font-medium text-red-600 dark:text-red-400 pt-1">
+                      {error}
+                    </p>
+                  )}
 
                   <div className="flex items-center justify-between pt-2">
                     <button type="button" onClick={() => setStep(1)} className="btn-ghost" data-testid="booking-back">
