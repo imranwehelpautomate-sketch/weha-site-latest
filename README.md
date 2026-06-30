@@ -24,8 +24,22 @@ The schema lives in `frontend/schema.sql` and is safe to re-run (every statement
 uses `IF NOT EXISTS`). Apply it with Wrangler:
 
 ```bash
-wrangler d1 execute <db-name> --file=frontend/schema.sql
+wrangler d1 execute <db-name> --remote --file=frontend/schema.sql
 ```
+
+> **Important — column migrations on EXISTING databases.** `CREATE TABLE IF NOT
+> EXISTS` only creates missing tables; it does **not** add new columns to a table
+> that already exists. If your D1 database was created before the booking-slot
+> columns were added, the `booking_requests` table will be missing
+> `slot_iso_utc` / `timezone`, and every booking POST will fail with a 500
+> (the booking modal then appears to "do nothing" on submit). Apply the
+> migration once to add them:
+>
+> ```bash
+> wrangler d1 execute <db-name> --remote --file=frontend/migrations/0001_add_booking_slot_columns.sql
+> ```
+>
+> A `duplicate column name` error means the columns already exist — safe to ignore.
 
 ### Forms → tables → endpoints
 

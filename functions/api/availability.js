@@ -126,22 +126,26 @@ export async function onRequestGet({ request, env }) {
 
   if (candidates.length === 0) return json([]);
 
-  // Mark slots already booked (best-effort: never let a DB hiccup break the calendar).
-  let booked = new Set();
-  try {
-    const isoKeys = candidates.map((s) => s.iso_utc);
-    const placeholders = isoKeys.map(() => "?").join(", ");
-    const sql = `
-      SELECT slot_iso_utc FROM audit_requests   WHERE slot_iso_utc IN (${placeholders})
-      UNION
-      SELECT slot_iso_utc FROM booking_requests WHERE slot_iso_utc IN (${placeholders})
-    `;
-    const { results } = await env.DB.prepare(sql)
-      .bind(...isoKeys, ...isoKeys)
-      .all();
-    booked = new Set((results || []).map((r) => r.slot_iso_utc));
-  } catch {
-    booked = new Set();
+  // Mark slots already booked. Query each table INDEPENDENTLY and guard each one
+  // so a table that does not have a slot_iso_utc column (e.g. audit_requests in
+  // the current D1 schema) cannot break the lookup for the table that does
+  // (booking_requests). Best-effort: a DB hiccup never breaks the calendar.
+  const booked = new Set();
+  const isoKeys = candidates.map((s) => s.iso_utc);
+  const placeholders = isoKeys.map(() => "?").join(", ");
+  for (const table of ["booking_requests", "audit_requests"]) {
+    try {
+      const { results } = await env.DB.prepare(
+        `SELECT slot_iso_utc FROM ${table} WHERE slot_iso_utc IN (${placeholders})`
+      )
+        .bind(...isoKeys)
+        .all();
+      for (const r of results || []) {
+        if (r && r.slot_iso_utc) booked.add(r.slot_iso_utc);
+      }
+    } catch {
+      // Table missing / lacks slot_iso_utc column — skip it, keep the rest.
+    }
   }
 
   return json(
