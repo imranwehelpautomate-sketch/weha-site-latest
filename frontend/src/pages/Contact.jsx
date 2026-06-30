@@ -38,7 +38,7 @@ const initial = {
 // office phone strip.
 const OFFICE = {
   address: "We Work Amanora Crest, 4th floor, Amanora Town Centre, Amanora Park Town, Hadapsar, Pune, Maharashtra 411028",
-  email: "help@wehelpautomate.com",
+  email: "hello@wehelpautomate.com",
   phone: "+91 81808 61084",
   whatsapp: "+91 81808 61084",
   coords: { lat: 18.518774, lng: 73.93606 },
@@ -94,7 +94,7 @@ export default function Contact() {
             ...ORG,
             contactPoint: {
               "@type": "ContactPoint",
-              email: "help@wehelpautomate.com",
+              email: "hello@wehelpautomate.com",
               contactType: "customer service",
             },
           },
