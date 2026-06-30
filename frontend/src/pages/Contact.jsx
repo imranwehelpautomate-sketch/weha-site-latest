@@ -37,11 +37,11 @@ const initial = {
 // used by the WhatsApp link (digits only), the displayed WhatsApp text, and the
 // office phone strip.
 const OFFICE = {
-  address: "A 401 Marvel Isola Undri, Pune - 411 060",
-  email: "hi@wehelpautomate.com",
+  address: "We Work Amanora Crest, 4th floor, Amanora Town Centre, Amanora Park Town, Hadapsar, Pune, Maharashtra 411028",
+  email: "help@wehelpautomate.com",
   phone: "+91 81808 61084",
   whatsapp: "+91 81808 61084",
-  coords: { lat: 18.464100, lng: 73.914443 },
+  coords: { lat: 18.518774, lng: 73.93606 },
 };
 const WHATSAPP_DIGITS = OFFICE.whatsapp.replace(/\D/g, "");
 const MAP_EMBED_SRC = `https://maps.google.com/maps?q=${OFFICE.coords.lat},${OFFICE.coords.lng}&t=&z=16&ie=UTF8&iwloc=&output=embed`;
@@ -94,7 +94,7 @@ export default function Contact() {
             ...ORG,
             contactPoint: {
               "@type": "ContactPoint",
-              email: "hi@wehelpautomate.com",
+              email: "help@wehelpautomate.com",
               contactType: "customer service",
             },
           },
@@ -286,7 +286,7 @@ export default function Contact() {
                   <p className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-faint">
                     Office Address
                   </p>
-                  <p className="text-weha-text leading-relaxed">{OFFICE.address}.</p>
+                  <p className="text-weha-text leading-relaxed">{OFFICE.address}</p>
                 </div>
               </Reveal>
 
