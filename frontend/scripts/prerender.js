@@ -12,8 +12,25 @@
  * from the "reactSnap" block in package.json so there is a single source of
  * truth.
  */
+const fs = require("fs");
+const path = require("path");
 const { run } = require("react-snap");
 const pkg = require("../package.json");
+
+// Cloudflare Pages serves 200.html for any path with no matching static file,
+// acting as the SPA fallback for deep links / refreshes WITHOUT the
+// "Infinite loop detected" warning that a `/* /index.html 200` rewrite triggers.
+function writeSpaFallback() {
+  const buildDir = path.resolve(__dirname, "..", "build");
+  const indexHtml = path.join(buildDir, "index.html");
+  const fallbackHtml = path.join(buildDir, "200.html");
+  if (fs.existsSync(indexHtml)) {
+    fs.copyFileSync(indexHtml, fallbackHtml);
+    console.log("Wrote SPA fallback: build/200.html");
+  } else {
+    console.warn("Skipped 200.html: build/index.html not found");
+  }
+}
 
 run({
   ...(pkg.reactSnap || {}),
@@ -22,7 +39,10 @@ run({
     (pkg.reactSnap && pkg.reactSnap.puppeteerExecutablePath) ||
     undefined,
 })
-  .then(() => process.exit(0))
+  .then(() => {
+    writeSpaFallback();
+    process.exit(0);
+  })
   .catch((err) => {
     console.error(err);
     process.exit(1);

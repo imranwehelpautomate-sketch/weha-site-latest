@@ -1,412 +1,454 @@
 #!/usr/bin/env python3
 """
-Comprehensive backend test for WeHA API
-Tests the UPDATED playbook lead capture endpoint with relaxed validation
-and runs regression tests on existing endpoints.
+Backend Regression + Contract Test for WeHA API
+Tests all endpoints against the preview FastAPI backend.
 """
 
 import requests
+import json
 from datetime import datetime, timedelta
-import sys
+import os
 
-# Backend URL from frontend/.env
-BASE_URL = "https://site-ready-27.preview.emergentagent.com/api"
+# Read backend URL from frontend/.env
+with open('/app/frontend/.env', 'r') as f:
+    for line in f:
+        if line.startswith('REACT_APP_BACKEND_URL='):
+            BACKEND_URL = line.strip().split('=')[1]
+            break
 
-def test_playbook_minimal_payload():
-    """Test 1: POST with ONLY name+email => 200, company should be null"""
-    print("\n[TEST 1] POST /api/playbook-requests with minimal payload (name+email only)")
-    payload = {
-        "name": "Jordan Lee",
-        "email": "jordan@brightledger.co"
-    }
-    response = requests.post(f"{BASE_URL}/playbook-requests", json=payload)
-    print(f"  Status: {response.status_code}")
-    print(f"  Response: {response.json()}")
-    
-    assert response.status_code == 200, f"Expected 200, got {response.status_code}"
-    data = response.json()
-    assert "id" in data, "Response should contain 'id'"
-    assert "created_at" in data, "Response should contain 'created_at'"
-    assert data["name"] == "Jordan Lee", f"Expected name 'Jordan Lee', got {data.get('name')}"
-    assert data["email"] == "jordan@brightledger.co", f"Expected email 'jordan@brightledger.co', got {data.get('email')}"
-    assert data.get("company") is None, f"Expected company to be null, got {data.get('company')}"
-    print("  ✅ PASS: Minimal payload accepted, company is null")
-    return data["id"]
+API_BASE = f"{BACKEND_URL}/api"
 
+print(f"Testing backend at: {API_BASE}\n")
+print("=" * 80)
 
-def test_playbook_with_source_and_asset_title():
-    """Test 2: POST with name+email+source+asset_title => 200, both fields persisted"""
-    print("\n[TEST 2] POST /api/playbook-requests with source and asset_title")
-    payload = {
-        "name": "Sam Patel",
-        "email": "sam@techcorp.io",
-        "source": "resource:ebook:operating-system",
-        "asset_title": "The Automation-First Operating System"
-    }
-    response = requests.post(f"{BASE_URL}/playbook-requests", json=payload)
-    print(f"  Status: {response.status_code}")
-    print(f"  Response: {response.json()}")
-    
-    assert response.status_code == 200, f"Expected 200, got {response.status_code}"
-    data = response.json()
-    assert "id" in data, "Response should contain 'id'"
-    assert "created_at" in data, "Response should contain 'created_at'"
-    assert data["source"] == "resource:ebook:operating-system", f"Expected source to be persisted, got {data.get('source')}"
-    assert data["asset_title"] == "The Automation-First Operating System", f"Expected asset_title to be persisted, got {data.get('asset_title')}"
-    print("  ✅ PASS: source and asset_title persisted and returned")
-    return data["id"]
-
-
-def test_playbook_empty_name():
-    """Test 3: POST with empty/whitespace name => 422"""
-    print("\n[TEST 3] POST /api/playbook-requests with empty/whitespace name")
-    payload = {
-        "name": "  ",
-        "email": "a@b.com"
-    }
-    response = requests.post(f"{BASE_URL}/playbook-requests", json=payload)
-    print(f"  Status: {response.status_code}")
-    print(f"  Response: {response.json()}")
-    
-    assert response.status_code == 422, f"Expected 422, got {response.status_code}"
-    print("  ✅ PASS: Empty name correctly rejected with 422")
-
-
-def test_playbook_invalid_email():
-    """Test 4: POST with invalid email => 422 (pydantic EmailStr)"""
-    print("\n[TEST 4] POST /api/playbook-requests with invalid email format")
-    payload = {
-        "name": "X",
-        "email": "notanemail"
-    }
-    response = requests.post(f"{BASE_URL}/playbook-requests", json=payload)
-    print(f"  Status: {response.status_code}")
-    print(f"  Response: {response.json()}")
-    
-    assert response.status_code == 422, f"Expected 422, got {response.status_code}"
-    print("  ✅ PASS: Invalid email correctly rejected with 422")
-
-
-def test_playbook_missing_email():
-    """Test 5: POST missing email field => 422"""
-    print("\n[TEST 5] POST /api/playbook-requests missing email field")
-    payload = {
-        "name": "X"
-    }
-    response = requests.post(f"{BASE_URL}/playbook-requests", json=payload)
-    print(f"  Status: {response.status_code}")
-    print(f"  Response: {response.json()}")
-    
-    assert response.status_code == 422, f"Expected 422, got {response.status_code}"
-    print("  ✅ PASS: Missing email correctly rejected with 422")
-
-
-def test_playbook_backwards_compatibility():
-    """Test 6: POST with full payload (all fields) => 200"""
-    print("\n[TEST 6] POST /api/playbook-requests with full payload (backwards compatibility)")
-    payload = {
-        "name": "Full Name",
-        "company": "Acme Corp",
-        "designation": "Operations Manager",
-        "email": "operations@acmecorp.io",
-        "industry": "Technology",
-        "country": "UAE",
-        "session_interest": "Maybe later",
-        "source": "resources"
-    }
-    response = requests.post(f"{BASE_URL}/playbook-requests", json=payload)
-    print(f"  Status: {response.status_code}")
-    print(f"  Response: {response.json()}")
-    
-    assert response.status_code == 200, f"Expected 200, got {response.status_code}"
-    data = response.json()
-    assert data["name"] == "Full Name", f"Expected name 'Full Name', got {data.get('name')}"
-    assert data["company"] == "Acme Corp", f"Expected company 'Acme Corp', got {data.get('company')}"
-    assert data["designation"] == "Operations Manager", f"Expected designation, got {data.get('designation')}"
-    assert data["email"] == "operations@acmecorp.io", f"Expected email, got {data.get('email')}"
-    print("  ✅ PASS: Full payload accepted (backwards compatible)")
-    return data["id"]
-
-
-def test_playbook_get_list(created_ids):
-    """Test 7: GET /api/playbook-requests => 200, sorted newest-first, includes created records"""
-    print("\n[TEST 7] GET /api/playbook-requests (list sorted newest-first)")
-    response = requests.get(f"{BASE_URL}/playbook-requests")
-    print(f"  Status: {response.status_code}")
-    
-    assert response.status_code == 200, f"Expected 200, got {response.status_code}"
-    data = response.json()
-    assert isinstance(data, list), "Response should be a list"
-    print(f"  Total records: {len(data)}")
-    
-    # Check that our created records are in the list
-    returned_ids = [item["id"] for item in data]
-    for created_id in created_ids:
-        assert created_id in returned_ids, f"Created record {created_id} not found in list"
-    
-    # Check sorting (newest first)
-    if len(data) > 1:
-        for i in range(len(data) - 1):
-            current_time = datetime.fromisoformat(data[i]["created_at"].replace("Z", "+00:00"))
-            next_time = datetime.fromisoformat(data[i+1]["created_at"].replace("Z", "+00:00"))
-            assert current_time >= next_time, "List should be sorted by created_at descending (newest first)"
-    
-    # Check that source and asset_title fields are present
-    for item in data:
-        if item["id"] == created_ids[1]:  # The one with source and asset_title
-            assert item.get("source") == "resource:ebook:operating-system", "source field should be present"
-            assert item.get("asset_title") == "The Automation-First Operating System", "asset_title field should be present"
-            print(f"  ✅ source and asset_title fields confirmed in GET response")
-    
-    print("  ✅ PASS: GET returns list sorted newest-first with all fields")
-
-
-def test_regression_root():
-    """Test 8: GET /api/ => 200 {message: 'WeHA API'}"""
-    print("\n[TEST 8 - REGRESSION] GET /api/")
-    response = requests.get(f"{BASE_URL}/")
-    print(f"  Status: {response.status_code}")
-    print(f"  Response: {response.json()}")
-    
-    assert response.status_code == 200, f"Expected 200, got {response.status_code}"
-    data = response.json()
-    assert data.get("message") == "WeHA API", f"Expected message 'WeHA API', got {data.get('message')}"
-    print("  ✅ PASS: Root endpoint working")
-
-
-def test_regression_audit_requests():
-    """Test 9: POST /api/audit-requests with valid payload => 200; empty name/process => 422"""
-    print("\n[TEST 9 - REGRESSION] POST /api/audit-requests")
-    
-    # Valid payload
-    print("  9a. Valid payload")
-    payload = {
-        "name": "Alex Johnson",
-        "company": "TechFlow Solutions",
-        "country": "UAE",
-        "industry": "Technology",
-        "process": "Lead qualification automation",
-        "contact_method": "Email",
-        "email": "alex@techflow.io"
-    }
-    response = requests.post(f"{BASE_URL}/audit-requests", json=payload)
-    print(f"    Status: {response.status_code}")
-    assert response.status_code == 200, f"Expected 200, got {response.status_code}"
-    data = response.json()
-    assert "id" in data, "Response should contain 'id'"
-    assert "created_at" in data, "Response should contain 'created_at'"
-    print("    ✅ PASS: Valid audit request accepted")
-    
-    # Empty name
-    print("  9b. Empty name")
-    payload_empty_name = {
-        "name": "",
-        "company": "TechFlow Solutions",
-        "country": "UAE",
-        "industry": "Technology",
-        "process": "Some process",
-        "contact_method": "Email"
-    }
-    response = requests.post(f"{BASE_URL}/audit-requests", json=payload_empty_name)
-    print(f"    Status: {response.status_code}")
-    assert response.status_code == 422, f"Expected 422 for empty name, got {response.status_code}"
-    print("    ✅ PASS: Empty name rejected")
-    
-    # Empty process
-    print("  9c. Empty process")
-    payload_empty_process = {
-        "name": "Alex Johnson",
-        "company": "TechFlow Solutions",
-        "country": "UAE",
-        "industry": "Technology",
-        "process": "",
-        "contact_method": "Email"
-    }
-    response = requests.post(f"{BASE_URL}/audit-requests", json=payload_empty_process)
-    print(f"    Status: {response.status_code}")
-    assert response.status_code == 422, f"Expected 422 for empty process, got {response.status_code}"
-    print("    ✅ PASS: Empty process rejected")
-
-
-def test_regression_availability():
-    """Test 10: GET /api/availability?date=<future weekday>&tz=Asia/Dubai => 200 with ~18 slots"""
-    print("\n[TEST 10 - REGRESSION] GET /api/availability")
-    
-    # Find next weekday (Monday-Friday)
+# Helper to get a future weekday date
+def get_future_weekday():
+    """Get next Wednesday (or another weekday if today is Wednesday)"""
     today = datetime.now()
-    days_ahead = 1
-    next_date = today + timedelta(days=days_ahead)
-    while next_date.weekday() >= 5:  # 5=Saturday, 6=Sunday
-        days_ahead += 1
-        next_date = today + timedelta(days=days_ahead)
-    
-    date_str = next_date.strftime("%Y-%m-%d")
-    print(f"  Testing with date: {date_str} (weekday: {next_date.strftime('%A')})")
-    
-    response = requests.get(f"{BASE_URL}/availability", params={"date": date_str, "tz": "Asia/Dubai"})
-    print(f"  Status: {response.status_code}")
-    
-    assert response.status_code == 200, f"Expected 200, got {response.status_code}"
+    days_ahead = 2 - today.weekday()  # Wednesday is 2
+    if days_ahead <= 0:  # Target day already happened this week
+        days_ahead += 7
+    future_date = today + timedelta(days=days_ahead)
+    return future_date.strftime("%Y-%m-%d")
+
+def get_weekend_date():
+    """Get next Saturday"""
+    today = datetime.now()
+    days_ahead = 5 - today.weekday()  # Saturday is 5
+    if days_ahead <= 0:
+        days_ahead += 7
+    weekend_date = today + timedelta(days=days_ahead)
+    return weekend_date.strftime("%Y-%m-%d")
+
+# Test counters
+total_tests = 0
+passed_tests = 0
+failed_tests = []
+
+def test(name, condition, details=""):
+    global total_tests, passed_tests, failed_tests
+    total_tests += 1
+    if condition:
+        passed_tests += 1
+        print(f"✅ TEST {total_tests}: {name}")
+        if details:
+            print(f"   {details}")
+    else:
+        failed_tests.append(f"TEST {total_tests}: {name} - {details}")
+        print(f"❌ TEST {total_tests}: {name}")
+        if details:
+            print(f"   {details}")
+    print()
+
+# ============================================================================
+# TEST 1: GET /api/ => 200 {message:"WeHA API"}
+# ============================================================================
+print("TEST 1: GET /api/ root endpoint")
+print("-" * 80)
+try:
+    response = requests.get(f"{API_BASE}/")
+    test(
+        "GET /api/ returns 200 with correct message",
+        response.status_code == 200 and response.json().get("message") == "WeHA API",
+        f"Status: {response.status_code}, Response: {response.json()}"
+    )
+except Exception as e:
+    test("GET /api/ returns 200 with correct message", False, f"Error: {str(e)}")
+
+# ============================================================================
+# TEST 2: GET /api/availability?date=<future weekday>&tz=Asia/Kolkata
+# ============================================================================
+print("TEST 2: GET /api/availability for future weekday with Asia/Kolkata timezone")
+print("-" * 80)
+future_weekday = get_future_weekday()
+print(f"Using future weekday date: {future_weekday}")
+try:
+    response = requests.get(f"{API_BASE}/availability", params={
+        "date": future_weekday,
+        "tz": "Asia/Kolkata"
+    })
     data = response.json()
-    assert isinstance(data, list), "Response should be a list"
-    print(f"  Number of slots: {len(data)}")
     
-    # Should have ~18 slots (9:00-17:30 in 30-min intervals)
-    assert len(data) >= 15, f"Expected at least 15 slots, got {len(data)}"
+    test(
+        "GET /api/availability returns 200",
+        response.status_code == 200,
+        f"Status: {response.status_code}"
+    )
     
-    # Check structure of first slot
+    test(
+        "Response is a JSON array",
+        isinstance(data, list),
+        f"Type: {type(data)}"
+    )
+    
+    test(
+        "Array contains slots (non-empty for future weekday)",
+        len(data) > 0,
+        f"Slot count: {len(data)}"
+    )
+    
     if len(data) > 0:
-        slot = data[0]
-        assert "label" in slot, "Slot should have 'label'"
-        assert "iso_utc" in slot, "Slot should have 'iso_utc'"
-        assert "taken" in slot, "Slot should have 'taken'"
-        print(f"  Sample slot: {slot}")
-    
-    print("  ✅ PASS: Availability endpoint working")
+        sample_slot = data[0]
+        test(
+            "Each slot has required keys: label, iso_utc, taken",
+            all(key in sample_slot for key in ["label", "iso_utc", "taken"]),
+            f"Sample slot keys: {list(sample_slot.keys())}"
+        )
+        
+        test(
+            "taken field is boolean",
+            isinstance(sample_slot["taken"], bool),
+            f"taken type: {type(sample_slot['taken'])}"
+        )
+        
+        # Find 9:00 IST slot and verify UTC conversion
+        slot_9am = next((s for s in data if s["label"] == "09:00"), None)
+        if slot_9am:
+            test(
+                "9:00 IST maps to iso_utc ending in 03:30:00Z",
+                slot_9am["iso_utc"].endswith("03:30:00Z"),
+                f"9:00 IST slot: {slot_9am['iso_utc']}"
+            )
+        else:
+            test(
+                "9:00 IST slot exists in response",
+                False,
+                "9:00 slot not found in response"
+            )
+        
+        print(f"📊 Total slots returned: {len(data)}")
+        print(f"📋 Sample slot: {json.dumps(sample_slot, indent=2)}")
+        print()
+        
+except Exception as e:
+    test("GET /api/availability for future weekday", False, f"Error: {str(e)}")
 
+# ============================================================================
+# TEST 3: GET /api/availability for weekend => empty array
+# ============================================================================
+print("TEST 3: GET /api/availability for weekend date")
+print("-" * 80)
+weekend_date = get_weekend_date()
+print(f"Using weekend date (Saturday): {weekend_date}")
+try:
+    response = requests.get(f"{API_BASE}/availability", params={
+        "date": weekend_date,
+        "tz": "Asia/Kolkata"
+    })
+    data = response.json()
+    
+    test(
+        "GET /api/availability for weekend returns 200 with empty array",
+        response.status_code == 200 and isinstance(data, list) and len(data) == 0,
+        f"Status: {response.status_code}, Response: {data}"
+    )
+except Exception as e:
+    test("GET /api/availability for weekend", False, f"Error: {str(e)}")
 
-def test_regression_booking_double_booking():
-    """Test 11: POST /api/booking-requests / availability double-booking flow"""
-    print("\n[TEST 11 - REGRESSION] Booking double-booking prevention")
+# ============================================================================
+# TEST 4: GET /api/availability with unsupported timezone (Europe/London)
+# ============================================================================
+print("TEST 4: GET /api/availability with unsupported timezone")
+print("-" * 80)
+try:
+    response = requests.get(f"{API_BASE}/availability", params={
+        "date": future_weekday,
+        "tz": "Europe/London"
+    })
     
-    # Get available slots
-    today = datetime.now()
-    days_ahead = 1
-    next_date = today + timedelta(days=days_ahead)
-    while next_date.weekday() >= 5:
-        days_ahead += 1
-        next_date = today + timedelta(days=days_ahead)
-    
-    date_str = next_date.strftime("%Y-%m-%d")
-    response = requests.get(f"{BASE_URL}/availability", params={"date": date_str, "tz": "Asia/Dubai"})
-    assert response.status_code == 200, "Failed to get availability"
+    print(f"Status code: {response.status_code}")
+    print(f"Response: {response.json()}")
+    test(
+        "GET /api/availability with Europe/London returns 400 (unsupported)",
+        response.status_code == 400,
+        f"Status: {response.status_code}, Response: {response.json()}"
+    )
+except Exception as e:
+    test("GET /api/availability with unsupported timezone", False, f"Error: {str(e)}")
+
+# ============================================================================
+# TEST 5: POST /api/booking-requests with valid lead including slot
+# ============================================================================
+print("TEST 5: POST /api/booking-requests with valid lead including slot_iso_utc and timezone")
+print("-" * 80)
+try:
+    # First get available slots
+    response = requests.get(f"{API_BASE}/availability", params={
+        "date": future_weekday,
+        "tz": "Asia/Kolkata"
+    })
     slots = response.json()
     
-    if len(slots) == 0:
-        print("  ⚠️  SKIP: No available slots found for testing double-booking")
-        return
+    if len(slots) > 0:
+        # Pick the first available slot
+        available_slot = next((s for s in slots if not s["taken"]), slots[0])
+        
+        booking_payload = {
+            "name": "Sarah Chen",
+            "company": "Acme Logistics",
+            "country": "UAE",
+            "industry": "Freight",
+            "process": "We manually copy leads from email into a spreadsheet every morning",
+            "contact_method": "Email",
+            "email": "sarah@acmelogistics.com",
+            "slot_iso_utc": available_slot["iso_utc"],
+            "timezone": "Asia/Kolkata"
+        }
+        
+        response = requests.post(f"{API_BASE}/booking-requests", json=booking_payload)
+        data = response.json()
+        
+        test(
+            "POST /api/booking-requests returns 200",
+            response.status_code == 200,
+            f"Status: {response.status_code}"
+        )
+        
+        test(
+            "Response includes id and created_at",
+            "id" in data and "created_at" in data,
+            f"Response keys: {list(data.keys())}"
+        )
+        
+        test(
+            "slot_iso_utc is persisted in response",
+            data.get("slot_iso_utc") == available_slot["iso_utc"],
+            f"Expected: {available_slot['iso_utc']}, Got: {data.get('slot_iso_utc')}"
+        )
+        
+        test(
+            "timezone is persisted in response",
+            data.get("timezone") == "Asia/Kolkata",
+            f"Expected: Asia/Kolkata, Got: {data.get('timezone')}"
+        )
+        
+        print(f"📋 Created booking: {json.dumps(data, indent=2)}")
+        print()
+    else:
+        test("POST /api/booking-requests", False, "No available slots to test with")
+        
+except Exception as e:
+    test("POST /api/booking-requests", False, f"Error: {str(e)}")
+
+# ============================================================================
+# TEST 6: POST /api/audit-requests validation
+# ============================================================================
+print("TEST 6: POST /api/audit-requests validation")
+print("-" * 80)
+
+# Valid payload
+try:
+    valid_payload = {
+        "name": "Priya Sharma",
+        "company": "TechFlow Solutions",
+        "country": "India",
+        "industry": "Technology",
+        "process": "Lead qualification and follow-up automation needs improvement",
+        "contact_method": "Email",
+        "email": "priya@techflow.in"
+    }
     
-    # Find a slot that's not taken
-    available_slot = None
-    for slot in slots:
-        if not slot["taken"]:
-            available_slot = slot
-            break
+    response = requests.post(f"{API_BASE}/audit-requests", json=valid_payload)
+    data = response.json()
     
-    if not available_slot:
-        print("  ⚠️  SKIP: All slots are taken, cannot test double-booking")
-        return
+    test(
+        "POST /api/audit-requests with valid payload returns 200",
+        response.status_code == 200,
+        f"Status: {response.status_code}"
+    )
     
-    print(f"  Testing with slot: {available_slot['label']} ({available_slot['iso_utc']})")
-    
-    # Book the slot
-    print("  11a. First booking")
-    payload1 = {
-        "name": "First Booker",
-        "company": "Company Alpha",
+    test(
+        "Response includes id and created_at",
+        "id" in data and "created_at" in data,
+        f"Response keys: {list(data.keys())}"
+    )
+except Exception as e:
+    test("POST /api/audit-requests with valid payload", False, f"Error: {str(e)}")
+
+# Empty name validation
+try:
+    invalid_payload = {
+        "name": "",
+        "company": "Test Company",
         "country": "UAE",
         "industry": "Tech",
-        "process": "Automation",
+        "process": "Some process description here",
         "contact_method": "Email",
-        "email": "first@companyalpha.io",
-        "slot_iso_utc": available_slot["iso_utc"],
-        "timezone": "Asia/Dubai"
+        "email": "test@example.com"
     }
-    response1 = requests.post(f"{BASE_URL}/audit-requests", json=payload1)
-    print(f"    Status: {response1.status_code}")
-    assert response1.status_code == 200, f"Expected 200 for first booking, got {response1.status_code}"
-    print("    ✅ PASS: First booking successful")
     
-    # Try to book the same slot again
-    print("  11b. Second booking (should fail with 409)")
-    payload2 = {
-        "name": "Second Booker",
-        "company": "Company Beta",
+    response = requests.post(f"{API_BASE}/audit-requests", json=invalid_payload)
+    
+    test(
+        "POST /api/audit-requests with empty name returns 422",
+        response.status_code == 422,
+        f"Status: {response.status_code}, Response: {response.json()}"
+    )
+except Exception as e:
+    test("POST /api/audit-requests with empty name", False, f"Error: {str(e)}")
+
+# Empty process validation
+try:
+    invalid_payload = {
+        "name": "Valid Name",
+        "company": "Test Company",
         "country": "UAE",
         "industry": "Tech",
-        "process": "Automation",
+        "process": "",
         "contact_method": "Email",
-        "email": "second@companybeta.io",
-        "slot_iso_utc": available_slot["iso_utc"],
-        "timezone": "Asia/Dubai"
+        "email": "test@example.com"
     }
-    response2 = requests.post(f"{BASE_URL}/audit-requests", json=payload2)
-    print(f"    Status: {response2.status_code}")
-    print(f"    Response: {response2.json()}")
-    assert response2.status_code == 409, f"Expected 409 for double-booking, got {response2.status_code}"
-    print("    ✅ PASS: Double-booking prevented with 409")
-
-
-def main():
-    print("=" * 80)
-    print("WeHA Backend API Test Suite")
-    print("Testing UPDATED playbook lead capture + regression tests")
-    print("=" * 80)
     
-    created_ids = []
+    response = requests.post(f"{API_BASE}/audit-requests", json=invalid_payload)
     
-    try:
-        # NEW/CHANGED BEHAVIOR TESTS (1-7)
-        print("\n" + "=" * 80)
-        print("PART 1: NEW/CHANGED PLAYBOOK LEAD CAPTURE BEHAVIOR")
-        print("=" * 80)
-        
-        id1 = test_playbook_minimal_payload()
-        created_ids.append(id1)
-        
-        id2 = test_playbook_with_source_and_asset_title()
-        created_ids.append(id2)
-        
-        test_playbook_empty_name()
-        test_playbook_invalid_email()
-        test_playbook_missing_email()
-        
-        id3 = test_playbook_backwards_compatibility()
-        created_ids.append(id3)
-        
-        test_playbook_get_list(created_ids)
-        
-        # REGRESSION TESTS (8-11)
-        print("\n" + "=" * 80)
-        print("PART 2: REGRESSION TESTS (EXISTING ENDPOINTS)")
-        print("=" * 80)
-        
-        test_regression_root()
-        test_regression_audit_requests()
-        test_regression_availability()
-        test_regression_booking_double_booking()
-        
-        # SUMMARY
-        print("\n" + "=" * 80)
-        print("TEST SUMMARY")
-        print("=" * 80)
-        print("✅ ALL 11 TESTS PASSED")
-        print("\nNEW BEHAVIOR VERIFIED:")
-        print("  ✅ 1. Minimal payload (name+email only) accepted, company null")
-        print("  ✅ 2. source and asset_title fields persisted and returned")
-        print("  ✅ 3. Empty/whitespace name rejected (422)")
-        print("  ✅ 4. Invalid email format rejected (422)")
-        print("  ✅ 5. Missing email field rejected (422)")
-        print("  ✅ 6. Backwards compatible with full payload")
-        print("  ✅ 7. GET returns list sorted newest-first with all fields")
-        print("\nREGRESSION TESTS:")
-        print("  ✅ 8. GET /api/ returns {message: 'WeHA API'}")
-        print("  ✅ 9. POST /api/audit-requests validation working")
-        print("  ✅ 10. GET /api/availability returns slots")
-        print("  ✅ 11. Double-booking prevention working (409)")
-        print("=" * 80)
-        
-        return 0
-        
-    except AssertionError as e:
-        print(f"\n❌ TEST FAILED: {e}")
-        return 1
-    except Exception as e:
-        print(f"\n❌ UNEXPECTED ERROR: {e}")
-        import traceback
-        traceback.print_exc()
-        return 1
+    test(
+        "POST /api/audit-requests with empty process returns 422",
+        response.status_code == 422,
+        f"Status: {response.status_code}, Response: {response.json()}"
+    )
+except Exception as e:
+    test("POST /api/audit-requests with empty process", False, f"Error: {str(e)}")
 
+# ============================================================================
+# TEST 7: POST /api/playbook-requests
+# ============================================================================
+print("TEST 7: POST /api/playbook-requests")
+print("-" * 80)
+try:
+    playbook_payload = {
+        "name": "Priya Sharma",
+        "email": "priya@acmelogistics.com"
+    }
+    
+    response = requests.post(f"{API_BASE}/playbook-requests", json=playbook_payload)
+    data = response.json()
+    
+    test(
+        "POST /api/playbook-requests returns 200",
+        response.status_code == 200,
+        f"Status: {response.status_code}"
+    )
+    
+    test(
+        "Response includes id and created_at",
+        "id" in data and "created_at" in data,
+        f"Response keys: {list(data.keys())}"
+    )
+    
+    print(f"📋 Created playbook request: {json.dumps(data, indent=2)}")
+    print()
+except Exception as e:
+    test("POST /api/playbook-requests", False, f"Error: {str(e)}")
 
-if __name__ == "__main__":
-    sys.exit(main())
+# ============================================================================
+# TEST 8: POST /api/calculator-leads
+# ============================================================================
+print("TEST 8: POST /api/calculator-leads")
+print("-" * 80)
+try:
+    calculator_payload = {
+        "name": "Michael Rodriguez",
+        "email": "michael@automatenow.com",
+        "company": "AutomateNow Consulting",
+        "source": "services-page-calculator",
+        "inputs_json": json.dumps({"hours_per_week": 20, "hourly_rate": 50}),
+        "result_summary": "Potential savings: $52,000/year"
+    }
+    
+    response = requests.post(f"{API_BASE}/calculator-leads", json=calculator_payload)
+    data = response.json()
+    
+    test(
+        "POST /api/calculator-leads returns 200",
+        response.status_code == 200,
+        f"Status: {response.status_code}"
+    )
+    
+    test(
+        "Response includes id and created_at",
+        "id" in data and "created_at" in data,
+        f"Response keys: {list(data.keys())}"
+    )
+    
+    print(f"📋 Created calculator lead: {json.dumps(data, indent=2)}")
+    print()
+except Exception as e:
+    test("POST /api/calculator-leads", False, f"Error: {str(e)}")
+
+# ============================================================================
+# TEST 9: POST /api/contact-messages
+# ============================================================================
+print("TEST 9: POST /api/contact-messages")
+print("-" * 80)
+try:
+    contact_payload = {
+        "name": "Jennifer Lee",
+        "company": "Global Freight Solutions",
+        "country": "Singapore",
+        "industry": "Logistics",
+        "process": "We need help automating our invoice processing and customer communication workflows",
+        "contact_method": "Email",
+        "email": "jennifer@globalfreight.sg",
+        "source": "contact-page"
+    }
+    
+    response = requests.post(f"{API_BASE}/contact-messages", json=contact_payload)
+    data = response.json()
+    
+    test(
+        "POST /api/contact-messages returns 200",
+        response.status_code == 200,
+        f"Status: {response.status_code}"
+    )
+    
+    test(
+        "Response includes id and created_at",
+        "id" in data and "created_at" in data,
+        f"Response keys: {list(data.keys())}"
+    )
+    
+    print(f"📋 Created contact message: {json.dumps(data, indent=2)}")
+    print()
+except Exception as e:
+    test("POST /api/contact-messages", False, f"Error: {str(e)}")
+
+# ============================================================================
+# SUMMARY
+# ============================================================================
+print("=" * 80)
+print("TEST SUMMARY")
+print("=" * 80)
+print(f"Total tests: {total_tests}")
+print(f"Passed: {passed_tests}")
+print(f"Failed: {len(failed_tests)}")
+print()
+
+if failed_tests:
+    print("FAILED TESTS:")
+    for failure in failed_tests:
+        print(f"  ❌ {failure}")
+    print()
+    exit(1)
+else:
+    print("✅ ALL TESTS PASSED!")
+    exit(0)

@@ -1,5 +1,9 @@
-# Cloudflare Pages SPA fallback for client-side routing.
-# Prerendered routes (react-snap) ship their own /<route>/index.html and are
-# served as static files first; this 200 rewrite only catches paths that have
-# no matching static file, so deep links still resolve to the app shell.
-/*    /index.html   200
+# SPA fallback for client-side routing is handled by Cloudflare Pages' native
+# 200.html mechanism (generated in the build output by scripts/prerender.js),
+# NOT by a wildcard rewrite. The old `/*  /index.html  200` rule was rejected by
+# Pages with "Infinite loop detected" (since /index.html itself matches /*), so it
+# never took effect. Prerendered routes (react-snap) ship their own
+# /<route>/index.html static files, and any unmatched path falls back to 200.html.
+#
+# API requests are routed to Pages Functions via public/_routes.json
+# ("include": ["/api/*"]) and are never served the SPA shell.
