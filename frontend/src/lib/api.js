@@ -15,9 +15,9 @@ export const submitContactMessage = (payload) => submitForm("/contact-messages",
 export const submitPlaybookLead = (payload) => submitForm("/playbook-requests", payload);
 export const submitCalculatorLead = (payload) => submitForm("/calculator-leads", payload);
 
-export async function fetchAvailability(dateYmd, tz) {
+export async function fetchAvailability(dateYmd, tz, duration = 15) {
   const { data } = await axios.get(`${API}/availability`, {
-    params: { date: dateYmd, tz },
+    params: { date: dateYmd, tz, duration },
   });
   return data; // [{ label, iso_utc, taken }]
 }

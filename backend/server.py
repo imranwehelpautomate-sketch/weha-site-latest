@@ -8,7 +8,7 @@ from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict, EmailStr
 from typing import List, Optional
 import uuid
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone, timedelta, date as date_cls
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 from validation import validate_name, validate_email, validate_company, validate_free_text
 
@@ -68,10 +68,19 @@ class AuditRequest(BaseModel):
 
 
 # --- Booking config -----------------------------------------------------------
-BUSINESS_START_HOUR = 9     # local time
-BUSINESS_END_HOUR = 18      # local time (exclusive)
-SLOT_MINUTES = 30
-WORK_DAYS = {0, 1, 2, 3, 4}  # Mon..Fri
+# All bookable slots are anchored to India Standard Time (IST) business hours and
+# then converted (DST-aware) into whatever timezone the visitor selects.
+#   - Window: IST 08:00 -> 20:00 (8 AM - 8 PM), EVERY day of the week.
+#   - Start grid: every 15 minutes. A start is valid only if start + duration
+#     still finishes by 20:00 IST.
+#   - Durations: 15 minutes (default) or 30 minutes (visitor can extend).
+IST_ZONE = ZoneInfo("Asia/Kolkata")
+IST_WINDOW_START_HOUR = 8      # 08:00 IST
+IST_WINDOW_END_HOUR = 20       # 20:00 IST (exclusive window end)
+SLOT_GRID_MINUTES = 15         # spacing between consecutive start times
+ALLOWED_DURATIONS = {15, 30}
+DEFAULT_DURATION = 15
+LEGACY_DURATION = 30           # bookings without a stored duration are assumed 30 min
 
 ALLOWED_TIMEZONES = {
     "Asia/Dubai",            # UAE · GST
@@ -150,10 +159,47 @@ async def get_status_checks():
     return status_checks
 
 
+def _ist_slot_starts(ist_date: date_cls, duration: int):
+    """Aware IST start datetimes within the 08:00-20:00 window on `ist_date`."""
+    starts = []
+    day_start = datetime(ist_date.year, ist_date.month, ist_date.day,
+                         IST_WINDOW_START_HOUR, 0, tzinfo=IST_ZONE)
+    window_end = datetime(ist_date.year, ist_date.month, ist_date.day,
+                          IST_WINDOW_END_HOUR, 0, tzinfo=IST_ZONE)
+    step = timedelta(minutes=SLOT_GRID_MINUTES)
+    cur = day_start
+    while cur + timedelta(minutes=duration) <= window_end:
+        starts.append(cur)
+        cur += step
+    return starts
+
+
+async def _fetch_booked_intervals():
+    """All booked (start_utc, end_utc) intervals across audit + booking records."""
+    intervals = []
+    for coll in (db.audit_requests, db.booking_requests):
+        cursor = coll.find(
+            {"slot_iso_utc": {"$ne": None}},
+            {"_id": 0, "slot_iso_utc": 1, "duration_minutes": 1},
+        )
+        async for doc in cursor:
+            iso = doc.get("slot_iso_utc")
+            if not iso:
+                continue
+            try:
+                start = datetime.fromisoformat(iso.replace("Z", "+00:00"))
+            except Exception:
+                continue
+            dur = doc.get("duration_minutes") or LEGACY_DURATION
+            intervals.append((start, start + timedelta(minutes=dur)))
+    return intervals
+
+
 @api_router.get("/availability", response_model=List[Slot])
 async def get_availability(
     date: str = Query(..., description="YYYY-MM-DD in the chosen timezone"),
     tz: str = Query(..., description="IANA timezone, e.g. Asia/Dubai"),
+    duration: int = Query(DEFAULT_DURATION, description="Call length in minutes (15 or 30)"),
 ):
     if tz not in ALLOWED_TIMEZONES:
         raise HTTPException(status_code=400, detail=f"Unsupported timezone: {tz}")
@@ -161,46 +207,49 @@ async def get_availability(
         zone = ZoneInfo(tz)
     except ZoneInfoNotFoundError:
         raise HTTPException(status_code=400, detail=f"Unknown timezone: {tz}")
+    if duration not in ALLOWED_DURATIONS:
+        duration = DEFAULT_DURATION
     try:
         y, m, d = (int(x) for x in date.split("-"))
-        local_day_start = datetime(y, m, d, 0, 0, tzinfo=zone)
+        target_date = date_cls(y, m, d)
     except Exception:
         raise HTTPException(status_code=400, detail="Date must be YYYY-MM-DD")
 
-    if local_day_start.weekday() not in WORK_DAYS:
-        return []
-
     now_utc = datetime.now(timezone.utc)
-    # Build local slots, convert to UTC ISO, then check Mongo for booked
-    candidate_slots = []
-    cur = local_day_start.replace(hour=BUSINESS_START_HOUR, minute=0)
-    end = local_day_start.replace(hour=BUSINESS_END_HOUR, minute=0)
-    while cur < end:
-        utc_dt = cur.astimezone(timezone.utc)
-        if utc_dt > now_utc + timedelta(minutes=15):  # must be in the future
-            candidate_slots.append({
-                "label": cur.strftime("%H:%M"),
-                "iso_utc": utc_dt.isoformat().replace("+00:00", "Z"),
-            })
-        cur += timedelta(minutes=SLOT_MINUTES)
+    min_utc = now_utc + timedelta(minutes=15)
 
-    if not candidate_slots:
+    # Build IST-anchored candidates, convert to the visitor's tz, keep the ones
+    # whose local wall-clock falls on the requested date. Looking at IST dates
+    # {D-1, D, D+1} guarantees we capture every slot that lands on date D for any
+    # supported timezone, regardless of its UTC offset.
+    candidates = {}  # iso_utc -> {"label", "start"}
+    for offset in (-1, 0, 1):
+        ist_date = target_date + timedelta(days=offset)
+        for ist_start in _ist_slot_starts(ist_date, duration):
+            utc_dt = ist_start.astimezone(timezone.utc)
+            local_dt = utc_dt.astimezone(zone)
+            if local_dt.date() != target_date:
+                continue
+            if utc_dt <= min_utc:
+                continue
+            iso = utc_dt.isoformat().replace("+00:00", "Z")
+            candidates[iso] = {
+                "label": local_dt.strftime("%-I:%M %p"),
+                "start": utc_dt,
+            }
+
+    if not candidates:
         return []
 
-    iso_keys = [s["iso_utc"] for s in candidate_slots]
-    booked_cursor = db.audit_requests.find(
-        {"slot_iso_utc": {"$in": iso_keys}}, {"_id": 0, "slot_iso_utc": 1}
-    )
-    booked = {doc["slot_iso_utc"] async for doc in booked_cursor}
-    booking_cursor = db.booking_requests.find(
-        {"slot_iso_utc": {"$in": iso_keys}}, {"_id": 0, "slot_iso_utc": 1}
-    )
-    booked |= {doc["slot_iso_utc"] async for doc in booking_cursor}
+    booked = await _fetch_booked_intervals()
 
-    return [
-        Slot(label=s["label"], iso_utc=s["iso_utc"], taken=(s["iso_utc"] in booked))
-        for s in candidate_slots
-    ]
+    result = []
+    for iso, c in sorted(candidates.items(), key=lambda kv: kv[1]["start"]):
+        cand_start = c["start"]
+        cand_end = cand_start + timedelta(minutes=duration)
+        taken = any(b_start < cand_end and b_end > cand_start for (b_start, b_end) in booked)
+        result.append(Slot(label=c["label"], iso_utc=iso, taken=taken))
+    return result
 
 
 @api_router.post("/audit-requests", response_model=AuditRequest)
@@ -384,6 +433,7 @@ class BookingRequestCreate(BaseModel):
     email: Optional[str] = None
     slot_iso_utc: Optional[str] = None
     timezone: Optional[str] = None
+    duration_minutes: Optional[int] = DEFAULT_DURATION
     source: Optional[str] = None
 
 
@@ -400,6 +450,7 @@ class BookingRequest(BaseModel):
     email: Optional[str] = None
     slot_iso_utc: Optional[str] = None
     timezone: Optional[str] = None
+    duration_minutes: Optional[int] = DEFAULT_DURATION
     source: Optional[str] = None
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
@@ -411,6 +462,8 @@ async def create_booking_request(input: BookingRequestCreate):
     validate_email(input.email, required=False)
     validate_free_text(input.process, "the process you want to fix")
 
+    duration = input.duration_minutes if input.duration_minutes in ALLOWED_DURATIONS else DEFAULT_DURATION
+
     if input.slot_iso_utc:
         if input.timezone and input.timezone not in ALLOWED_TIMEZONES:
             raise HTTPException(status_code=422, detail="Unsupported timezone.")
@@ -420,14 +473,14 @@ async def create_booking_request(input: BookingRequestCreate):
             raise HTTPException(status_code=422, detail="Invalid slot_iso_utc format.")
         if slot_dt <= datetime.now(timezone.utc):
             raise HTTPException(status_code=422, detail="Selected slot is in the past.")
-        # Prevent double-booking across both the audit and booking collections.
-        taken = await db.audit_requests.find_one({"slot_iso_utc": input.slot_iso_utc}, {"_id": 1})
-        if not taken:
-            taken = await db.booking_requests.find_one({"slot_iso_utc": input.slot_iso_utc}, {"_id": 1})
-        if taken:
-            raise HTTPException(status_code=409, detail="That slot was just taken. Please pick another.")
+        # Prevent double-booking: reject if the chosen interval overlaps any
+        # existing audit/booking interval (durations considered).
+        cand_end = slot_dt + timedelta(minutes=duration)
+        for b_start, b_end in await _fetch_booked_intervals():
+            if b_start < cand_end and b_end > slot_dt:
+                raise HTTPException(status_code=409, detail="That slot was just taken. Please pick another.")
 
-    obj = BookingRequest(**input.model_dump())
+    obj = BookingRequest(**{**input.model_dump(), "duration_minutes": duration})
     doc = obj.model_dump()
     doc['created_at'] = doc['created_at'].isoformat()
     await db.booking_requests.insert_one(doc)

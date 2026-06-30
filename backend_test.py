@@ -1,454 +1,458 @@
 #!/usr/bin/env python3
 """
-Backend Regression + Contract Test for WeHA API
-Tests all endpoints against the preview FastAPI backend.
+Comprehensive backend test for IST-anchored availability (8AM-8PM IST, all 7 days) 
++ 15/30-min duration + overlap blocking
 """
 
 import requests
 import json
-from datetime import datetime, timedelta
-import os
+from datetime import datetime
 
-# Read backend URL from frontend/.env
-with open('/app/frontend/.env', 'r') as f:
-    for line in f:
-        if line.startswith('REACT_APP_BACKEND_URL='):
-            BACKEND_URL = line.strip().split('=')[1]
-            break
+# Backend URL
+BASE_URL = "http://localhost:8001/api"
 
-API_BASE = f"{BACKEND_URL}/api"
-
-print(f"Testing backend at: {API_BASE}\n")
-print("=" * 80)
-
-# Helper to get a future weekday date
-def get_future_weekday():
-    """Get next Wednesday (or another weekday if today is Wednesday)"""
-    today = datetime.now()
-    days_ahead = 2 - today.weekday()  # Wednesday is 2
-    if days_ahead <= 0:  # Target day already happened this week
-        days_ahead += 7
-    future_date = today + timedelta(days=days_ahead)
-    return future_date.strftime("%Y-%m-%d")
-
-def get_weekend_date():
-    """Get next Saturday"""
-    today = datetime.now()
-    days_ahead = 5 - today.weekday()  # Saturday is 5
-    if days_ahead <= 0:
-        days_ahead += 7
-    weekend_date = today + timedelta(days=days_ahead)
-    return weekend_date.strftime("%Y-%m-%d")
-
-# Test counters
-total_tests = 0
-passed_tests = 0
-failed_tests = []
-
-def test(name, condition, details=""):
-    global total_tests, passed_tests, failed_tests
-    total_tests += 1
-    if condition:
-        passed_tests += 1
-        print(f"✅ TEST {total_tests}: {name}")
-        if details:
-            print(f"   {details}")
-    else:
-        failed_tests.append(f"TEST {total_tests}: {name} - {details}")
-        print(f"❌ TEST {total_tests}: {name}")
-        if details:
-            print(f"   {details}")
-    print()
-
-# ============================================================================
-# TEST 1: GET /api/ => 200 {message:"WeHA API"}
-# ============================================================================
-print("TEST 1: GET /api/ root endpoint")
-print("-" * 80)
-try:
-    response = requests.get(f"{API_BASE}/")
-    test(
-        "GET /api/ returns 200 with correct message",
-        response.status_code == 200 and response.json().get("message") == "WeHA API",
-        f"Status: {response.status_code}, Response: {response.json()}"
-    )
-except Exception as e:
-    test("GET /api/ returns 200 with correct message", False, f"Error: {str(e)}")
-
-# ============================================================================
-# TEST 2: GET /api/availability?date=<future weekday>&tz=Asia/Kolkata
-# ============================================================================
-print("TEST 2: GET /api/availability for future weekday with Asia/Kolkata timezone")
-print("-" * 80)
-future_weekday = get_future_weekday()
-print(f"Using future weekday date: {future_weekday}")
-try:
-    response = requests.get(f"{API_BASE}/availability", params={
-        "date": future_weekday,
-        "tz": "Asia/Kolkata"
-    })
+def test_api_root():
+    """Test GET /api/ returns correct message"""
+    print("\n=== TEST 1: GET /api/ ===")
+    response = requests.get(f"{BASE_URL}/")
+    print(f"Status: {response.status_code}")
     data = response.json()
+    print(f"Response: {data}")
+    assert response.status_code == 200, f"Expected 200, got {response.status_code}"
+    assert data.get("message") == "WeHA API", f"Expected 'WeHA API', got {data.get('message')}"
+    print("✅ PASS: GET /api/ returns correct message")
+    return True
+
+def test_availability_kolkata_15min():
+    """Test GET /api/availability with Asia/Kolkata, duration=15"""
+    print("\n=== TEST 2: GET /api/availability (Asia/Kolkata, duration=15) ===")
+    response = requests.get(f"{BASE_URL}/availability", params={
+        "date": "2026-07-15",
+        "tz": "Asia/Kolkata",
+        "duration": 15
+    })
+    print(f"Status: {response.status_code}")
+    data = response.json()
+    print(f"Number of slots: {len(data)}")
     
-    test(
-        "GET /api/availability returns 200",
-        response.status_code == 200,
-        f"Status: {response.status_code}"
-    )
+    assert response.status_code == 200, f"Expected 200, got {response.status_code}"
+    assert len(data) == 48, f"Expected 48 slots, got {len(data)}"
     
-    test(
-        "Response is a JSON array",
-        isinstance(data, list),
-        f"Type: {type(data)}"
-    )
+    # Check first slot
+    first_slot = data[0]
+    print(f"First slot: {first_slot}")
+    assert first_slot["label"] == "8:00 AM", f"Expected '8:00 AM', got {first_slot['label']}"
+    assert first_slot["iso_utc"] == "2026-07-15T02:30:00Z", f"Expected '2026-07-15T02:30:00Z', got {first_slot['iso_utc']}"
+    assert "taken" in first_slot, "Missing 'taken' field"
+    assert isinstance(first_slot["taken"], bool), f"'taken' should be bool, got {type(first_slot['taken'])}"
     
-    test(
-        "Array contains slots (non-empty for future weekday)",
-        len(data) > 0,
-        f"Slot count: {len(data)}"
-    )
+    # Check last slot
+    last_slot = data[-1]
+    print(f"Last slot: {last_slot}")
+    assert last_slot["label"] == "7:45 PM", f"Expected '7:45 PM', got {last_slot['label']}"
+    assert last_slot["iso_utc"] == "2026-07-15T14:15:00Z", f"Expected '2026-07-15T14:15:00Z', got {last_slot['iso_utc']}"
     
+    print("✅ PASS: Asia/Kolkata duration=15 returns 48 slots with correct first/last")
+    return True
+
+def test_availability_kolkata_30min():
+    """Test GET /api/availability with Asia/Kolkata, duration=30"""
+    print("\n=== TEST 3: GET /api/availability (Asia/Kolkata, duration=30) ===")
+    response = requests.get(f"{BASE_URL}/availability", params={
+        "date": "2026-07-15",
+        "tz": "Asia/Kolkata",
+        "duration": 30
+    })
+    print(f"Status: {response.status_code}")
+    data = response.json()
+    print(f"Number of slots: {len(data)}")
+    
+    assert response.status_code == 200, f"Expected 200, got {response.status_code}"
+    assert len(data) == 47, f"Expected 47 slots, got {len(data)}"
+    
+    # Check last slot
+    last_slot = data[-1]
+    print(f"Last slot: {last_slot}")
+    assert last_slot["label"] == "7:30 PM", f"Expected '7:30 PM', got {last_slot['label']}"
+    assert last_slot["iso_utc"] == "2026-07-15T14:00:00Z", f"Expected '2026-07-15T14:00:00Z', got {last_slot['iso_utc']}"
+    
+    print("✅ PASS: Asia/Kolkata duration=30 returns 47 slots with correct last slot")
+    return True
+
+def test_availability_sydney_15min():
+    """Test GET /api/availability with Australia/Sydney, duration=15 (DST-correct)"""
+    print("\n=== TEST 4: GET /api/availability (Australia/Sydney, duration=15) ===")
+    response = requests.get(f"{BASE_URL}/availability", params={
+        "date": "2026-07-15",
+        "tz": "Australia/Sydney",
+        "duration": 15
+    })
+    print(f"Status: {response.status_code}")
+    data = response.json()
+    print(f"Number of slots: {len(data)}")
+    
+    assert response.status_code == 200, f"Expected 200, got {response.status_code}"
+    assert len(data) == 48, f"Expected 48 slots (DST-correct), got {len(data)}"
+    
+    # Check structure
     if len(data) > 0:
-        sample_slot = data[0]
-        test(
-            "Each slot has required keys: label, iso_utc, taken",
-            all(key in sample_slot for key in ["label", "iso_utc", "taken"]),
-            f"Sample slot keys: {list(sample_slot.keys())}"
-        )
-        
-        test(
-            "taken field is boolean",
-            isinstance(sample_slot["taken"], bool),
-            f"taken type: {type(sample_slot['taken'])}"
-        )
-        
-        # Find 9:00 IST slot and verify UTC conversion
-        slot_9am = next((s for s in data if s["label"] == "09:00"), None)
-        if slot_9am:
-            test(
-                "9:00 IST maps to iso_utc ending in 03:30:00Z",
-                slot_9am["iso_utc"].endswith("03:30:00Z"),
-                f"9:00 IST slot: {slot_9am['iso_utc']}"
-            )
-        else:
-            test(
-                "9:00 IST slot exists in response",
-                False,
-                "9:00 slot not found in response"
-            )
-        
-        print(f"📊 Total slots returned: {len(data)}")
-        print(f"📋 Sample slot: {json.dumps(sample_slot, indent=2)}")
-        print()
-        
-except Exception as e:
-    test("GET /api/availability for future weekday", False, f"Error: {str(e)}")
+        print(f"First slot: {data[0]}")
+        print(f"Last slot: {data[-1]}")
+        assert "label" in data[0], "Missing 'label' field"
+        assert "iso_utc" in data[0], "Missing 'iso_utc' field"
+        assert "taken" in data[0], "Missing 'taken' field"
+    
+    print("✅ PASS: Australia/Sydney duration=15 returns 48 slots (DST-correct)")
+    return True
 
-# ============================================================================
-# TEST 3: GET /api/availability for weekend => empty array
-# ============================================================================
-print("TEST 3: GET /api/availability for weekend date")
-print("-" * 80)
-weekend_date = get_weekend_date()
-print(f"Using weekend date (Saturday): {weekend_date}")
-try:
-    response = requests.get(f"{API_BASE}/availability", params={
-        "date": weekend_date,
-        "tz": "Asia/Kolkata"
+def test_availability_los_angeles_15min():
+    """Test GET /api/availability with America/Los_Angeles, duration=15 (DST-correct)"""
+    print("\n=== TEST 5: GET /api/availability (America/Los_Angeles, duration=15) ===")
+    response = requests.get(f"{BASE_URL}/availability", params={
+        "date": "2026-07-15",
+        "tz": "America/Los_Angeles",
+        "duration": 15
+    })
+    print(f"Status: {response.status_code}")
+    data = response.json()
+    print(f"Number of slots: {len(data)}")
+    
+    assert response.status_code == 200, f"Expected 200, got {response.status_code}"
+    assert len(data) == 48, f"Expected 48 slots (DST-correct), got {len(data)}"
+    
+    # Check structure
+    if len(data) > 0:
+        print(f"First slot: {data[0]}")
+        print(f"Last slot: {data[-1]}")
+    
+    print("✅ PASS: America/Los_Angeles duration=15 returns 48 slots (DST-correct)")
+    return True
+
+def test_availability_weekend_saturday():
+    """Test GET /api/availability for Saturday (weekends now allowed)"""
+    print("\n=== TEST 6: GET /api/availability (Saturday 2026-07-18) ===")
+    response = requests.get(f"{BASE_URL}/availability", params={
+        "date": "2026-07-18",  # Saturday
+        "tz": "Asia/Kolkata",
+        "duration": 15
+    })
+    print(f"Status: {response.status_code}")
+    data = response.json()
+    print(f"Number of slots: {len(data)}")
+    
+    assert response.status_code == 200, f"Expected 200, got {response.status_code}"
+    assert len(data) > 0, f"Expected slots on Saturday (weekends allowed), got {len(data)}"
+    assert len(data) == 48, f"Expected 48 slots on Saturday, got {len(data)}"
+    
+    print("✅ PASS: Saturday returns slots (weekends allowed)")
+    return True
+
+def test_availability_weekend_sunday():
+    """Test GET /api/availability for Sunday (weekends now allowed)"""
+    print("\n=== TEST 7: GET /api/availability (Sunday 2026-07-19) ===")
+    response = requests.get(f"{BASE_URL}/availability", params={
+        "date": "2026-07-19",  # Sunday
+        "tz": "Asia/Kolkata",
+        "duration": 15
+    })
+    print(f"Status: {response.status_code}")
+    data = response.json()
+    print(f"Number of slots: {len(data)}")
+    
+    assert response.status_code == 200, f"Expected 200, got {response.status_code}"
+    assert len(data) > 0, f"Expected slots on Sunday (weekends allowed), got {len(data)}"
+    assert len(data) == 48, f"Expected 48 slots on Sunday, got {len(data)}"
+    
+    print("✅ PASS: Sunday returns slots (weekends allowed)")
+    return True
+
+def test_availability_unsupported_timezone():
+    """Test GET /api/availability with unsupported timezone (Europe/London)"""
+    print("\n=== TEST 8: GET /api/availability (unsupported tz Europe/London) ===")
+    response = requests.get(f"{BASE_URL}/availability", params={
+        "date": "2026-07-15",
+        "tz": "Europe/London",
+        "duration": 15
+    })
+    print(f"Status: {response.status_code}")
+    
+    assert response.status_code == 400, f"Expected 400, got {response.status_code}"
+    data = response.json()
+    print(f"Error response: {data}")
+    assert "detail" in data, "Expected 'detail' in error response"
+    
+    print("✅ PASS: Unsupported timezone returns 400")
+    return True
+
+def test_availability_bad_date():
+    """Test GET /api/availability with bad date format"""
+    print("\n=== TEST 9: GET /api/availability (bad date 'abc') ===")
+    response = requests.get(f"{BASE_URL}/availability", params={
+        "date": "abc",
+        "tz": "Asia/Kolkata",
+        "duration": 15
+    })
+    print(f"Status: {response.status_code}")
+    
+    assert response.status_code == 400, f"Expected 400, got {response.status_code}"
+    data = response.json()
+    print(f"Error response: {data}")
+    
+    print("✅ PASS: Bad date format returns 400")
+    return True
+
+def test_availability_invalid_duration():
+    """Test GET /api/availability with invalid duration (45) - should default to 15"""
+    print("\n=== TEST 10: GET /api/availability (invalid duration=45, should default to 15) ===")
+    response = requests.get(f"{BASE_URL}/availability", params={
+        "date": "2026-07-15",
+        "tz": "Asia/Kolkata",
+        "duration": 45
+    })
+    print(f"Status: {response.status_code}")
+    data = response.json()
+    print(f"Number of slots: {len(data)}")
+    
+    assert response.status_code == 200, f"Expected 200, got {response.status_code}"
+    assert len(data) == 48, f"Expected 48 slots (defaulted to 15min), got {len(data)}"
+    
+    print("✅ PASS: Invalid duration=45 defaults to 15, returns 48 slots")
+    return True
+
+def test_booking_overlap_blocking():
+    """Test overlap/blocking: POST booking, verify slot taken, test overlap prevention"""
+    print("\n=== TEST 11: Overlap/Blocking - POST booking and verify taken status ===")
+    
+    # First, create a booking for 2026-07-20 at 9:00 AM IST (03:30 UTC)
+    booking_payload = {
+        "name": "Grace Hopper",
+        "company": "Navy Systems",
+        "process": "We manually re-key purchase orders from email into our ERP every afternoon.",
+        "contact_method": "Email",
+        "email": "grace@navysys.com",
+        "slot_iso_utc": "2026-07-20T03:30:00Z",
+        "timezone": "Asia/Kolkata",
+        "duration_minutes": 15
+    }
+    
+    print(f"Creating booking: {booking_payload['name']} at {booking_payload['slot_iso_utc']}")
+    response = requests.post(f"{BASE_URL}/booking-requests", json=booking_payload)
+    print(f"Status: {response.status_code}")
+    
+    assert response.status_code == 200, f"Expected 200, got {response.status_code}"
+    data = response.json()
+    print(f"Booking created: {data.get('id')}")
+    assert data.get("duration_minutes") == 15, f"Expected duration_minutes=15, got {data.get('duration_minutes')}"
+    
+    # Now check availability for 2026-07-20 with duration=15
+    print("\n--- Checking availability for 2026-07-20 (duration=15) ---")
+    response = requests.get(f"{BASE_URL}/availability", params={
+        "date": "2026-07-20",
+        "tz": "Asia/Kolkata",
+        "duration": 15
     })
     data = response.json()
     
-    test(
-        "GET /api/availability for weekend returns 200 with empty array",
-        response.status_code == 200 and isinstance(data, list) and len(data) == 0,
-        f"Status: {response.status_code}, Response: {data}"
-    )
-except Exception as e:
-    test("GET /api/availability for weekend", False, f"Error: {str(e)}")
-
-# ============================================================================
-# TEST 4: GET /api/availability with unsupported timezone (Europe/London)
-# ============================================================================
-print("TEST 4: GET /api/availability with unsupported timezone")
-print("-" * 80)
-try:
-    response = requests.get(f"{API_BASE}/availability", params={
-        "date": future_weekday,
-        "tz": "Europe/London"
+    # Find the 9:00 AM slot
+    slot_9am = next((s for s in data if s["iso_utc"] == "2026-07-20T03:30:00Z"), None)
+    slot_845am = next((s for s in data if s["label"] == "8:45 AM"), None)
+    slot_915am = next((s for s in data if s["label"] == "9:15 AM"), None)
+    
+    print(f"9:00 AM slot: {slot_9am}")
+    print(f"8:45 AM slot: {slot_845am}")
+    print(f"9:15 AM slot: {slot_915am}")
+    
+    assert slot_9am is not None, "9:00 AM slot not found"
+    assert slot_9am["taken"] == True, f"Expected 9:00 AM slot to be taken, got {slot_9am['taken']}"
+    assert slot_845am["taken"] == False, f"Expected 8:45 AM slot to be available, got {slot_845am['taken']}"
+    assert slot_915am["taken"] == False, f"Expected 9:15 AM slot to be available, got {slot_915am['taken']}"
+    
+    print("✅ PASS: 9:00 AM slot is taken, adjacent 15-min slots are available")
+    
+    # Now check availability with duration=30
+    print("\n--- Checking availability for 2026-07-20 (duration=30) ---")
+    response = requests.get(f"{BASE_URL}/availability", params={
+        "date": "2026-07-20",
+        "tz": "Asia/Kolkata",
+        "duration": 30
     })
-    
-    print(f"Status code: {response.status_code}")
-    print(f"Response: {response.json()}")
-    test(
-        "GET /api/availability with Europe/London returns 400 (unsupported)",
-        response.status_code == 400,
-        f"Status: {response.status_code}, Response: {response.json()}"
-    )
-except Exception as e:
-    test("GET /api/availability with unsupported timezone", False, f"Error: {str(e)}")
-
-# ============================================================================
-# TEST 5: POST /api/booking-requests with valid lead including slot
-# ============================================================================
-print("TEST 5: POST /api/booking-requests with valid lead including slot_iso_utc and timezone")
-print("-" * 80)
-try:
-    # First get available slots
-    response = requests.get(f"{API_BASE}/availability", params={
-        "date": future_weekday,
-        "tz": "Asia/Kolkata"
-    })
-    slots = response.json()
-    
-    if len(slots) > 0:
-        # Pick the first available slot
-        available_slot = next((s for s in slots if not s["taken"]), slots[0])
-        
-        booking_payload = {
-            "name": "Sarah Chen",
-            "company": "Acme Logistics",
-            "country": "UAE",
-            "industry": "Freight",
-            "process": "We manually copy leads from email into a spreadsheet every morning",
-            "contact_method": "Email",
-            "email": "sarah@acmelogistics.com",
-            "slot_iso_utc": available_slot["iso_utc"],
-            "timezone": "Asia/Kolkata"
-        }
-        
-        response = requests.post(f"{API_BASE}/booking-requests", json=booking_payload)
-        data = response.json()
-        
-        test(
-            "POST /api/booking-requests returns 200",
-            response.status_code == 200,
-            f"Status: {response.status_code}"
-        )
-        
-        test(
-            "Response includes id and created_at",
-            "id" in data and "created_at" in data,
-            f"Response keys: {list(data.keys())}"
-        )
-        
-        test(
-            "slot_iso_utc is persisted in response",
-            data.get("slot_iso_utc") == available_slot["iso_utc"],
-            f"Expected: {available_slot['iso_utc']}, Got: {data.get('slot_iso_utc')}"
-        )
-        
-        test(
-            "timezone is persisted in response",
-            data.get("timezone") == "Asia/Kolkata",
-            f"Expected: Asia/Kolkata, Got: {data.get('timezone')}"
-        )
-        
-        print(f"📋 Created booking: {json.dumps(data, indent=2)}")
-        print()
-    else:
-        test("POST /api/booking-requests", False, "No available slots to test with")
-        
-except Exception as e:
-    test("POST /api/booking-requests", False, f"Error: {str(e)}")
-
-# ============================================================================
-# TEST 6: POST /api/audit-requests validation
-# ============================================================================
-print("TEST 6: POST /api/audit-requests validation")
-print("-" * 80)
-
-# Valid payload
-try:
-    valid_payload = {
-        "name": "Priya Sharma",
-        "company": "TechFlow Solutions",
-        "country": "India",
-        "industry": "Technology",
-        "process": "Lead qualification and follow-up automation needs improvement",
-        "contact_method": "Email",
-        "email": "priya@techflow.in"
-    }
-    
-    response = requests.post(f"{API_BASE}/audit-requests", json=valid_payload)
     data = response.json()
     
-    test(
-        "POST /api/audit-requests with valid payload returns 200",
-        response.status_code == 200,
-        f"Status: {response.status_code}"
-    )
+    # Find relevant slots
+    slot_830am = next((s for s in data if s["label"] == "8:30 AM"), None)
+    slot_845am_30 = next((s for s in data if s["label"] == "8:45 AM"), None)
+    slot_9am_30 = next((s for s in data if s["label"] == "9:00 AM"), None)
+    slot_930am = next((s for s in data if s["label"] == "9:30 AM"), None)
     
-    test(
-        "Response includes id and created_at",
-        "id" in data and "created_at" in data,
-        f"Response keys: {list(data.keys())}"
-    )
-except Exception as e:
-    test("POST /api/audit-requests with valid payload", False, f"Error: {str(e)}")
+    print(f"8:30 AM slot (30min): {slot_830am}")
+    print(f"8:45 AM slot (30min): {slot_845am_30}")
+    print(f"9:00 AM slot (30min): {slot_9am_30}")
+    print(f"9:30 AM slot (30min): {slot_930am}")
+    
+    assert slot_830am["taken"] == False, f"Expected 8:30 AM (30min) to be available, got {slot_830am['taken']}"
+    assert slot_845am_30["taken"] == True, f"Expected 8:45 AM (30min) to be taken (overlaps), got {slot_845am_30['taken']}"
+    assert slot_9am_30["taken"] == True, f"Expected 9:00 AM (30min) to be taken (overlaps), got {slot_9am_30['taken']}"
+    assert slot_930am["taken"] == False, f"Expected 9:30 AM (30min) to be available, got {slot_930am['taken']}"
+    
+    print("✅ PASS: 30-min slots show correct overlap blocking")
+    return True
 
-# Empty name validation
-try:
-    invalid_payload = {
-        "name": "",
-        "company": "Test Company",
-        "country": "UAE",
-        "industry": "Tech",
-        "process": "Some process description here",
+def test_booking_double_booking_prevention():
+    """Test double-booking prevention: POST overlapping booking should return 409"""
+    print("\n=== TEST 12: Double-booking prevention (409) ===")
+    
+    # Try to book an overlapping slot (8:45 AM IST for 30 minutes, which overlaps with existing 9:00 AM 15-min booking)
+    overlapping_payload = {
+        "name": "Ada Lovelace",
+        "company": "Analytical Engines",
+        "process": "We reconcile invoices across two systems by hand each day.",
         "contact_method": "Email",
-        "email": "test@example.com"
+        "email": "ada@engines.co",
+        "slot_iso_utc": "2026-07-20T03:15:00Z",  # 8:45 AM IST
+        "timezone": "Asia/Kolkata",
+        "duration_minutes": 30
     }
     
-    response = requests.post(f"{API_BASE}/audit-requests", json=invalid_payload)
+    print(f"Attempting overlapping booking: {overlapping_payload['name']} at {overlapping_payload['slot_iso_utc']}")
+    response = requests.post(f"{BASE_URL}/booking-requests", json=overlapping_payload)
+    print(f"Status: {response.status_code}")
     
-    test(
-        "POST /api/audit-requests with empty name returns 422",
-        response.status_code == 422,
-        f"Status: {response.status_code}, Response: {response.json()}"
-    )
-except Exception as e:
-    test("POST /api/audit-requests with empty name", False, f"Error: {str(e)}")
+    assert response.status_code == 409, f"Expected 409 (conflict), got {response.status_code}"
+    data = response.json()
+    print(f"Error response: {data}")
+    
+    print("✅ PASS: Overlapping booking returns 409")
+    return True
 
-# Empty process validation
-try:
-    invalid_payload = {
-        "name": "Valid Name",
-        "company": "Test Company",
-        "country": "UAE",
-        "industry": "Tech",
-        "process": "",
+def test_booking_backwards_compatible():
+    """Test backwards compatibility: POST booking without slot_iso_utc should work"""
+    print("\n=== TEST 13: Backwards compatibility (booking without slot) ===")
+    
+    payload = {
+        "name": "Alan Turing",
+        "company": "Bletchley Park",
+        "process": "We manually decode messages and file them in cabinets.",
         "contact_method": "Email",
-        "email": "test@example.com"
+        "email": "alan@bletchley.uk"
     }
     
-    response = requests.post(f"{API_BASE}/audit-requests", json=invalid_payload)
+    print(f"Creating booking without slot: {payload['name']}")
+    response = requests.post(f"{BASE_URL}/booking-requests", json=payload)
+    print(f"Status: {response.status_code}")
     
-    test(
-        "POST /api/audit-requests with empty process returns 422",
-        response.status_code == 422,
-        f"Status: {response.status_code}, Response: {response.json()}"
-    )
-except Exception as e:
-    test("POST /api/audit-requests with empty process", False, f"Error: {str(e)}")
-
-# ============================================================================
-# TEST 7: POST /api/playbook-requests
-# ============================================================================
-print("TEST 7: POST /api/playbook-requests")
-print("-" * 80)
-try:
-    playbook_payload = {
-        "name": "Priya Sharma",
-        "email": "priya@acmelogistics.com"
-    }
-    
-    response = requests.post(f"{API_BASE}/playbook-requests", json=playbook_payload)
+    assert response.status_code == 200, f"Expected 200, got {response.status_code}"
     data = response.json()
+    print(f"Booking created: {data.get('id')}")
     
-    test(
-        "POST /api/playbook-requests returns 200",
-        response.status_code == 200,
-        f"Status: {response.status_code}"
-    )
-    
-    test(
-        "Response includes id and created_at",
-        "id" in data and "created_at" in data,
-        f"Response keys: {list(data.keys())}"
-    )
-    
-    print(f"📋 Created playbook request: {json.dumps(data, indent=2)}")
-    print()
-except Exception as e:
-    test("POST /api/playbook-requests", False, f"Error: {str(e)}")
+    print("✅ PASS: Booking without slot_iso_utc works (backwards compatible)")
+    return True
 
-# ============================================================================
-# TEST 8: POST /api/calculator-leads
-# ============================================================================
-print("TEST 8: POST /api/calculator-leads")
-print("-" * 80)
-try:
-    calculator_payload = {
-        "name": "Michael Rodriguez",
-        "email": "michael@automatenow.com",
-        "company": "AutomateNow Consulting",
-        "source": "services-page-calculator",
-        "inputs_json": json.dumps({"hours_per_week": 20, "hourly_rate": 50}),
-        "result_summary": "Potential savings: $52,000/year"
-    }
+def test_regression_audit_requests():
+    """Test regression: POST /api/audit-requests"""
+    print("\n=== TEST 14: Regression - POST /api/audit-requests ===")
     
-    response = requests.post(f"{API_BASE}/calculator-leads", json=calculator_payload)
-    data = response.json()
-    
-    test(
-        "POST /api/calculator-leads returns 200",
-        response.status_code == 200,
-        f"Status: {response.status_code}"
-    )
-    
-    test(
-        "Response includes id and created_at",
-        "id" in data and "created_at" in data,
-        f"Response keys: {list(data.keys())}"
-    )
-    
-    print(f"📋 Created calculator lead: {json.dumps(data, indent=2)}")
-    print()
-except Exception as e:
-    test("POST /api/calculator-leads", False, f"Error: {str(e)}")
-
-# ============================================================================
-# TEST 9: POST /api/contact-messages
-# ============================================================================
-print("TEST 9: POST /api/contact-messages")
-print("-" * 80)
-try:
-    contact_payload = {
-        "name": "Jennifer Lee",
-        "company": "Global Freight Solutions",
-        "country": "Singapore",
-        "industry": "Logistics",
-        "process": "We need help automating our invoice processing and customer communication workflows",
+    # Valid audit request
+    payload = {
+        "name": "Margaret Hamilton",
+        "company": "MIT Instrumentation Lab",
+        "country": "USA",
+        "industry": "Aerospace",
+        "process": "We manually check flight software calculations with pencil and paper.",
         "contact_method": "Email",
-        "email": "jennifer@globalfreight.sg",
-        "source": "contact-page"
+        "email": "margaret@mit.edu"
     }
     
-    response = requests.post(f"{API_BASE}/contact-messages", json=contact_payload)
+    print("Creating valid audit request")
+    response = requests.post(f"{BASE_URL}/audit-requests", json=payload)
+    print(f"Status: {response.status_code}")
+    assert response.status_code == 200, f"Expected 200, got {response.status_code}"
+    print("✅ Valid audit request: PASS")
+    
+    # Empty name should return 422
+    print("\nTesting empty name validation")
+    invalid_payload = payload.copy()
+    invalid_payload["name"] = ""
+    response = requests.post(f"{BASE_URL}/audit-requests", json=invalid_payload)
+    print(f"Status: {response.status_code}")
+    assert response.status_code == 422, f"Expected 422 for empty name, got {response.status_code}"
+    print("✅ Empty name validation: PASS")
+    
+    # Empty process should return 422
+    print("\nTesting empty process validation")
+    invalid_payload = payload.copy()
+    invalid_payload["process"] = ""
+    response = requests.post(f"{BASE_URL}/audit-requests", json=invalid_payload)
+    print(f"Status: {response.status_code}")
+    assert response.status_code == 422, f"Expected 422 for empty process, got {response.status_code}"
+    print("✅ Empty process validation: PASS")
+    
+    return True
+
+def test_regression_playbook_requests():
+    """Test regression: POST /api/playbook-requests"""
+    print("\n=== TEST 15: Regression - POST /api/playbook-requests ===")
+    
+    payload = {
+        "name": "Katherine Johnson",
+        "company": "NASA",
+        "email": "katherine@nasa.gov"
+    }
+    
+    print("Creating playbook request")
+    response = requests.post(f"{BASE_URL}/playbook-requests", json=payload)
+    print(f"Status: {response.status_code}")
+    
+    assert response.status_code == 200, f"Expected 200, got {response.status_code}"
     data = response.json()
+    print(f"Playbook request created: {data.get('id')}")
     
-    test(
-        "POST /api/contact-messages returns 200",
-        response.status_code == 200,
-        f"Status: {response.status_code}"
-    )
-    
-    test(
-        "Response includes id and created_at",
-        "id" in data and "created_at" in data,
-        f"Response keys: {list(data.keys())}"
-    )
-    
-    print(f"📋 Created contact message: {json.dumps(data, indent=2)}")
-    print()
-except Exception as e:
-    test("POST /api/contact-messages", False, f"Error: {str(e)}")
+    print("✅ PASS: POST /api/playbook-requests works")
+    return True
 
-# ============================================================================
-# SUMMARY
-# ============================================================================
-print("=" * 80)
-print("TEST SUMMARY")
-print("=" * 80)
-print(f"Total tests: {total_tests}")
-print(f"Passed: {passed_tests}")
-print(f"Failed: {len(failed_tests)}")
-print()
+def main():
+    """Run all tests"""
+    print("=" * 80)
+    print("COMPREHENSIVE BACKEND TEST: IST-anchored availability + overlap blocking")
+    print("=" * 80)
+    
+    tests = [
+        test_api_root,
+        test_availability_kolkata_15min,
+        test_availability_kolkata_30min,
+        test_availability_sydney_15min,
+        test_availability_los_angeles_15min,
+        test_availability_weekend_saturday,
+        test_availability_weekend_sunday,
+        test_availability_unsupported_timezone,
+        test_availability_bad_date,
+        test_availability_invalid_duration,
+        test_booking_overlap_blocking,
+        test_booking_double_booking_prevention,
+        test_booking_backwards_compatible,
+        test_regression_audit_requests,
+        test_regression_playbook_requests,
+    ]
+    
+    passed = 0
+    failed = 0
+    
+    for test in tests:
+        try:
+            test()
+            passed += 1
+        except AssertionError as e:
+            print(f"❌ FAIL: {e}")
+            failed += 1
+        except Exception as e:
+            print(f"❌ ERROR: {e}")
+            failed += 1
+    
+    print("\n" + "=" * 80)
+    print(f"RESULTS: {passed} passed, {failed} failed out of {len(tests)} tests")
+    print("=" * 80)
+    
+    return failed == 0
 
-if failed_tests:
-    print("FAILED TESTS:")
-    for failure in failed_tests:
-        print(f"  ❌ {failure}")
-    print()
-    exit(1)
-else:
-    print("✅ ALL TESTS PASSED!")
-    exit(0)
+if __name__ == "__main__":
+    success = main()
+    exit(0 if success else 1)

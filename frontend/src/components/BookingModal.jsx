@@ -68,6 +68,7 @@ export default function BookingModal({ open, onOpenChange }) {
   const [slots, setSlots] = useState([]);
   const [loadingSlots, setLoadingSlots] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState(null); // { iso_utc, label }
+  const [duration, setDuration] = useState(15); // 15 (default) or 30 minutes
   const [form, setForm] = useState(initialForm);
   const [hp, setHp] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -80,31 +81,32 @@ export default function BookingModal({ open, onOpenChange }) {
       setDate(null);
       setSlots([]);
       setSelectedSlot(null);
+      setDuration(15);
       setForm(initialForm);
       setError("");
     }
   }, [open]);
 
-  // Fetch slots whenever date or tz changes
+  // Fetch slots whenever date, tz, or call length changes
   useEffect(() => {
     if (!date) { setSlots([]); return; }
     let cancel = false;
     setLoadingSlots(true);
     setSelectedSlot(null);
-    fetchAvailability(ymdLocal(date), tz)
+    fetchAvailability(ymdLocal(date), tz, duration)
       .then(data => { if (!cancel) setSlots(Array.isArray(data) ? data : []); })
       .catch(() => { if (!cancel) setSlots([]); })
       .finally(() => { if (!cancel) setLoadingSlots(false); });
     return () => { cancel = true; };
-  }, [date, tz]);
+  }, [date, tz, duration]);
 
   const tzLabel = useMemo(() => TIMEZONES.find(z => z.value === tz)?.label || tz, [tz]);
 
   const slotDisplay = useMemo(() => {
     if (!selectedSlot || !date) return "";
     const d = date.toLocaleDateString(undefined, { weekday: "long", day: "numeric", month: "long" });
-    return `${d} · ${selectedSlot.label} (${tzLabel.split("·")[1]?.trim() || tz})`;
-  }, [selectedSlot, date, tz, tzLabel]);
+    return `${d} · ${selectedSlot.label} · ${duration} min (${tzLabel.split("·")[1]?.trim() || tz})`;
+  }, [selectedSlot, date, tz, tzLabel, duration]);
 
   const updateForm = (k) => (e) => setForm(f => ({ ...f, [k]: e.target.value }));
 
@@ -129,6 +131,7 @@ export default function BookingModal({ open, onOpenChange }) {
         source: "booking-modal",
         slot_iso_utc: selectedSlot?.iso_utc || null,
         timezone: selectedSlot ? tz : null,
+        duration_minutes: duration,
       });
       setStep(3);
     } catch (err) {
@@ -227,6 +230,48 @@ export default function BookingModal({ open, onOpenChange }) {
                     {TIMEZONES.map(z => <option key={z.value} value={z.value}>{z.label}</option>)}
                   </select>
 
+                  {/* Call length — 15 min default, optional extend to 30 min */}
+                  <label className="weha-label flex items-center gap-2">
+                    <Clock size={13} /> Call length
+                  </label>
+                  <div className="flex items-center gap-2" data-testid="booking-duration">
+                    {[15, 30].map((mins) => {
+                      const active = duration === mins;
+                      return (
+                        <button
+                          key={mins}
+                          type="button"
+                          onClick={() => setDuration(mins)}
+                          data-testid={`duration-${mins}`}
+                          aria-pressed={active}
+                          className={`flex-1 rounded-lg border px-3 py-2.5 text-sm font-medium transition-all ${
+                            active
+                              ? "border-weha-teal bg-weha-teal text-white shadow-sm"
+                              : "border-weha-border text-weha-text hover:border-weha-teal hover:text-weha-teal"
+                          }`}
+                        >
+                          {mins} min
+                          {mins === 15 && (
+                            <span className={`ml-1.5 text-[0.7rem] ${active ? "text-white/80" : "text-weha-faint"}`}>
+                              · default
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <p className="mt-2 mb-5 text-xs text-weha-muted">
+                    Most audits fit in 15 minutes. Need a deeper dive?{" "}
+                    <button
+                      type="button"
+                      onClick={() => setDuration(30)}
+                      className="font-medium text-weha-teal underline underline-offset-2 hover:opacity-80"
+                      data-testid="duration-extend-link"
+                    >
+                      Extend to 30 min
+                    </button>.
+                  </p>
+
                   <div className="grid gap-5 lg:grid-cols-[minmax(260px,320px)_1fr]">
                     <div className="min-w-0">
                       <label className="weha-label flex items-center gap-2">
@@ -237,10 +282,7 @@ export default function BookingModal({ open, onOpenChange }) {
                           mode="single"
                           selected={date}
                           onSelect={setDate}
-                          disabled={(d) => {
-                            const day = d.getDay();
-                            return d < today || d > horizon || day === 0 || day === 6;
-                          }}
+                          disabled={(d) => d < today || d > horizon}
                           fromDate={today}
                           toDate={horizon}
                           className="w-full p-2"

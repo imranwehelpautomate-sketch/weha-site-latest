@@ -35,6 +35,10 @@ export async function onRequestPost({ request, env }) {
     return json({ detail: spamError }, 422);
   }
 
+  const slotIso = body.slot_iso_utc ? String(body.slot_iso_utc).trim() : null;
+  let duration = Number(body.duration_minutes);
+  if (![15, 30].includes(duration)) duration = 15;
+
   const record = {
     id: crypto.randomUUID(),
     form_name: FORM_NAME,
@@ -46,21 +50,22 @@ export async function onRequestPost({ request, env }) {
     process,
     contact_method: (body.contact_method || "").trim(),
     email: body.email ? String(body.email).trim() : null,
-    slot_iso_utc: body.slot_iso_utc ? String(body.slot_iso_utc).trim() : null,
+    slot_iso_utc: slotIso,
     timezone: body.timezone ? String(body.timezone).trim() : null,
+    duration_minutes: duration,
     created_at: new Date().toISOString(),
   };
 
   try {
     await env.DB.prepare(
       `INSERT INTO booking_requests
-       (id, form_name, source, name, company, country, industry, process, contact_method, email, slot_iso_utc, timezone, created_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+       (id, form_name, source, name, company, country, industry, process, contact_method, email, slot_iso_utc, timezone, duration_minutes, created_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     )
       .bind(
         record.id, record.form_name, record.source, record.name, record.company,
         record.country, record.industry, record.process, record.contact_method,
-        record.email, record.slot_iso_utc, record.timezone, record.created_at
+        record.email, record.slot_iso_utc, record.timezone, record.duration_minutes, record.created_at
       )
       .run();
   } catch (err) {
@@ -98,7 +103,7 @@ export async function onRequestGet({ env }) {
   try {
     const { results } = await env.DB.prepare(
       `SELECT id, form_name, source, name, company, country, industry, process,
-              contact_method, email, slot_iso_utc, timezone, created_at
+              contact_method, email, slot_iso_utc, timezone, duration_minutes, created_at
        FROM booking_requests
        ORDER BY created_at DESC
        LIMIT 1000`

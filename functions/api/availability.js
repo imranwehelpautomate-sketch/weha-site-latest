@@ -1,13 +1,19 @@
-// GET /api/availability?date=YYYY-MM-DD&tz=<IANA timezone>
-// Returns business-hours booking slots for the requested local date, shaped as
-// [{ label, iso_utc, taken }] to match what BookingModal.jsx / fetchAvailability expect.
+// GET /api/availability?date=YYYY-MM-DD&tz=<IANA timezone>&duration=<15|30>
+// Returns bookable slots for the requested local date, shaped as
+// [{ label, iso_utc, taken }] to match BookingModal.jsx / fetchAvailability.
 //
 // Rules (kept in sync with the local dev backend in backend/server.py):
-//   - Monday to Friday only; weekends return an empty array.
-//   - 30 minute slots from 09:00 to 18:00 (exclusive) in the visitor's timezone.
+//   - All slots are anchored to India Standard Time (IST, UTC+5:30, no DST):
+//     a window of 08:00 -> 20:00 (8 AM - 8 PM), EVERY day of the week.
+//   - Start grid is every 15 minutes; a start is valid only if start+duration
+//     still finishes by 20:00 IST.
+//   - Durations: 15 minutes (default) or 30 minutes.
+//   - IST starts are converted (DST-aware via Intl) into the visitor's selected
+//     timezone; only the ones whose local wall-clock lands on the requested date
+//     are returned, labelled in the visitor's local time.
 //   - Past slots (and anything within the next 15 minutes) are dropped.
-//   - A slot is marked taken:true if its iso_utc already exists in either the
-//     audit_requests or booking_requests D1 tables.
+//   - A slot is taken:true if its interval overlaps an existing booking interval
+//     in the booking_requests D1 table (duration considered; legacy rows = 30m).
 
 const ALLOWED_TIMEZONES = new Set([
   "Asia/Dubai",
@@ -30,10 +36,13 @@ const ALLOWED_TIMEZONES = new Set([
   "Australia/Hobart",
 ]);
 
-const BUSINESS_START_HOUR = 9; // local time
-const BUSINESS_END_HOUR = 18; // local time (exclusive)
-const SLOT_MINUTES = 30;
-const WORK_DAYS = new Set([1, 2, 3, 4, 5]); // Mon..Fri (getUTCDay: 0=Sun..6=Sat)
+const IST_OFFSET_MS = (5 * 60 + 30) * 60 * 1000; // IST = UTC+5:30 (fixed)
+const IST_WINDOW_START_HOUR = 8; // 08:00 IST
+const IST_WINDOW_END_HOUR = 20; // 20:00 IST (exclusive)
+const SLOT_GRID_MINUTES = 15;
+const ALLOWED_DURATIONS = new Set([15, 30]);
+const DEFAULT_DURATION = 15;
+const LEGACY_DURATION = 30; // bookings without a stored duration are assumed 30m
 
 const json = (data, status = 200) =>
   new Response(JSON.stringify(data), {
@@ -41,8 +50,8 @@ const json = (data, status = 200) =>
     headers: { "Content-Type": "application/json" },
   });
 
-// Offset (ms) between the given UTC instant and its wall-clock time in `tz`.
-function tzOffsetMs(instant, tz) {
+// Wall-clock parts of a UTC instant, rendered in `tz`.
+function localPartsInTz(utcMs, tz) {
   const dtf = new Intl.DateTimeFormat("en-US", {
     timeZone: tz,
     hourCycle: "h23",
@@ -51,32 +60,18 @@ function tzOffsetMs(instant, tz) {
     day: "2-digit",
     hour: "2-digit",
     minute: "2-digit",
-    second: "2-digit",
   });
-  const parts = dtf.formatToParts(instant).reduce((acc, p) => {
-    acc[p.type] = p.value;
+  const p = dtf.formatToParts(new Date(utcMs)).reduce((acc, x) => {
+    acc[x.type] = x.value;
     return acc;
   }, {});
-  const asUTC = Date.UTC(
-    Number(parts.year),
-    Number(parts.month) - 1,
-    Number(parts.day),
-    Number(parts.hour),
-    Number(parts.minute),
-    Number(parts.second)
-  );
-  return asUTC - instant.getTime();
-}
-
-// Convert a wall-clock time (y, m, d, hh, mm) in `tz` to the matching UTC instant (ms).
-function wallTimeToUtcMs(y, m, d, hh, mm, tz) {
-  const naiveUtc = Date.UTC(y, m - 1, d, hh, mm, 0);
-  // First pass using the offset at the naive instant, then refine once for DST edges.
-  let offset = tzOffsetMs(new Date(naiveUtc), tz);
-  let utc = naiveUtc - offset;
-  offset = tzOffsetMs(new Date(utc), tz);
-  utc = naiveUtc - offset;
-  return utc;
+  return {
+    y: Number(p.year),
+    m: Number(p.month),
+    d: Number(p.day),
+    hh: Number(p.hour),
+    mm: Number(p.minute),
+  };
 }
 
 function label12(hh, mm) {
@@ -90,69 +85,98 @@ function isoUtcNoMillis(ms) {
   return new Date(ms).toISOString().replace(/\.\d{3}Z$/, "Z");
 }
 
+// UTC ms for a given IST wall-clock date/time (IST is a fixed UTC+5:30 offset).
+function istWallToUtcMs(y, m, d, hh, mm) {
+  return Date.UTC(y, m - 1, d, hh, mm, 0) - IST_OFFSET_MS;
+}
+
+// All IST start instants (UTC ms) within the window on a given IST calendar date.
+function istSlotStartsUtc(y, m, d, duration) {
+  const starts = [];
+  for (let total = IST_WINDOW_START_HOUR * 60; ; total += SLOT_GRID_MINUTES) {
+    if (total + duration > IST_WINDOW_END_HOUR * 60) break;
+    const hh = Math.floor(total / 60);
+    const mm = total % 60;
+    starts.push(istWallToUtcMs(y, m, d, hh, mm));
+  }
+  return starts;
+}
+
 export async function onRequestGet({ request, env }) {
   const url = new URL(request.url);
   const date = (url.searchParams.get("date") || "").trim();
   const tz = (url.searchParams.get("tz") || "").trim();
+  let duration = Number(url.searchParams.get("duration") || DEFAULT_DURATION);
+  if (!ALLOWED_DURATIONS.has(duration)) duration = DEFAULT_DURATION;
 
-  // Unsupported timezone or malformed date -> graceful empty list (calendar shows "no slots").
+  // Unsupported timezone or malformed date -> graceful empty list.
   if (!ALLOWED_TIMEZONES.has(tz)) return json([]);
-
   const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date);
   if (!match) return json([]);
-  const y = Number(match[1]);
-  const m = Number(match[2]);
-  const d = Number(match[3]);
-
-  // Weekday of the requested calendar date (noon UTC avoids any tz date-edge ambiguity).
-  const weekday = new Date(Date.UTC(y, m - 1, d, 12, 0, 0)).getUTCDay();
-  if (!WORK_DAYS.has(weekday)) return json([]);
+  const ty = Number(match[1]);
+  const tm = Number(match[2]);
+  const td = Number(match[3]);
 
   const nowMs = Date.now();
-  const minMs = nowMs + 15 * 60 * 1000; // must be at least 15 minutes in the future
+  const minMs = nowMs + 15 * 60 * 1000; // at least 15 minutes in the future
 
-  const candidates = [];
-  for (let hh = BUSINESS_START_HOUR; hh < BUSINESS_END_HOUR; hh++) {
-    for (let mm = 0; mm < 60; mm += SLOT_MINUTES) {
-      const utcMs = wallTimeToUtcMs(y, m, d, hh, mm, tz);
-      if (utcMs > minMs) {
-        candidates.push({
-          label: label12(hh, mm),
-          iso_utc: isoUtcNoMillis(utcMs),
-        });
-      }
+  // Build IST-anchored candidates from IST dates {D-1, D, D+1}, convert to the
+  // visitor's tz, and keep the ones whose local date matches the requested date.
+  const candidates = new Map(); // iso -> { label, startMs }
+  for (let offset = -1; offset <= 1; offset++) {
+    const base = new Date(Date.UTC(ty, tm - 1, td + offset, 12, 0, 0));
+    const iy = base.getUTCFullYear();
+    const im = base.getUTCMonth() + 1;
+    const id = base.getUTCDate();
+    for (const startMs of istSlotStartsUtc(iy, im, id, duration)) {
+      const lp = localPartsInTz(startMs, tz);
+      if (lp.y !== ty || lp.m !== tm || lp.d !== td) continue;
+      if (startMs <= minMs) continue;
+      const iso = isoUtcNoMillis(startMs);
+      candidates.set(iso, { label: label12(lp.hh, lp.mm), startMs });
     }
   }
 
-  if (candidates.length === 0) return json([]);
+  if (candidates.size === 0) return json([]);
 
-  // Mark slots already booked. Query each table INDEPENDENTLY and guard each one
-  // so a table that does not have a slot_iso_utc column (e.g. audit_requests in
-  // the current D1 schema) cannot break the lookup for the table that does
-  // (booking_requests). Best-effort: a DB hiccup never breaks the calendar.
-  const booked = new Set();
-  const isoKeys = candidates.map((s) => s.iso_utc);
-  const placeholders = isoKeys.map(() => "?").join(", ");
-  for (const table of ["booking_requests", "audit_requests"]) {
+  // Existing booking intervals from D1. Try with duration_minutes; if the column
+  // is missing, fall back to a query without it (treating each as LEGACY_DURATION).
+  const intervals = [];
+  const pushRows = (rows, hasDuration) => {
+    for (const r of rows || []) {
+      if (!r || !r.slot_iso_utc) continue;
+      const t = Date.parse(r.slot_iso_utc);
+      if (Number.isNaN(t)) continue;
+      const dur = hasDuration && r.duration_minutes ? Number(r.duration_minutes) : LEGACY_DURATION;
+      intervals.push([t, t + dur * 60 * 1000]);
+    }
+  };
+  try {
+    const { results } = await env.DB.prepare(
+      `SELECT slot_iso_utc, duration_minutes FROM booking_requests WHERE slot_iso_utc IS NOT NULL`
+    ).all();
+    pushRows(results, true);
+  } catch {
     try {
       const { results } = await env.DB.prepare(
-        `SELECT slot_iso_utc FROM ${table} WHERE slot_iso_utc IN (${placeholders})`
-      )
-        .bind(...isoKeys)
-        .all();
-      for (const r of results || []) {
-        if (r && r.slot_iso_utc) booked.add(r.slot_iso_utc);
-      }
+        `SELECT slot_iso_utc FROM booking_requests WHERE slot_iso_utc IS NOT NULL`
+      ).all();
+      pushRows(results, false);
     } catch {
-      // Table missing / lacks slot_iso_utc column — skip it, keep the rest.
+      // DB hiccup — never break the calendar; just show everything as open.
     }
   }
 
-  return json(
-    candidates.map((s) => ({
-      label: s.label,
-      iso_utc: s.iso_utc,
-      taken: booked.has(s.iso_utc),
-    }))
-  );
+  const durMs = duration * 60 * 1000;
+  const out = [...candidates.entries()]
+    .map(([iso, c]) => ({ iso, ...c }))
+    .sort((a, b) => a.startMs - b.startMs)
+    .map((c) => {
+      const candStart = c.startMs;
+      const candEnd = c.startMs + durMs;
+      const taken = intervals.some(([bStart, bEnd]) => bStart < candEnd && bEnd > candStart);
+      return { label: c.label, iso_utc: c.iso, taken };
+    });
+
+  return json(out);
 }
