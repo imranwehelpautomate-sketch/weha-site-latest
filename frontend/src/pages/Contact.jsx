@@ -109,7 +109,7 @@ export default function Contact() {
         kicker="Contact"
         title="Let's find your"
         italicWord="first automation."
-        subtitle="Book a free 60 minute AI Audit. We map your most painful manual workflows and show you what one automation would look like, live, for your specific business."
+        subtitle="Book a free 15 minute AI Audit. We map your most painful manual workflows and show you what one automation would look like, live, for your specific business."
         showForm={false}
       />
 
@@ -246,7 +246,7 @@ export default function Contact() {
                     </li>
                     <li className="flex gap-3">
                       <span className="grid place-items-center h-6 w-6 shrink-0 rounded-full bg-weha-teal-soft text-weha-teal text-xs font-semibold">2</span>
-                      We book a free 60 minute audit at a time that suits you.
+                      We book a free 15 minute audit at a time that suits you.
                     </li>
                     <li className="flex gap-3">
                       <span className="grid place-items-center h-6 w-6 shrink-0 rounded-full bg-weha-teal-soft text-weha-teal text-xs font-semibold">3</span>
@@ -270,7 +270,7 @@ export default function Contact() {
                   Find us
                 </span>
                 <h2 className="weha-display text-3xl md:text-4xl mt-3 text-weha-text">
-                  Or drop by the office.
+                  Drop by the office.
                 </h2>
               </div>
             </Reveal>

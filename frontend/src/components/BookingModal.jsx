@@ -164,7 +164,7 @@ export default function BookingModal({ open, onOpenChange }) {
             )}
             <p className="mt-3 text-weha-muted max-w-md mx-auto leading-relaxed">
               A confirmation will arrive within 24 hours via your preferred contact method.
-              No sales scripts, just a focused 60-minute working session.
+              No sales scripts, just a focused 15-minute working session.
             </p>
             <button
               onClick={() => onOpenChange(false)}
@@ -180,20 +180,21 @@ export default function BookingModal({ open, onOpenChange }) {
             <aside className="hidden md:flex flex-col justify-between p-7 lg:p-8 bg-weha-surface border-r border-weha-border">
               <div>
                 <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">
-                  Free · 60 minutes
+                  Free · 15 minutes
                 </span>
                 <h2 className="weha-display text-3xl lg:text-4xl mt-3 leading-tight">
                   Book your <span className="italic text-weha-teal">AI Audit.</span>
                 </h2>
                 <p className="mt-4 text-weha-muted leading-relaxed text-[0.95rem]">
-                  We map your top 3 manual workflows and build one automation live on the call.
+                  On call we will understand your pain-points, discover your automation and agentic workflow needs, and give you our honest opinion.{" "}
+                  <span className="italic text-weha-text">No BS.</span>
                 </p>
               </div>
               <ul className="mt-8 space-y-3.5 text-[0.95rem]">
                 {[
                   "Map your most time-consuming workflows",
                   "Identify what is automatable today",
-                  "See one automation built live",
+                  "Get free honest consultation from an expert",
                 ].map(x => (
                   <li key={x} className="flex gap-3"><span className="text-weha-teal mt-1">✦</span><span>{x}</span></li>
                 ))}
