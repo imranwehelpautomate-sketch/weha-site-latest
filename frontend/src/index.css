@@ -165,9 +165,58 @@
         82%      { opacity: 1; transform: translateX(0); }
         100%     { opacity: 0; transform: translateX(0.4em); }
     }
+    /* ── Morph intro: full name "We Help Automate" collapses into "We | HA" ── */
+    /* Idle (waiting to be seen): full name visible, stroke hidden. */
+    .weha-logo--morph .weha-logo__collapse {
+        display: inline-block;
+        font-size: 1em;
+        opacity: 1;
+        white-space: pre;
+    }
+    .weha-logo--morph .weha-logo__stroke {
+        transform-origin: top center;
+        transform: translateY(0.06em) scaleY(0);
+        opacity: 0;
+    }
+    /* Collapsing (in view): shrink the extra letters, draw the stroke. */
+    .weha-logo--morph.is-collapsing .weha-logo__collapse {
+        animation: weha-morph-collapse 2.8s cubic-bezier(.6,.02,.2,1) forwards;
+    }
+    .weha-logo--morph.is-collapsing .weha-logo__stroke {
+        animation: weha-morph-stroke 2.8s cubic-bezier(.6,.02,.2,1) forwards;
+    }
+    @keyframes weha-morph-collapse {
+        0%, 28%   { font-size: 1em; opacity: 1; }
+        66%, 100% { font-size: 0;  opacity: 0; }
+    }
+    @keyframes weha-morph-stroke {
+        0%, 30%   { transform: translateY(0.06em) scaleY(0); opacity: 0; }
+        62%, 100% { transform: translateY(0.06em) scaleY(1); opacity: 1; }
+    }
+
+    /* ── Seamless handoff: looping compact mark begins already "built" ── */
+    .weha-logo--loop .weha-logo__stroke {
+        transform-origin: top center;
+        animation: weha-logo-stroke 4.8s cubic-bezier(.5,.1,.2,1) infinite;
+        animation-delay: -1.9s;
+    }
+    .weha-logo--loop .weha-logo__ha {
+        animation: weha-logo-ha 4.8s cubic-bezier(.5,.1,.2,1) infinite;
+        animation-delay: -1.9s;
+        display: inline-block;
+    }
+    .weha-logo--loop:hover .weha-logo__stroke,
+    .weha-logo--loop:hover .weha-logo__ha {
+        animation-play-state: paused;
+    }
+
     @media (prefers-reduced-motion: reduce) {
         .weha-logo--animated .weha-logo__stroke,
-        .weha-logo--animated .weha-logo__ha { animation: none; }
+        .weha-logo--animated .weha-logo__ha,
+        .weha-logo--loop .weha-logo__stroke,
+        .weha-logo--loop .weha-logo__ha,
+        .weha-logo--morph.is-collapsing .weha-logo__stroke,
+        .weha-logo--morph.is-collapsing .weha-logo__collapse { animation: none; }
     }
     .btn-teal {
         display: inline-flex;

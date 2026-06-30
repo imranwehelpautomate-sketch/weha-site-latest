@@ -163,7 +163,14 @@ export default function Header() {
     >
       <div className="max-w-7xl mx-auto px-5 sm:px-8 h-16 md:h-[72px] flex items-center justify-between">
         <Link to="/" className="text-weha-text" data-testid="header-logo-link" onClick={() => setOpen(false)}>
-          <Logo animated />
+          {/* Desktop (xl+): full-name → "We | HA" morph intro, with room to breathe */}
+          <span className="hidden xl:inline-flex">
+            <Logo morph animated />
+          </span>
+          {/* Smaller laptops, tablet & mobile: compact animated mark (unchanged) */}
+          <span className="xl:hidden inline-flex">
+            <Logo animated />
+          </span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-5 lg:gap-7">

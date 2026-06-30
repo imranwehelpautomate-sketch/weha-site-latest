@@ -21,7 +21,14 @@ export default function Footer() {
         <div className="grid gap-12 md:grid-cols-[1.5fr_1fr_1fr]">
           <div>
             <div className="text-weha-text">
-              <Logo animated />
+              {/* Mobile: full-name → "We | HA" morph intro */}
+              <span className="md:hidden inline-flex">
+                <Logo morph animated />
+              </span>
+              {/* Desktop: compact animated mark (unchanged) */}
+              <span className="hidden md:inline-flex">
+                <Logo animated />
+              </span>
             </div>
             <p className="mt-5 text-weha-muted max-w-xs text-base leading-relaxed">
               Automation without the busywork.
