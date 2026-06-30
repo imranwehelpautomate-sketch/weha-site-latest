@@ -205,7 +205,7 @@ export default function Header() {
           </button>
 
           <Magnetic strength={0.3} className="hidden sm:inline-flex">
-            <Link to="/contact" className="btn-teal" data-testid="header-cta" data-cursor="hover" onClick={(e) => { e.preventDefault(); openBooking(); }}>
+            <Link to="/contact" className="btn-teal text-[0.8rem] px-4 py-2.5 md:text-[0.95rem] md:px-[1.6rem] md:py-[0.85rem]" data-testid="header-cta" data-cursor="hover" onClick={(e) => { e.preventDefault(); openBooking(); }}>
               Book a Free Audit <ArrowRight size={16} />
             </Link>
           </Magnetic>
@@ -238,7 +238,7 @@ export default function Header() {
                     onClick={() => setOpen(false)}
                     data-testid="mobile-nav-resources"
                     className={({ isActive }) =>
-                      `weha-display text-5xl py-3 block ${isActive ? "text-weha-teal" : "text-weha-text"}`
+                      `weha-display text-3xl py-2.5 block ${isActive ? "text-weha-teal" : "text-weha-text"}`
                     }
                   >
                     Resources
@@ -272,7 +272,7 @@ export default function Header() {
                 onClick={() => setOpen(false)}
                 data-testid={`mobile-nav-${l.label.toLowerCase().replace(/\s+/g, "-")}`}
                 className={({ isActive }) =>
-                  `weha-display text-5xl py-3 border-b border-weha-border ${
+                  `weha-display text-3xl py-2.5 border-b border-weha-border ${
                     isActive ? "text-weha-teal" : "text-weha-text"
                   }`
                 }
