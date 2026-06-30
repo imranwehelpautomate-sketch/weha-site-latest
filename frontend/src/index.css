@@ -420,6 +420,57 @@
     @media (prefers-reduced-motion: reduce) {
         .weha-whatsapp-pulse { animation: none; opacity: 0; }
     }
+
+    /* ── 404 page — playful, on-brand animated backdrop ── */
+    .weha-404-blob {
+        position: absolute;
+        border-radius: 9999px;
+        filter: blur(64px);
+        opacity: 0.5;
+        will-change: transform;
+        animation: weha-404-blob 18s ease-in-out infinite;
+    }
+    @keyframes weha-404-blob {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33%      { transform: translate(40px, -30px) scale(1.12); }
+        66%      { transform: translate(-30px, 22px) scale(0.95); }
+    }
+    .weha-404-cog {
+        transform-origin: 50% 50%;
+        animation: weha-404-spin 9s linear infinite;
+    }
+    @keyframes weha-404-spin { to { transform: rotate(360deg); } }
+    .weha-404-grid {
+        will-change: transform;
+        animation: weha-404-drift 26s ease-in-out infinite alternate;
+    }
+    @keyframes weha-404-drift {
+        from { transform: translate3d(0, 0, 0); }
+        to   { transform: translate3d(-26px, -18px, 0); }
+    }
+    .weha-404-node {
+        transform-origin: center;
+        animation: weha-404-twinkle var(--tdur, 4s) ease-in-out var(--delay, 0s) infinite;
+    }
+    @keyframes weha-404-twinkle {
+        0%, 100% { opacity: 0.25; }
+        50%      { opacity: 0.9; }
+    }
+    .weha-404-chip {
+        will-change: transform;
+        animation: weha-404-float var(--dur, 9s) ease-in-out var(--delay, 0s) infinite;
+    }
+    @keyframes weha-404-float {
+        0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+        50%      { transform: translateY(-22px) rotate(var(--rot, 0deg)); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .weha-404-blob,
+        .weha-404-cog,
+        .weha-404-grid,
+        .weha-404-node,
+        .weha-404-chip { animation: none; }
+    }
 }
 
 @media (pointer: fine) {
