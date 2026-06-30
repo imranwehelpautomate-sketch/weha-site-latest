@@ -39,7 +39,7 @@ const initial = {
 const OFFICE = {
   address: "A 401 Marvel Isola Undri, Pune - 411 060",
   email: "hi@wehelpautomate.com",
-  phone: "+91 79722 95436",
+  phone: "+91 81808 61084",
   whatsapp: "+91 81808 61084",
   coords: { lat: 18.464100, lng: 73.914443 },
 };
