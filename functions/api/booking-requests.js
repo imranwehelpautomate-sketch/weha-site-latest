@@ -2,6 +2,7 @@
 // GET  /api/booking-requests   — returns recent bookings (newest first).
 
 import { notifyLead } from "../_lib/notify.js";
+import { sendConfirmation } from "../_lib/sendConfirmation.js";
 import { validateName, validateEmail, validateCompany, validateFreeText, honeypotTripped } from "../_lib/validate.js";
 
 const FORM_NAME = "booking_request";
@@ -71,6 +72,9 @@ export async function onRequestPost({ request, env }) {
   } catch (err) {
     return json({ detail: "Could not save request.", error: String(err) }, 500);
   }
+
+  // Confirmation email to the submitter (best-effort; never blocks the response).
+  await sendConfirmation(env, record);
 
   await notifyLead(env, {
     subject: `New WeHA booking request — ${record.company || record.name}`,

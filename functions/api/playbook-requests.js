@@ -2,6 +2,7 @@
 // GET  /api/playbook-requests   — returns recent playbook leads (newest first).
 
 import { notifyLead } from "../_lib/notify.js";
+import { sendConfirmation } from "../_lib/sendConfirmation.js";
 import { validateName, validateEmail, validateCompany, honeypotTripped } from "../_lib/validate.js";
 
 const FORM_NAME = "playbook_lead";
@@ -62,6 +63,9 @@ export async function onRequestPost({ request, env }) {
   } catch (err) {
     return json({ detail: "Could not save request.", error: String(err) }, 500);
   }
+
+  // Confirmation email to the submitter (best-effort; never blocks the response).
+  await sendConfirmation(env, record);
 
   await notifyLead(env, {
     subject: `New WeHA playbook lead — ${record.company || record.name}`,
