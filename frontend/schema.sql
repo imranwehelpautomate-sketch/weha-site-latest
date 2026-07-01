@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS booking_requests (
   slot_iso_utc   TEXT,
   timezone       TEXT,
   duration_minutes INTEGER DEFAULT 15,
+  meet_link      TEXT,
   created_at     TEXT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS idx_booking_created_at ON booking_requests (created_at DESC);

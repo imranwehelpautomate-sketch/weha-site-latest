@@ -4,6 +4,7 @@
 import { notifyLead } from "../_lib/notify.js";
 import { sendConfirmation } from "../_lib/sendConfirmation.js";
 import { syncToSheets } from "../_lib/syncSheets.js";
+import { createMeetLink } from "../_lib/googleMeet.js";
 import { validateName, validateEmail, validateCompany, validateFreeText, honeypotTripped } from "../_lib/validate.js";
 
 const FORM_NAME = "booking_request";
@@ -72,6 +73,16 @@ export async function onRequestPost({ request, env }) {
       .run();
   } catch (err) {
     return json({ detail: "Could not save request.", error: String(err) }, 500);
+  }
+
+  // Generate a Google Meet link for the booking (best-effort; never blocks).
+  // Runs BEFORE sendConfirmation so the first confirmation email can include it.
+  const meetLink = await createMeetLink(env, record);
+  if (meetLink) {
+    record.meet_link = meetLink;
+    await env.DB.prepare("UPDATE booking_requests SET meet_link = ? WHERE id = ?")
+      .bind(meetLink, record.id)
+      .run();
   }
 
   // Confirmation email to the submitter (best-effort; never blocks the response).

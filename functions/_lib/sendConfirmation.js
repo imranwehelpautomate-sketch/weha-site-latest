@@ -105,6 +105,11 @@ function contentFor(record) {
       blocks.push({ type: "p", text: dur ? `${slot} \u00b7 ${dur} min` : slot });
     }
 
+    // Google Meet join button, only when a link was generated for this booking.
+    if (record.meet_link) {
+      blocks.push({ type: "button", text: "Join with Google Meet", href: record.meet_link });
+    }
+
     blocks.push({
       type: "p",
       text: "What this call actually is: no pitch decks, just a focused conversation where we map your process and show where automation takes over.",
@@ -176,6 +181,9 @@ function blockToText(b) {
   if (b.type === "quote") {
     return b.label ? `${b.label}\n${b.text}` : b.text;
   }
+  if (b.type === "button") {
+    return `${b.text}: ${b.href}`;
+  }
   if (b.type === "bullets") {
     return [b.lead, ...b.items.map((i) => `- ${i}`)].join("\n");
   }
@@ -195,6 +203,9 @@ function blockToHtml(b) {
       ? `<p style="margin:0 0 6px;font-weight:600;color:${TEXT};">${escapeHtml(b.label)}</p>`
       : "";
     return `${label}<blockquote style="margin:0 0 14px;padding:10px 14px;border-left:3px solid ${ACCENT};background:${PAGE_BG};color:${MUTED};font-style:italic;border-radius:4px;">${escapeHtml(b.text)}</blockquote>`;
+  }
+  if (b.type === "button") {
+    return `<p style="margin:0 0 18px;"><a href="${escapeHtml(b.href)}" style="display:inline-block;background:${ACCENT};color:#ffffff;text-decoration:none;font-weight:600;font-size:15px;padding:11px 22px;border-radius:8px;">${escapeHtml(b.text)}</a></p>`;
   }
   if (b.type === "bullets" || b.type === "numbered") {
     const tag = b.type === "bullets" ? "ul" : "ol";
