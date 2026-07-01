@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 import { submitAuditRequest } from "@/lib/api";
+import MarketingConsent from "@/components/MarketingConsent";
 
 const initial = { name: "", email: "", company: "", process: "" };
 
@@ -10,6 +11,7 @@ export default function LeadForm({ heading = "Book your free AI Audit", testid =
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
+  const [marketingOptIn, setMarketingOptIn] = useState(true);
 
   const update = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
@@ -84,6 +86,7 @@ export default function LeadForm({ heading = "Book your free AI Audit", testid =
           <button type="submit" disabled={submitting} className="btn-teal w-full justify-center disabled:opacity-60" data-cursor="hover" data-testid={`${testid}-submit`}>
             {submitting ? "Sending…" : "Request My Free Audit"} <ArrowRight size={16} />
           </button>
+          <MarketingConsent checked={marketingOptIn} onChange={setMarketingOptIn} testid={`${testid}-marketing`} />
           <p className="text-xs text-weha-muted leading-relaxed">No pitch decks. We reply within 24 hours.</p>
         </form>
       )}

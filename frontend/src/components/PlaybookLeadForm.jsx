@@ -3,6 +3,7 @@ import { Download, BookOpen, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 import { submitPlaybookLead, PLAYBOOK_DOWNLOAD_URL } from "@/lib/api";
 import { validateName, validateEmail, validateCompany } from "@/lib/spamGuard";
+import MarketingConsent from "@/components/MarketingConsent";
 
 const SESSION_OPTIONS = ["Yes, book me in", "Maybe later", "No, just the playbook"];
 
@@ -33,6 +34,7 @@ export default function PlaybookLeadForm({
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
+  const [marketingOptIn, setMarketingOptIn] = useState(true);
 
   // A provided downloadUrl always wins (used by the hero playbook magnet so the
   // real PDF is delivered instead of the placeholder).
@@ -233,6 +235,7 @@ export default function PlaybookLeadForm({
           >
             {submitting ? "Preparing your copy…" : (submitLabel || (minimal ? "Get the download" : "Download Playbook"))} <Download size={16} />
           </button>
+          <MarketingConsent checked={marketingOptIn} onChange={setMarketingOptIn} testid={`${testid}-marketing`} />
           <p className="text-xs text-weha-faint leading-relaxed">
             We will never spam. Unsubscribe in one click. Your data stays private and is never shared.
           </p>

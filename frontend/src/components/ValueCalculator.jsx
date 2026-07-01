@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { submitCalculatorLead } from "@/lib/api";
 import { validateName, validateEmail, validateCompany } from "@/lib/spamGuard";
+import MarketingConsent from "@/components/MarketingConsent";
 
 // Lead is captured once per SPA session, then both calculators recalculate
 // freely without re-gating. This module-scoped flag is reset on a full page
@@ -58,6 +59,7 @@ export default function ValueCalculator({
   const [lead, setLead] = useState({ name: "", email: "", company: "" });
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [marketingOptIn, setMarketingOptIn] = useState(true);
 
   const setIndex = (key) => (e) =>
     setSel((s) => ({ ...s, [key]: Number(e.target.value) }));
@@ -214,6 +216,7 @@ export default function ValueCalculator({
             <button type="submit" disabled={submitting} className="btn-teal w-full justify-center disabled:opacity-60" data-cursor="hover" data-testid={`${testid}-gate-submit`}>
               {submitting ? "Calculating…" : "Show my estimate"} <ArrowRight size={16} />
             </button>
+            <MarketingConsent checked={marketingOptIn} onChange={setMarketingOptIn} testid={`${testid}-gate-marketing`} />
             <p className="text-xs text-weha-faint leading-relaxed">
               We will never spam. Unsubscribe in one click. Your data stays private and is never shared.
             </p>

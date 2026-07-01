@@ -5,6 +5,7 @@ import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import ScrollSection from "@/components/ScrollSection";
 import Seo from "@/components/Seo";
+import MarketingConsent from "@/components/MarketingConsent";
 import { submitContactMessage } from "@/lib/api";
 import { checkContactFields } from "@/lib/spamGuard";
 import { ORG, SITE, breadcrumb, faqPage, graph } from "@/lib/seoSchemas";
@@ -50,6 +51,7 @@ export default function Contact() {
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
+  const [marketingOptIn, setMarketingOptIn] = useState(true);
 
   const update = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
@@ -170,6 +172,8 @@ export default function Contact() {
                     <button type="submit" disabled={submitting} className="btn-teal w-full justify-center disabled:opacity-60" data-testid="submit-audit">
                       {submitting ? "Sending…" : "Send to WeHA"} <ArrowRight size={16} />
                     </button>
+
+                    <MarketingConsent checked={marketingOptIn} onChange={setMarketingOptIn} testid="contact-marketing" />
 
                     <p className="text-sm text-weha-muted leading-relaxed pt-1">
                       We respond within 24 hours. No sales scripts. No pitch decks. Just a

@@ -4,6 +4,7 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/compone
 import { Calendar } from "@/components/ui/calendar";
 import { fetchAvailability, submitBookingRequest } from "@/lib/api";
 import { validateName, validateEmail, validateCompany, validateFreeText } from "@/lib/spamGuard";
+import MarketingConsent from "@/components/MarketingConsent";
 
 const TIMEZONES = [
   { label: "🇦🇪 UAE · GST",                 value: "Asia/Dubai" },
@@ -72,6 +73,7 @@ export default function BookingModal({ open, onOpenChange }) {
   const [form, setForm] = useState(initialForm);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [marketingOptIn, setMarketingOptIn] = useState(true);
 
   // Reset state every time the modal opens
   useEffect(() => {
@@ -441,6 +443,8 @@ export default function BookingModal({ open, onOpenChange }) {
                       }
                     </button>
                   </div>
+
+                  <MarketingConsent checked={marketingOptIn} onChange={setMarketingOptIn} testid="booking-marketing" />
                 </form>
               )}
             </div>
