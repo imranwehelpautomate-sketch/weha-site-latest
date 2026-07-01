@@ -99,10 +99,12 @@ function contentFor(record) {
   if (record.form_name === "booking_request") {
     const blocks = [{ type: "p", text: "Your audit is booked." }];
 
+    // Normalized call length (booking always stores 15 or 30; default 15).
+    const durMin = [15, 30].includes(Number(record.duration_minutes)) ? Number(record.duration_minutes) : 15;
+
     const slot = record.slot_iso_utc ? formatSlot(record.slot_iso_utc, record.timezone) : null;
     if (slot) {
-      const dur = [15, 30].includes(Number(record.duration_minutes)) ? Number(record.duration_minutes) : null;
-      blocks.push({ type: "p", text: dur ? `${slot} \u00b7 ${dur} min` : slot });
+      blocks.push({ type: "p", text: `${slot} \u00b7 ${durMin} min` });
     }
 
     // Google Meet join button, only when a link was generated for this booking.
@@ -121,7 +123,7 @@ function contentFor(record) {
 
     blocks.push({
       type: "bullets",
-      lead: "To make the most of our 15 minutes, it helps if you have ready:",
+      lead: `To make the most of our ${durMin} minutes, it helps if you have ready:`,
       items: [
         "A rough sense of how many hours a week the process costs you",
         "Which tool(s) are involved",
