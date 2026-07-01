@@ -181,10 +181,7 @@ export default function BookingModal({ open, onOpenChange }) {
             {/* LEFT - context column */}
             <aside className="hidden md:flex flex-col justify-between p-7 lg:p-8 bg-weha-surface border-r border-weha-border">
               <div>
-                <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">
-                  Free · 15 minutes
-                </span>
-                <h2 className="weha-display text-3xl lg:text-4xl mt-3 leading-tight">
+                <h2 className="weha-display text-3xl lg:text-4xl leading-tight">
                   Book your <span className="italic text-weha-teal">AI Audit.</span>
                 </h2>
                 <p className="mt-4 text-weha-muted leading-relaxed text-[0.95rem]">
