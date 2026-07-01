@@ -6,7 +6,7 @@ import Reveal from "@/components/Reveal";
 import ScrollSection from "@/components/ScrollSection";
 import Seo from "@/components/Seo";
 import { submitContactMessage } from "@/lib/api";
-import { checkContactFields, isHoneypotTripped } from "@/lib/spamGuard";
+import { checkContactFields } from "@/lib/spamGuard";
 import { ORG, SITE, breadcrumb, faqPage, graph } from "@/lib/seoSchemas";
 import {
   Accordion,
@@ -48,7 +48,6 @@ const MAP_EMBED_SRC = `https://maps.google.com/maps?q=${OFFICE.coords.lat},${OFF
 
 export default function Contact() {
   const [form, setForm] = useState(initial);
-  const [hp, setHp] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
@@ -57,8 +56,6 @@ export default function Contact() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    // Honeypot: silently drop bot submissions.
-    if (isHoneypotTripped(hp)) return;
     setError("");
     const spamError = checkContactFields({
       name: form.name,
@@ -133,17 +130,6 @@ export default function Contact() {
                   </div>
                 ) : (
                   <form onSubmit={onSubmit} data-testid="audit-form" className="space-y-5">
-                    {/* Honeypot: hidden from real users; bots that fill it are blocked. */}
-                    <div aria-hidden="true" className="absolute left-[-9999px] top-auto h-0 w-0 overflow-hidden" tabIndex={-1}>
-                      <input
-                        type="text"
-                        name="hp_x92k"
-                        tabIndex={-1}
-                        autoComplete="off"
-                        value={hp}
-                        onChange={(e) => setHp(e.target.value)}
-                      />
-                    </div>
                     <div className="grid gap-5 sm:grid-cols-2">
                       <div>
                         <label className="weha-label" htmlFor="name">Name</label>

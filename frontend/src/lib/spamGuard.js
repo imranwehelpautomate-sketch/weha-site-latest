@@ -86,19 +86,12 @@ export function validateFreeText(value, label = "this", min = 10) {
   return null;
 }
 
-// Honeypot: a hidden field real users never fill. If it has any value, it is a bot.
-export function isHoneypotTripped(value) {
-  return String(value || "").trim().length > 0;
-}
-
 // Convenience runners. Each returns the first error message found, or null.
-export function checkLeadFields({ name, email, hp } = {}) {
-  if (isHoneypotTripped(hp)) return "Submission blocked. Please try again.";
+export function checkLeadFields({ name, email } = {}) {
   return validateName(name) || validateEmail(email);
 }
 
-export function checkContactFields({ name, company, email, process, hp } = {}) {
-  if (isHoneypotTripped(hp)) return "Submission blocked. Please try again.";
+export function checkContactFields({ name, company, email, process } = {}) {
   return (
     validateName(name) ||
     validateCompany(company) ||

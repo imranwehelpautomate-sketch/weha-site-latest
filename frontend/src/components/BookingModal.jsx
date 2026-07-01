@@ -3,7 +3,7 @@ import { ArrowRight, Calendar as CalendarIcon, Clock, Globe, Check, Loader2 } fr
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Calendar } from "@/components/ui/calendar";
 import { fetchAvailability, submitBookingRequest } from "@/lib/api";
-import { validateName, validateEmail, validateCompany, validateFreeText, isHoneypotTripped } from "@/lib/spamGuard";
+import { validateName, validateEmail, validateCompany, validateFreeText } from "@/lib/spamGuard";
 
 const TIMEZONES = [
   { label: "🇦🇪 UAE · GST",                 value: "Asia/Dubai" },
@@ -70,7 +70,6 @@ export default function BookingModal({ open, onOpenChange }) {
   const [selectedSlot, setSelectedSlot] = useState(null); // { iso_utc, label }
   const [duration, setDuration] = useState(15); // 15 (default) or 30 minutes
   const [form, setForm] = useState(initialForm);
-  const [hp, setHp] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
@@ -112,8 +111,6 @@ export default function BookingModal({ open, onOpenChange }) {
 
   const submit = async (e) => {
     e?.preventDefault?.();
-    // Honeypot: silently drop bot submissions.
-    if (isHoneypotTripped(hp)) return;
     setError("");
     const spamError =
       validateName(form.name) ||
@@ -376,17 +373,6 @@ export default function BookingModal({ open, onOpenChange }) {
 
               {step === 2 && (
                 <form onSubmit={submit} data-testid="booking-step-details" className="space-y-4">
-                  {/* Honeypot: hidden from real users; bots that fill it are blocked. */}
-                  <div aria-hidden="true" className="absolute left-[-9999px] top-auto h-0 w-0 overflow-hidden" tabIndex={-1}>
-                    <input
-                      type="text"
-                      name="hp_x92k"
-                      tabIndex={-1}
-                      autoComplete="off"
-                      value={hp}
-                      onChange={(e) => setHp(e.target.value)}
-                    />
-                  </div>
                   <div className="rounded-lg border border-weha-border bg-weha-surface px-4 py-3 flex items-start gap-3">
                     <CalendarIcon size={15} className="text-weha-teal mt-0.5 shrink-0" />
                     <p className="text-sm">

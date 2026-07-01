@@ -9,7 +9,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { submitCalculatorLead } from "@/lib/api";
-import { validateName, validateEmail, validateCompany, isHoneypotTripped } from "@/lib/spamGuard";
+import { validateName, validateEmail, validateCompany } from "@/lib/spamGuard";
 
 // Lead is captured once per SPA session, then both calculators recalculate
 // freely without re-gating. This module-scoped flag is reset on a full page
@@ -56,7 +56,6 @@ export default function ValueCalculator({
   const [resultOpen, setResultOpen] = useState(false);
   const [result, setResult] = useState(null);
   const [lead, setLead] = useState({ name: "", email: "", company: "" });
-  const [hp, setHp] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
@@ -89,7 +88,6 @@ export default function ValueCalculator({
 
   const handleGateSubmit = async (e) => {
     e.preventDefault();
-    if (isHoneypotTripped(hp)) return;
 
     const err =
       validateName(lead.name) ||
@@ -196,11 +194,6 @@ export default function ValueCalculator({
           </DialogHeader>
 
           <form onSubmit={handleGateSubmit} className="space-y-4 mt-1" data-testid={`${testid}-gate-form`}>
-            {/* Honeypot: hidden from real users; bots that fill it are blocked. */}
-            <div aria-hidden="true" className="absolute left-[-9999px] top-auto h-0 w-0 overflow-hidden" tabIndex={-1}>
-              <input type="text" name="hp_x92k" tabIndex={-1} autoComplete="off" value={hp} onChange={(e) => setHp(e.target.value)} />
-            </div>
-
             <div>
               <label className="weha-label" htmlFor={`${testid}-gate-name`}>Name</label>
               <input id={`${testid}-gate-name`} className="weha-input text-base" value={lead.name} onChange={updateLead("name")} placeholder="Your name" autoComplete="name" data-testid={`${testid}-gate-name`} />

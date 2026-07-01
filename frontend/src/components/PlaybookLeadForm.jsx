@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Download, BookOpen, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 import { submitPlaybookLead, PLAYBOOK_DOWNLOAD_URL } from "@/lib/api";
-import { validateName, validateEmail, validateCompany, isHoneypotTripped } from "@/lib/spamGuard";
+import { validateName, validateEmail, validateCompany } from "@/lib/spamGuard";
 
 const SESSION_OPTIONS = ["Yes, book me in", "Maybe later", "No, just the playbook"];
 
@@ -30,7 +30,6 @@ export default function PlaybookLeadForm({
   onSuccess,
 }) {
   const [form, setForm] = useState(initial);
-  const [hp, setHp] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
@@ -43,9 +42,6 @@ export default function PlaybookLeadForm({
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
-    // Honeypot: silently drop bot submissions.
-    if (isHoneypotTripped(hp)) return;
 
     setError("");
     const spamError = minimal
@@ -106,17 +102,6 @@ export default function PlaybookLeadForm({
         </div>
       ) : (
         <form onSubmit={onSubmit} data-testid={`${testid}-form`} className="space-y-4">
-          {/* Honeypot: hidden from real users; bots that fill it are blocked. */}
-          <div aria-hidden="true" className="absolute left-[-9999px] top-auto h-0 w-0 overflow-hidden" tabIndex={-1}>
-            <input
-              type="text"
-              name="hp_x92k"
-              tabIndex={-1}
-              autoComplete="off"
-              value={hp}
-              onChange={(e) => setHp(e.target.value)}
-            />
-          </div>
           <div>
             <span className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">
               <BookOpen size={13} /> {minimal ? "Free download" : "Free · 28-page PDF"}
