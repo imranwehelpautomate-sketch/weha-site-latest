@@ -8,7 +8,7 @@ import requests
 from datetime import datetime, timedelta
 
 # Backend base URL from frontend/.env
-BASE_URL = "https://we-ha-morph.preview.emergentagent.com/api"
+BASE_URL = "https://leads-to-sheets.preview.emergentagent.com/api"
 
 def test_weha_ai_models():
     """Test 1: GET /api/weha-ai/models should return 5 models + default"""

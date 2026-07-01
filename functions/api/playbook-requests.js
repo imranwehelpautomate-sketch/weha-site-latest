@@ -3,6 +3,7 @@
 
 import { notifyLead } from "../_lib/notify.js";
 import { sendConfirmation } from "../_lib/sendConfirmation.js";
+import { syncToSheets } from "../_lib/syncSheets.js";
 import { validateName, validateEmail, validateCompany, honeypotTripped } from "../_lib/validate.js";
 
 const FORM_NAME = "playbook_lead";
@@ -66,6 +67,9 @@ export async function onRequestPost({ request, env }) {
 
   // Confirmation email to the submitter (best-effort; never blocks the response).
   await sendConfirmation(env, record);
+
+  // Fire-and-forget mirror to Google Sheets (best-effort; never blocks the response).
+  await syncToSheets(env, record);
 
   await notifyLead(env, {
     subject: `New WeHA playbook lead — ${record.company || record.name}`,
