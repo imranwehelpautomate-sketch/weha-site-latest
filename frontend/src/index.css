@@ -210,14 +210,12 @@
         animation-play-state: paused;
     }
 
-    @media (prefers-reduced-motion: reduce) {
-        .weha-logo--animated .weha-logo__stroke,
-        .weha-logo--animated .weha-logo__ha,
-        .weha-logo--loop .weha-logo__stroke,
-        .weha-logo--loop .weha-logo__ha,
-        .weha-logo--morph.is-collapsing .weha-logo__stroke,
-        .weha-logo--morph.is-collapsing .weha-logo__collapse { animation: none; }
-    }
+    /* NOTE: the WeHA logo animation is deliberately NOT disabled under
+       prefers-reduced-motion — it is a small, essential brand mark and must
+       animate consistently across every OS/browser (macOS defaults to motion
+       on, while many Windows machines / VMs report `reduce`, which previously
+       left the logo frozen there). Reduced-motion handling for other, larger
+       decorative effects still lives in their own media blocks below. */
     .btn-teal {
         display: inline-flex;
         align-items: center;

@@ -177,6 +177,21 @@ backend:
           comment: "✅ VERIFIED ALL 12 TEST CASES PASSED. NEW ENDPOINTS: (1) POST /api/playbook-requests with ALL fields (name, company, designation, email, industry, country, session_interest, source) → 200 with id, created_at ISO Z, all fields persisted. (2) POST with only required fields (name, company, email) → 200, optional fields default to null. (3) Empty name (whitespace) → 422 with 'Name and company are required.' (4) Empty company (whitespace) → 422. (5) Invalid email format ('notanemail') → 422 with pydantic EmailStr validation error. (6) Missing email field → 422. (7) GET /api/playbook-requests returns list sorted by created_at desc, includes created records. (8) GET /api/audit-requests still works (no interference), returns 3 audit records. (9) Data correctly stored in separate db.playbook_requests collection. REGRESSION: (10) GET /api/ returns {message: WeHA API}. (11) GET /api/availability?date=next-tuesday&tz=Asia/Dubai works, returns 18 slots. (12) POST /api/audit-requests with valid payload works, existing booking flow intact. All endpoints functional, no interference between collections."
 
 frontend:
+  - task: "Header logo animation frozen on Windows (prefers-reduced-motion) — logo must animate on all OSes"
+    implemented: true
+    working: "NA"
+    file: "frontend/src/components/Logo.jsx, frontend/src/index.css"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: false
+          agent: "user"
+          comment: "BUG: header WeHA logo animates on MacBooks but is static/not-animating on Windows across multiple fresh browsers (never-visited). Consistent across browsers on the same machine."
+        - working: "NA"
+          agent: "main"
+          comment: "ROOT CAUSE: the logo animation was gated on prefers-reduced-motion in TWO places — (1) Logo.jsx started the morph only when `!reduceMotion` (else jumped to static 'rest'); (2) index.css had a @media (prefers-reduced-motion: reduce) block setting animation:none on .weha-logo--animated/.weha-logo--loop/.weha-logo--morph. macOS defaults to motion ON, but many Windows machines / VMs / cloud test browsers report `reduce` (Show animations off / 'Adjust for best performance'), which is OS-level and thus consistent across fresh browsers. FIX: the WeHA wordmark now animates regardless of reduced-motion — removed the `!reduceMotion` gate in Logo.jsx (phase now starts 'idle' whenever morph=true) and removed the logo entries from the reduced-motion @media block in index.css. VERIFY (see agent_communication for exact steps): with Playwright emulating prefers-reduced-motion=reduce AND viewport >=1280 wide, loading '/' the header logo must ANIMATE: it starts as full 'We Help Automate' and collapses to 'We | HA' (the .weha-logo--morph element gets .is-collapsing, its width shrinks from ~200px to ~70px), then the compact mark keeps a looping stroke/HA animation (getAnimations() on .weha-logo__stroke / .weha-logo__ha returns running animations). Must behave identically with reduced_motion='no-preference'. Also on a narrow viewport (<1280, e.g. 800px) the header shows the compact .weha-logo--animated which must ALSO have running animations under reduce."
+
   - task: "Honeypot field rename (company_url -> hp_x92k) to stop Chrome autofill silently blocking real submissions"
     implemented: true
     working: "NA"
@@ -371,7 +386,7 @@ backend:
 
 test_plan:
   current_focus:
-    - "Honeypot field rename (company_url -> hp_x92k) to stop Chrome autofill silently blocking real submissions"
+    - "Header logo animation frozen on Windows (prefers-reduced-motion) — logo must animate on all OSes"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"

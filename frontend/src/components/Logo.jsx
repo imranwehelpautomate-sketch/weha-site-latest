@@ -12,13 +12,14 @@ export default function Logo({ className = "", animated = false, morph = false }
   //               The collapse fires when the mark scrolls into view, so it
   //               plays instantly in the header (visible on load) and only
   //               when reached in the footer.
-  const reduceMotion =
-    typeof window !== "undefined" &&
-    window.matchMedia &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
   // morph phases: "idle" (full name, waiting to be seen) → "morph" (collapsing) → "rest" (loop)
-  const [phase, setPhase] = useState(morph && !reduceMotion ? "idle" : "rest");
+  // NOTE: the WeHA wordmark animation is an essential brand element, so it plays
+  // regardless of the OS "reduce motion" setting. (Previously this was gated on
+  // prefers-reduced-motion, which left the logo permanently static on Windows /
+  // VMs / test browsers that report `reduce` by default — while it animated on
+  // Macs where motion is on. See index.css: the logo is intentionally excluded
+  // from the reduced-motion overrides for the same reason.)
+  const [phase, setPhase] = useState(morph ? "idle" : "rest");
   const wrapRef = useRef(null);
 
   // Trigger the collapse once the mark is visible in the viewport.
