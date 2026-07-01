@@ -202,14 +202,27 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <button
+          <motion.button
             onClick={toggle}
             data-testid="theme-toggle"
             aria-label="Toggle theme"
-            className="h-9 w-9 grid place-items-center rounded-full border border-weha-border text-weha-text hover:text-weha-teal hover:border-weha-teal transition-colors"
+            whileTap={{ scale: 0.85 }}
+            transition={{ type: "spring", stiffness: 400, damping: 22 }}
+            className="relative h-9 w-9 grid place-items-center rounded-full border border-weha-border text-weha-text hover:text-weha-teal hover:border-weha-teal transition-colors overflow-hidden"
           >
-            {theme === "light" ? <Moon size={17} /> : <Sun size={17} />}
-          </button>
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={theme}
+                initial={{ rotate: -90, scale: 0, opacity: 0 }}
+                animate={{ rotate: 0, scale: 1, opacity: 1 }}
+                exit={{ rotate: 90, scale: 0, opacity: 0 }}
+                transition={{ duration: 0.32, ease: EASE }}
+                className="absolute inset-0 grid place-items-center"
+              >
+                {theme === "light" ? <Moon size={17} /> : <Sun size={17} />}
+              </motion.span>
+            </AnimatePresence>
+          </motion.button>
 
           <Magnetic strength={0.3} className="hidden sm:inline-flex">
             <Link to="/contact" className="btn-teal text-[0.8rem] px-4 py-2.5 md:text-[0.95rem] md:px-[1.6rem] md:py-[0.85rem]" data-testid="header-cta" data-cursor="hover" onClick={(e) => { e.preventDefault(); openBooking(); }}>
