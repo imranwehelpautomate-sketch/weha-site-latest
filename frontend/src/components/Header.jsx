@@ -137,6 +137,12 @@ export default function Header() {
   const { openBooking } = useBooking();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [pulse, setPulse] = useState(0);
+
+  const handleThemeToggle = () => {
+    setPulse((p) => p + 1);
+    toggle();
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -203,20 +209,41 @@ export default function Header() {
 
         <div className="flex items-center gap-3">
           <motion.button
-            onClick={toggle}
+            onClick={handleThemeToggle}
             data-testid="theme-toggle"
             aria-label="Toggle theme"
-            whileTap={{ scale: 0.85 }}
-            transition={{ type: "spring", stiffness: 400, damping: 22 }}
-            className="relative h-9 w-9 grid place-items-center rounded-full border border-weha-border text-weha-text hover:text-weha-teal hover:border-weha-teal transition-colors overflow-hidden"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.88 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            className="relative h-9 w-9 grid place-items-center rounded-full border border-weha-border text-weha-text hover:text-weha-teal hover:border-weha-teal transition-colors"
           >
+            {/* Expanding ripple ring + soft glow, emitted on every theme switch */}
+            {pulse > 0 && (
+              <>
+                <motion.span
+                  key={`ring-${pulse}`}
+                  initial={{ scale: 0.5, opacity: 0.6 }}
+                  animate={{ scale: 2.8, opacity: 0 }}
+                  transition={{ duration: 0.65, ease: "easeOut" }}
+                  className="pointer-events-none absolute inset-0 rounded-full border-2 border-weha-teal"
+                />
+                <motion.span
+                  key={`glow-${pulse}`}
+                  initial={{ scale: 0.6, opacity: 0.65 }}
+                  animate={{ scale: 1.9, opacity: 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className="pointer-events-none absolute inset-0 rounded-full bg-weha-teal/40 blur-md"
+                />
+              </>
+            )}
+
             <AnimatePresence mode="wait" initial={false}>
               <motion.span
                 key={theme}
-                initial={{ rotate: -90, scale: 0, opacity: 0 }}
+                initial={{ rotate: -160, scale: 0, opacity: 0 }}
                 animate={{ rotate: 0, scale: 1, opacity: 1 }}
-                exit={{ rotate: 90, scale: 0, opacity: 0 }}
-                transition={{ duration: 0.32, ease: EASE }}
+                exit={{ rotate: 160, scale: 0, opacity: 0 }}
+                transition={{ type: "spring", stiffness: 320, damping: 13 }}
                 className="absolute inset-0 grid place-items-center"
               >
                 {theme === "light" ? <Moon size={17} /> : <Sun size={17} />}
