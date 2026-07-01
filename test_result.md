@@ -177,6 +177,21 @@ backend:
           comment: "✅ VERIFIED ALL 12 TEST CASES PASSED. NEW ENDPOINTS: (1) POST /api/playbook-requests with ALL fields (name, company, designation, email, industry, country, session_interest, source) → 200 with id, created_at ISO Z, all fields persisted. (2) POST with only required fields (name, company, email) → 200, optional fields default to null. (3) Empty name (whitespace) → 422 with 'Name and company are required.' (4) Empty company (whitespace) → 422. (5) Invalid email format ('notanemail') → 422 with pydantic EmailStr validation error. (6) Missing email field → 422. (7) GET /api/playbook-requests returns list sorted by created_at desc, includes created records. (8) GET /api/audit-requests still works (no interference), returns 3 audit records. (9) Data correctly stored in separate db.playbook_requests collection. REGRESSION: (10) GET /api/ returns {message: WeHA API}. (11) GET /api/availability?date=next-tuesday&tz=Asia/Dubai works, returns 18 slots. (12) POST /api/audit-requests with valid payload works, existing booking flow intact. All endpoints functional, no interference between collections."
 
 frontend:
+  - task: "Honeypot field rename (company_url -> hp_x92k) to stop Chrome autofill silently blocking real submissions"
+    implemented: true
+    working: "NA"
+    file: "frontend/src/components/BookingModal.jsx, frontend/src/pages/Contact.jsx, frontend/src/components/PlaybookLeadForm.jsx, frontend/src/components/ValueCalculator.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: false
+          agent: "user"
+          comment: "BUG: hidden honeypot input was name='company_url'. Chrome autofill ignores autocomplete='off' for fields whose name matches profile categories (company/url), so Chrome silently autofilled the invisible field for users with a saved profile -> isHoneypotTripped(hp) tripped client-side -> submit() returned early with NO error and NO network request. Real users could not submit forms."
+        - working: "NA"
+          agent: "main"
+          comment: "FIX: renamed the honeypot input name attribute from 'company_url' to nonsensical 'hp_x92k' (no autofill-category substrings) in all 4 forms that use the pattern: BookingModal, Contact page, PlaybookLeadForm, ValueCalculator. No input had an id attribute. Everything else about the honeypot is UNCHANGED (off-screen hiding div, aria-hidden, tabIndex={-1}, autoComplete='off', and the isHoneypotTripped logic in spamGuard.js). The honeypot value is still held in `hp` state and gated client-side; server honeypotTripped(body) still checks company_url||hp (harmless, unchanged). VERIFY (preview, forms POST to FastAPI /api): a NORMAL user (who never touches the hidden field) can submit and reach the success screen: (1) Booking modal (header 'Book a Free Audit' -> pick timezone/date/slot -> Continue -> fill name/company/country/industry/email + process -> Confirm Booking -> success screen 'Your audit is booked.'; POST /api/booking-requests 200). (2) Contact form (/contact -> fill name/company/country/industry/email/process -> submit 'Send to WeHA' -> success 'contact-success'; POST /api/contact-messages 200). (3) Confirm each honeypot input's name is now 'hp_x92k' (NOT 'company_url') and it stays visually hidden. Also confirm normal submissions are NOT silently blocked (no early-return)."
+
   - task: "Restore frontend/.env (REACT_APP_BACKEND_URL)"
     implemented: true
     working: "NA"
@@ -356,7 +371,7 @@ backend:
 
 test_plan:
   current_focus:
-    - "IST-anchored availability (8AM-8PM IST, all 7 days) + 15/30-min duration + overlap blocking"
+    - "Honeypot field rename (company_url -> hp_x92k) to stop Chrome autofill silently blocking real submissions"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"

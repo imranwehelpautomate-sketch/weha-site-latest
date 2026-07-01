@@ -84,46 +84,129 @@ function formatSlot(iso, tz) {
   }
 }
 
+function quoteExcerpt(text) {
+  const t = String(text == null ? "" : text).trim();
+  if (!t) return null;
+  const MAX = 150;
+  const clipped = t.length > MAX ? t.slice(0, MAX).trimEnd() + "\u2026" : t;
+  return `"${clipped}"`;
+}
+
 function contentFor(record) {
   const greeting = `Hi ${firstName(record.name)},`;
+  const processQuote = quoteExcerpt(record.process);
 
   if (record.form_name === "booking_request") {
-    const lines = ["Your audit is booked."];
+    const blocks = [{ type: "p", text: "Your audit is booked." }];
+
     const slot = record.slot_iso_utc ? formatSlot(record.slot_iso_utc, record.timezone) : null;
-    if (slot) lines.push(slot);
-    lines.push("No sales scripts. Just a focused conversation about your workflow.");
-    return { subject: "Your AI Audit is booked.", greeting, lines };
+    if (slot) {
+      const dur = [15, 30].includes(Number(record.duration_minutes)) ? Number(record.duration_minutes) : null;
+      blocks.push({ type: "p", text: dur ? `${slot} \u00b7 ${dur} min` : slot });
+    }
+
+    blocks.push({
+      type: "p",
+      text: "What this call actually is: no pitch decks, just a focused conversation where we map your process and show where automation takes over.",
+    });
+
+    if (processQuote) {
+      blocks.push({ type: "quote", label: "You told us:", text: processQuote });
+    }
+
+    blocks.push({
+      type: "bullets",
+      lead: "To make the most of our 15 minutes, it helps if you have ready:",
+      items: [
+        "A rough sense of how many hours a week the process costs you",
+        "Which tool(s) are involved",
+        "Whoever on the team owns the task day-to-day",
+      ],
+    });
+
+    blocks.push({
+      type: "p",
+      text: "After the call: we'll send a short summary plus one automation recommendation to follow up on. No obligation.",
+    });
+
+    blocks.push({ type: "p", text: "Need to reschedule? Just reply to this email." });
+
+    return { subject: "Your AI Audit is booked.", greeting, blocks };
   }
 
   if (record.form_name === "contact_message") {
-    return {
-      subject: "We've got your request.",
-      greeting,
-      lines: [
-        "Thanks, your audit request is in.",
-        "We reply within 24 hours. No sales scripts, no pitch decks, just a conversation about your workflow.",
+    const blocks = [{ type: "p", text: "Thanks, your audit request is in." }];
+
+    if (processQuote) {
+      blocks.push({ type: "quote", label: "You told us:", text: processQuote });
+    }
+
+    blocks.push({
+      type: "numbered",
+      lead: "Here's exactly what happens next:",
+      items: [
+        "We reply within 24 hours, and it's a real person.",
+        "If it's a fit, we'll offer times for a free 15-minute audit call.",
+        "On that call we map your workflow and show one automation you could ship immediately.",
       ],
-    };
+    });
+
+    blocks.push({
+      type: "p",
+      text: "No sales scripts, no pitch decks, just a conversation about your workflow.",
+    });
+
+    return { subject: "We've got your request.", greeting, blocks };
   }
 
   // playbook_lead / calculator_lead / audit_request / anything else -> generic
-  return {
-    subject: "Thanks for your interest in WeHA",
-    greeting,
-    lines: [
-      "Thanks for reaching out to WeHA. We've received your details and someone from our team will be in touch soon.",
-    ],
-  };
+  const blocks = [
+    {
+      type: "p",
+      text: "Thanks for reaching out to WeHA. We've received your details and someone from our team will be in touch soon.",
+    },
+  ];
+  if (processQuote) {
+    blocks.push({ type: "quote", label: "You told us:", text: processQuote });
+  }
+  return { subject: "Thanks for your interest in WeHA", greeting, blocks };
 }
 
-function renderText({ greeting, lines }) {
-  return [greeting, "", ...lines, "", SIGNOFF].join("\n");
+function blockToText(b) {
+  if (b.type === "quote") {
+    return b.label ? `${b.label}\n${b.text}` : b.text;
+  }
+  if (b.type === "bullets") {
+    return [b.lead, ...b.items.map((i) => `- ${i}`)].join("\n");
+  }
+  if (b.type === "numbered") {
+    return [b.lead, ...b.items.map((i, idx) => `${idx + 1}. ${i}`)].join("\n");
+  }
+  return b.text || "";
 }
 
-function renderHtml({ greeting, lines }) {
-  const body = lines
-    .map((l) => `<p style="margin:0 0 14px;">${escapeHtml(l)}</p>`)
-    .join("");
+function renderText({ greeting, blocks }) {
+  return [greeting, ...blocks.map(blockToText), SIGNOFF].join("\n\n");
+}
+
+function blockToHtml(b) {
+  if (b.type === "quote") {
+    const label = b.label
+      ? `<p style="margin:0 0 6px;font-weight:600;color:${TEXT};">${escapeHtml(b.label)}</p>`
+      : "";
+    return `${label}<blockquote style="margin:0 0 14px;padding:10px 14px;border-left:3px solid ${ACCENT};background:${PAGE_BG};color:${MUTED};font-style:italic;border-radius:4px;">${escapeHtml(b.text)}</blockquote>`;
+  }
+  if (b.type === "bullets" || b.type === "numbered") {
+    const tag = b.type === "bullets" ? "ul" : "ol";
+    const lead = b.lead ? `<p style="margin:0 0 8px;">${escapeHtml(b.lead)}</p>` : "";
+    const items = b.items.map((i) => `<li style="margin:0 0 6px;">${escapeHtml(i)}</li>`).join("");
+    return `${lead}<${tag} style="margin:0 0 14px;padding-left:20px;">${items}</${tag}>`;
+  }
+  return `<p style="margin:0 0 14px;">${escapeHtml(b.text || "")}</p>`;
+}
+
+function renderHtml({ greeting, blocks }) {
+  const body = blocks.map(blockToHtml).join("");
   return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
 <body style="margin:0;padding:0;background:${PAGE_BG};">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${PAGE_BG};padding:32px 16px;">
@@ -150,7 +233,7 @@ export async function sendConfirmation(env, record) {
     if (!env || !env.RESEND_API_KEY) return;
     if (!record || !record.email) return;
 
-    const { subject, greeting, lines } = contentFor(record);
+    const { subject, greeting, blocks } = contentFor(record);
 
     await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -163,8 +246,8 @@ export async function sendConfirmation(env, record) {
         to: record.email,
         reply_to: CONFIRM_REPLY_TO,
         subject,
-        html: renderHtml({ greeting, lines }),
-        text: renderText({ greeting, lines }),
+        html: renderHtml({ greeting, blocks }),
+        text: renderText({ greeting, blocks }),
       }),
     });
   } catch (_) {

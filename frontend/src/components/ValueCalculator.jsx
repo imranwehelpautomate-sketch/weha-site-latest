@@ -198,7 +198,7 @@ export default function ValueCalculator({
           <form onSubmit={handleGateSubmit} className="space-y-4 mt-1" data-testid={`${testid}-gate-form`}>
             {/* Honeypot: hidden from real users; bots that fill it are blocked. */}
             <div aria-hidden="true" className="absolute left-[-9999px] top-auto h-0 w-0 overflow-hidden" tabIndex={-1}>
-              <input type="text" name="company_url" tabIndex={-1} autoComplete="off" value={hp} onChange={(e) => setHp(e.target.value)} />
+              <input type="text" name="hp_x92k" tabIndex={-1} autoComplete="off" value={hp} onChange={(e) => setHp(e.target.value)} />
             </div>
 
             <div>
