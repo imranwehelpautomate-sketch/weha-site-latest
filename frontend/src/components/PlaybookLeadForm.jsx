@@ -106,7 +106,7 @@ export default function PlaybookLeadForm({
         <form onSubmit={onSubmit} data-testid={`${testid}-form`} className="space-y-4">
           <div>
             <span className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">
-              <BookOpen size={13} /> {minimal ? "Free download" : "Free · 28-page PDF"}
+              <BookOpen size={13} /> {minimal ? "Free download" : "Free · 12-page expert curated PDF"}
             </span>
             <h3 className="weha-display text-2xl md:text-3xl mt-2 text-weha-text leading-tight">{heading}</h3>
             <p className="mt-2 text-sm text-weha-muted leading-relaxed">
