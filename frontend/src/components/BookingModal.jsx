@@ -58,7 +58,7 @@ horizon.setDate(horizon.getDate() + 28);
 
 const initialForm = {
   name: "", company: "", country: "", industry: "",
-  process: "", contact_method: "WhatsApp", email: "",
+  process: "", email: "",
 };
 
 export default function BookingModal({ open, onOpenChange }) {
@@ -163,7 +163,7 @@ export default function BookingModal({ open, onOpenChange }) {
               </p>
             )}
             <p className="mt-3 text-weha-muted max-w-md mx-auto leading-relaxed">
-              A confirmation will arrive within 24 hours via your preferred contact method.
+              A confirmation will arrive within 24 hours by email.
               No sales scripts, just a focused 15-minute working session.
             </p>
             <button
@@ -422,15 +422,6 @@ export default function BookingModal({ open, onOpenChange }) {
                     <textarea id="bk-process" rows={3} className="weha-input resize-none"
                       placeholder="e.g. We copy new leads into a spreadsheet every morning…"
                       value={form.process} onChange={updateForm("process")} data-testid="booking-process" />
-                  </div>
-                  <div>
-                    <label className="weha-label" htmlFor="bk-contact">Preferred contact method</label>
-                    <select id="bk-contact" className="weha-input"
-                      value={form.contact_method} onChange={updateForm("contact_method")} data-testid="booking-contact">
-                      <option>WhatsApp</option>
-                      <option>Email</option>
-                      <option>LinkedIn</option>
-                    </select>
                   </div>
 
                   {error && (

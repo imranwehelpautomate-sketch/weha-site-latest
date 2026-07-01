@@ -29,7 +29,6 @@ const initial = {
   country: "",
   industry: "",
   process: "",
-  contact_method: "WhatsApp",
   email: "",
 };
 
@@ -160,15 +159,6 @@ export default function Contact() {
                     <div>
                       <label className="weha-label" htmlFor="process">The manual process you want to fix</label>
                       <textarea id="process" rows={4} className="weha-input resize-none" value={form.process} onChange={update("process")} placeholder="e.g. Every morning we copy new enquiries from email into our CRM and a spreadsheet by hand." data-testid="input-process" />
-                    </div>
-
-                    <div>
-                      <label className="weha-label" htmlFor="contact_method">Preferred contact method</label>
-                      <select id="contact_method" className="weha-input" value={form.contact_method} onChange={update("contact_method")} data-testid="select-contact-method">
-                        <option>WhatsApp</option>
-                        <option>Email</option>
-                        <option>LinkedIn</option>
-                      </select>
                     </div>
 
                     {error && (
