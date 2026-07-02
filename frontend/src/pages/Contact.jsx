@@ -37,7 +37,7 @@ const initial = {
 // used by the WhatsApp link (digits only), the displayed WhatsApp text, and the
 // office phone strip.
 const OFFICE = {
-  address: "We Work Amanora Crest, 4th floor, Amanora Town Centre, Amanora Park Town, Hadapsar, Pune, Maharashtra 411028",
+  address: "We Work Amanora Crest, 4th floor, Amanora Town Centre, Amanora Park Town, Hadapsar, 411 028.\nPune, Maharashtra, India.",
   email: "hello@wehelpautomate.com",
   phone: "+91 81808 61084",
   whatsapp: "+91 81808 61084",
@@ -266,7 +266,7 @@ export default function Contact() {
                   <p className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-faint">
                     Office Address
                   </p>
-                  <p className="text-weha-text leading-relaxed">{OFFICE.address}</p>
+                  <p className="text-weha-text leading-relaxed whitespace-pre-line">{OFFICE.address}</p>
                 </div>
               </Reveal>
 

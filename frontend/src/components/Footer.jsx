@@ -78,7 +78,9 @@ export default function Footer() {
             <p className="text-xs font-semibold tracking-widest uppercase text-weha-faint mb-4">Where we work</p>
             <ul className="space-y-3 text-weha-muted">
               <li className="leading-relaxed">
-                We Work Amanora Crest, 4th floor, Amanora Town Centre, Amanora Park Town, Hadapsar, Pune, Maharashtra 411028.
+                We Work Amanora Crest, 4th floor, Amanora Town Centre, Amanora Park Town, Hadapsar, 411 028.
+                <br />
+                Pune, Maharashtra, India.
               </li>
             </ul>
             <a
