@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Linkedin, Mail } from "lucide-react";
 import Logo from "@/components/Logo";
+import IndiaFlag from "@/components/IndiaFlag";
 import { openCookiePreferences } from "@/components/CookieConsent";
 
 // Placeholder — replace with the real company LinkedIn URL.
@@ -87,6 +88,13 @@ export default function Footer() {
             >
               hello@wehelpautomate.com
             </a>
+            <p
+              className="mt-4 flex items-center gap-2 text-sm text-weha-muted"
+              data-testid="footer-made-in-india"
+            >
+              <IndiaFlag />
+              <span>Designed for the World, built in India.</span>
+            </p>
           </div>
         </div>
 

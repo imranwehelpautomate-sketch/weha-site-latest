@@ -408,6 +408,26 @@
         .weha-marquee__track { animation: none; }
     }
 
+    /* Footer "built in India" flag — a continuous, gentle cloth wave. Pinned to
+       the pole side (left) so it reads like a flag, not a wobble. */
+    .weha-flag {
+        display: inline-flex;
+        align-items: center;
+        line-height: 0;
+    }
+    .weha-flag svg {
+        transform-origin: left center;
+        animation: weha-flag-wave 2.4s ease-in-out infinite;
+        will-change: transform;
+    }
+    @keyframes weha-flag-wave {
+        0%,
+        100% { transform: perspective(70px) rotateY(0deg) skewY(0deg); }
+        25%  { transform: perspective(70px) rotateY(-11deg) skewY(1.3deg); }
+        50%  { transform: perspective(70px) rotateY(0deg) skewY(0deg); }
+        75%  { transform: perspective(70px) rotateY(11deg) skewY(-1.3deg); }
+    }
+
     /* Floating WhatsApp — soft, slow pulse halo */
     .weha-whatsapp-pulse {
         opacity: 0.35;
