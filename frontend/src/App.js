@@ -11,6 +11,7 @@ import ScrollPill from "@/components/ScrollPill";
 import Cursor from "@/components/Cursor";
 import NetworkScene from "@/three/NetworkScene";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
+import CookieConsent from "@/components/CookieConsent";
 import { PAGE_TRANSITION } from "@/lib/motion";
 import Home from "@/pages/Home";
 import Services from "@/pages/Services";
@@ -83,6 +84,7 @@ function App() {
             <Footer />
           </div>
           <FloatingWhatsApp />
+          <CookieConsent />
           <Toaster position="bottom-right" />
         </BrowserRouter>
       </BookingProvider>

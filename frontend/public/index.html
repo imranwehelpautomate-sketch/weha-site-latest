@@ -3,6 +3,34 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- Consent Mode v2 default: every visitor starts denied until they choose -->
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('consent', 'default', {
+          'analytics_storage': 'denied',
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied',
+          'wait_for_update': 500
+        });
+        // Re-apply a previously stored choice on every load, before GTM evaluates tags.
+        try {
+          var wehaConsent = localStorage.getItem('weha_cookie_consent');
+          if (wehaConsent === 'accepted') {
+            gtag('consent', 'update', {
+              analytics_storage: 'granted', ad_storage: 'granted',
+              ad_user_data: 'granted', ad_personalization: 'granted'
+            });
+          } else if (wehaConsent === 'declined') {
+            gtag('consent', 'update', {
+              analytics_storage: 'denied', ad_storage: 'denied',
+              ad_user_data: 'denied', ad_personalization: 'denied'
+            });
+          }
+        } catch (e) {}
+        </script>
+        <!-- End Consent Mode v2 default -->
         <!-- Google Tag Manager -->
         <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -119,14 +147,24 @@
                     }),
                     (e.__SV = 1));
             })(document, window.posthog || []);
-            posthog.init("phc_xAvL2Iq4tFmANRE7kzbKwaSqp1HJjN7x48s3vr0CMjs", {
-                api_host: "https://us.i.posthog.com",
-                person_profiles: "identified_only", // or 'always' to create profiles for anonymous users as well,
-                session_recording: {
-                    recordCrossOriginIframes: true,
-                    capturePerformance: false,
-                },
-            });
+            window.__wehaInitPosthog = function () {
+                if (window.__wehaPosthogLoaded) return;
+                window.__wehaPosthogLoaded = true;
+                posthog.init("phc_xAvL2Iq4tFmANRE7kzbKwaSqp1HJjN7x48s3vr0CMjs", {
+                    api_host: "https://us.i.posthog.com",
+                    person_profiles: "identified_only", // or 'always' to create profiles for anonymous users as well,
+                    session_recording: {
+                        recordCrossOriginIframes: true,
+                        capturePerformance: false,
+                    },
+                });
+            };
+            // Consent gate: PostHog only initializes/loads if the visitor accepted cookies.
+            try {
+                if (localStorage.getItem("weha_cookie_consent") === "accepted") {
+                    window.__wehaInitPosthog();
+                }
+            } catch (e) {}
         </script>
     </body>
 </html>

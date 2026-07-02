@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Linkedin, Mail } from "lucide-react";
 import Logo from "@/components/Logo";
+import { openCookiePreferences } from "@/components/CookieConsent";
 
 // Placeholder — replace with the real company LinkedIn URL.
 const LINKEDIN_URL = "https://www.linkedin.com/company/we-help-automate";
@@ -106,6 +107,14 @@ export default function Footer() {
             >
               Terms of Service
             </Link>
+            <button
+              type="button"
+              onClick={openCookiePreferences}
+              data-testid="footer-cookie-preferences"
+              className="text-sm text-weha-faint hover:text-weha-teal transition-colors"
+            >
+              Cookie preferences
+            </button>
           </div>
         </div>
       </div>

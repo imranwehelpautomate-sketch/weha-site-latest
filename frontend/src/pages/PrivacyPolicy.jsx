@@ -41,7 +41,8 @@ const SECTIONS = [
     n: 5,
     heading: "Cookies",
     paras: [
-      "We use essential cookies for site functionality and analytics cookies to understand usage patterns. You can control cookie preferences through your browser settings.",
+      "Essential cookies are always active because the site needs them to function. Analytics and tracking cookies, including PostHog and Google Analytics (loaded through Google Tag Manager), only activate after you accept them in our cookie banner. Until you accept, these tools are held back and set no analytics or advertising cookies or identifiers.",
+      "You can change your choice at any time using the Cookie preferences link in the footer, which reopens the banner and lets you switch between accept and decline.",
     ],
   },
   {
