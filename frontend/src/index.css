@@ -417,15 +417,16 @@
     }
     .weha-flag svg {
         transform-origin: left center;
-        animation: weha-flag-wave 2.4s ease-in-out infinite;
+        animation: weha-flag-wave 5s ease-in-out infinite;
         will-change: transform;
     }
     @keyframes weha-flag-wave {
         0%,
-        100% { transform: perspective(70px) rotateY(0deg) skewY(0deg); }
-        25%  { transform: perspective(70px) rotateY(-11deg) skewY(1.3deg); }
-        50%  { transform: perspective(70px) rotateY(0deg) skewY(0deg); }
-        75%  { transform: perspective(70px) rotateY(11deg) skewY(-1.3deg); }
+        100% { transform: rotate(0deg) skewY(0deg); }
+        20%  { transform: rotate(-1.3deg) skewY(1deg); }
+        45%  { transform: rotate(0.9deg) skewY(-0.7deg); }
+        70%  { transform: rotate(-0.7deg) skewY(0.8deg); }
+        85%  { transform: rotate(1.1deg) skewY(-0.9deg); }
     }
 
     /* Floating WhatsApp — soft, slow pulse halo */

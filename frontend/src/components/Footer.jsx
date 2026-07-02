@@ -92,8 +92,8 @@ export default function Footer() {
               className="mt-4 flex items-center gap-2 text-sm text-weha-muted"
               data-testid="footer-made-in-india"
             >
-              <IndiaFlag />
               <span>Designed for the World, built in India.</span>
+              <IndiaFlag />
             </p>
           </div>
         </div>
