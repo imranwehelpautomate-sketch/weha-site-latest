@@ -1,5 +1,6 @@
 // Infinite horizontal ticker of integration logos.
 // Logos are real, full-color, transparent SVGs served locally from /public/logos.
+import { useState, useEffect, useRef } from "react";
 // A handful of brands ship a single-tone (monochrome) mark; those are flagged
 // `mono` so they render dark on the light theme and invert to light on the dark
 // theme, staying legible either way. Colored logos are shown as-is.
@@ -47,10 +48,11 @@ function Logo({ name, slug, mono }) {
       <img
         src={`${PUBLIC_URL}/logos/${slug}.svg`}
         alt={`${name} logo`}
-        loading="lazy"
         className={`h-7 md:h-8 w-auto max-w-[110px] object-contain opacity-90 group-hover:opacity-100 transition duration-300 group-hover:scale-105 ${
           mono ? "dark:invert dark:brightness-200" : ""
         }`}
+        loading="eager"
+        decoding="async"
         onError={(e) => { e.currentTarget.style.display = "none"; }}
       />
       <span className="text-sm md:text-[0.95rem] font-medium text-weha-muted group-hover:text-weha-text transition-colors whitespace-nowrap">
@@ -61,6 +63,44 @@ function Logo({ name, slug, mono }) {
 }
 
 export default function IntegrationStrip({ heading = "Fluent in your stack" }) {
+  // Start the ticker only after fonts and logo images have finished loading.
+  // Until then the track width is not final; animating to translateX(-50%) on a
+  // still-changing width is what caused the brief jitter on a fresh reload.
+  const [ready, setReady] = useState(false);
+  const trackRef = useRef(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    const markReady = () => { if (!cancelled) setReady(true); };
+
+    const waitImages = () => {
+      const root = trackRef.current;
+      if (!root) return Promise.resolve();
+      const imgs = Array.from(root.querySelectorAll("img"));
+      return Promise.all(
+        imgs.map((img) =>
+          img.complete
+            ? Promise.resolve()
+            : new Promise((res) => {
+                img.addEventListener("load", res, { once: true });
+                img.addEventListener("error", res, { once: true });
+              })
+        )
+      );
+    };
+
+    const fontsReady =
+      typeof document !== "undefined" && document.fonts && document.fonts.ready
+        ? document.fonts.ready
+        : Promise.resolve();
+
+    Promise.all([fontsReady, waitImages()]).then(markReady);
+
+    // Safety net: never leave the ticker frozen if a resource stalls.
+    const t = setTimeout(markReady, 3000);
+    return () => { cancelled = true; clearTimeout(t); };
+  }, []);
+
   return (
     <section
       aria-label="Tool fluency — integrations we build with"
@@ -75,8 +115,8 @@ export default function IntegrationStrip({ heading = "Fluent in your stack" }) {
            style={{ background: "linear-gradient(to right, var(--weha-bg), transparent)" }} />
       <div className="pointer-events-none absolute inset-y-0 right-0 w-24 md:w-40 z-10"
            style={{ background: "linear-gradient(to left, var(--weha-bg), transparent)" }} />
-      <div className="weha-marquee" data-testid="integration-marquee">
-        <div className="weha-marquee__track">
+      <div className={`weha-marquee ${ready ? "is-ready" : ""}`} data-testid="integration-marquee">
+        <div className="weha-marquee__track" ref={trackRef}>
           {TOOLS.map((t) => <Logo key={`a-${t.slug}`} {...t} />)}
           {/* duplicated set for seamless loop */}
           {TOOLS.map((t) => <Logo key={`b-${t.slug}`} {...t} />)}

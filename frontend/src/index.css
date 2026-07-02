@@ -389,7 +389,13 @@
         flex-shrink: 0;
         align-items: center;
         animation: weha-marquee 38s linear infinite;
+        /* Paused until the strip signals it is ready (fonts + logo images loaded),
+           so the track width is final before it starts moving. Prevents reload jitter. */
+        animation-play-state: paused;
         will-change: transform;
+    }
+    .weha-marquee.is-ready .weha-marquee__track {
+        animation-play-state: running;
     }
     .weha-marquee:hover .weha-marquee__track {
         animation-play-state: paused;
