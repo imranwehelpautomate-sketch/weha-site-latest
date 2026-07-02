@@ -22,7 +22,7 @@ const BG = "#f7f6f2";
 const BORDER = "#ece9e3";
 const TEXT = "#2b2a28";
 const MUTED = "#6b6862";
-const CORAL = "#f0552d";
+const ACCENT = "#6F55AF"; // primary CTA fill for the Accept button
 
 // Called from the Footer to reopen the banner so a visitor can change their choice.
 export function openCookiePreferences() {
@@ -68,7 +68,9 @@ export default function CookieConsent() {
     applyGtag(true);
     try {
       localStorage.setItem(STORAGE_KEY, "accepted");
-    } catch (e) {}
+    } catch (e) {
+      /* localStorage unavailable; ignore */
+    }
     if (typeof window !== "undefined" && typeof window.__wehaInitPosthog === "function") {
       window.__wehaInitPosthog();
     }
@@ -82,7 +84,9 @@ export default function CookieConsent() {
     applyGtag(false);
     try {
       localStorage.setItem(STORAGE_KEY, "declined");
-    } catch (e) {}
+    } catch (e) {
+      /* localStorage unavailable; ignore */
+    }
     // Never initialize PostHog. If it was loaded in a prior accepted session,
     // stop it from capturing now that the visitor has opted out.
     if (typeof window !== "undefined" && window.posthog && typeof window.posthog.opt_out_capturing === "function") {
@@ -123,7 +127,7 @@ export default function CookieConsent() {
               onClick={accept}
               data-testid="cookie-accept"
               className="flex-1 inline-flex items-center justify-center rounded-full px-4 py-2.5 text-sm font-medium text-white transition-transform hover:-translate-y-0.5"
-              style={{ background: CORAL }}
+              style={{ background: ACCENT }}
             >
               Accept
             </button>
