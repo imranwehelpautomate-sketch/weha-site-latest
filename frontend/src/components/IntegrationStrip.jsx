@@ -1,22 +1,43 @@
-// Infinite horizontal ticker of integration logos using Simple Icons CDN.
-// Logos are rendered grayscale at reduced opacity for a refined, on-brand strip;
-// brand color appears on hover.
+// Infinite horizontal ticker of integration logos.
+// Logos are real, full-color, transparent SVGs served locally from /public/logos.
+// A handful of brands ship a single-tone (monochrome) mark; those are flagged
+// `mono` so they render dark on the light theme and invert to light on the dark
+// theme, staying legible either way. Colored logos are shown as-is.
 const TOOLS = [
+  // Automation + tools
+  { name: "n8n",           slug: "n8n" },
+  { name: "Make",          slug: "make" },
+  { name: "Zapier",        slug: "zapier" },
+  { name: "HubSpot",       slug: "hubspot" },
+  { name: "Airtable",      slug: "airtable" },
+  { name: "WhatsApp",      slug: "whatsapp" },
+  { name: "Slack",         slug: "slack" },
+  { name: "Notion",        slug: "notion", mono: true },
   { name: "Google Sheets", slug: "googlesheets" },
-  { name: "n8n",      slug: "n8n" },
-  { name: "HubSpot",  slug: "hubspot" },
-  { name: "WhatsApp", slug: "whatsapp" },
-  { name: "Claude",   slug: "anthropic" },
-  { name: "Make",     slug: "make" },
-  { name: "Airtable", slug: "airtable" },
-  { name: "OpenAI",   slug: "openai" },
-  { name: "Zapier",   slug: "zapier" },
-  { name: "Slack",    slug: "slack" },
-  { name: "Notion",   slug: "notion" },
-  { name: "Apify",    slug: "apify" },
+  // Leading LLMs
+  { name: "OpenAI",        slug: "openai", mono: true },
+  { name: "Claude",        slug: "claude" },
+  { name: "Gemini",        slug: "gemini" },
+  { name: "Mistral",       slug: "mistral" },
+  { name: "DeepSeek",      slug: "deepseek" },
+  { name: "Perplexity",    slug: "perplexity" },
+  { name: "Cohere",        slug: "cohere" },
+  { name: "Grok",          slug: "grok", mono: true },
+  { name: "Qwen",          slug: "qwen", mono: true },
+  { name: "Kimi",          slug: "kimi" },
+  { name: "Llama",         slug: "meta" },
+  // Agentic frameworks + dev tools
+  { name: "LangChain",     slug: "langchain" },
+  { name: "Hugging Face",  slug: "huggingface" },
+  { name: "Ollama",        slug: "ollama", mono: true },
+  { name: "OpenCode",      slug: "opencode", mono: true },
+  { name: "OpenClaw",      slug: "openclaw" },
+  { name: "Cursor",        slug: "cursor", mono: true },
 ];
 
-function Logo({ name, slug }) {
+const PUBLIC_URL = process.env.PUBLIC_URL || "";
+
+function Logo({ name, slug, mono }) {
   return (
     <div
       className="shrink-0 mx-7 md:mx-10 flex items-center gap-3 group"
@@ -24,10 +45,12 @@ function Logo({ name, slug }) {
       data-testid={`integration-logo-${slug}`}
     >
       <img
-        src={`https://cdn.simpleicons.org/${slug}`}
+        src={`${PUBLIC_URL}/logos/${slug}.svg`}
         alt={`${name} logo`}
         loading="lazy"
-        className="h-7 w-7 md:h-8 md:w-8 object-contain grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition duration-300"
+        className={`h-7 md:h-8 w-auto max-w-[110px] object-contain opacity-90 group-hover:opacity-100 transition duration-300 group-hover:scale-105 ${
+          mono ? "dark:invert dark:brightness-200" : ""
+        }`}
         onError={(e) => { e.currentTarget.style.display = "none"; }}
       />
       <span className="text-sm md:text-[0.95rem] font-medium text-weha-muted group-hover:text-weha-text transition-colors whitespace-nowrap">
