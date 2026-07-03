@@ -4,7 +4,7 @@
 
 const SITE_URL = (process.env.REACT_APP_SITE_URL || "https://www.wehelpautomate.com").replace(/\/$/, "");
 const DEFAULT_IMG = `${SITE_URL}/og-default.png`;
-const DEFAULT_TITLE = "WeHA | We Help Automate · Done For You AI Automation Services";
+const DEFAULT_TITLE = "We Help Automate | Done For You AI Automation Services";
 
 export default function Seo({
   title,
