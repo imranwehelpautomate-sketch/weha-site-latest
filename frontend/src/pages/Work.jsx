@@ -109,7 +109,7 @@ const TOOL_LOGOS = {
   "Apify": "https://www.google.com/s2/favicons?domain=apify.com&sz=128",
   "Apollo": "https://www.google.com/s2/favicons?domain=apollo.io&sz=128",
   "Instantly": "https://www.google.com/s2/favicons?domain=instantly.ai&sz=128",
-  "Clay": "https://www.google.com/s2/favicons?domain=clay.com&sz=128",
+  "Clay": "/logos/clay.png",
 };
 
 const slugify = (name) =>
