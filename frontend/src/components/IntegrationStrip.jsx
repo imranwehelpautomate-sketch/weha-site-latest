@@ -4,6 +4,9 @@ import { useState, useEffect, useRef } from "react";
 // A handful of brands ship a single-tone (monochrome) mark; those are flagged
 // `mono` so they render dark on the light theme and invert to light on the dark
 // theme, staying legible either way. Colored logos are shown as-is.
+// Some products expose only a live favicon (no public SVG); for those we use the
+// Google favicon service (same source the Work page uses) via `url`.
+const gfav = (domain) => `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
 const TOOLS = [
   // Automation + tools
   { name: "n8n",           slug: "n8n" },
@@ -15,16 +18,18 @@ const TOOLS = [
   { name: "Slack",         slug: "slack" },
   { name: "Notion",        slug: "notion", mono: true },
   // Platforms + services
-  { name: "Emergent",      slug: "emergent", mono: true },
-  { name: "OpenRouter",    slug: "openrouter", mono: true },
-  { name: "ElevenLabs",    slug: "elevenlabs", mono: true },
-  { name: "GitHub",        slug: "github", mono: true },
-  { name: "Apollo",        slug: "apollo" },
-  { name: "Clay",          slug: "clay", ext: "png" },
-  { name: "Replit",        slug: "replit" },
-  { name: "Antigravity",   slug: "antigravity" },
-  { name: "Google Cloud",  slug: "googlecloud" },
-  { name: "AWS",           slug: "aws", mono: true },
+  { name: "Emergent",       slug: "emergent", ext: "png", rounded: true },
+  { name: "OpenRouter",     slug: "openrouter", mono: true },
+  { name: "ElevenLabs",     slug: "elevenlabs", mono: true },
+  { name: "GitHub",         slug: "github", mono: true },
+  { name: "Apollo",         slug: "apollo", url: gfav("apollo.io"), rounded: true },
+  { name: "Clay",           slug: "clay", url: gfav("clay.com"), rounded: true },
+  { name: "Instantly",      slug: "instantly", url: gfav("instantly.ai"), rounded: true },
+  { name: "ActiveCampaign", slug: "activecampaign", url: gfav("activecampaign.com"), rounded: true },
+  { name: "Replit",         slug: "replit" },
+  { name: "Antigravity",    slug: "antigravity" },
+  { name: "Google Cloud",   slug: "googlecloud" },
+  { name: "AWS",            slug: "aws", mono: true },
   // Leading LLMs
   { name: "OpenAI",        slug: "openai", mono: true },
   { name: "Claude",        slug: "claude" },
@@ -48,7 +53,8 @@ const TOOLS = [
 
 const PUBLIC_URL = process.env.PUBLIC_URL || "";
 
-function Logo({ name, slug, mono, ext = "svg" }) {
+function Logo({ name, slug, mono, ext = "svg", url, rounded }) {
+  const src = url || `${PUBLIC_URL}/logos/${slug}.${ext}`;
   return (
     <div
       className="shrink-0 mx-7 md:mx-10 flex items-center gap-3 group"
@@ -56,11 +62,11 @@ function Logo({ name, slug, mono, ext = "svg" }) {
       data-testid={`integration-logo-${slug}`}
     >
       <img
-        src={`${PUBLIC_URL}/logos/${slug}.${ext}`}
+        src={src}
         alt={`${name} logo`}
         className={`h-7 md:h-8 w-auto max-w-[110px] object-contain opacity-90 group-hover:opacity-100 transition duration-300 group-hover:scale-105 ${
-          mono ? "dark:invert dark:brightness-200" : ""
-        }`}
+          rounded ? "rounded-md" : ""
+        } ${mono ? "dark:invert dark:brightness-200" : ""}`}
         loading="eager"
         decoding="async"
         onError={(e) => { e.currentTarget.style.display = "none"; }}
