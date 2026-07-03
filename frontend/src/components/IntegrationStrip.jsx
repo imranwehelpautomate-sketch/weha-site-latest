@@ -23,7 +23,7 @@ const TOOLS = [
   { name: "ElevenLabs",     slug: "elevenlabs", mono: true },
   { name: "GitHub",         slug: "github", mono: true },
   { name: "Apollo",         slug: "apollo", url: gfav("apollo.io"), rounded: true },
-  { name: "Clay",           slug: "clay", url: gfav("clay.com"), rounded: true },
+  { name: "Clay",           slug: "clay", ext: "png", rounded: true },
   { name: "Instantly",      slug: "instantly", url: gfav("instantly.ai"), rounded: true },
   { name: "ActiveCampaign", slug: "activecampaign", url: gfav("activecampaign.com"), rounded: true },
   { name: "Replit",         slug: "replit" },
