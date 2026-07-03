@@ -14,7 +14,17 @@ const TOOLS = [
   { name: "WhatsApp",      slug: "whatsapp" },
   { name: "Slack",         slug: "slack" },
   { name: "Notion",        slug: "notion", mono: true },
-  { name: "Google Sheets", slug: "googlesheets" },
+  // Platforms + services
+  { name: "Emergent",      slug: "emergent", mono: true },
+  { name: "OpenRouter",    slug: "openrouter", mono: true },
+  { name: "ElevenLabs",    slug: "elevenlabs", mono: true },
+  { name: "GitHub",        slug: "github", mono: true },
+  { name: "Apollo",        slug: "apollo" },
+  { name: "Clay",          slug: "clay" },
+  { name: "Replit",        slug: "replit" },
+  { name: "Antigravity",   slug: "antigravity", mono: true },
+  { name: "Google Cloud",  slug: "googlecloud" },
+  { name: "AWS",           slug: "aws" },
   // Leading LLMs
   { name: "OpenAI",        slug: "openai", mono: true },
   { name: "Claude",        slug: "claude" },
