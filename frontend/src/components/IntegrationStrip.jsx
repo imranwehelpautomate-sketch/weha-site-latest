@@ -20,11 +20,11 @@ const TOOLS = [
   { name: "ElevenLabs",    slug: "elevenlabs", mono: true },
   { name: "GitHub",        slug: "github", mono: true },
   { name: "Apollo",        slug: "apollo" },
-  { name: "Clay",          slug: "clay" },
+  { name: "Clay",          slug: "clay", ext: "png" },
   { name: "Replit",        slug: "replit" },
-  { name: "Antigravity",   slug: "antigravity", mono: true },
+  { name: "Antigravity",   slug: "antigravity" },
   { name: "Google Cloud",  slug: "googlecloud" },
-  { name: "AWS",           slug: "aws" },
+  { name: "AWS",           slug: "aws", mono: true },
   // Leading LLMs
   { name: "OpenAI",        slug: "openai", mono: true },
   { name: "Claude",        slug: "claude" },
@@ -48,7 +48,7 @@ const TOOLS = [
 
 const PUBLIC_URL = process.env.PUBLIC_URL || "";
 
-function Logo({ name, slug, mono }) {
+function Logo({ name, slug, mono, ext = "svg" }) {
   return (
     <div
       className="shrink-0 mx-7 md:mx-10 flex items-center gap-3 group"
@@ -56,7 +56,7 @@ function Logo({ name, slug, mono }) {
       data-testid={`integration-logo-${slug}`}
     >
       <img
-        src={`${PUBLIC_URL}/logos/${slug}.svg`}
+        src={`${PUBLIC_URL}/logos/${slug}.${ext}`}
         alt={`${name} logo`}
         className={`h-7 md:h-8 w-auto max-w-[110px] object-contain opacity-90 group-hover:opacity-100 transition duration-300 group-hover:scale-105 ${
           mono ? "dark:invert dark:brightness-200" : ""
