@@ -16,10 +16,21 @@ from validation import validate_name, validate_email, validate_company, validate
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-# MongoDB connection
-mongo_url = os.environ['MONGO_URL']
+# MongoDB connection.
+# NOTE: `.env` is git-ignored, so it is absent whenever the repo is pulled into a
+# fresh preview/dev environment. To keep the backend from crashing on startup
+# (which took down /api/availability and broke the booking calendar), we fall
+# back to sensible local defaults instead of hard-failing on a missing key.
+# Production (Cloudflare Functions + D1) does not use this file at all.
+mongo_url = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
+db_name = os.environ.get('DB_NAME', 'weha_database')
+if 'MONGO_URL' not in os.environ or 'DB_NAME' not in os.environ:
+    logging.getLogger(__name__).warning(
+        "MONGO_URL/DB_NAME not set (missing backend/.env). "
+        "Falling back to defaults MONGO_URL=%s DB_NAME=%s", mongo_url, db_name
+    )
 client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+db = client[db_name]
 
 # Create the main app without a prefix
 app = FastAPI()
