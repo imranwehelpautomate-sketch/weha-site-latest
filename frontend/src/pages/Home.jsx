@@ -164,14 +164,14 @@ const FLOWS = [
   },
 ];
 
-// Proof / dogfooding: what happens when someone books on this very site.
-const proofSteps = [
-  { icon: CalendarCheck, title: "You pick a slot", caption: "Live availability, real calendar" },
-  { icon: Database, title: "Lead saved", caption: "Straight into our database" },
-  { icon: Video, title: "Meet link created", caption: "Generated automatically" },
-  { icon: Mail, title: "Confirmation sent", caption: "Branded, personal, instant" },
-  { icon: BellRing, title: "Reminders queued", caption: "24 hours and 1 hour before" },
-  { icon: Table, title: "Books updated", caption: "Logged and tracked, zero typing" },
+// Live teardown: how we make sure you are the first to answer a new lead.
+const teardownSteps = [
+  { icon: Inbox, title: "Lead comes in", caption: "Website, ad, WhatsApp or DM" },
+  { icon: Sparkles, title: "AI qualifies it", caption: "Fit, intent, urgency, in seconds" },
+  { icon: Database, title: "CRM updated", caption: "Enriched, tagged, routed" },
+  { icon: Send, title: "Reply in minutes", caption: "Personal and on brand, day or night" },
+  { icon: CalendarClock, title: "Follow-ups queued", caption: "Nothing goes cold" },
+  { icon: Bell, title: "You get one summary", caption: "Not another task on your list" },
 ];
 
 // Who this is for. Each entry powers a card + an expanded detail view.
@@ -788,7 +788,7 @@ export default function Home() {
                 <div className="mt-6">
                   <Magnetic>
                     <button type="button" onClick={openBooking} className="btn-teal" data-cursor="hover">
-                      Book the audit <ArrowRight size={15} />
+                      Book my free audit <ArrowRight size={15} />
                     </button>
                   </Magnetic>
                 </div>
@@ -878,7 +878,7 @@ export default function Home() {
                 probably automate it.
               </p>
               <button type="button" onClick={openBooking} className="btn-ghost shrink-0" data-cursor="hover">
-                Book the free audit <ArrowRight size={15} />
+                Book my free audit <ArrowRight size={15} />
               </button>
             </div>
           </div>
@@ -1011,7 +1011,7 @@ export default function Home() {
                               data-cursor="hover"
                               data-testid="industry-book-audit"
                             >
-                              Book Free Audit <ArrowRight size={15} />
+                              Book my free audit <ArrowRight size={15} />
                             </button>
                           </Magnetic>
                         </div>
@@ -1032,26 +1032,34 @@ export default function Home() {
       <section className="relative section-glass py-24 md:py-32" data-testid="section-proof">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <Reveal>
-            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Proof, not promises</span>
-            <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">This website is the demo.</h2>
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">See our thinking</span>
+            <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">Watch us solve one, live.</h2>
           </Reveal>
           <Reveal delay={0.08}>
             <p className="mt-5 text-weha-muted max-w-xl leading-relaxed">
-              When you book an audit here, no human lifts a finger. Our own automations do the work:
+              The first business to answer usually wins the deal. Here is exactly how we make sure
+              that is you.
             </p>
           </Reveal>
-          <div className="mt-14 md:mt-16">
-            <FlowDiagram steps={proofSteps} autoPlay />
+          <Reveal delay={0.12}>
+            <p className="mt-8 text-sm text-weha-faint max-w-2xl leading-relaxed">
+              Before: a demo request lands Friday night, you reply Monday, they already booked with
+              whoever answered first.
+            </p>
+          </Reveal>
+          <div className="mt-8 md:mt-10">
+            <FlowDiagram steps={teardownSteps} autoPlay />
           </div>
           <Reveal delay={0.1}>
             <p className="mt-14 weha-display text-2xl md:text-3xl text-weha-text max-w-3xl leading-snug">
-              We did not hire anyone to run this. We automated it.{" "}
-              <span className="italic text-weha-teal">That is the point.</span>
+              After: every lead answered in minutes, around the clock. You stop losing deals to{" "}
+              <span className="italic text-weha-teal">whoever happened to be awake.</span>
             </p>
           </Reveal>
           <Reveal delay={0.16}>
-            <p className="mt-4 text-weha-muted leading-relaxed max-w-2xl">
-              The systems we sell are the systems we run on.
+            <p className="mt-4 text-weha-faint leading-relaxed max-w-2xl">
+              Every automation here runs on the same systems we sell. This site books, confirms and
+              reminds you with zero human touch.
             </p>
           </Reveal>
         </div>
@@ -1182,7 +1190,7 @@ export default function Home() {
                 data-cursor="hover"
                 className="mt-9 inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 font-medium text-[var(--weha-teal)] transition-transform hover:-translate-y-0.5"
               >
-                Book My Free Audit <ArrowUpRight size={17} />
+                Book my free audit <ArrowUpRight size={17} />
               </button>
             </Magnetic>
           </Reveal>

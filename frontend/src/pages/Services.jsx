@@ -26,9 +26,6 @@ import {
   Video,
   BellRing,
   Table,
-  Send,
-  ShoppingCart,
-  Clock,
 } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import CTABanner from "@/components/CTABanner";
@@ -503,54 +500,6 @@ const engagement = [
   },
 ];
 
-// Section 2b: live teardowns. "Watch us solve one, live."
-const teardowns = [
-  {
-    id: "agency-reporting",
-    label: "Agency reporting",
-    before:
-      "Monthly client reports. Six dashboards, four spreadsheets, the same numbers pasted into slides. Around 4 hours per client, every month, usually the founder's Sunday.",
-    steps: [
-      { icon: Database, title: "Data pulled nightly", caption: "Ads, analytics, CRM, all of it" },
-      { icon: Sparkles, title: "AI writes the narrative", caption: "What changed and why it matters" },
-      { icon: LayoutDashboard, title: "Formatted to your template", caption: "On brand, client ready" },
-      { icon: Send, title: "Delivered before the call", caption: "In their inbox Monday 8 AM" },
-    ],
-    after:
-      "4 hours becomes about 6 minutes of review. Reports land before the kickoff call, not after. The founder's Sunday comes back.",
-  },
-  {
-    id: "ecommerce-winback",
-    label: "Ecommerce winback",
-    before:
-      "Abandoned carts, lapsed customers, review requests you never send. The revenue playbook everyone knows and nobody has time to actually run.",
-    steps: [
-      { icon: ShoppingCart, title: "Cart abandoned", caption: "Detected in real time" },
-      { icon: Clock, title: "Perfect-timing wait", caption: "Not too soon, not too late" },
-      { icon: Sparkles, title: "Message personalized", caption: "Their items, your voice" },
-      { icon: Send, title: "Sent across channels", caption: "Email and SMS" },
-      { icon: RefreshCw, title: "Sequence continues", caption: "Until they buy or opt out" },
-    ],
-    after:
-      "The winback flows run 24/7 without anyone touching them. Recovered revenue that used to leak away quietly, now captured on autopilot.",
-  },
-  {
-    id: "saas-lead-response",
-    label: "SaaS lead response",
-    before:
-      "A demo request lands Friday night. You reply Monday morning. They already booked with whoever answered first. Speed is the whole game and manual loses it.",
-    steps: [
-      { icon: Inbox, title: "Demo request lands", caption: "Any time, any channel" },
-      { icon: Sparkles, title: "AI qualifies instantly", caption: "Fit, intent, urgency" },
-      { icon: Database, title: "CRM updated", caption: "Enriched and routed" },
-      { icon: Send, title: "Reply in minutes", caption: "Day or night, on brand" },
-      { icon: CalendarClock, title: "Meeting booked", caption: "Straight into the calendar" },
-    ],
-    after:
-      "Every lead answered in minutes, around the clock. You stop losing deals to whoever happened to be awake. First to respond, first to win.",
-  },
-];
-
 // Section 6: the booking flow that runs this very site.
 const proofSteps = [
   { icon: CalendarCheck, title: "You pick a slot", caption: "Live availability" },
@@ -599,10 +548,6 @@ export default function Services() {
   // Section 2: which pillar tab is active.
   const [activeTab, setActiveTab] = useState(pillars[0].id);
   const activePillar = pillars.find((p) => p.id === activeTab) || pillars[0];
-
-  // Section 2b: which live teardown is active.
-  const [activeTeardown, setActiveTeardown] = useState(teardowns[0].id);
-  const activeTeardownItem = teardowns.find((t) => t.id === activeTeardown) || teardowns[0];
 
   // Addition 2: sticky-bottom CTA bar. Appears after the hero scrolls out of
   // view, can be dismissed for the session.
@@ -784,85 +729,6 @@ export default function Services() {
               </motion.div>
             </AnimatePresence>
           </div>
-        </div>
-      </section>
-      </ScrollSection>
-
-      {/* SECTION 2b · LIVE TEARDOWN */}
-      <ScrollSection direction="right" settle depth={0.6} intensity={0.5}>
-      <section className="section-glass relative py-24 md:py-32" data-testid="services-teardown">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <Reveal>
-            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">See our thinking</span>
-            <h2 className="weha-display text-3xl md:text-5xl mt-3 text-weha-text max-w-3xl">
-              Watch us solve one, live.
-            </h2>
-            <p className="mt-5 text-lg text-weha-muted max-w-2xl leading-relaxed">
-              Pick a bottleneck you recognize. Here is exactly how we would take it apart. No
-              mystery, no black box.
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.1}>
-            <div className="mt-8">
-              <TabSwitch
-                tabs={teardowns.map((t) => ({ id: t.id, label: t.label }))}
-                active={activeTeardown}
-                onChange={setActiveTeardown}
-              />
-            </div>
-          </Reveal>
-
-          <div className="mt-12">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeTeardown}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.25, ease: EASE }}
-              >
-                {/* Before */}
-                <div
-                  className="rounded-2xl border border-weha-border bg-weha-elevated p-6 md:p-8"
-                  data-testid="teardown-before"
-                >
-                  <p className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-weha-faint">
-                    Before
-                  </p>
-                  <p className="mt-3 text-lg text-weha-muted leading-relaxed max-w-3xl">
-                    {activeTeardownItem.before}
-                  </p>
-                </div>
-
-                {/* The teardown flow */}
-                <div className="mt-10">
-                  <FlowDiagram steps={activeTeardownItem.steps} replayKey={activeTeardown} />
-                </div>
-
-                {/* After */}
-                <div
-                  className="mt-10 rounded-2xl border p-6 md:p-8"
-                  style={{ borderColor: "var(--weha-teal)", background: "var(--weha-teal-soft)" }}
-                  data-testid="teardown-after"
-                >
-                  <p className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-weha-teal">
-                    After
-                  </p>
-                  <p className="mt-3 text-lg text-weha-text leading-relaxed max-w-3xl">
-                    {activeTeardownItem.after}
-                  </p>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          <Reveal delay={0.1}>
-            <p className="mt-12 text-weha-muted leading-relaxed max-w-3xl">
-              This is the exact conversation we have in the free audit, except we build one of these
-              live while you watch.
-            </p>
-          </Reveal>
         </div>
       </section>
       </ScrollSection>
