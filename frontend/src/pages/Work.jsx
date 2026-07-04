@@ -5,8 +5,10 @@ import Reveal from "@/components/Reveal";
 import ScrollSection from "@/components/ScrollSection";
 import IntegrationStrip from "@/components/IntegrationStrip";
 import ValueCalculator from "@/components/ValueCalculator";
+import Magnetic from "@/components/Magnetic";
 import Seo from "@/components/Seo";
-import { Sparkles, Check } from "lucide-react";
+import { Sparkles, Check, ArrowRight, TrendingUp } from "lucide-react";
+import { useBooking } from "@/context/BookingContext";
 import { ORG, SITE, breadcrumb, graph } from "@/lib/seoSchemas";
 
 /* ------------------------------------------------------------------ *
@@ -147,44 +149,52 @@ function StackChip({ name }) {
  * ------------------------------------------------------------------ */
 const caseStudies = [
   {
-    descriptor: "Multi-vertical group of seven companies",
+    descriptor: "A group of seven companies under one brand umbrella",
+    badge: "7 brands, one small team",
     title: "Automated SEO and Content Engine",
-    problem:
-      "Seven companies under one group needed to stay visible and publish consistently across every brand, without a large in-house team.",
+    challenge:
+      "Seven brands, all needing to stay visible and publish consistently, with nowhere near enough hands to do it manually across every site and channel.",
     built:
       "We deployed a custom forked Claude Code SEO agent with its own UI for all-round SEO, plus a content generation system in Claude Projects that produces, distributes, and repurposes content across platforms from a few simple inputs.",
     stack: ["Claude Code", "Custom SEO agent", "Claude Projects", "Custom UI"],
-    outcome: "SEO and multi-platform content for seven brands, run by a small team.",
+    before: "SEO and content for seven brands, impossible to keep up with by hand.",
+    after: "One small team runs visibility and multi-platform publishing for all seven, on autopilot.",
   },
   {
-    descriptor: "B2B services company",
+    descriptor: "A B2B services company running its own sales motion",
+    badge: "Manual outreach to self-running funnel",
     title: "Inbound and Outbound Lead Engine",
-    problem:
-      "Lead generation was manual and inconsistent across both website inbound and cold email outbound.",
+    challenge:
+      "Lead generation lived in someone's head and calendar. Website inbound and cold outbound were both manual, inconsistent, and easy to drop when things got busy.",
     built:
       "An automated inbound capture flow from landing pages, paired with an automated outbound cold email engine, with a human kept in the loop where judgment was needed.",
     stack: ["Apify", "Apollo", "Instantly", "n8n"],
-    outcome: "A self-running lead and outreach system that fills the funnel without daily manual work.",
+    before: "Outreach happened only when someone remembered to do it.",
+    after: "A self-running lead and outreach system fills the funnel with no daily manual work.",
   },
   {
-    descriptor: "Professional services firm",
+    descriptor: "A professional services firm that sells on proposals",
+    badge: "Raw lead to sent proposal, no manual drafting",
     title: "Lead Enrichment and Proposal Automation",
-    problem:
-      "Leads were researched by hand, proposals written manually, and follow-ups were inconsistent.",
+    challenge:
+      "Every lead was researched by hand, every proposal written from scratch, and follow-ups slipped through the cracks. Slow, inconsistent, and entirely dependent on people having time.",
     built:
       "Incoming leads are enriched automatically, a tailored proposal is generated from that data and sent to the prospect, and follow-ups are scheduled at day three and day seven.",
     stack: ["Clay", "Apify", "LLM models", "Instantly"],
-    outcome: "From raw lead to sent proposal to timed follow-up, with no manual drafting between.",
+    before: "Manual research, manual proposals, follow-ups forgotten.",
+    after: "Raw lead to enriched profile to sent proposal to timed follow-up, with no manual drafting in between.",
   },
   {
-    descriptor: "High-volume hiring team",
+    descriptor: "A high-volume hiring team drowning in inbound resumes",
+    badge: "Screening and prep, now automatic",
     title: "AI Recruitment Pipeline",
-    problem:
-      "Inbound resumes needed screening, document collection, and candidate prep, all manual and slow.",
+    challenge:
+      "Every inbound resume meant manual screening, chasing documents, and prepping candidates by hand. Slow, repetitive, and a bottleneck on every hire.",
     built:
       "A pipeline that reaches out to inbound candidates, screens them with AI, collects required documents, prepares each candidate for the role with a tailored PDF brief, and keeps the hiring manager informed.",
     stack: ["AI screening agents", "Document automation", "Workflow orchestration"],
-    outcome: "Screening and candidate prep run automatically, with the recruiter always in the loop.",
+    before: "Every hire bottlenecked on manual screening and document chasing.",
+    after: "Screening, document collection, and candidate prep run automatically, with the recruiter always in the loop.",
   },
 ];
 
@@ -226,16 +236,28 @@ function CaseStudyCard({ study, index }) {
           </span>
         </div>
 
+        {/* relative-metric badge */}
+        {study.badge && (
+          <span
+            className="mt-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-weha-teal"
+            style={{ background: "var(--weha-teal-soft)" }}
+            data-testid={`work-case-badge-${index + 1}`}
+          >
+            <TrendingUp size={12} className="shrink-0" />
+            {study.badge}
+          </span>
+        )}
+
         {/* title */}
-        <h2 className="weha-display text-3xl md:text-5xl mt-4 text-weha-text max-w-3xl">
+        <h2 className="weha-display text-3xl md:text-5xl mt-3 text-weha-text max-w-3xl">
           {study.title}
         </h2>
 
-        {/* problem + built */}
+        {/* challenge + approach */}
         <div className="mt-10 grid gap-8 md:grid-cols-2">
           <div>
-            <span className="weha-label uppercase tracking-widest text-xs">The problem</span>
-            <p className="text-weha-muted leading-relaxed">{study.problem}</p>
+            <span className="weha-label uppercase tracking-widest text-xs">The challenge</span>
+            <p className="text-weha-muted leading-relaxed">{study.challenge}</p>
           </div>
           <div>
             <span className="weha-label uppercase tracking-widest text-xs">What we built</span>
@@ -259,14 +281,27 @@ function CaseStudyCard({ study, index }) {
           </div>
         </div>
 
-        {/* outcome */}
-        <div className="mt-8 flex items-start gap-3 border-l-2 border-weha-teal pl-5">
-          <Check size={18} className="text-weha-teal mt-1 shrink-0" />
-          <div>
-            <span className="weha-label uppercase tracking-widest text-xs">Outcome</span>
-            <p className="weha-display text-xl md:text-2xl text-weha-text leading-snug">
-              {study.outcome}
-            </p>
+        {/* before to after transformation */}
+        <div
+          className="mt-8 rounded-2xl border border-weha-border p-6 md:p-7"
+          data-testid={`work-case-beforeafter-${index + 1}`}
+        >
+          <div className="grid gap-5 md:grid-cols-[1fr_auto_1fr] md:items-center md:gap-6">
+            <div>
+              <span className="weha-label uppercase tracking-widest text-xs text-weha-faint">Before</span>
+              <p className="mt-1 text-weha-muted leading-relaxed">{study.before}</p>
+            </div>
+            <ArrowRight
+              size={22}
+              aria-hidden="true"
+              className="hidden md:block text-weha-teal shrink-0"
+            />
+            <div className="md:pl-1">
+              <span className="weha-label uppercase tracking-widest text-xs text-weha-teal">After</span>
+              <p className="mt-1 weha-display text-lg md:text-xl text-weha-text leading-snug">
+                {study.after}
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -275,6 +310,7 @@ function CaseStudyCard({ study, index }) {
 }
 
 export default function Work() {
+  const { openBooking } = useBooking();
   return (
     <div data-testid="work-page" className="overflow-x-hidden">
       <Seo
@@ -292,7 +328,7 @@ export default function Work() {
               item: {
                 "@type": "CreativeWork",
                 name: s.title,
-                abstract: s.problem,
+                abstract: s.challenge,
                 creator: { "@id": `${SITE}/#organization` },
               },
             })),
@@ -323,6 +359,25 @@ export default function Work() {
       />
 
       <IntegrationStrip heading="The tools behind the builds" />
+
+      {/* ANONYMITY TRUST STRIP */}
+      <ScrollSection direction="right" settle depth={0} intensity={0.3}>
+        <section className="py-10 md:py-14" data-testid="work-anonymity">
+          <div className="max-w-5xl mx-auto px-5 sm:px-8">
+            <Reveal>
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">
+                Why no logos?
+              </span>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <p className="mt-3 weha-display text-xl md:text-2xl text-weha-text max-w-3xl leading-snug border-l-2 border-weha-teal pl-5">
+                Client names stay private. For most of these teams, the automation is a competitive
+                edge they would rather keep. The systems, the stacks, and the results are real.
+              </p>
+            </Reveal>
+          </div>
+        </section>
+      </ScrollSection>
 
       {/* TOP FILLER: proof, not promises */}
       <ScrollSection direction="right">
@@ -392,6 +447,45 @@ export default function Work() {
                 The fastest way to see it is on your own workflow. Bring us the manual process eating
                 your week, and we will map the automated version with you.
               </p>
+            </Reveal>
+          </div>
+        </section>
+      </ScrollSection>
+
+      {/* CTA BRIDGE */}
+      <ScrollSection direction="left" settle depth={0.4} intensity={0.4}>
+        <section className="section-solid py-20 md:py-28" data-testid="work-cta-bridge">
+          <div className="max-w-4xl mx-auto px-5 sm:px-8">
+            <Reveal>
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">
+                Your turn
+              </span>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <h2 className="weha-display text-3xl md:text-5xl mt-3 text-weha-text">
+                Yours is the next one we build.
+              </h2>
+            </Reveal>
+            <Reveal delay={0.14}>
+              <p className="mt-5 text-lg text-weha-muted leading-relaxed max-w-2xl">
+                Every system above started the same way: a free audit where we mapped the real
+                bottleneck and built one automation live. That is exactly how yours would start.
+              </p>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <div className="mt-8">
+                <Magnetic>
+                  <button
+                    type="button"
+                    onClick={openBooking}
+                    className="btn-teal"
+                    data-cursor="hover"
+                    data-testid="work-bridge-cta"
+                  >
+                    Book my free audit <ArrowRight size={16} />
+                  </button>
+                </Magnetic>
+              </div>
             </Reveal>
           </div>
         </section>
