@@ -311,14 +311,14 @@ export default function Work() {
   return (
     <div data-testid="work-page" className="overflow-x-hidden">
       <Seo
-        title="Our Work"
-        description="Automation systems WeHA has designed and shipped: SEO and content engines, lead generation, proposal automation, and AI recruitment pipelines."
-        path="/work"
+        title="Success Stories"
+        description="Automation success stories from WeHA: SEO and content engines, lead generation, proposal automation, and AI recruitment pipelines built for real teams."
+        path="/success-stories"
         jsonLd={graph([
           ORG,
           {
             "@type": "ItemList",
-            name: "WeHA automation case studies",
+            name: "WeHA automation success stories",
             itemListElement: caseStudies.map((s, i) => ({
               "@type": "ListItem",
               position: i + 1,
@@ -332,13 +332,13 @@ export default function Work() {
           },
           breadcrumb([
             { name: "Home", path: "/" },
-            { name: "Work", path: "/work" },
+            { name: "Success Stories", path: "/success-stories" },
           ]),
         ])}
       />
 
       <PageHero
-        kicker="Our Work"
+        kicker="Success Stories"
         title="Real systems, built for real"
         italicWord="teams."
         subtitle="A look at automation systems we have designed and shipped. Client names stay private. The work speaks for itself."

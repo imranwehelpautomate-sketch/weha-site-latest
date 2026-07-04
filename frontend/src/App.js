@@ -1,5 +1,5 @@
 import "@/App.css";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { BookingProvider } from "@/context/BookingContext";
@@ -55,7 +55,8 @@ function AnimatedRoutes() {
           <Route path="/" element={<Home />} />
           <Route path="/services" element={<Services />} />
           <Route path="/ai-workforce" element={<AIWorkforce />} />
-          <Route path="/work" element={<Work />} />
+          <Route path="/success-stories" element={<Work />} />
+          <Route path="/work" element={<Navigate to="/success-stories" replace />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/resources" element={<Resources />} />

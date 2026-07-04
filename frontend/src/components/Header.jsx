@@ -13,7 +13,7 @@ const links = [
   { to: "/about", label: "About" },
   { to: "/services", label: "Services" },
   { to: "/ai-workforce", label: "AI Workforce" },
-  { to: "/work", label: "Work" },
+  { to: "/success-stories", label: "Success Stories" },
   { to: "/resources", label: "Resources" },
   { to: "/contact", label: "Contact" },
 ];
@@ -276,7 +276,7 @@ export default function Header() {
           open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >
-        <div className="px-6 pt-8 pb-12 flex flex-col gap-2">
+        <div className="px-6 pt-6 pb-8 flex flex-col gap-1">
           {links.map((l, i) => {
             if (l.label === "Resources") {
               return (
@@ -286,12 +286,12 @@ export default function Header() {
                     onClick={() => setOpen(false)}
                     data-testid="mobile-nav-resources"
                     className={({ isActive }) =>
-                      `weha-display text-3xl py-2.5 block ${isActive ? "text-weha-teal" : "text-weha-text"}`
+                      `weha-display text-2xl py-2 block ${isActive ? "text-weha-teal" : "text-weha-text"}`
                     }
                   >
                     Resources
                   </NavLink>
-                  <div className="pb-4 pl-2 flex flex-col gap-1">
+                  <div className="pb-3 pl-2 flex flex-col gap-0.5">
                     {RESOURCE_CHILDREN.map((c) => {
                       const Icon = c.icon;
                       return (
@@ -301,10 +301,10 @@ export default function Header() {
                           onClick={() => setOpen(false)}
                           data-testid={`mobile-nav-resources-${c.key}`}
                           className={({ isActive }) =>
-                            `flex items-center gap-3 py-2.5 text-lg ${isActive ? "text-weha-teal" : "text-weha-muted"}`
+                            `flex items-center gap-3 py-1.5 text-base ${isActive ? "text-weha-teal" : "text-weha-muted"}`
                           }
                         >
-                          <Icon size={18} className="text-weha-teal" /> {c.title}
+                          <Icon size={16} className="text-weha-teal" /> {c.title}
                         </NavLink>
                       );
                     })}
@@ -320,7 +320,7 @@ export default function Header() {
                 onClick={() => setOpen(false)}
                 data-testid={`mobile-nav-${l.label.toLowerCase().replace(/\s+/g, "-")}`}
                 className={({ isActive }) =>
-                  `weha-display text-3xl py-2.5 border-b border-weha-border ${
+                  `weha-display text-2xl py-2 border-b border-weha-border ${
                     isActive ? "text-weha-teal" : "text-weha-text"
                   }`
                 }
@@ -333,7 +333,7 @@ export default function Header() {
           <Link
             to="/contact"
             onClick={(e) => { e.preventDefault(); setOpen(false); openBooking(); }}
-            className="btn-teal mt-8 justify-center"
+            className="btn-teal mt-6 justify-center"
             data-testid="mobile-cta"
           >
             Book a Free Audit <ArrowRight size={16} />

@@ -32,7 +32,7 @@
 - Home: https://www.wehelpautomate.com/
 - Services: https://www.wehelpautomate.com/services
 - AI Workforce: https://www.wehelpautomate.com/ai-workforce
-- Work: https://www.wehelpautomate.com/work
+- Success Stories: https://www.wehelpautomate.com/success-stories
 - About: https://www.wehelpautomate.com/about
 - Contact: https://www.wehelpautomate.com/contact
 - Resources: https://www.wehelpautomate.com/resources
