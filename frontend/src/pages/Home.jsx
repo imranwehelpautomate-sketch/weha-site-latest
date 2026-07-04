@@ -894,7 +894,7 @@ export default function Home() {
                   style={{ background: "color-mix(in srgb, var(--weha-bg) 74%, transparent)" }}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
+                  exit={{ opacity: 0, transition: { duration: 0.2, ease: EASE } }}
                   transition={{ duration: 0.35, ease: EASE }}
                   onClick={() => setExpandedIndustry(null)}
                 />,
@@ -903,7 +903,7 @@ export default function Home() {
                   className="fixed inset-0 z-[130] flex items-center justify-center p-4 sm:p-6 pointer-events-none"
                   initial={{ opacity: 0, scale: 0.8, y: 28 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.88, y: 16 }}
+                  exit={{ opacity: 0, scale: 0.9, y: 12, transition: { duration: 0.28, ease: EASE } }}
                   transition={{ duration: 0.55, ease: EASE }}
                 >
                   <div
@@ -1002,7 +1002,16 @@ export default function Home() {
                     {/* CTA */}
                     <div className="mt-10 pt-8 border-t border-weha-border flex flex-col sm:flex-row sm:items-center gap-4">
                       <Magnetic>
-                        <button type="button" onClick={openBooking} className="btn-teal" data-cursor="hover">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setExpandedIndustry(null);
+                            openBooking();
+                          }}
+                          className="btn-teal"
+                          data-cursor="hover"
+                          data-testid="industry-book-audit"
+                        >
                           Book Free Audit <ArrowRight size={15} />
                         </button>
                       </Magnetic>
