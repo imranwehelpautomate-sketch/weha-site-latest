@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
@@ -493,6 +493,19 @@ export default function Home() {
 
   // "Who this is for" — index of the expanded industry (null = grid view).
   const [expandedIndustry, setExpandedIndustry] = useState(null);
+  // The expanding card overlays the grid; we lift the wrapper's min-height to the
+  // expanded panel's height so the section grows smoothly and nothing below it
+  // is ever overlapped (matters most on mobile where the grid is short).
+  const whoDetailRef = useRef(null);
+  const [whoWrapMinH, setWhoWrapMinH] = useState(undefined);
+  useLayoutEffect(() => {
+    if (expandedIndustry === null) {
+      setWhoWrapMinH(undefined);
+      return;
+    }
+    const el = whoDetailRef.current;
+    if (el) setWhoWrapMinH(el.offsetHeight);
+  }, [expandedIndustry]);
 
   // "Sound familiar?" slider — horizontal scroll with arrow controls.
   const painsRef = useRef(null);
@@ -825,174 +838,187 @@ export default function Home() {
             </p>
           </Reveal>
 
-          {/* Grid of industry cards ⇄ single expanded detail card */}
-          <div className="mt-12">
-            <AnimatePresence mode="wait">
-              {expandedIndustry === null ? (
-                <motion.div
-                  key="who-grid"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.25, ease: EASE }}
-                >
-                  <div className="flex md:grid md:grid-cols-2 gap-5 overflow-x-auto md:overflow-visible hide-scrollbar -mx-5 px-5 md:mx-0 md:px-0">
-                    {industries.map((v, i) => (
-                      <Reveal key={v.title} delay={(i % 2) * 0.06}>
-                        <motion.div
-                          className="weha-card p-7 min-w-[78vw] sm:min-w-[340px] md:min-w-0 h-full flex flex-col"
-                          data-cursor="hover"
-                          whileHover={{ y: -6 }}
-                          transition={{ type: "spring", stiffness: 300, damping: 24 }}
-                        >
+          {/* Grid of industry cards. Clicking a card grows it (shared-layout)
+              to cover the others, which stay dimmed in the background. */}
+          <div className="relative mt-12" style={whoWrapMinH ? { minHeight: whoWrapMinH } : undefined}>
+            <div className="flex md:grid md:grid-cols-2 gap-5 overflow-x-auto md:overflow-visible hide-scrollbar -mx-5 px-5 md:mx-0 md:px-0">
+              {industries.map((v, i) => (
+                <Reveal key={v.title} delay={(i % 2) * 0.06}>
+                  <motion.div
+                    layoutId={expandedIndustry === i ? undefined : `ind-card-${i}`}
+                    onClick={() => setExpandedIndustry(i)}
+                    className="weha-card p-7 min-w-[78vw] sm:min-w-[340px] md:min-w-0 h-full flex flex-col cursor-pointer"
+                    data-cursor="hover"
+                    whileHover={{ y: -6 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 24 }}
+                    data-testid={`industry-card-${i}`}
+                  >
+                    <span
+                      className="self-start inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold tracking-wide"
+                      style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}
+                    >
+                      {v.tag}
+                    </span>
+                    <h3 className="weha-display text-2xl mt-4 text-weha-text">{v.title}</h3>
+                    <p className="mt-4 text-weha-muted leading-relaxed flex-1">{v.body}</p>
+                    <div className="mt-6">
+                      <span
+                        className="btn-ghost"
+                        data-cursor="hover"
+                        data-testid={`industry-expand-${i}`}
+                      >
+                        Expand <Plus size={15} />
+                      </span>
+                    </div>
+                  </motion.div>
+                </Reveal>
+              ))}
+            </div>
+
+            <div className="mt-6 rounded-2xl border border-dashed border-weha-border p-6 md:p-7 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <p className="text-weha-muted leading-relaxed max-w-2xl">
+                A different business? The bottlenecks rhyme. If it is manual and it repeats, we can
+                probably automate it.
+              </p>
+              <button type="button" onClick={openBooking} className="btn-ghost shrink-0" data-cursor="hover">
+                Book the free audit <ArrowRight size={15} />
+              </button>
+            </div>
+
+            {/* Expanding overlay */}
+            <AnimatePresence>
+              {expandedIndustry !== null && (
+                <>
+                  <motion.div
+                    key="who-backdrop"
+                    className="absolute inset-0 z-10 rounded-2xl backdrop-blur-sm"
+                    style={{ background: "color-mix(in srgb, var(--weha-bg) 68%, transparent)" }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.25, ease: EASE }}
+                    onClick={() => setExpandedIndustry(null)}
+                  />
+                  <motion.div
+                    key={`who-detail-${expandedIndustry}`}
+                    layoutId={`ind-card-${expandedIndustry}`}
+                    ref={whoDetailRef}
+                    className="absolute inset-x-0 top-0 z-20 weha-card p-7 md:p-10 overflow-hidden"
+                    transition={{ type: "spring", stiffness: 260, damping: 30 }}
+                    data-testid="industry-detail"
+                  >
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.12, duration: 0.3, ease: EASE }}
+                    >
+                      {/* header */}
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
                           <span
-                            className="self-start inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold tracking-wide"
+                            className="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold tracking-wide"
                             style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}
                           >
-                            {v.tag}
+                            {industries[expandedIndustry].tag}
                           </span>
-                          <h3 className="weha-display text-2xl mt-4 text-weha-text">{v.title}</h3>
-                          <p className="mt-4 text-weha-muted leading-relaxed flex-1">{v.body}</p>
-                          <div className="mt-6">
-                            <button
-                              type="button"
-                              onClick={() => setExpandedIndustry(i)}
-                              className="btn-ghost"
-                              data-cursor="hover"
-                              data-testid={`industry-expand-${i}`}
-                            >
-                              Expand <Plus size={15} />
-                            </button>
+                          <h3 className="weha-display text-3xl md:text-4xl mt-4 text-weha-text">
+                            {industries[expandedIndustry].title}
+                          </h3>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setExpandedIndustry(null)}
+                          aria-label="Close"
+                          className="shrink-0 inline-flex items-center gap-2 rounded-full border border-weha-border px-4 py-2 text-sm text-weha-muted hover:text-weha-text hover:border-weha-teal transition-colors"
+                          data-cursor="hover"
+                          data-testid="industry-detail-close"
+                        >
+                          <X size={16} /> Close
+                        </button>
+                      </div>
+
+                      <div className="mt-8 grid gap-9 md:gap-10 md:grid-cols-2">
+                        {/* Business use case */}
+                        <div>
+                          <div className="flex items-center gap-2.5">
+                            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
+                              <Lightbulb size={16} />
+                            </span>
+                            <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">Business use case</h4>
                           </div>
-                        </motion.div>
-                      </Reveal>
-                    ))}
-                  </div>
-                  <div className="mt-6 rounded-2xl border border-dashed border-weha-border p-6 md:p-7 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                    <p className="text-weha-muted leading-relaxed max-w-2xl">
-                      A different business? The bottlenecks rhyme. If it is manual and it repeats, we can
-                      probably automate it.
-                    </p>
-                    <button type="button" onClick={openBooking} className="btn-ghost shrink-0" data-cursor="hover">
-                      Book the free audit <ArrowRight size={15} />
-                    </button>
-                  </div>
-                </motion.div>
-              ) : (
-                <motion.div
-                  key={`who-detail-${expandedIndustry}`}
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 24 }}
-                  transition={{ duration: 0.32, ease: EASE }}
-                  className="weha-card p-7 md:p-10"
-                  data-testid="industry-detail"
-                >
-                  {/* header */}
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <span
-                        className="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold tracking-wide"
-                        style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}
-                      >
-                        {industries[expandedIndustry].tag}
-                      </span>
-                      <h3 className="weha-display text-3xl md:text-4xl mt-4 text-weha-text">
-                        {industries[expandedIndustry].title}
-                      </h3>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => setExpandedIndustry(null)}
-                      aria-label="Close"
-                      className="shrink-0 inline-flex items-center gap-2 rounded-full border border-weha-border px-4 py-2 text-sm text-weha-muted hover:text-weha-text hover:border-weha-teal transition-colors"
-                      data-cursor="hover"
-                      data-testid="industry-detail-close"
-                    >
-                      <X size={16} /> Close
-                    </button>
-                  </div>
+                          <p className="mt-4 text-weha-muted leading-relaxed">{industries[expandedIndustry].useCase}</p>
+                        </div>
 
-                  <div className="mt-8 grid gap-9 md:gap-10 md:grid-cols-2">
-                    {/* Business use case */}
-                    <div>
-                      <div className="flex items-center gap-2.5">
-                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
-                          <Lightbulb size={16} />
-                        </span>
-                        <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">Business use case</h4>
-                      </div>
-                      <p className="mt-4 text-weha-muted leading-relaxed">{industries[expandedIndustry].useCase}</p>
-                    </div>
+                        {/* Painpoints */}
+                        <div>
+                          <div className="flex items-center gap-2.5">
+                            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
+                              <AlertCircle size={16} />
+                            </span>
+                            <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">Painpoints we fix</h4>
+                          </div>
+                          <ul className="mt-4 space-y-3">
+                            {industries[expandedIndustry].painpoints.map((p) => (
+                              <li key={p} className="flex gap-3 text-weha-muted leading-relaxed">
+                                <span className="mt-2 h-1.5 w-1.5 rounded-full shrink-0" style={{ background: "var(--weha-teal)" }} />
+                                <span>{p}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
 
-                    {/* Painpoints */}
-                    <div>
-                      <div className="flex items-center gap-2.5">
-                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
-                          <AlertCircle size={16} />
-                        </span>
-                        <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">Painpoints we fix</h4>
-                      </div>
-                      <ul className="mt-4 space-y-3">
-                        {industries[expandedIndustry].painpoints.map((p) => (
-                          <li key={p} className="flex gap-3 text-weha-muted leading-relaxed">
-                            <span className="mt-2 h-1.5 w-1.5 rounded-full shrink-0" style={{ background: "var(--weha-teal)" }} />
-                            <span>{p}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                        {/* Departments / processes */}
+                        <div>
+                          <div className="flex items-center gap-2.5">
+                            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
+                              <LayoutDashboard size={16} />
+                            </span>
+                            <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">Processes we automate</h4>
+                          </div>
+                          <div className="mt-4 flex flex-wrap gap-2">
+                            {industries[expandedIndustry].departments.map((d) => (
+                              <span key={d} className="rounded-lg border border-weha-border bg-weha-surface px-3 py-1.5 text-sm text-weha-text">
+                                {d}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
 
-                    {/* Departments / processes */}
-                    <div>
-                      <div className="flex items-center gap-2.5">
-                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
-                          <LayoutDashboard size={16} />
-                        </span>
-                        <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">Processes we automate</h4>
+                        {/* Tech stack */}
+                        <div>
+                          <div className="flex items-center gap-2.5">
+                            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
+                              <Share2 size={16} />
+                            </span>
+                            <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">Typical tech stack</h4>
+                          </div>
+                          <div className="mt-4 flex flex-wrap gap-2.5">
+                            {industries[expandedIndustry].stack.map((s) => (
+                              <StackLogo key={s.name} {...s} />
+                            ))}
+                          </div>
+                        </div>
                       </div>
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        {industries[expandedIndustry].departments.map((d) => (
-                          <span key={d} className="rounded-lg border border-weha-border bg-weha-surface px-3 py-1.5 text-sm text-weha-text">
-                            {d}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
 
-                    {/* Tech stack */}
-                    <div>
-                      <div className="flex items-center gap-2.5">
-                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
-                          <Share2 size={16} />
-                        </span>
-                        <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">Typical tech stack</h4>
+                      {/* CTA */}
+                      <div className="mt-10 pt-8 border-t border-weha-border flex flex-col sm:flex-row sm:items-center gap-4">
+                        <Magnetic>
+                          <button type="button" onClick={openBooking} className="btn-teal" data-cursor="hover">
+                            Book Free Audit <ArrowRight size={15} />
+                          </button>
+                        </Magnetic>
+                        <button
+                          type="button"
+                          onClick={() => setExpandedIndustry(null)}
+                          className="btn-ghost"
+                          data-cursor="hover"
+                        >
+                          <ChevronLeft size={15} /> Back to all
+                        </button>
                       </div>
-                      <div className="mt-4 flex flex-wrap gap-2.5">
-                        {industries[expandedIndustry].stack.map((s) => (
-                          <StackLogo key={s.name} {...s} />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* CTA */}
-                  <div className="mt-10 pt-8 border-t border-weha-border flex flex-col sm:flex-row sm:items-center gap-4">
-                    <Magnetic>
-                      <button type="button" onClick={openBooking} className="btn-teal" data-cursor="hover">
-                        Book Free Audit <ArrowRight size={15} />
-                      </button>
-                    </Magnetic>
-                    <button
-                      type="button"
-                      onClick={() => setExpandedIndustry(null)}
-                      className="btn-ghost"
-                      data-cursor="hover"
-                    >
-                      <ChevronLeft size={15} /> Back to all
-                    </button>
-                  </div>
-                </motion.div>
+                    </motion.div>
+                  </motion.div>
+                </>
               )}
             </AnimatePresence>
           </div>
