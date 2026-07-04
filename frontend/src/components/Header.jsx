@@ -276,7 +276,7 @@ export default function Header() {
           open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >
-        <div className="px-6 pt-6 pb-8 flex flex-col gap-1">
+        <div className="px-6 pt-6 pb-6 flex flex-col gap-1">
           {links.map((l, i) => {
             if (l.label === "Resources") {
               return (
@@ -333,7 +333,7 @@ export default function Header() {
           <Link
             to="/contact"
             onClick={(e) => { e.preventDefault(); setOpen(false); openBooking(); }}
-            className="btn-teal mt-6 justify-center"
+            className="btn-teal mt-4 justify-center"
             data-testid="mobile-cta"
           >
             Book a Free Audit <ArrowRight size={16} />

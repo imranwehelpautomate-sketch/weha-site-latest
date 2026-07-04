@@ -151,7 +151,7 @@ const serviceCards = [
   },
   {
     icon: Sparkles,
-    name: "Agentic Automation",
+    name: "Agentic Automation | AI Workforce",
     tagline: "AI that reasons, decides, and gets work done on its own.",
     description:
       "Custom AI agents that handle tasks needing judgment. They read and respond, triage, draft, and make multi step decisions end to end, instead of just following fixed rules.",
