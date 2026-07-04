@@ -999,7 +999,7 @@ export default function Home() {
 
                         {/* CTA — kept here (below the logos) so it stays visible
                             without scrolling to the very bottom of the modal. */}
-                        <div className="mt-7 flex flex-col sm:flex-row sm:items-center gap-4">
+                        <div className="mt-7">
                           <Magnetic>
                             <button
                               type="button"
@@ -1014,14 +1014,6 @@ export default function Home() {
                               Book Free Audit <ArrowRight size={15} />
                             </button>
                           </Magnetic>
-                          <button
-                            type="button"
-                            onClick={() => setExpandedIndustry(null)}
-                            className="btn-ghost"
-                            data-cursor="hover"
-                          >
-                            <ChevronLeft size={15} /> Back to all
-                          </button>
                         </div>
                       </div>
                     </div>
