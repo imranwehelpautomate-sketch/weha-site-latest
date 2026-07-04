@@ -25,6 +25,7 @@ import {
   Table,
   ChevronLeft,
   ChevronRight,
+  X,
 } from "lucide-react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import Reveal from "@/components/Reveal";
@@ -172,63 +173,266 @@ const proofSteps = [
   { icon: Table, title: "Books updated", caption: "Logged and tracked, zero typing" },
 ];
 
-// Who this is for.
+// Who this is for. Each entry powers a card + an expanded detail view.
+// stack logos: { name, slug } => /logos/{slug}.svg (or ext), { name, domain } => favicon.
 const industries = [
   {
     tag: "Agencies",
     title: "Marketing & Creative Agencies",
     body: "Client reporting that writes itself. Onboarding that runs without the founder. More retainers on the same headcount.",
+    useCase:
+      "Agencies win on output and margin. We automate the repetitive delivery work — reporting, onboarding and content ops — so the same team serves more clients without burning out or hiring ahead of revenue.",
+    painpoints: [
+      "Client reporting eats a full day every month, for every account.",
+      "Onboarding still depends on the founder chasing logins and assets.",
+      "Content and campaigns ship late because the tools do not talk to each other.",
+      "No single view of what is due, live or overdue across every client.",
+    ],
+    departments: [
+      "Client reporting & dashboards",
+      "Onboarding & asset intake",
+      "Content production & scheduling",
+      "Campaign QA & approvals",
+      "Billing & retainer tracking",
+      "Lead nurture & pitches",
+    ],
+    stack: [
+      { name: "HubSpot", slug: "hubspot" },
+      { name: "Notion", slug: "notion" },
+      { name: "Slack", slug: "slack" },
+      { name: "Airtable", slug: "airtable" },
+      { name: "Google Sheets", slug: "googlesheets" },
+      { name: "OpenAI", slug: "openai" },
+    ],
   },
   {
     tag: "Recruitment",
     title: "Recruitment Agencies",
     body: "Candidate screening, CV formatting, interview scheduling and follow-ups — automated end to end. Great candidates get a reply in minutes, not days, so you place roles faster.",
+    useCase:
+      "Placement speed is everything. We automate sourcing admin, screening and scheduling so recruiters spend their day talking to people — not formatting CVs or copying data between systems.",
+    painpoints: [
+      "Hundreds of CVs to screen and reformat by hand for every role.",
+      "Great candidates go cold before anyone finds time to reply.",
+      "Interview scheduling is endless back-and-forth across calendars.",
+      "The ATS is always out of date because every update is manual.",
+    ],
+    departments: [
+      "Candidate sourcing & CV parsing",
+      "Screening & shortlisting",
+      "CV reformatting to your template",
+      "Interview scheduling",
+      "Candidate & client comms",
+      "ATS / CRM hygiene",
+    ],
+    stack: [
+      { name: "LinkedIn", domain: "linkedin.com" },
+      { name: "Calendly", domain: "calendly.com" },
+      { name: "Gmail", domain: "mail.google.com" },
+      { name: "HubSpot", slug: "hubspot" },
+      { name: "Slack", slug: "slack" },
+      { name: "OpenAI", slug: "openai" },
+    ],
   },
   {
     tag: "Remote",
     title: "Work From Home & Remote Teams",
-    body: "A workforce scattered across cities — sometimes across the globe. Automations keep everyone in sync: handoffs, approvals, status updates and reporting run themselves across every timezone, so nothing gets lost between inboxes and no one waits on a colleague who is asleep.",
+    body: "A workforce scattered across cities — sometimes across the globe. Automations keep everyone in sync so nothing gets lost between inboxes and no one waits on a colleague who is asleep.",
+    useCase:
+      "When your team is spread across cities — or continents — coordination becomes the hidden tax. We wire your tools together so handoffs, approvals and status updates move on their own, and work keeps flowing while half the team sleeps.",
+    painpoints: [
+      "Work stalls for hours waiting on a colleague in another timezone.",
+      "Status updates and approvals get buried in chat and email.",
+      "No single source of truth for who owns what, right now.",
+      "Managers lose hours stitching scattered updates into reports.",
+    ],
+    departments: [
+      "Task & handoff routing",
+      "Approvals & sign-offs",
+      "Async status reporting",
+      "Onboarding & IT access",
+      "Meeting notes & follow-ups",
+      "Timezone coordination",
+    ],
+    stack: [
+      { name: "Slack", slug: "slack" },
+      { name: "Notion", slug: "notion" },
+      { name: "Google Calendar", domain: "calendar.google.com" },
+      { name: "Zoom", domain: "zoom.us" },
+      { name: "Zapier", slug: "zapier" },
+      { name: "Gmail", domain: "mail.google.com" },
+    ],
   },
   {
     tag: "Real Estate",
     title: "Real Estate",
     body: "New enquiries answered instantly, viewings booked, listings kept in sync and follow-ups nurtured on their own. Every lead worked around the clock while you focus on closing.",
+    useCase:
+      "In property, the first agent to respond usually wins the listing or the buyer. We make sure that is you — instant replies, booked viewings, synced listings and follow-ups that never let a warm lead go cold.",
+    painpoints: [
+      "Enquiries arrive after hours and get answered far too late.",
+      "Listings drift out of sync across portals and the website.",
+      "Viewings are a scheduling headache across buyers and owners.",
+      "Follow-up stops after the first call, so leads quietly slip away.",
+    ],
+    departments: [
+      "Enquiry response & routing",
+      "Viewing scheduling",
+      "Listing sync across portals",
+      "Lead nurture & drip",
+      "Document & contract prep",
+      "CRM & pipeline updates",
+    ],
+    stack: [
+      { name: "WhatsApp", slug: "whatsapp" },
+      { name: "HubSpot", slug: "hubspot" },
+      { name: "Calendly", domain: "calendly.com" },
+      { name: "DocuSign", domain: "docusign.com" },
+      { name: "Gmail", domain: "mail.google.com" },
+      { name: "OpenAI", slug: "openai" },
+    ],
   },
   {
     tag: "Online",
     title: "Online Businesses",
     body: "Orders, support, reviews and retention flows running 24/7. The revenue playbook you keep meaning to run, finally on autopilot.",
+    useCase:
+      "If your storefront runs online, revenue leaks quietly — unanswered messages, missed follow-ups, reviews never requested. We put the whole retention and support playbook on autopilot so nothing worth money slips through.",
+    painpoints: [
+      "Customer messages pile up across channels and get missed.",
+      "Post-purchase follow-ups and review requests never get sent.",
+      "Refunds, FAQs and order questions eat the team's whole day.",
+      "No time to run the retention flows you already planned.",
+    ],
+    departments: [
+      "Multi-channel support triage",
+      "Order & delivery updates",
+      "Reviews & UGC requests",
+      "Retention & win-back flows",
+      "FAQ & self-serve deflection",
+      "Reporting & KPIs",
+    ],
+    stack: [
+      { name: "WhatsApp", slug: "whatsapp" },
+      { name: "Stripe", domain: "stripe.com" },
+      { name: "Zendesk", domain: "zendesk.com" },
+      { name: "Slack", slug: "slack" },
+      { name: "Zapier", slug: "zapier" },
+      { name: "OpenAI", slug: "openai" },
+    ],
   },
   {
     tag: "Ecommerce",
     title: "Ecommerce & D2C Brands",
     body: "Abandoned carts chased, reviews requested, support triaged. The revenue playbook, finally running 24/7.",
+    useCase:
+      "D2C margins live and die on repeat purchases. We automate the revenue plays — abandoned carts, reviews, support and win-backs — so your store sells around the clock without a bigger team.",
+    painpoints: [
+      "Abandoned carts are never chased consistently.",
+      "Support tickets spike during launches and overwhelm the team.",
+      "Reviews and UGC are left on the table.",
+      "Win-back and loyalty flows exist only on paper.",
+    ],
+    departments: [
+      "Abandoned cart recovery",
+      "Support & returns triage",
+      "Reviews & loyalty",
+      "Post-purchase upsell",
+      "Inventory & fulfilment alerts",
+      "Marketing reporting",
+    ],
+    stack: [
+      { name: "Shopify", domain: "shopify.com" },
+      { name: "Stripe", domain: "stripe.com" },
+      { name: "Mailchimp", domain: "mailchimp.com" },
+      { name: "WhatsApp", slug: "whatsapp" },
+      { name: "Zapier", slug: "zapier" },
+      { name: "OpenAI", slug: "openai" },
+    ],
   },
   {
     tag: "SaaS",
     title: "SaaS & Tech Startups",
     body: "Every trial signup and demo request answered in minutes. Your pipeline updates itself while you ship product.",
+    useCase:
+      "For SaaS, speed to lead and time-to-value decide growth. We automate trial onboarding, lead response and health tracking so activation goes up and churn signals surface before it is too late.",
+    painpoints: [
+      "Demo and trial signups wait too long for a first reply.",
+      "Onboarding is one-size-fits-all, so activation lags.",
+      "At-risk accounts churn quietly with no early warning.",
+      "The pipeline and CRM are always slightly out of date.",
+    ],
+    departments: [
+      "Lead response & routing",
+      "Trial onboarding sequences",
+      "Product-usage tracking",
+      "Churn / at-risk alerts",
+      "Pipeline & CRM sync",
+      "Customer comms",
+    ],
+    stack: [
+      { name: "HubSpot", slug: "hubspot" },
+      { name: "Slack", slug: "slack" },
+      { name: "Stripe", domain: "stripe.com" },
+      { name: "Intercom", domain: "intercom.com" },
+      { name: "GitHub", slug: "github" },
+      { name: "OpenAI", slug: "openai" },
+    ],
   },
   {
     tag: "Consultants",
     title: "Coaches, Consultants & Online Services",
     body: "Discovery calls booked, no-shows reminded, follow-ups sent. You sell and deliver; the admin runs itself.",
+    useCase:
+      "Your time is the product. We automate everything around the session — booking, reminders, intake, follow-ups and content — so you spend your hours delivering, not doing admin.",
+    painpoints: [
+      "Discovery calls turn into a scheduling ping-pong match.",
+      "No-shows quietly kill the calendar and the revenue.",
+      "Intake forms and prep are chased manually every single time.",
+      "Follow-up and nurture stop the moment a call ends.",
+    ],
+    departments: [
+      "Discovery & session booking",
+      "Reminders & no-show reduction",
+      "Client intake & prep",
+      "Follow-up & nurture",
+      "Content & newsletter",
+      "Payments & invoicing",
+    ],
+    stack: [
+      { name: "Calendly", domain: "calendly.com" },
+      { name: "Zoom", domain: "zoom.us" },
+      { name: "Stripe", domain: "stripe.com" },
+      { name: "Typeform", domain: "typeform.com" },
+      { name: "Gmail", domain: "mail.google.com" },
+      { name: "OpenAI", slug: "openai" },
+    ],
   },
 ];
 
-// Animated pills for the "Who this is for" section.
-const whoPills = [
-  "Marketing Agencies",
-  "Recruitment Agencies",
-  "Remote Teams",
-  "Real Estate",
-  "Online Businesses",
-  "Ecommerce & D2C",
-  "SaaS & Startups",
-  "Coaches & Consultants",
-  "Creative Studios",
-  "Global Teams",
-];
+// Renders a brand logo for the tech-stack grid. Uses a local SVG/PNG when a
+// slug is given, otherwise falls back to the Google favicon service by domain.
+const stackFavicon = (domain) =>
+  `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+
+function StackLogo({ name, slug, domain, ext = "svg" }) {
+  const src = domain
+    ? stackFavicon(domain)
+    : `${process.env.PUBLIC_URL || ""}/logos/${slug}.${ext}`;
+  return (
+    <div className="flex items-center gap-2.5 rounded-full border border-weha-border bg-weha-surface px-3.5 py-2">
+      <img
+        src={src}
+        alt={`${name} logo`}
+        className="h-5 w-5 object-contain rounded-sm"
+        loading="lazy"
+        decoding="async"
+        onError={(e) => { e.currentTarget.style.display = "none"; }}
+      />
+      <span className="text-sm font-medium text-weha-text whitespace-nowrap">{name}</span>
+    </div>
+  );
+}
 
 // Why WeHA (dark section) bullets, unchanged.
 const whyWeha = [
@@ -286,6 +490,9 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState(FLOWS[0].id);
   const activeFlow = FLOWS.find((f) => f.id === activeTab) || FLOWS[0];
   const [openFaq, setOpenFaq] = useState(0);
+
+  // "Who this is for" — index of the expanded industry (null = grid view).
+  const [expandedIndustry, setExpandedIndustry] = useState(null);
 
   // "Sound familiar?" slider — horizontal scroll with arrow controls.
   const painsRef = useRef(null);
@@ -618,70 +825,177 @@ export default function Home() {
             </p>
           </Reveal>
 
-          {/* Animated business-area pills */}
-          <div className="mt-8 flex flex-wrap gap-2.5 sm:gap-3">
-            {whoPills.map((label, i) => (
-              <motion.span
-                key={label}
-                className="inline-flex items-center gap-2 rounded-full border border-weha-border bg-weha-surface px-4 py-2 text-sm font-medium text-weha-text cursor-default"
-                initial={{ opacity: 0, y: 14, scale: 0.9 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ delay: i * 0.06, duration: 0.5, ease: EASE }}
-                whileHover={{
-                  scale: 1.06,
-                  borderColor: "var(--weha-teal)",
-                  color: "var(--weha-teal)",
-                }}
-                data-cursor="hover"
-              >
-                <motion.span
-                  className="h-1.5 w-1.5 rounded-full shrink-0"
-                  style={{ background: "var(--weha-teal)" }}
-                  animate={{ opacity: [0.4, 1, 0.4], scale: [1, 1.3, 1] }}
-                  transition={{
-                    duration: 2.4 + (i % 4) * 0.4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-                {label}
-              </motion.span>
-            ))}
-          </div>
-
-          <div className="mt-12 flex md:grid md:grid-cols-2 gap-5 overflow-x-auto md:overflow-visible hide-scrollbar -mx-5 px-5 md:mx-0 md:px-0">
-            {industries.map((v, i) => (
-              <Reveal key={v.title} delay={(i % 2) * 0.08}>
+          {/* Grid of industry cards ⇄ single expanded detail card */}
+          <div className="mt-12">
+            <AnimatePresence mode="wait">
+              {expandedIndustry === null ? (
                 <motion.div
-                  className="weha-card p-7 min-w-[78vw] sm:min-w-[340px] md:min-w-0 h-full"
-                  data-cursor="hover"
-                  whileHover={{ y: -6 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 24 }}
+                  key="who-grid"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.25, ease: EASE }}
                 >
-                  <span
-                    className="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold tracking-wide"
-                    style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}
-                  >
-                    {v.tag}
-                  </span>
-                  <h3 className="weha-display text-2xl mt-4 text-weha-text">{v.title}</h3>
-                  <p className="mt-4 text-weha-muted leading-relaxed">{v.body}</p>
+                  <div className="flex md:grid md:grid-cols-2 gap-5 overflow-x-auto md:overflow-visible hide-scrollbar -mx-5 px-5 md:mx-0 md:px-0">
+                    {industries.map((v, i) => (
+                      <Reveal key={v.title} delay={(i % 2) * 0.06}>
+                        <motion.div
+                          className="weha-card p-7 min-w-[78vw] sm:min-w-[340px] md:min-w-0 h-full flex flex-col"
+                          data-cursor="hover"
+                          whileHover={{ y: -6 }}
+                          transition={{ type: "spring", stiffness: 300, damping: 24 }}
+                        >
+                          <span
+                            className="self-start inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold tracking-wide"
+                            style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}
+                          >
+                            {v.tag}
+                          </span>
+                          <h3 className="weha-display text-2xl mt-4 text-weha-text">{v.title}</h3>
+                          <p className="mt-4 text-weha-muted leading-relaxed flex-1">{v.body}</p>
+                          <div className="mt-6">
+                            <button
+                              type="button"
+                              onClick={() => setExpandedIndustry(i)}
+                              className="btn-ghost"
+                              data-cursor="hover"
+                              data-testid={`industry-expand-${i}`}
+                            >
+                              Expand <Plus size={15} />
+                            </button>
+                          </div>
+                        </motion.div>
+                      </Reveal>
+                    ))}
+                  </div>
+                  <div className="mt-6 rounded-2xl border border-dashed border-weha-border p-6 md:p-7 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                    <p className="text-weha-muted leading-relaxed max-w-2xl">
+                      A different business? The bottlenecks rhyme. If it is manual and it repeats, we can
+                      probably automate it.
+                    </p>
+                    <button type="button" onClick={openBooking} className="btn-ghost shrink-0" data-cursor="hover">
+                      Book the free audit <ArrowRight size={15} />
+                    </button>
+                  </div>
                 </motion.div>
-              </Reveal>
-            ))}
+              ) : (
+                <motion.div
+                  key={`who-detail-${expandedIndustry}`}
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 24 }}
+                  transition={{ duration: 0.32, ease: EASE }}
+                  className="weha-card p-7 md:p-10"
+                  data-testid="industry-detail"
+                >
+                  {/* header */}
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <span
+                        className="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold tracking-wide"
+                        style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}
+                      >
+                        {industries[expandedIndustry].tag}
+                      </span>
+                      <h3 className="weha-display text-3xl md:text-4xl mt-4 text-weha-text">
+                        {industries[expandedIndustry].title}
+                      </h3>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setExpandedIndustry(null)}
+                      aria-label="Close"
+                      className="shrink-0 inline-flex items-center gap-2 rounded-full border border-weha-border px-4 py-2 text-sm text-weha-muted hover:text-weha-text hover:border-weha-teal transition-colors"
+                      data-cursor="hover"
+                      data-testid="industry-detail-close"
+                    >
+                      <X size={16} /> Close
+                    </button>
+                  </div>
+
+                  <div className="mt-8 grid gap-9 md:gap-10 md:grid-cols-2">
+                    {/* Business use case */}
+                    <div>
+                      <div className="flex items-center gap-2.5">
+                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
+                          <Lightbulb size={16} />
+                        </span>
+                        <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">Business use case</h4>
+                      </div>
+                      <p className="mt-4 text-weha-muted leading-relaxed">{industries[expandedIndustry].useCase}</p>
+                    </div>
+
+                    {/* Painpoints */}
+                    <div>
+                      <div className="flex items-center gap-2.5">
+                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
+                          <AlertCircle size={16} />
+                        </span>
+                        <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">Painpoints we fix</h4>
+                      </div>
+                      <ul className="mt-4 space-y-3">
+                        {industries[expandedIndustry].painpoints.map((p) => (
+                          <li key={p} className="flex gap-3 text-weha-muted leading-relaxed">
+                            <span className="mt-2 h-1.5 w-1.5 rounded-full shrink-0" style={{ background: "var(--weha-teal)" }} />
+                            <span>{p}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Departments / processes */}
+                    <div>
+                      <div className="flex items-center gap-2.5">
+                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
+                          <LayoutDashboard size={16} />
+                        </span>
+                        <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">Processes we automate</h4>
+                      </div>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {industries[expandedIndustry].departments.map((d) => (
+                          <span key={d} className="rounded-lg border border-weha-border bg-weha-surface px-3 py-1.5 text-sm text-weha-text">
+                            {d}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Tech stack */}
+                    <div>
+                      <div className="flex items-center gap-2.5">
+                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
+                          <Share2 size={16} />
+                        </span>
+                        <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">Typical tech stack</h4>
+                      </div>
+                      <div className="mt-4 flex flex-wrap gap-2.5">
+                        {industries[expandedIndustry].stack.map((s) => (
+                          <StackLogo key={s.name} {...s} />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* CTA */}
+                  <div className="mt-10 pt-8 border-t border-weha-border flex flex-col sm:flex-row sm:items-center gap-4">
+                    <Magnetic>
+                      <button type="button" onClick={openBooking} className="btn-teal" data-cursor="hover">
+                        Book Free Audit <ArrowRight size={15} />
+                      </button>
+                    </Magnetic>
+                    <button
+                      type="button"
+                      onClick={() => setExpandedIndustry(null)}
+                      className="btn-ghost"
+                      data-cursor="hover"
+                    >
+                      <ChevronLeft size={15} /> Back to all
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
-          <Reveal delay={0.1}>
-            <div className="mt-6 rounded-2xl border border-dashed border-weha-border p-6 md:p-7 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <p className="text-weha-muted leading-relaxed max-w-2xl">
-                A different business? The bottlenecks rhyme. If it is manual and it repeats, we can
-                probably automate it.
-              </p>
-              <button type="button" onClick={openBooking} className="btn-ghost shrink-0" data-cursor="hover">
-                Book the free audit <ArrowRight size={15} />
-              </button>
-            </div>
-          </Reveal>
         </div>
       </section>
       </ScrollSection>
