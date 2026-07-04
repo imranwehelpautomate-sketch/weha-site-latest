@@ -10,6 +10,7 @@ const CONTACT_EMAIL = "hi@wehelpautomate.com";
 
 const nav = [
   { to: "/services", label: "Services" },
+  { to: "/ai-workforce", label: "AI Workforce" },
   { to: "/work", label: "Work" },
   { to: "/resources", label: "Resources" },
   { to: "/about", label: "About" },

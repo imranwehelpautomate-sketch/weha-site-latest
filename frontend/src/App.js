@@ -15,6 +15,7 @@ import CookieConsent from "@/components/CookieConsent";
 import { PAGE_TRANSITION } from "@/lib/motion";
 import Home from "@/pages/Home";
 import Services from "@/pages/Services";
+import AIWorkforce from "@/pages/AIWorkforce";
 import Work from "@/pages/Work";
 import About from "@/pages/About";
 import Contact from "@/pages/Contact";
@@ -53,6 +54,7 @@ function AnimatedRoutes() {
         <Routes location={location}>
           <Route path="/" element={<Home />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/ai-workforce" element={<AIWorkforce />} />
           <Route path="/work" element={<Work />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
