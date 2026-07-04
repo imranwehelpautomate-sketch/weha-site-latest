@@ -996,33 +996,34 @@ export default function Home() {
                             <StackLogo key={s.name} {...s} />
                           ))}
                         </div>
-                      </div>
-                    </div>
 
-                    {/* CTA */}
-                    <div className="mt-10 pt-8 border-t border-weha-border flex flex-col sm:flex-row sm:items-center gap-4">
-                      <Magnetic>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setExpandedIndustry(null);
-                            openBooking();
-                          }}
-                          className="btn-teal"
-                          data-cursor="hover"
-                          data-testid="industry-book-audit"
-                        >
-                          Book Free Audit <ArrowRight size={15} />
-                        </button>
-                      </Magnetic>
-                      <button
-                        type="button"
-                        onClick={() => setExpandedIndustry(null)}
-                        className="btn-ghost"
-                        data-cursor="hover"
-                      >
-                        <ChevronLeft size={15} /> Back to all
-                      </button>
+                        {/* CTA — kept here (below the logos) so it stays visible
+                            without scrolling to the very bottom of the modal. */}
+                        <div className="mt-7 flex flex-col sm:flex-row sm:items-center gap-4">
+                          <Magnetic>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setExpandedIndustry(null);
+                                openBooking();
+                              }}
+                              className="btn-teal"
+                              data-cursor="hover"
+                              data-testid="industry-book-audit"
+                            >
+                              Book Free Audit <ArrowRight size={15} />
+                            </button>
+                          </Magnetic>
+                          <button
+                            type="button"
+                            onClick={() => setExpandedIndustry(null)}
+                            className="btn-ghost"
+                            data-cursor="hover"
+                          >
+                            <ChevronLeft size={15} /> Back to all
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </motion.div>,
