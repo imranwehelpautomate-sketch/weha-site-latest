@@ -473,8 +473,8 @@ const engagement = [
   {
     num: "01",
     name: "Audit",
-    meta: "90 minutes, free",
-    body: "A working session, not a sales call. We map your three most automatable workflows and build one live while you watch. You leave with a prioritized plan whether you hire us or not.",
+    meta: "30 MINUTES, free",
+    body: "A conversation, not a sales call. We map your most automatable workflows and maybe build one live while you watch. You leave with a prioritized plan whether you hire us or not.",
   },
   {
     num: "02",
