@@ -196,7 +196,7 @@ export default function Contact() {
                     <MessageCircle size={18} className="text-weha-teal" /> WhatsApp: {OFFICE.whatsapp}
                   </a>
                   <a
-                    href="https://www.linkedin.com/in/selena-thomas-9839472b8/"
+                    href="https://www.linkedin.com/company/we-help-automate/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 text-weha-text hover:text-weha-teal transition-colors"
