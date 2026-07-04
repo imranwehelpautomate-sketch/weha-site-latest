@@ -5,10 +5,8 @@ import Reveal from "@/components/Reveal";
 import ScrollSection from "@/components/ScrollSection";
 import IntegrationStrip from "@/components/IntegrationStrip";
 import ValueCalculator from "@/components/ValueCalculator";
-import Magnetic from "@/components/Magnetic";
 import Seo from "@/components/Seo";
 import { Sparkles, Check, ArrowRight, TrendingUp } from "lucide-react";
-import { useBooking } from "@/context/BookingContext";
 import { ORG, SITE, breadcrumb, graph } from "@/lib/seoSchemas";
 
 /* ------------------------------------------------------------------ *
@@ -310,7 +308,6 @@ function CaseStudyCard({ study, index }) {
 }
 
 export default function Work() {
-  const { openBooking } = useBooking();
   return (
     <div data-testid="work-page" className="overflow-x-hidden">
       <Seo
@@ -360,28 +357,9 @@ export default function Work() {
 
       <IntegrationStrip heading="The tools behind the builds" />
 
-      {/* ANONYMITY TRUST STRIP */}
-      <ScrollSection direction="right" settle depth={0} intensity={0.3}>
-        <section className="py-10 md:py-14" data-testid="work-anonymity">
-          <div className="max-w-5xl mx-auto px-5 sm:px-8">
-            <Reveal>
-              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">
-                Why no logos?
-              </span>
-            </Reveal>
-            <Reveal delay={0.08}>
-              <p className="mt-3 weha-display text-xl md:text-2xl text-weha-text max-w-3xl leading-snug border-l-2 border-weha-teal pl-5">
-                Client names stay private. For most of these teams, the automation is a competitive
-                edge they would rather keep. The systems, the stacks, and the results are real.
-              </p>
-            </Reveal>
-          </div>
-        </section>
-      </ScrollSection>
-
       {/* TOP FILLER: proof, not promises */}
       <ScrollSection direction="right">
-        <section className="section-glass py-16 md:py-20 bg-weha-surface border-y border-weha-border">
+        <section className="section-glass py-16 md:py-20 bg-weha-surface border-t border-weha-border">
           <div className="max-w-5xl mx-auto px-5 sm:px-8 text-center">
             <Reveal>
               <span className="text-xs font-semibold tracking-[0.22em] uppercase text-weha-teal">
@@ -390,13 +368,13 @@ export default function Work() {
             </Reveal>
             <Reveal delay={0.08}>
               <h2 className="weha-display text-3xl md:text-4xl mt-5 text-weha-text leading-[1.1]">
-                Different businesses, the same method.
+                Some of our Success Stories
               </h2>
             </Reveal>
             <Reveal delay={0.14}>
               <p className="mt-5 text-lg text-weha-muted leading-relaxed max-w-2xl mx-auto">
-                We build on the tools you already use, keep a human in the loop where it matters,
-                and hand over a system you own.
+                Read below some of our prized success stories that helped businesses like yours
+                accelerate growth.
               </p>
             </Reveal>
           </div>
@@ -447,45 +425,6 @@ export default function Work() {
                 The fastest way to see it is on your own workflow. Bring us the manual process eating
                 your week, and we will map the automated version with you.
               </p>
-            </Reveal>
-          </div>
-        </section>
-      </ScrollSection>
-
-      {/* CTA BRIDGE */}
-      <ScrollSection direction="left" settle depth={0.4} intensity={0.4}>
-        <section className="section-solid py-20 md:py-28" data-testid="work-cta-bridge">
-          <div className="max-w-4xl mx-auto px-5 sm:px-8">
-            <Reveal>
-              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">
-                Your turn
-              </span>
-            </Reveal>
-            <Reveal delay={0.08}>
-              <h2 className="weha-display text-3xl md:text-5xl mt-3 text-weha-text">
-                Yours is the next one we build.
-              </h2>
-            </Reveal>
-            <Reveal delay={0.14}>
-              <p className="mt-5 text-lg text-weha-muted leading-relaxed max-w-2xl">
-                Every system above started the same way: a free audit where we mapped the real
-                bottleneck and built one automation live. That is exactly how yours would start.
-              </p>
-            </Reveal>
-            <Reveal delay={0.2}>
-              <div className="mt-8">
-                <Magnetic>
-                  <button
-                    type="button"
-                    onClick={openBooking}
-                    className="btn-teal"
-                    data-cursor="hover"
-                    data-testid="work-bridge-cta"
-                  >
-                    Book my free audit <ArrowRight size={16} />
-                  </button>
-                </Magnetic>
-              </div>
             </Reveal>
           </div>
         </section>
