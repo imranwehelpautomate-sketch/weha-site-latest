@@ -781,7 +781,7 @@ export default function Home() {
                 </span>
                 <h3 className="weha-display text-2xl mt-5 text-weha-text">The AI Audit</h3>
                 <p className="mt-3 text-weha-muted leading-relaxed flex-1">
-                  A 90-minute working session. We map your three most automatable workflows and
+                  A 30-minute conversation. We map your most automatable workflows and maybe
                   build one live on the call. You leave with a prioritized plan whether you hire us
                   or not.
                 </p>
