@@ -124,6 +124,42 @@ const FLOWS = [
       { icon: Send, title: "Report in your inbox", caption: "Monday 8 AM, client-ready" },
     ],
   },
+  {
+    id: "recruitment",
+    label: "Recruitment agency",
+    steps: [
+      { icon: Inbox, title: "CVs come in", caption: "Job boards, referrals, email" },
+      { icon: Sparkles, title: "AI screens & ranks", caption: "Skills, experience, role fit" },
+      { icon: FileText, title: "CV reformatted", caption: "Your branded template, instantly" },
+      { icon: CalendarCheck, title: "Interviews booked", caption: "Candidate and client, synced" },
+      { icon: Send, title: "Updates go out", caption: "Everyone kept in the loop" },
+      { icon: Database, title: "ATS updated", caption: "Every stage logged, zero typing" },
+    ],
+  },
+  {
+    id: "realestate",
+    label: "Real estate",
+    steps: [
+      { icon: Inbox, title: "Enquiry arrives", caption: "Portal, ad, WhatsApp or call" },
+      { icon: Send, title: "Instant reply sent", caption: "Answered in seconds, day or night" },
+      { icon: CalendarCheck, title: "Viewing booked", caption: "Live calendar, auto-confirmed" },
+      { icon: RefreshCw, title: "Listings synced", caption: "Portals and site always match" },
+      { icon: BellRing, title: "Follow-ups nurtured", caption: "Warm leads never go cold" },
+      { icon: Database, title: "CRM updated", caption: "Every lead tracked to close" },
+    ],
+  },
+  {
+    id: "onboarding",
+    label: "SaaS onboarding",
+    steps: [
+      { icon: UserCheck, title: "New signup", caption: "Trial or paid, welcomed instantly" },
+      { icon: Mail, title: "Welcome sequence", caption: "Personalized to their plan" },
+      { icon: Sparkles, title: "AI guides setup", caption: "Nudges toward the aha moment" },
+      { icon: CalendarClock, title: "Check-ins scheduled", caption: "Right message, right day" },
+      { icon: AlertCircle, title: "At-risk flagged", caption: "Before they quietly churn" },
+      { icon: LayoutDashboard, title: "Health tracked", caption: "Activation and usage, live" },
+    ],
+  },
 ];
 
 // Proof / dogfooding: what happens when someone books on this very site.
