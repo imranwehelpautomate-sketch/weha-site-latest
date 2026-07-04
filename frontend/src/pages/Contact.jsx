@@ -122,8 +122,7 @@ export default function Contact() {
                     <span className="text-xs font-semibold tracking-widest uppercase text-weha-teal">Received</span>
                     <h2 className="weha-display text-3xl md:text-4xl mt-3 text-weha-text">Thanks, your audit request is in.</h2>
                     <p className="mt-4 text-weha-muted leading-relaxed">
-                      We respond within 24 hours. No sales scripts. No pitch decks. Just a
-                      conversation about your workflow.
+                      We respond to queries instantly. No Secrets, <em className="italic">it&apos;s Automated</em>
                     </p>
                     <button onClick={() => setDone(false)} className="btn-ghost mt-6" data-testid="contact-reset">
                       Send another request <ArrowRight size={15} />
@@ -176,8 +175,7 @@ export default function Contact() {
                     <MarketingConsent checked={marketingOptIn} onChange={setMarketingOptIn} testid="contact-marketing" />
 
                     <p className="text-sm text-weha-muted leading-relaxed pt-1">
-                      We respond within 24 hours. No sales scripts. No pitch decks. Just a
-                      conversation about your workflow.
+                      We respond to queries instantly. No Secrets, <em className="italic">it&apos;s Automated</em>
                     </p>
                   </form>
                 )}
