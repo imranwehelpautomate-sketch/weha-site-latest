@@ -504,6 +504,9 @@ const proofSteps = [
   { icon: Mail, title: "Confirmation sent", caption: "Branded and instant" },
   { icon: BellRing, title: "Reminders queued", caption: "24 hours and 1 hour before" },
   { icon: Table, title: "Records updated", caption: "Zero typing" },
+  { icon: Search, title: "Lead enrichment", caption: "Company + contact data" },
+  { icon: Sparkles, title: "AI-assisted pain point discovery", caption: "Surfaced automatically" },
+  { icon: ClipboardList, title: "Account manager's brief", caption: "Ready before the call" },
 ];
 
 // Section 7: FAQ.
