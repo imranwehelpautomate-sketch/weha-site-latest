@@ -509,6 +509,35 @@ const industries = [
       { name: "OpenAI", slug: "openai" },
     ],
   },
+  {
+    tag: "Hospitality",
+    title: "Hotels & Restaurants",
+    body: "Bookings, guest messages, reviews and reorders handled around the clock. Tables and rooms stay full, guests get instant replies, and your team stays on the floor, not on the phone.",
+    useCase:
+      "In hospitality, every unanswered message is a lost booking and every slow reply dents the review score. We automate reservations, guest communication, reviews and supplier reordering so your team spends time with guests, not glued to a screen.",
+    painpoints: [
+      "Booking and reservation enquiries arrive at all hours and get missed.",
+      "Guest messages across phone, email and social pile up unanswered.",
+      "Review requests are forgotten, so ratings stall.",
+      "Stock and supplier reordering is tracked by hand and runs late.",
+    ],
+    departments: [
+      "Reservations & booking response",
+      "Guest messaging & concierge",
+      "Reviews & reputation",
+      "Table / room availability sync",
+      "Supplier & stock reordering",
+      "Feedback & loyalty follow-up",
+    ],
+    stack: [
+      { name: "WhatsApp", slug: "whatsapp" },
+      { name: "OpenTable", domain: "opentable.com" },
+      { name: "Toast", domain: "toasttab.com" },
+      { name: "Google Business", domain: "business.google.com" },
+      { name: "Stripe", domain: "stripe.com" },
+      { name: "OpenAI", slug: "openai" },
+    ],
+  },
 ];
 
 // Renders a brand logo for the tech-stack grid. Uses a local SVG/PNG when a
