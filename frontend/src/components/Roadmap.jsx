@@ -111,6 +111,11 @@ export default function Roadmap({ steps = [] }) {
                   </p>
                   <h3 className="weha-display text-2xl mt-1.5 text-weha-text">{s.name}</h3>
                   <p className="mt-2.5 text-sm text-weha-muted leading-relaxed">{s.body}</p>
+                  {s.chip && (
+                    <p className="mt-3 inline-flex rounded-full border border-weha-border bg-weha-elevated px-3 py-1 font-mono text-[0.65rem] leading-snug tracking-[0.04em] text-weha-faint">
+                      {s.chip}
+                    </p>
+                  )}
                 </div>
               </motion.div>
 
@@ -170,6 +175,11 @@ export default function Roadmap({ steps = [] }) {
                 </p>
                 <h3 className="weha-display text-2xl mt-1.5 text-weha-text">{s.name}</h3>
                 <p className="mt-2.5 text-sm text-weha-muted leading-relaxed">{s.body}</p>
+                {s.chip && (
+                  <p className="mt-3 inline-flex rounded-full border border-weha-border bg-weha-elevated px-3 py-1 font-mono text-[0.65rem] leading-snug tracking-[0.04em] text-weha-faint">
+                    {s.chip}
+                  </p>
+                )}
               </div>
             </motion.div>
           ))}

@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
   Plus,
@@ -26,6 +26,9 @@ import {
   Video,
   BellRing,
   Table,
+  Send,
+  ShoppingCart,
+  Clock,
 } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import CTABanner from "@/components/CTABanner";
@@ -475,24 +478,76 @@ const engagement = [
     name: "Audit",
     meta: "30 MINUTES, free",
     body: "A conversation, not a sales call. We map your most automatable workflows and maybe build one live while you watch. You leave with a prioritized plan whether you hire us or not.",
+    chip: "You keep the workflow map either way.",
   },
   {
     num: "02",
     name: "Build",
     meta: "days, not months",
     body: "We build your highest-impact workflow first, on the tools you already use, and test it against real data before anything goes live. Scoped and priced before we start, so there are never surprise invoices.",
+    chip: "Most first automations live within the first week.",
   },
   {
     num: "03",
     name: "Deliver",
     meta: "you own it",
     body: "We hand over working systems with plain-English documentation. The code, the accounts and the docs are yours. If you stopped working with us tomorrow, everything keeps running.",
+    chip: "Code, accounts and docs transferred to you at handoff.",
   },
   {
     num: "04",
     name: "Support",
     meta: "we stay reachable",
     body: "Automations drift, APIs change, things break quietly. Every build ships with 30 days of support, and we are one message away after that. You are never left stranded with a system you cannot fix.",
+    chip: "30 days included, then one message away.",
+  },
+];
+
+// Section 2b: live teardowns. "Watch us solve one, live."
+const teardowns = [
+  {
+    id: "agency-reporting",
+    label: "Agency reporting",
+    before:
+      "Monthly client reports. Six dashboards, four spreadsheets, the same numbers pasted into slides. Around 4 hours per client, every month, usually the founder's Sunday.",
+    steps: [
+      { icon: Database, title: "Data pulled nightly", caption: "Ads, analytics, CRM, all of it" },
+      { icon: Sparkles, title: "AI writes the narrative", caption: "What changed and why it matters" },
+      { icon: LayoutDashboard, title: "Formatted to your template", caption: "On brand, client ready" },
+      { icon: Send, title: "Delivered before the call", caption: "In their inbox Monday 8 AM" },
+    ],
+    after:
+      "4 hours becomes about 6 minutes of review. Reports land before the kickoff call, not after. The founder's Sunday comes back.",
+  },
+  {
+    id: "ecommerce-winback",
+    label: "Ecommerce winback",
+    before:
+      "Abandoned carts, lapsed customers, review requests you never send. The revenue playbook everyone knows and nobody has time to actually run.",
+    steps: [
+      { icon: ShoppingCart, title: "Cart abandoned", caption: "Detected in real time" },
+      { icon: Clock, title: "Perfect-timing wait", caption: "Not too soon, not too late" },
+      { icon: Sparkles, title: "Message personalized", caption: "Their items, your voice" },
+      { icon: Send, title: "Sent across channels", caption: "Email and SMS" },
+      { icon: RefreshCw, title: "Sequence continues", caption: "Until they buy or opt out" },
+    ],
+    after:
+      "The winback flows run 24/7 without anyone touching them. Recovered revenue that used to leak away quietly, now captured on autopilot.",
+  },
+  {
+    id: "saas-lead-response",
+    label: "SaaS lead response",
+    before:
+      "A demo request lands Friday night. You reply Monday morning. They already booked with whoever answered first. Speed is the whole game and manual loses it.",
+    steps: [
+      { icon: Inbox, title: "Demo request lands", caption: "Any time, any channel" },
+      { icon: Sparkles, title: "AI qualifies instantly", caption: "Fit, intent, urgency" },
+      { icon: Database, title: "CRM updated", caption: "Enriched and routed" },
+      { icon: Send, title: "Reply in minutes", caption: "Day or night, on brand" },
+      { icon: CalendarClock, title: "Meeting booked", caption: "Straight into the calendar" },
+    ],
+    after:
+      "Every lead answered in minutes, around the clock. You stop losing deals to whoever happened to be awake. First to respond, first to win.",
   },
 ];
 
@@ -539,10 +594,42 @@ const faqs = [
 
 export default function Services() {
   const { openBooking } = useBooking();
+  const prefersReducedMotion = useReducedMotion();
 
   // Section 2: which pillar tab is active.
   const [activeTab, setActiveTab] = useState(pillars[0].id);
   const activePillar = pillars.find((p) => p.id === activeTab) || pillars[0];
+
+  // Section 2b: which live teardown is active.
+  const [activeTeardown, setActiveTeardown] = useState(teardowns[0].id);
+  const activeTeardownItem = teardowns.find((t) => t.id === activeTeardown) || teardowns[0];
+
+  // Addition 2: sticky-bottom CTA bar. Appears after the hero scrolls out of
+  // view, can be dismissed for the session.
+  const heroSentinelRef = useRef(null);
+  const [showStickyBar, setShowStickyBar] = useState(false);
+  const [stickyDismissed, setStickyDismissed] = useState(
+    () => typeof window !== "undefined" && sessionStorage.getItem("weha_sticky_cta_dismissed") === "1"
+  );
+  useEffect(() => {
+    const el = heroSentinelRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => setShowStickyBar(!entry.isIntersecting),
+      { rootMargin: "0px", threshold: 0 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  const dismissStickyBar = () => {
+    setStickyDismissed(true);
+    try {
+      sessionStorage.setItem("weha_sticky_cta_dismissed", "1");
+    } catch {
+      /* ignore */
+    }
+  };
+  const stickyVisible = showStickyBar && !stickyDismissed;
 
   // Section 4: index of the expanded industry (null = closed).
   const [expandedIndustry, setExpandedIndustry] = useState(null);
@@ -562,7 +649,11 @@ export default function Services() {
   }, [expandedIndustry]);
 
   return (
-    <div data-testid="services-page" className="overflow-x-hidden">
+    <div
+      data-testid="services-page"
+      className="overflow-x-hidden"
+      style={{ paddingBottom: stickyVisible ? "5.5rem" : undefined }}
+    >
       <Seo
         title="AI Automation Services"
         description="Three ways WeHA fixes what slows you down: connect your tools with deterministic automation, put AI to work with agents, or get a clear advisory roadmap."
@@ -627,6 +718,9 @@ export default function Services() {
           />
         }
       />
+
+      {/* sentinel: once this scrolls out of view, reveal the sticky CTA bar */}
+      <div ref={heroSentinelRef} aria-hidden="true" className="h-px w-full" />
 
       <IntegrationStrip heading="Plays nice with your whole toolbox" />
 
@@ -694,6 +788,85 @@ export default function Services() {
       </section>
       </ScrollSection>
 
+      {/* SECTION 2b · LIVE TEARDOWN */}
+      <ScrollSection direction="right" settle depth={0.6} intensity={0.5}>
+      <section className="section-glass relative py-24 md:py-32" data-testid="services-teardown">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <Reveal>
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">See our thinking</span>
+            <h2 className="weha-display text-3xl md:text-5xl mt-3 text-weha-text max-w-3xl">
+              Watch us solve one, live.
+            </h2>
+            <p className="mt-5 text-lg text-weha-muted max-w-2xl leading-relaxed">
+              Pick a bottleneck you recognize. Here is exactly how we would take it apart. No
+              mystery, no black box.
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <div className="mt-8">
+              <TabSwitch
+                tabs={teardowns.map((t) => ({ id: t.id, label: t.label }))}
+                active={activeTeardown}
+                onChange={setActiveTeardown}
+              />
+            </div>
+          </Reveal>
+
+          <div className="mt-12">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTeardown}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25, ease: EASE }}
+              >
+                {/* Before */}
+                <div
+                  className="rounded-2xl border border-weha-border bg-weha-elevated p-6 md:p-8"
+                  data-testid="teardown-before"
+                >
+                  <p className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-weha-faint">
+                    Before
+                  </p>
+                  <p className="mt-3 text-lg text-weha-muted leading-relaxed max-w-3xl">
+                    {activeTeardownItem.before}
+                  </p>
+                </div>
+
+                {/* The teardown flow */}
+                <div className="mt-10">
+                  <FlowDiagram steps={activeTeardownItem.steps} replayKey={activeTeardown} />
+                </div>
+
+                {/* After */}
+                <div
+                  className="mt-10 rounded-2xl border p-6 md:p-8"
+                  style={{ borderColor: "var(--weha-teal)", background: "var(--weha-teal-soft)" }}
+                  data-testid="teardown-after"
+                >
+                  <p className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-weha-teal">
+                    After
+                  </p>
+                  <p className="mt-3 text-lg text-weha-text leading-relaxed max-w-3xl">
+                    {activeTeardownItem.after}
+                  </p>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          <Reveal delay={0.1}>
+            <p className="mt-12 text-weha-muted leading-relaxed max-w-3xl">
+              This is the exact conversation we have in the free audit, except we build one of these
+              live while you watch.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+      </ScrollSection>
+
       {/* SECTION 4 · WHO THIS IS FOR (ported from Home) */}
       <ScrollSection direction="right" settle depth={0} intensity={0.35}>
       <section className="section-glass relative section-surface border-y border-weha-border py-24 md:py-32" data-testid="section-who">
@@ -747,7 +920,7 @@ export default function Services() {
                 probably automate it.
               </p>
               <button type="button" onClick={openBooking} className="btn-ghost shrink-0" data-cursor="hover">
-                Book the free audit <ArrowRight size={15} />
+                Book my free audit <ArrowRight size={15} />
               </button>
             </div>
           </div>
@@ -880,7 +1053,7 @@ export default function Services() {
                               data-cursor="hover"
                               data-testid="industry-book-audit"
                             >
-                              Book Free Audit <ArrowRight size={15} />
+                              Book my free audit <ArrowRight size={15} />
                             </button>
                           </Magnetic>
                         </div>
@@ -971,10 +1144,55 @@ export default function Services() {
       <CTABanner
         heading="Not sure where to start? Let's map it out together."
         sub="Book a free AI Audit. We map how you work, then show you what is worth automating first."
-        cta="Book a Free Audit"
+        cta="Book my free audit"
         testid="services-cta"
       />
       </ScrollSection>
+
+      {/* ADDITION 2 · STICKY-BOTTOM CTA BAR */}
+      <AnimatePresence>
+        {stickyVisible && (
+          <motion.div
+            key="sticky-cta"
+            initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { y: 120, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={prefersReducedMotion ? { opacity: 0 } : { y: 120, opacity: 0 }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.3, ease: EASE }}
+            className="fixed inset-x-0 bottom-0 z-40 border-t border-weha-border"
+            style={{ background: "color-mix(in srgb, var(--weha-surface) 85%, transparent)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)" }}
+            data-testid="services-sticky-cta"
+          >
+            <div className="max-w-7xl mx-auto px-5 sm:px-8 py-3 flex flex-col sm:flex-row items-center gap-3 sm:gap-5">
+              <p className="text-sm md:text-base text-weha-text text-center sm:text-left flex-1">
+                Map your top workflows in 90 minutes, free.
+              </p>
+              <div className="flex items-center gap-2 w-full sm:w-auto">
+                <Magnetic strength={0.3} className="flex-1 sm:flex-none">
+                  <button
+                    type="button"
+                    onClick={openBooking}
+                    className="btn-teal w-full sm:w-auto justify-center"
+                    data-cursor="hover"
+                    data-testid="sticky-cta-book"
+                  >
+                    Book my free audit <ArrowRight size={15} />
+                  </button>
+                </Magnetic>
+                <button
+                  type="button"
+                  onClick={dismissStickyBar}
+                  aria-label="Dismiss"
+                  className="shrink-0 grid place-items-center h-9 w-9 rounded-full text-weha-muted hover:text-weha-text hover:bg-weha-elevated transition-colors"
+                  data-cursor="hover"
+                  data-testid="sticky-cta-dismiss"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
