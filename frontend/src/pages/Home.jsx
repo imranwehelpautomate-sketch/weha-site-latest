@@ -75,28 +75,6 @@ const pains = [
   },
 ];
 
-// How it works (ghost-number steps + a mono meta line).
-const steps = [
-  {
-    no: "01",
-    title: "The Audit",
-    meta: "90 minutes · free",
-    body: "A working session, not a sales call. We map your three most automatable workflows and build one live while you watch. You leave with a plan either way.",
-  },
-  {
-    no: "02",
-    title: "The Build",
-    meta: "days, not months",
-    body: "Your highest-impact workflows shipped as working automations on the tools you already use. Tested against real data before anything goes live.",
-  },
-  {
-    no: "03",
-    title: "The Handoff",
-    meta: "you own it from day one",
-    body: "Working systems, plain-English documentation and 30 days of support. Code, accounts and docs are yours. No hostage fees.",
-  },
-];
-
 // Flagship flows shown in the flow section (each replays on tab switch).
 const FLOWS = [
   {
@@ -161,21 +139,59 @@ const proofSteps = [
 // Who this is for.
 const industries = [
   {
-    title: "Marketing and creative agencies",
+    tag: "Agencies",
+    title: "Marketing & Creative Agencies",
     body: "Client reporting that writes itself. Onboarding that runs without the founder. More retainers on the same headcount.",
   },
   {
-    title: "Ecommerce and D2C brands",
+    tag: "Recruitment",
+    title: "Recruitment Agencies",
+    body: "Candidate screening, CV formatting, interview scheduling and follow-ups — automated end to end. Great candidates get a reply in minutes, not days, so you place roles faster.",
+  },
+  {
+    tag: "Remote",
+    title: "Work From Home & Remote Teams",
+    body: "A workforce scattered across cities — sometimes across the globe. Automations keep everyone in sync: handoffs, approvals, status updates and reporting run themselves across every timezone, so nothing gets lost between inboxes and no one waits on a colleague who is asleep.",
+  },
+  {
+    tag: "Real Estate",
+    title: "Real Estate",
+    body: "New enquiries answered instantly, viewings booked, listings kept in sync and follow-ups nurtured on their own. Every lead worked around the clock while you focus on closing.",
+  },
+  {
+    tag: "Online",
+    title: "Online Businesses",
+    body: "Orders, support, reviews and retention flows running 24/7. The revenue playbook you keep meaning to run, finally on autopilot.",
+  },
+  {
+    tag: "Ecommerce",
+    title: "Ecommerce & D2C Brands",
     body: "Abandoned carts chased, reviews requested, support triaged. The revenue playbook, finally running 24/7.",
   },
   {
-    title: "SaaS and tech startups",
+    tag: "SaaS",
+    title: "SaaS & Tech Startups",
     body: "Every trial signup and demo request answered in minutes. Your pipeline updates itself while you ship product.",
   },
   {
-    title: "Coaches, consultants and online services",
+    tag: "Consultants",
+    title: "Coaches, Consultants & Online Services",
     body: "Discovery calls booked, no-shows reminded, follow-ups sent. You sell and deliver; the admin runs itself.",
   },
+];
+
+// Animated pills for the "Who this is for" section.
+const whoPills = [
+  "Marketing Agencies",
+  "Recruitment Agencies",
+  "Remote Teams",
+  "Real Estate",
+  "Online Businesses",
+  "Ecommerce & D2C",
+  "SaaS & Startups",
+  "Coaches & Consultants",
+  "Creative Studios",
+  "Global Teams",
 ];
 
 // Why WeHA (dark section) bullets, unchanged.
@@ -490,30 +506,6 @@ export default function Home() {
       </section>
       </ScrollSection>
 
-      {/* SECTION 6 · HOW IT WORKS */}
-      <ScrollSection direction="right" settle depth={0} intensity={0.4}>
-      <section className="section-glass relative section-surface border-y border-weha-border py-24 md:py-32" data-testid="section-how">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <Reveal>
-            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">How it works</span>
-            <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">From first call to handoff, without the drag.</h2>
-          </Reveal>
-          <div className="mt-16 grid gap-12 md:grid-cols-3 md:gap-8">
-            {steps.map((s, i) => (
-              <Reveal key={s.no} delay={i * 0.1}>
-                <div className="relative" data-cursor="hover">
-                  <span className="weha-display text-7xl text-weha-teal/25">{s.no}</span>
-                  <h3 className="weha-display text-3xl mt-2 text-weha-text">{s.title}</h3>
-                  <p className="mt-2 font-mono text-xs uppercase tracking-[0.18em] text-weha-faint">{s.meta}</p>
-                  <p className="mt-4 text-weha-muted leading-relaxed text-base">{s.body}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-      </ScrollSection>
-
       {/* SECTION 7 · SERVICES */}
       <ScrollSection direction="left" settle depth={0.6} intensity={0.45}>
       <section className="section-solid relative py-24 md:py-32" data-testid="section-services">
@@ -589,13 +581,57 @@ export default function Home() {
               That is where we play.
             </p>
           </Reveal>
-          <div className="mt-14 flex md:grid md:grid-cols-2 gap-5 overflow-x-auto md:overflow-visible hide-scrollbar -mx-5 px-5 md:mx-0 md:px-0">
+
+          {/* Animated business-area pills */}
+          <div className="mt-8 flex flex-wrap gap-2.5 sm:gap-3">
+            {whoPills.map((label, i) => (
+              <motion.span
+                key={label}
+                className="inline-flex items-center gap-2 rounded-full border border-weha-border bg-weha-surface px-4 py-2 text-sm font-medium text-weha-text cursor-default"
+                initial={{ opacity: 0, y: 14, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ delay: i * 0.06, duration: 0.5, ease: EASE }}
+                whileHover={{
+                  scale: 1.06,
+                  borderColor: "var(--weha-teal)",
+                  color: "var(--weha-teal)",
+                }}
+                data-cursor="hover"
+              >
+                <motion.span
+                  className="h-1.5 w-1.5 rounded-full shrink-0"
+                  style={{ background: "var(--weha-teal)" }}
+                  animate={{ opacity: [0.4, 1, 0.4], scale: [1, 1.3, 1] }}
+                  transition={{
+                    duration: 2.4 + (i % 4) * 0.4,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
+                {label}
+              </motion.span>
+            ))}
+          </div>
+
+          <div className="mt-12 flex md:grid md:grid-cols-2 gap-5 overflow-x-auto md:overflow-visible hide-scrollbar -mx-5 px-5 md:mx-0 md:px-0">
             {industries.map((v, i) => (
               <Reveal key={v.title} delay={(i % 2) * 0.08}>
-                <div className="weha-card p-7 min-w-[78vw] sm:min-w-[340px] md:min-w-0 h-full" data-cursor="hover">
-                  <h3 className="weha-display text-2xl text-weha-text">{v.title}</h3>
+                <motion.div
+                  className="weha-card p-7 min-w-[78vw] sm:min-w-[340px] md:min-w-0 h-full"
+                  data-cursor="hover"
+                  whileHover={{ y: -6 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 24 }}
+                >
+                  <span
+                    className="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold tracking-wide"
+                    style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}
+                  >
+                    {v.tag}
+                  </span>
+                  <h3 className="weha-display text-2xl mt-4 text-weha-text">{v.title}</h3>
                   <p className="mt-4 text-weha-muted leading-relaxed">{v.body}</p>
-                </div>
+                </motion.div>
               </Reveal>
             ))}
           </div>
