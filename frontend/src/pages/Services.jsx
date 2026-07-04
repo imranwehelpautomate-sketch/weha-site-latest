@@ -904,12 +904,6 @@ export default function Services() {
           <div className="mt-16">
             <Roadmap steps={engagement} />
           </div>
-          <Reveal delay={0.1}>
-            <p className="mt-14 text-weha-muted leading-relaxed max-w-3xl">
-              How we price: the audit is free, builds are scoped and quoted before we start. If a
-              workflow is not worth automating, we will tell you.
-            </p>
-          </Reveal>
         </div>
       </section>
       </ScrollSection>
