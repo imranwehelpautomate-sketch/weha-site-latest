@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
@@ -164,6 +165,7 @@ const serviceCards = [
     ],
     footLabel: "Built with",
     foot: "OpenClaw, Hermes, Claude and modern agent frameworks.",
+    cta: { label: "Explore AI Workforce", to: "/ai-workforce" },
   },
   {
     icon: Compass,
@@ -639,6 +641,7 @@ const faqs = [
 
 export default function Services() {
   const { openBooking } = useBooking();
+  const navigate = useNavigate();
   const prefersReducedMotion = useReducedMotion();
 
   // Section 2: which pillar tab is active.
@@ -838,6 +841,29 @@ export default function Services() {
                       <span className="font-semibold uppercase tracking-wider">{card.footLabel}:</span>{" "}
                       {card.foot}
                     </p>
+
+                    {card.cta && (
+                      <span
+                        role="link"
+                        tabIndex={0}
+                        data-cursor="hover"
+                        data-testid={`service-card-${i + 1}-cta`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(card.cta.to);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            navigate(card.cta.to);
+                          }
+                        }}
+                        className="btn-teal mt-6 justify-center w-full cursor-pointer"
+                      >
+                        {card.cta.label} <ArrowRight size={15} />
+                      </span>
+                    )}
                   </motion.button>
                 );
               })}
