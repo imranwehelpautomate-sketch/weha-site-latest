@@ -23,10 +23,11 @@ import {
   Mail,
   BellRing,
   Table,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import Reveal from "@/components/Reveal";
-import Parallax from "@/components/Parallax";
 import MaskReveal from "@/components/MaskReveal";
 import Magnetic from "@/components/Magnetic";
 import IntegrationStrip from "@/components/IntegrationStrip";
@@ -56,6 +57,21 @@ const pains = [
     label: "SaaS founder · 9:40 PM",
     quote:
       "A demo request came in Friday night. We replied Monday morning. They had already signed with someone else.",
+  },
+  {
+    label: "Recruitment firm · 7:20 PM",
+    quote:
+      "Three hundred CVs for one role. Screening, formatting, scheduling, follow-ups — all by hand. Great candidates go cold before we even reply.",
+  },
+  {
+    label: "Marketing head · 6:05 PM",
+    quote:
+      "A team of two doing the work of six. Content, campaigns, reporting — everything ships late because we are stuck stitching tools together.",
+  },
+  {
+    label: "Sales head · 10:15 PM",
+    quote:
+      "My reps spend half their day updating the CRM and chasing quotes instead of selling. Small team, no ops person, pipeline slipping through the cracks.",
   },
 ];
 
@@ -219,6 +235,15 @@ export default function Home() {
   const activeFlow = FLOWS.find((f) => f.id === activeTab) || FLOWS[0];
   const [openFaq, setOpenFaq] = useState(0);
 
+  // "Sound familiar?" slider — horizontal scroll with arrow controls.
+  const painsRef = useRef(null);
+  const scrollPains = (dir) => {
+    const el = painsRef.current;
+    if (!el) return;
+    const amount = Math.min(el.clientWidth * 0.85, 420);
+    el.scrollBy({ left: dir * amount, behavior: "smooth" });
+  };
+
   // Hero → first-section handoff: as the hero scrolls away it lifts + fades,
   // synced with the network camera pulling the viewer inward.
   const heroRef = useRef(null);
@@ -302,14 +327,14 @@ export default function Home() {
               </p>
             </Reveal>
             <Reveal delay={0.45}>
-              <div className="mt-9 flex flex-wrap items-center gap-5 pointer-events-auto">
+              <div className="mt-9 flex flex-nowrap items-center gap-3 sm:gap-5 pointer-events-auto">
                 <Magnetic>
-                  <button type="button" onClick={openBooking} className="btn-teal" data-testid="hero-primary-cta" data-cursor="hover">
+                  <button type="button" onClick={openBooking} className="btn-teal max-sm:!px-4 max-sm:!text-sm" data-testid="hero-primary-cta" data-cursor="hover">
                     Book a Free AI Audit <ArrowRight size={16} />
                   </button>
                 </Magnetic>
                 <Magnetic strength={0.3}>
-                  <Link to="/services" className="btn-ghost" data-testid="hero-secondary-cta" data-cursor="hover">
+                  <Link to="/services" className="btn-ghost max-sm:!text-sm whitespace-nowrap" data-testid="hero-secondary-cta" data-cursor="hover">
                     See How It Works <ArrowRight size={15} />
                   </Link>
                 </Magnetic>
@@ -339,18 +364,46 @@ export default function Home() {
       <section className="relative section-glass py-24 md:py-32" data-testid="section-pains">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <Reveal>
-            <h2 className="weha-display text-4xl md:text-6xl text-weha-text">Sound familiar?</h2>
+            <div className="flex items-end justify-between gap-4">
+              <h2 className="weha-display text-4xl md:text-6xl text-weha-text">Sound familiar?</h2>
+              <div className="hidden sm:flex items-center gap-2 shrink-0">
+                <button
+                  type="button"
+                  aria-label="Previous"
+                  onClick={() => scrollPains(-1)}
+                  className="inline-flex items-center justify-center h-11 w-11 rounded-full border border-weha-border text-weha-text hover:border-weha-teal hover:text-weha-teal transition-colors"
+                  data-cursor="hover"
+                >
+                  <ChevronLeft size={18} />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Next"
+                  onClick={() => scrollPains(1)}
+                  className="inline-flex items-center justify-center h-11 w-11 rounded-full border border-weha-border text-weha-text hover:border-weha-teal hover:text-weha-teal transition-colors"
+                  data-cursor="hover"
+                >
+                  <ChevronRight size={18} />
+                </button>
+              </div>
+            </div>
           </Reveal>
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
+          <div
+            ref={painsRef}
+            className="mt-12 flex gap-6 overflow-x-auto hide-scrollbar snap-x snap-mandatory -mx-5 px-5 sm:-mx-8 sm:px-8 pb-2"
+          >
             {pains.map((p, i) => (
-              <Parallax key={i} speed={20 + i * 14} className="h-full">
-                <Reveal delay={i * 0.08} className="h-full">
+              <div
+                key={i}
+                className="snap-start shrink-0 w-[82vw] sm:w-[340px] md:w-[360px]"
+              >
+                <Reveal delay={(i % 3) * 0.08} className="h-full">
                   <div className="glass rounded-2xl p-7 h-full" data-cursor="hover">
                     <span className="text-xs uppercase tracking-[0.2em] text-weha-faint">{p.label}</span>
                     <p className="mt-4 text-lg leading-relaxed text-weha-text">&ldquo;{p.quote}&rdquo;</p>
                   </div>
                 </Reveal>
-              </Parallax>
+              </div>
             ))}
           </div>
           <Reveal delay={0.1}>
@@ -502,11 +555,6 @@ export default function Home() {
                   We take the workflows from your audit and ship them as working automations. Scoped
                   and priced before we start, so there are no surprise invoices.
                 </p>
-                <div className="mt-6">
-                  <Link to="/services" className="btn-ghost" data-cursor="hover">
-                    See how we build <ArrowRight size={15} />
-                  </Link>
-                </div>
               </div>
             </Reveal>
             {/* Card 3 - the automation partner */}
@@ -520,11 +568,6 @@ export default function Home() {
                   We keep your systems running, catch what breaks before you notice, and keep
                   finding the next thing worth automating as you grow.
                 </p>
-                <div className="mt-6">
-                  <Link to="/services" className="btn-ghost" data-cursor="hover">
-                    Explore the partnership <ArrowRight size={15} />
-                  </Link>
-                </div>
               </div>
             </Reveal>
           </div>

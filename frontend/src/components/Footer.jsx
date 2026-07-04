@@ -102,18 +102,18 @@ export default function Footer() {
 
         <div className="mt-14 pt-6 border-t border-weha-border flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
           <p className="text-sm text-weha-faint">© {new Date().getFullYear()} We Help Automate. All rights reserved.</p>
-          <div className="flex items-center gap-5">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
             <Link
               to="/privacy-policy"
               data-testid="footer-privacy"
-              className="text-sm text-weha-faint hover:text-weha-teal transition-colors"
+              className="text-sm text-weha-faint hover:text-weha-teal transition-colors whitespace-nowrap"
             >
               Privacy Policy
             </Link>
             <Link
               to="/terms-of-service"
               data-testid="footer-terms"
-              className="text-sm text-weha-faint hover:text-weha-teal transition-colors"
+              className="text-sm text-weha-faint hover:text-weha-teal transition-colors whitespace-nowrap"
             >
               Terms of Service
             </Link>
@@ -121,7 +121,7 @@ export default function Footer() {
               type="button"
               onClick={openCookiePreferences}
               data-testid="footer-cookie-preferences"
-              className="text-sm text-weha-faint hover:text-weha-teal transition-colors"
+              className="text-sm text-weha-faint hover:text-weha-teal transition-colors whitespace-nowrap"
             >
               Cookie preferences
             </button>

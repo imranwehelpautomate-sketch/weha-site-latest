@@ -241,11 +241,18 @@ export default function FlowDiagram({
           const Icon = step.icon;
           const active = nodeActive(i);
           return (
-            <div key={i} className="flex flex-col items-center text-center">
+            <div
+              key={i}
+              className={
+                vertical
+                  ? "flex w-full max-w-sm items-center gap-5 text-left"
+                  : "flex flex-col items-center text-center"
+              }
+            >
               {/* node box */}
               <motion.div
                 ref={(el) => (nodeRefs.current[i] = el)}
-                className="relative flex items-center justify-center rounded-2xl"
+                className="relative flex items-center justify-center rounded-2xl shrink-0"
                 style={{
                   width: 60,
                   height: 60,
@@ -284,8 +291,8 @@ export default function FlowDiagram({
 
               {/* labels fade up into place on activation */}
               <motion.div
-                className="mt-3"
-                style={{ maxWidth: 150 }}
+                className={vertical ? "flex-1 min-w-0" : "mt-3"}
+                style={vertical ? undefined : { maxWidth: 150 }}
                 initial={{ opacity: reduceMotion ? 1 : 0, y: reduceMotion ? 0 : 8 }}
                 animate={{ opacity: active ? 1 : 0, y: active ? 0 : 8 }}
                 transition={
