@@ -422,6 +422,93 @@ const industries = [
       { name: "OpenAI", slug: "openai" },
     ],
   },
+  {
+    tag: "FinTech & BFSI",
+    title: "FinTech, Banking & Insurance",
+    body: "Onboarding, KYC checks, reconciliation and compliance reporting, handled automatically. Faster approvals, cleaner audit trails, and a team freed from copy-pasting between systems.",
+    useCase:
+      "In financial services, speed and accuracy both matter and manual work costs you on each one. We automate KYC and onboarding, transaction reconciliation and compliance reporting, with a human kept in the loop wherever judgment or regulation demands it.",
+    painpoints: [
+      "KYC and onboarding checks are slow, manual and easy to get wrong.",
+      "Reconciliation across accounts and systems eats analyst hours.",
+      "Compliance and regulatory reports are assembled by hand every cycle.",
+      "Customer queries about payments and applications pile up unanswered.",
+    ],
+    departments: [
+      "KYC / AML & onboarding",
+      "Transaction reconciliation",
+      "Compliance & regulatory reporting",
+      "Fraud & risk alerts",
+      "Customer support triage",
+      "Loan & claims processing",
+    ],
+    stack: [
+      { name: "Plaid", domain: "plaid.com" },
+      { name: "Stripe", domain: "stripe.com" },
+      { name: "Salesforce", domain: "salesforce.com" },
+      { name: "DocuSign", domain: "docusign.com" },
+      { name: "Slack", slug: "slack" },
+      { name: "OpenAI", slug: "openai" },
+    ],
+  },
+  {
+    tag: "Healthcare",
+    title: "Medical & Healthcare",
+    body: "Patient intake, scheduling, reminders and records updates, running on their own. Less time on admin, more time on care, with sensitive data handled carefully.",
+    useCase:
+      "Clinics and healthcare teams lose hours to admin that has nothing to do with care. We automate patient intake, scheduling, reminders and records updates, keeping sensitive data secure and a human in the loop for anything clinical.",
+    painpoints: [
+      "Patient intake and forms are collected and re-keyed by hand.",
+      "No-shows drain the calendar because reminders go out inconsistently.",
+      "Records and referrals are updated manually across systems.",
+      "Front-desk staff drown in scheduling calls and follow-ups.",
+    ],
+    departments: [
+      "Patient intake & forms",
+      "Appointment scheduling",
+      "Reminders & no-show reduction",
+      "Records & referral updates",
+      "Billing & insurance prep",
+      "Follow-up & recall",
+    ],
+    stack: [
+      { name: "Calendly", domain: "calendly.com" },
+      { name: "Twilio", domain: "twilio.com" },
+      { name: "Google Workspace", domain: "workspace.google.com" },
+      { name: "DocuSign", domain: "docusign.com" },
+      { name: "Zapier", slug: "zapier" },
+      { name: "OpenAI", slug: "openai" },
+    ],
+  },
+  {
+    tag: "Legal",
+    title: "Legal & Research Teams",
+    body: "Case research, document review, contract drafting and intake, accelerated by AI. Your team spends time on judgment, not on reading hundreds of pages by hand.",
+    useCase:
+      "Legal work is high value but heavy on reading and drafting. We automate research, document review, contract drafting and client intake, so your team moves faster on the work that actually needs a lawyer's judgment.",
+    painpoints: [
+      "Case and precedent research swallows billable hours.",
+      "Document and contract review is slow and easy to miss things in.",
+      "First-draft contracts and briefs are written from scratch every time.",
+      "Client intake and matter setup are entirely manual.",
+    ],
+    departments: [
+      "Case & precedent research",
+      "Document & contract review",
+      "Contract & brief drafting",
+      "Client intake & matter setup",
+      "Deadline & docket tracking",
+      "Knowledge base & summaries",
+    ],
+    stack: [
+      { name: "Google Docs", domain: "docs.google.com" },
+      { name: "DocuSign", domain: "docusign.com" },
+      { name: "Clio", domain: "clio.com" },
+      { name: "Notion", slug: "notion" },
+      { name: "Slack", slug: "slack" },
+      { name: "OpenAI", slug: "openai" },
+    ],
+  },
 ];
 
 // Renders a brand logo for the tech-stack grid. Uses a local SVG/PNG when a
