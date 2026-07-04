@@ -135,7 +135,7 @@ const computeRoi = (v) => {
 const serviceCards = [
   {
     icon: Workflow,
-    name: "Deterministic automation",
+    name: "Deterministic Automation",
     tagline: "Connect your tools so they finally talk to each other.",
     description:
       "Rule based, reliable automations that move data and trigger actions between the apps you already use. Predictable, fast to deploy, and running quietly in the background so your team stops doing it by hand.",
@@ -151,7 +151,7 @@ const serviceCards = [
   },
   {
     icon: Sparkles,
-    name: "Agentic automation",
+    name: "Agentic Automation",
     tagline: "AI that reasons, decides, and gets work done on its own.",
     description:
       "Custom AI agents that handle tasks needing judgment. They read and respond, triage, draft, and make multi step decisions end to end, instead of just following fixed rules.",
@@ -167,7 +167,7 @@ const serviceCards = [
   },
   {
     icon: Compass,
-    name: "Advisory and strategy",
+    name: "Advisory & Strategic Consulting",
     tagline: "A clear AI roadmap, without the guesswork.",
     description:
       "Purely advisory. We help you understand where AI fits in your business, what to automate first, how to sequence it, and how to avoid expensive mistakes. This is consulting and strategy only. We advise, we do not build, in this engagement.",
@@ -642,7 +642,7 @@ export default function Services() {
   const prefersReducedMotion = useReducedMotion();
 
   // Section 2: which pillar tab is active.
-  const [activeCard, setActiveCard] = useState(0);
+  const [activeCard, setActiveCard] = useState(1);
 
   // Addition 2: sticky-bottom CTA bar. Appears after the hero scrolls out of
   // view, can be dismissed for the session.
