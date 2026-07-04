@@ -162,66 +162,6 @@ const FLOWS = [
       { icon: LayoutDashboard, title: "Health tracked", caption: "Activation and usage, live" },
     ],
   },
-  {
-    id: "hospital",
-    label: "Hospital",
-    steps: [
-      { icon: Inbox, title: "Patient books in", caption: "Web, phone or referral" },
-      { icon: Sparkles, title: "AI triages intake", caption: "Symptoms, urgency, forms" },
-      { icon: Database, title: "Records updated", caption: "History pulled and synced" },
-      { icon: CalendarCheck, title: "Appointment set", caption: "Right doctor, right slot" },
-      { icon: BellRing, title: "Reminders sent", caption: "Fewer no-shows, on autopilot" },
-      { icon: Send, title: "Follow-up & recall", caption: "Care continues after the visit" },
-    ],
-  },
-  {
-    id: "insurance",
-    label: "Insurance",
-    steps: [
-      { icon: Inbox, title: "Claim submitted", caption: "Any channel, any hour" },
-      { icon: Sparkles, title: "AI reviews the claim", caption: "Docs checked, risk scored" },
-      { icon: Database, title: "Policy data pulled", caption: "Enriched and validated" },
-      { icon: UserCheck, title: "Human approves edge cases", caption: "Judgment where it matters" },
-      { icon: Send, title: "Decision sent", caption: "Fast, clear, on-brand" },
-      { icon: LayoutDashboard, title: "Audit trail logged", caption: "Compliant, every step" },
-    ],
-  },
-  {
-    id: "hotel",
-    label: "Hotel",
-    steps: [
-      { icon: Inbox, title: "Booking enquiry", caption: "OTA, site, WhatsApp or call" },
-      { icon: Send, title: "Instant reply sent", caption: "Answered in seconds, day or night" },
-      { icon: CalendarCheck, title: "Reservation confirmed", caption: "Availability synced live" },
-      { icon: Mail, title: "Pre-arrival sequence", caption: "Details, upsells, check-in info" },
-      { icon: Sparkles, title: "Guest requests handled", caption: "Concierge, on autopilot" },
-      { icon: BellRing, title: "Review requested", caption: "Timed right after checkout" },
-    ],
-  },
-  {
-    id: "coaching",
-    label: "Coaches & consultants",
-    steps: [
-      { icon: Inbox, title: "Discovery request", caption: "Site, DM or referral" },
-      { icon: CalendarCheck, title: "Call booked", caption: "No scheduling ping-pong" },
-      { icon: FileText, title: "Intake collected", caption: "Forms and prep, automatic" },
-      { icon: BellRing, title: "Reminders sent", caption: "No-shows drop off a cliff" },
-      { icon: Send, title: "Follow-up & nurture", caption: "Every lead stays warm" },
-      { icon: Database, title: "Payments & CRM", caption: "Invoiced and logged, hands-free" },
-    ],
-  },
-  {
-    id: "research",
-    label: "Research team",
-    steps: [
-      { icon: Inbox, title: "Question comes in", caption: "A brief, a case, a topic" },
-      { icon: Sparkles, title: "AI gathers sources", caption: "Searched, read and cited" },
-      { icon: FileText, title: "Documents reviewed", caption: "Hundreds of pages, in minutes" },
-      { icon: Lightbulb, title: "Key findings surfaced", caption: "What actually matters" },
-      { icon: LayoutDashboard, title: "Summary drafted", caption: "Structured and referenced" },
-      { icon: UserCheck, title: "You validate", caption: "Judgment on top of the grunt work" },
-    ],
-  },
 ];
 
 // Who this is for. Each entry powers a card + an expanded detail view.
