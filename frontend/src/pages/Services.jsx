@@ -26,6 +26,9 @@ import {
   Video,
   BellRing,
   Table,
+  Workflow,
+  Compass,
+  Check,
 } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import CTABanner from "@/components/CTABanner";
@@ -35,7 +38,6 @@ import IntegrationStrip from "@/components/IntegrationStrip";
 import Magnetic from "@/components/Magnetic";
 import ValueCalculator from "@/components/ValueCalculator";
 import FlowDiagram from "@/components/FlowDiagram";
-import TabSwitch from "@/components/TabSwitch";
 import Roadmap from "@/components/Roadmap";
 import Seo from "@/components/Seo";
 import { EASE } from "@/lib/motion";
@@ -128,23 +130,15 @@ const computeRoi = (v) => {
 };
 
 /* ------------------------------------------------------------------ *
- * Section 2 data: the three pillars, led by outcome. Each pillar owns
- * a FlowDiagram whose steps swap when the tab changes.
+ * Section 2 data: the three service cards, always fully open, click to focus.
  * ------------------------------------------------------------------ */
-const pillars = [
+const serviceCards = [
   {
-    id: "connect",
-    label: "Connect your tools",
-    subtitle: "Deterministic automation",
-    intro:
-      "When you know exactly what should happen every time. Rule-based, reliable, running quietly in the background.",
-    steps: [
-      { icon: Inbox, title: "Lead form submitted", caption: "Website or ad" },
-      { icon: Database, title: "CRM updated", caption: "Contact created and tagged" },
-      { icon: Mail, title: "Welcome email sent", caption: "Instantly, on-brand" },
-      { icon: Slack, title: "Team notified", caption: "Right person, right channel" },
-      { icon: CalendarClock, title: "Follow-up scheduled", caption: "Nothing slips" },
-    ],
+    icon: Workflow,
+    name: "Deterministic automation",
+    tagline: "Connect your tools so they finally talk to each other.",
+    description:
+      "Rule based, reliable automations that move data and trigger actions between the apps you already use. Predictable, fast to deploy, and running quietly in the background so your team stops doing it by hand.",
     looks: [
       "Lead capture and routing",
       "Data sync between apps",
@@ -152,45 +146,31 @@ const pillars = [
       "Notifications and reminders",
       "Document generation",
     ],
-    builtLabel: "Built with",
-    built: "n8n, Make, Zapier, Google Workspace and your existing app stack.",
+    footLabel: "Built with",
+    foot: "n8n, Make, Zapier, Google Workspace and your existing app stack.",
   },
   {
-    id: "ai",
-    label: "Put AI to work",
-    subtitle: "Agentic automation",
-    intro:
-      "When the task needs judgment, reading or decisions. AI agents that handle multi-step work end to end, not just fixed rules.",
-    steps: [
-      { icon: Inbox, title: "Message arrives", caption: "Email, DM or ticket" },
-      { icon: Sparkles, title: "AI reads and understands", caption: "Intent, urgency, context" },
-      { icon: Search, title: "Gathers what it needs", caption: "Pulls the right info" },
-      { icon: PenLine, title: "Drafts a real response", caption: "In your voice" },
-      { icon: UserCheck, title: "You approve or it sends", caption: "Your rules decide" },
-      { icon: RefreshCw, title: "Follows through", caption: "Until the task is done" },
-    ],
+    icon: Sparkles,
+    name: "Agentic automation",
+    tagline: "AI that reasons, decides, and gets work done on its own.",
+    description:
+      "Custom AI agents that handle tasks needing judgment. They read and respond, triage, draft, and make multi step decisions end to end, instead of just following fixed rules.",
     looks: [
       "Inbox and ticket triage",
-      "First-draft generation",
+      "First draft generation",
       "Research and summarization",
-      "Multi-step task execution",
-      "Autonomous follow-through",
+      "Multi step task execution",
+      "Autonomous follow through",
     ],
-    builtLabel: "Built with",
-    built: "OpenClaw, Hermes, Claude and modern agent frameworks.",
+    footLabel: "Built with",
+    foot: "OpenClaw, Hermes, Claude and modern agent frameworks.",
   },
   {
-    id: "plan",
-    label: "Get a clear plan",
-    subtitle: "Advisory and strategy",
-    intro:
-      "When you are not sure where AI even fits yet. Purely advisory. We help you see what to automate first and how to sequence it. We advise, we do not build, in this engagement.",
-    steps: [
-      { icon: ClipboardList, title: "We map how you work", caption: "The real workflows" },
-      { icon: Search, title: "Spot the opportunities", caption: "Where AI actually pays off" },
-      { icon: ListOrdered, title: "Prioritize by impact", caption: "Quick wins first" },
-      { icon: FileText, title: "You get a roadmap", caption: "Documented, your team can act on it" },
-    ],
+    icon: Compass,
+    name: "Advisory and strategy",
+    tagline: "A clear AI roadmap, without the guesswork.",
+    description:
+      "Purely advisory. We help you understand where AI fits in your business, what to automate first, how to sequence it, and how to avoid expensive mistakes. This is consulting and strategy only. We advise, we do not build, in this engagement.",
     looks: [
       "AI readiness assessment",
       "Opportunity mapping",
@@ -198,8 +178,8 @@ const pillars = [
       "Tool and vendor guidance",
       "Team enablement",
     ],
-    builtLabel: "You leave with",
-    built: "A documented roadmap your team can act on, whether you build it with us or not.",
+    footLabel: "You leave with",
+    foot: "A documented roadmap your team can act on, whether you build it with us or not.",
   },
 ];
 
@@ -546,8 +526,7 @@ export default function Services() {
   const prefersReducedMotion = useReducedMotion();
 
   // Section 2: which pillar tab is active.
-  const [activeTab, setActiveTab] = useState(pillars[0].id);
-  const activePillar = pillars.find((p) => p.id === activeTab) || pillars[0];
+  const [activeCard, setActiveCard] = useState(0);
 
   // Addition 2: sticky-bottom CTA bar. Appears after the hero scrolls out of
   // view, can be dismissed for the session.
@@ -669,66 +648,85 @@ export default function Services() {
 
       <IntegrationStrip heading="Plays nice with your whole toolbox" />
 
-      {/* SECTION 2 · THE THREE PILLARS */}
-      <ScrollSection direction="left" settle depth={0.6} intensity={0.5}>
+      {/* SECTION 2 · WHAT WE BUILD (three always-open, click-to-focus cards) */}
+      <ScrollSection direction="left" settle depth={0.5} intensity={0.45}>
       <section className="section-glass relative py-24 md:py-32" data-testid="services-pillars">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <Reveal>
             <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">What we build</span>
             <h2 className="weha-display text-3xl md:text-5xl mt-3 text-weha-text max-w-3xl">
-              Three types of automation services. We recommend the one you actually need
+              Three kinds of automation. We recommend the one you actually need.
             </h2>
           </Reveal>
-          <Reveal delay={0.1}>
-            <div className="mt-8">
-              <TabSwitch
-                tabs={pillars.map((p) => ({ id: p.id, label: p.label }))}
-                active={activeTab}
-                onChange={setActiveTab}
-              />
-            </div>
+          <Reveal delay={0.08}>
+            <p className="mt-5 text-weha-muted max-w-2xl leading-relaxed">
+              From simple tool to tool automation, to AI that reasons and acts, to a plain roadmap
+              when you are not sure where to start. Tap a card to bring it forward.
+            </p>
           </Reveal>
 
-          <div className="mt-12">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeTab}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.25, ease: EASE }}
-              >
-                <p className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">
-                  {activePillar.subtitle}
-                </p>
-                <p className="mt-3 text-lg text-weha-muted max-w-2xl leading-relaxed">
-                  {activePillar.intro}
-                </p>
+          <Reveal delay={0.14}>
+            <div className="mt-12 grid gap-6 md:grid-cols-3 md:items-start">
+              {serviceCards.map((card, i) => {
+                const Icon = card.icon;
+                const isActive = i === activeCard;
+                const motionAnimate = prefersReducedMotion
+                  ? {}
+                  : isActive
+                  ? { scale: 1.03, opacity: 1, boxShadow: "0 24px 60px -20px rgba(15,10,40,0.35)" }
+                  : { scale: 0.97, opacity: 0.72, boxShadow: "0 0 0 0 rgba(0,0,0,0)" };
+                return (
+                  <motion.button
+                    key={card.name}
+                    type="button"
+                    onClick={() => setActiveCard(i)}
+                    aria-pressed={isActive}
+                    data-cursor="hover"
+                    data-testid={`service-card-${i + 1}`}
+                    className="weha-card group relative flex h-full flex-col rounded-2xl border p-7 text-left md:p-8 focus-visible:outline-none focus-visible:shadow-[0_0_0_3px_var(--weha-teal-soft)]"
+                    style={{
+                      zIndex: isActive ? 10 : 1,
+                      borderColor: isActive
+                        ? "color-mix(in srgb, var(--weha-teal) 35%, transparent)"
+                        : "var(--weha-border)",
+                      transition: "border-color 0.3s ease",
+                    }}
+                    initial={false}
+                    animate={motionAnimate}
+                    transition={{ duration: 0.3, ease: EASE }}
+                  >
+                    <span
+                      className="grid h-12 w-12 place-items-center rounded-xl"
+                      style={{ background: "var(--weha-teal-soft)" }}
+                    >
+                      <Icon size={22} className="text-weha-teal" />
+                    </span>
 
-                <div className="mt-10">
-                  <FlowDiagram steps={activePillar.steps} replayKey={activeTab} />
-                </div>
+                    <h3 className="weha-display text-2xl mt-5 text-weha-text">{card.name}</h3>
+                    <p className="mt-2 font-medium text-weha-text leading-snug">{card.tagline}</p>
+                    <p className="mt-3 text-sm text-weha-muted leading-relaxed">{card.description}</p>
 
-                <div className="mt-14 grid gap-8 md:gap-12 md:grid-cols-2">
-                  <div>
-                    <p className="weha-label">What it looks like</p>
-                    <ul className="mt-3 space-y-2.5">
-                      {activePillar.looks.map((g) => (
-                        <li key={g} className="flex gap-3 text-weha-text leading-relaxed">
-                          <span className="mt-2 h-1.5 w-1.5 rounded-full shrink-0" style={{ background: "var(--weha-teal)" }} />
-                          <span>{g}</span>
+                    <div className="my-6 h-px w-full" style={{ background: "var(--weha-border)" }} />
+
+                    <p className="weha-label uppercase tracking-widest text-xs">What it looks like</p>
+                    <ul className="mt-3 space-y-2">
+                      {card.looks.map((item) => (
+                        <li key={item} className="flex gap-2.5 text-sm text-weha-text leading-relaxed">
+                          <Check size={15} className="mt-0.5 shrink-0 text-weha-teal" />
+                          <span>{item}</span>
                         </li>
                       ))}
                     </ul>
-                  </div>
-                  <div>
-                    <p className="weha-label">{activePillar.builtLabel}</p>
-                    <p className="mt-3 text-weha-muted leading-relaxed">{activePillar.built}</p>
-                  </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
+
+                    <p className="mt-auto pt-6 text-xs text-weha-faint leading-relaxed">
+                      <span className="font-semibold uppercase tracking-wider">{card.footLabel}:</span>{" "}
+                      {card.foot}
+                    </p>
+                  </motion.button>
+                );
+              })}
+            </div>
+          </Reveal>
         </div>
       </section>
       </ScrollSection>
