@@ -107,7 +107,7 @@ export default function Contact() {
         kicker="Contact"
         title="Let's find your"
         italicWord="first automation."
-        subtitle="Book a free 15 minute AI Audit. We map your most painful manual workflows and show you what one automation would look like, live, for your specific business."
+        subtitle="Book a free consultation. We map your most painful manual workflows and show you what one automation would look like, live, for your specific business."
         showForm={false}
       />
 
