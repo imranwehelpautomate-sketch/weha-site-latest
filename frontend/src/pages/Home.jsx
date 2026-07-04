@@ -164,16 +164,6 @@ const FLOWS = [
   },
 ];
 
-// Live teardown: how we make sure you are the first to answer a new lead.
-const teardownSteps = [
-  { icon: Inbox, title: "Lead comes in", caption: "Website, ad, WhatsApp or DM" },
-  { icon: Sparkles, title: "AI qualifies it", caption: "Fit, intent, urgency, in seconds" },
-  { icon: Database, title: "CRM updated", caption: "Enriched, tagged, routed" },
-  { icon: Send, title: "Reply in minutes", caption: "Personal and on brand, day or night" },
-  { icon: CalendarClock, title: "Follow-ups queued", caption: "Nothing goes cold" },
-  { icon: Bell, title: "You get one summary", caption: "Not another task on your list" },
-];
-
 // Who this is for. Each entry powers a card + an expanded detail view.
 // stack logos: { name, slug } => /logos/{slug}.svg (or ext), { name, domain } => favicon.
 const industries = [
@@ -1023,45 +1013,6 @@ export default function Home() {
             </AnimatePresence>,
             document.body
           )}
-        </div>
-      </section>
-      </ScrollSection>
-
-      {/* SECTION 9 · PROOF - dogfooding, over the network */}
-      <ScrollSection direction="left" settle depth={0.7} intensity={0.5}>
-      <section className="relative section-glass py-24 md:py-32" data-testid="section-proof">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <Reveal>
-            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">See our thinking</span>
-            <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">Watch us solve one, live.</h2>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <p className="mt-5 text-weha-muted max-w-xl leading-relaxed">
-              The first business to answer usually wins the deal. Here is exactly how we make sure
-              that is you.
-            </p>
-          </Reveal>
-          <Reveal delay={0.12}>
-            <p className="mt-8 text-sm text-weha-faint max-w-2xl leading-relaxed">
-              Before: a demo request lands Friday night, you reply Monday, they already booked with
-              whoever answered first.
-            </p>
-          </Reveal>
-          <div className="mt-8 md:mt-10">
-            <FlowDiagram steps={teardownSteps} autoPlay />
-          </div>
-          <Reveal delay={0.1}>
-            <p className="mt-14 weha-display text-2xl md:text-3xl text-weha-text max-w-3xl leading-snug">
-              After: every lead answered in minutes, around the clock. You stop losing deals to{" "}
-              <span className="italic text-weha-teal">whoever happened to be awake.</span>
-            </p>
-          </Reveal>
-          <Reveal delay={0.16}>
-            <p className="mt-4 text-weha-faint leading-relaxed max-w-2xl">
-              Every automation here runs on the same systems we sell. This site books, confirms and
-              reminds you with zero human touch.
-            </p>
-          </Reveal>
         </div>
       </section>
       </ScrollSection>
