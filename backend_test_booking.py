@@ -10,7 +10,7 @@ from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Tuple
 
 # Read backend URL from frontend/.env
-BACKEND_URL = "https://site-staging-hub.preview.emergentagent.com/api"
+BACKEND_URL = "https://web-staging-81.preview.emergentagent.com/api"
 
 def get_next_weekday(target_weekday: int) -> str:
     """Get the next occurrence of a specific weekday (0=Mon, 1=Tue, etc.)"""
