@@ -36,6 +36,7 @@ import Magnetic from "@/components/Magnetic";
 import ValueCalculator from "@/components/ValueCalculator";
 import FlowDiagram from "@/components/FlowDiagram";
 import TabSwitch from "@/components/TabSwitch";
+import Roadmap from "@/components/Roadmap";
 import Seo from "@/components/Seo";
 import { EASE } from "@/lib/motion";
 import { useBooking } from "@/context/BookingContext";
@@ -203,12 +204,6 @@ const pillars = [
 ];
 
 // Section 3: plain-language situation mapped to a pillar.
-const fits = [
-  { problem: "You know exactly what should happen, every time.", pillar: "Connect your tools" },
-  { problem: "The task needs judgment, reading or real decisions.", pillar: "Put AI to work" },
-  { problem: "You are not sure where AI even fits yet.", pillar: "Get a clear plan" },
-];
-
 /* ------------------------------------------------------------------ *
  * Section 4 data: "Who this is for", ported from Home.jsx.
  * stack logos: { name, slug } => /logos/{slug}.svg (or ext),
@@ -639,7 +634,7 @@ export default function Services() {
           <Reveal>
             <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">What we build</span>
             <h2 className="weha-display text-3xl md:text-5xl mt-3 text-weha-text max-w-3xl">
-              Three kinds of automation. We recommend the one you actually need.
+              Three types of automation services. We recommend the one you actually need
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
@@ -692,36 +687,6 @@ export default function Services() {
               </motion.div>
             </AnimatePresence>
           </div>
-        </div>
-      </section>
-      </ScrollSection>
-
-      {/* SECTION 3 · WHICH ONE FITS YOU */}
-      <ScrollSection direction="right" settle depth={0} intensity={0.35}>
-      <section className="section-glass relative section-surface border-y border-weha-border py-24 md:py-32" data-testid="services-fit">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <Reveal>
-            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Not sure which?</span>
-            <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">Match your situation to the fix.</h2>
-          </Reveal>
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {fits.map((f, i) => (
-              <Reveal key={f.pillar} delay={(i % 3) * 0.08}>
-                <div className="weha-card h-full p-7 flex flex-col" data-cursor="hover" data-testid={`fit-card-${i + 1}`}>
-                  <p className="text-lg text-weha-text leading-relaxed">{f.problem}</p>
-                  <div className="mt-auto pt-6">
-                    <p className="weha-label">Start with</p>
-                    <p className="weha-display text-2xl text-weha-teal leading-tight">{f.pillar}</p>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-          <Reveal delay={0.1}>
-            <p className="mt-10 text-weha-muted leading-relaxed max-w-2xl">
-              Still unsure? The free audit tells you which, in 90 minutes, with no obligation.
-            </p>
-          </Reveal>
         </div>
       </section>
       </ScrollSection>
@@ -936,17 +901,8 @@ export default function Services() {
             <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">How it works</span>
             <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">From first call to fully handed off.</h2>
           </Reveal>
-          <div className="mt-16 grid gap-12 md:grid-cols-2 md:gap-x-10 md:gap-y-14">
-            {engagement.map((s, i) => (
-              <Reveal key={s.num} delay={(i % 2) * 0.08}>
-                <div className="relative" data-cursor="hover">
-                  <span className="weha-display text-7xl text-weha-teal/25">{s.num}</span>
-                  <h3 className="weha-display text-3xl mt-2 text-weha-text">{s.name}</h3>
-                  <p className="mt-2 font-mono text-xs uppercase tracking-[0.18em] text-weha-faint">{s.meta}</p>
-                  <p className="mt-4 text-weha-muted leading-relaxed text-base">{s.body}</p>
-                </div>
-              </Reveal>
-            ))}
+          <div className="mt-16">
+            <Roadmap steps={engagement} />
           </div>
           <Reveal delay={0.1}>
             <p className="mt-14 text-weha-muted leading-relaxed max-w-3xl">
