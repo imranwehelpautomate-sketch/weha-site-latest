@@ -1,29 +1,168 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, ArrowUpRight, MousePointer2 } from "lucide-react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Plus,
+  Inbox,
+  Sparkles,
+  Database,
+  Send,
+  CalendarClock,
+  Bell,
+  FileText,
+  Eye,
+  RefreshCw,
+  AlertCircle,
+  UserCheck,
+  Lightbulb,
+  Share2,
+  LayoutDashboard,
+  CalendarCheck,
+  Video,
+  Mail,
+  BellRing,
+  Table,
+} from "lucide-react";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import Reveal from "@/components/Reveal";
 import Parallax from "@/components/Parallax";
 import MaskReveal from "@/components/MaskReveal";
 import Magnetic from "@/components/Magnetic";
 import IntegrationStrip from "@/components/IntegrationStrip";
 import ScrollSection from "@/components/ScrollSection";
+import CountUp from "@/components/CountUp";
+import TabSwitch from "@/components/TabSwitch";
+import FlowDiagram from "@/components/FlowDiagram";
+import CostSlider from "@/components/CostSlider";
 import Seo from "@/components/Seo";
+import { EASE } from "@/lib/motion";
 import { useBooking } from "@/context/BookingContext";
 import { ORG, SITE, breadcrumb, graph } from "@/lib/seoSchemas";
 
+// Three persona confessions (label = persona + time, then the quote).
 const pains = [
-  "I copy the same data between three different tools every single day.",
-  "Leads come in and sit unanswered for hours because everyone's busy.",
-  "I spend my evenings building the same reports by hand, every week.",
+  {
+    label: "Agency founder · 11:52 PM",
+    quote:
+      "Client reporting week again. Six dashboards, four spreadsheets, the same numbers pasted into slides. Every single month.",
+  },
+  {
+    label: "Ecommerce founder · 8:14 AM",
+    quote:
+      "Abandoned carts, unanswered DMs, review requests we never send. We know the playbook. Nobody has time to actually run it.",
+  },
+  {
+    label: "SaaS founder · 9:40 PM",
+    quote:
+      "A demo request came in Friday night. We replied Monday morning. They had already signed with someone else.",
+  },
 ];
 
+// How it works (ghost-number steps + a mono meta line).
 const steps = [
-  { no: "01", title: "Audit", body: "Map your manual workflows together and identify the top 3 worth automating this month." },
-  { no: "02", title: "Build", body: "Deploy automation using n8n, Claude, and your existing tools. No new software to buy." },
-  { no: "03", title: "Hand Off", body: "Working system + documentation + 30-day support. You own it." },
+  {
+    no: "01",
+    title: "The Audit",
+    meta: "90 minutes · free",
+    body: "A working session, not a sales call. We map your three most automatable workflows and build one live while you watch. You leave with a plan either way.",
+  },
+  {
+    no: "02",
+    title: "The Build",
+    meta: "days, not months",
+    body: "Your highest-impact workflows shipped as working automations on the tools you already use. Tested against real data before anything goes live.",
+  },
+  {
+    no: "03",
+    title: "The Handoff",
+    meta: "you own it from day one",
+    body: "Working systems, plain-English documentation and 30 days of support. Code, accounts and docs are yours. No hostage fees.",
+  },
 ];
 
+// Flagship flows shown in the flow section (each replays on tab switch).
+const FLOWS = [
+  {
+    id: "speed",
+    label: "Speed to lead",
+    steps: [
+      { icon: Inbox, title: "Lead comes in", caption: "Website, ad, WhatsApp or DM" },
+      { icon: Sparkles, title: "AI qualifies it", caption: "Intent, budget signals, fit" },
+      { icon: Database, title: "CRM updated", caption: "Enriched, tagged, assigned" },
+      { icon: Send, title: "Reply in minutes", caption: "Personal and on-brand, day or night" },
+      { icon: CalendarClock, title: "Follow-ups queued", caption: "Day 2 and day 5, automatic" },
+      { icon: Bell, title: "You get one ping", caption: "A clean summary, not another task" },
+    ],
+  },
+  {
+    id: "pipeline",
+    label: "Sales pipeline",
+    steps: [
+      { icon: FileText, title: "Proposal sent", caption: "Your rates, your template" },
+      { icon: Eye, title: "Opens tracked", caption: "You know the moment they read it" },
+      { icon: RefreshCw, title: "Chase-ups automatic", caption: "Polite, persistent, until they answer" },
+      { icon: Database, title: "Pipeline updates itself", caption: "No more stale deal stages" },
+      { icon: AlertCircle, title: "Cold deals flagged", caption: "Before they die quietly" },
+      { icon: UserCheck, title: "You close", caption: "The system did the chasing" },
+    ],
+  },
+  {
+    id: "content",
+    label: "Content engine",
+    steps: [
+      { icon: Lightbulb, title: "One idea goes in", caption: "A topic, a transcript, a rough note" },
+      { icon: Sparkles, title: "AI drafts in your voice", caption: "Post, email and captions" },
+      { icon: UserCheck, title: "You approve", caption: "One tap, edits optional" },
+      { icon: Share2, title: "Published everywhere", caption: "LinkedIn, Instagram, newsletter" },
+      { icon: RefreshCw, title: "Repurposed automatically", caption: "One asset becomes ten" },
+      { icon: LayoutDashboard, title: "Performance logged", caption: "What worked, ready for next week" },
+    ],
+  },
+  {
+    id: "reporting",
+    label: "Marketing reporting",
+    steps: [
+      { icon: Database, title: "Channels connected", caption: "Ads, analytics, email, CRM" },
+      { icon: RefreshCw, title: "Data pulled nightly", caption: "No exports, no copy-paste" },
+      { icon: Sparkles, title: "AI writes the summary", caption: "What changed and why it matters" },
+      { icon: LayoutDashboard, title: "Dashboard updates", caption: "Live, not last month" },
+      { icon: Send, title: "Report in your inbox", caption: "Monday 8 AM, client-ready" },
+    ],
+  },
+];
+
+// Proof / dogfooding: what happens when someone books on this very site.
+const proofSteps = [
+  { icon: CalendarCheck, title: "You pick a slot", caption: "Live availability, real calendar" },
+  { icon: Database, title: "Lead saved", caption: "Straight into our database" },
+  { icon: Video, title: "Meet link created", caption: "Generated automatically" },
+  { icon: Mail, title: "Confirmation sent", caption: "Branded, personal, instant" },
+  { icon: BellRing, title: "Reminders queued", caption: "24 hours and 1 hour before" },
+  { icon: Table, title: "Books updated", caption: "Logged and tracked, zero typing" },
+];
+
+// Who this is for.
+const industries = [
+  {
+    title: "Marketing and creative agencies",
+    body: "Client reporting that writes itself. Onboarding that runs without the founder. More retainers on the same headcount.",
+  },
+  {
+    title: "Ecommerce and D2C brands",
+    body: "Abandoned carts chased, reviews requested, support triaged. The revenue playbook, finally running 24/7.",
+  },
+  {
+    title: "SaaS and tech startups",
+    body: "Every trial signup and demo request answered in minutes. Your pipeline updates itself while you ship product.",
+  },
+  {
+    title: "Coaches, consultants and online services",
+    body: "Discovery calls booked, no-shows reminded, follow-ups sent. You sell and deliver; the admin runs itself.",
+  },
+];
+
+// Why WeHA (dark section) bullets, unchanged.
 const whyWeha = [
   "You own every system we build, no lock-in, no monthly hostage fees.",
   "We automate on top of the tools you already use. No rip-and-replace.",
@@ -31,20 +170,32 @@ const whyWeha = [
   "Every automation is documented and handed off, so your team stays in control.",
 ];
 
-const capabilities = [
-  { name: "Lead Capture & Follow-up", example: "Every enquiry answered and routed in seconds, day or night." },
-  { name: "Client Onboarding", example: "New clients set up and active without the manual back-and-forth." },
-  { name: "Quotes & Proposals", example: "Turn a request into a sent quote in minutes, not hours." },
-  { name: "Reporting & Dashboards", example: "Your numbers compiled automatically, no more manual spreadsheets." },
-  { name: "Data Sync", example: "Your tools finally talk to each other. Enter data once, everywhere." },
-  { name: "Reminders & Notifications", example: "Nothing slips through the cracks. Follow-ups happen on their own." },
+// Dogfooding stats row inside the dark section.
+const stats = [
+  { value: 90, suffix: " min", label: "to your first live automation" },
+  { value: 100, suffix: "%", label: "yours: code, docs and accounts" },
+  { value: 30, suffix: " days", label: "of support after every handoff" },
+  { value: 0, suffix: "", label: "new software to buy" },
 ];
 
-const metrics = [
-  ["120+", "workflows automated"],
-  ["200+", "hours saved per month"],
-  ["55+", "tools integrated"],
-  ["90 min", "to your first live demo"],
+// FAQ.
+const faqs = [
+  {
+    q: "How much does it cost?",
+    a: "The audit is free. Builds are scoped and priced before we start, so you never get a surprise invoice. And if a workflow is not worth automating, we will tell you that too.",
+  },
+  {
+    q: "Our tools are old and messy. Will this still work?",
+    a: "Almost certainly. We build on top of what you already run, including the spreadsheets. If something genuinely cannot connect, you will know at the audit, not after you have paid.",
+  },
+  {
+    q: "What happens when something breaks after handoff?",
+    a: "Every build ships with plain-English documentation and 30 days of support. After that you own a system your team understands, and we are one message away.",
+  },
+  {
+    q: "We are not technical people.",
+    a: "You do not need to be. You approve things from your phone and read clear summaries. The system does the technical part. That is what it is for.",
+  },
 ];
 
 export default function Home() {
@@ -62,6 +213,11 @@ export default function Home() {
   ];
   const [wordIndex, setWordIndex] = useState(0);
   const [visible, setVisible] = useState(true);
+
+  // Flagship flow tab + FAQ accordion state.
+  const [activeTab, setActiveTab] = useState(FLOWS[0].id);
+  const activeFlow = FLOWS.find((f) => f.id === activeTab) || FLOWS[0];
+  const [openFaq, setOpenFaq] = useState(0);
 
   // Hero → first-section handoff: as the hero scrolls away it lifts + fades,
   // synced with the network camera pulling the viewer inward.
@@ -136,7 +292,7 @@ export default function Home() {
               <MaskReveal delay={0.05}>Your business probably</MaskReveal>
               <MaskReveal delay={0.13}>runs on 47 manual steps.</MaskReveal>
               <MaskReveal delay={0.21}>
-                <span className="italic text-weha-teal">Let's automate that.</span>
+                <span className="italic text-weha-teal">Let&apos;s automate that.</span>
               </MaskReveal>
             </h1>
             <Reveal delay={0.35}>
@@ -178,9 +334,9 @@ export default function Home() {
       {/* INTEGRATION LOGO TICKER - tool fluency */}
       <IntegrationStrip />
 
-      {/* PAIN - glass cards floating over the network */}
+      {/* SECTION 3 · PAINS - glass cards floating over the network */}
       <ScrollSection direction="left" settle depth={0.25} intensity={0.4}>
-      <section className="relative section-glass py-24 md:py-32">
+      <section className="relative section-glass py-24 md:py-32" data-testid="section-pains">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <Reveal>
             <h2 className="weha-display text-4xl md:text-6xl text-weha-text">Sound familiar?</h2>
@@ -190,8 +346,8 @@ export default function Home() {
               <Parallax key={i} speed={20 + i * 14} className="h-full">
                 <Reveal delay={i * 0.08} className="h-full">
                   <div className="glass rounded-2xl p-7 h-full" data-cursor="hover">
-                    <span className="text-xs uppercase tracking-[0.2em] text-weha-faint">Inbound · 8:14 AM</span>
-                    <p className="mt-4 text-lg leading-relaxed text-weha-text">"{p}"</p>
+                    <span className="text-xs uppercase tracking-[0.2em] text-weha-faint">{p.label}</span>
+                    <p className="mt-4 text-lg leading-relaxed text-weha-text">&ldquo;{p.quote}&rdquo;</p>
                   </div>
                 </Reveal>
               </Parallax>
@@ -199,21 +355,95 @@ export default function Home() {
           </div>
           <Reveal delay={0.1}>
             <p className="mt-12 weha-display text-2xl md:text-4xl text-weha-text max-w-3xl leading-snug">
-              These are the exact bottlenecks we automate{" "}
-              <span className="italic text-weha-teal">first</span>, whatever business you run.
+              Different businesses. The same leak:{" "}
+              <span className="italic text-weha-teal">hours going into work a system should do.</span>
             </p>
           </Reveal>
         </div>
       </section>
       </ScrollSection>
 
-      {/* HOW IT WORKS */}
+      {/* SECTION 4 · THE COST - agitation */}
+      <ScrollSection direction="right" settle depth={0} intensity={0.35}>
+      <section className="section-surface border-y border-weha-border py-24 md:py-32" data-testid="section-cost">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <Reveal>
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">The real cost</span>
+            <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">Small leaks. Serious math.</h2>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <p className="mt-5 text-weha-muted max-w-xl leading-relaxed">
+              A few hours here, a couple of people there. Slide to see what the manual work adds up
+              to in a year.
+            </p>
+          </Reveal>
+          <Reveal delay={0.14}>
+            <div className="mt-10">
+              <CostSlider footnote="Based on your inputs. Most teams underestimate by half." />
+            </div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="mt-12 weha-display text-2xl md:text-4xl text-weha-text max-w-3xl leading-snug">
+              That is not a software problem. That is a{" "}
+              <span className="italic text-weha-teal">systems problem.</span> And systems can be fixed.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+      </ScrollSection>
+
+      {/* SECTION 5 · THE FLOW - flagship, over the network */}
+      <ScrollSection direction="left" settle depth={0.7} intensity={0.5}>
+      <section className="relative section-glass py-24 md:py-32" data-testid="section-flow">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <Reveal>
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">See it work</span>
+            <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">Watch one workflow fix itself.</h2>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <p className="mt-5 text-weha-muted max-w-xl leading-relaxed">
+              Pick a bottleneck. This is what it looks like after we automate it. The first business
+              to answer usually wins the deal; these systems make sure that is you.
+            </p>
+          </Reveal>
+          <Reveal delay={0.12}>
+            <div className="mt-8">
+              <TabSwitch
+                tabs={FLOWS.map((f) => ({ id: f.id, label: f.label }))}
+                active={activeTab}
+                onChange={setActiveTab}
+              />
+            </div>
+          </Reveal>
+          <div className="mt-14 md:mt-16">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25, ease: EASE }}
+              >
+                <FlowDiagram steps={activeFlow.steps} replayKey={activeTab} />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+          <Reveal delay={0.1}>
+            <p className="mt-14 text-weha-muted max-w-2xl leading-relaxed">
+              Every flow above runs on your existing tools. Nothing to rip out, nothing new to learn.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+      </ScrollSection>
+
+      {/* SECTION 6 · HOW IT WORKS */}
       <ScrollSection direction="right" settle depth={0} intensity={0.4}>
-      <section className="section-glass relative section-surface border-y border-weha-border py-24 md:py-32">
+      <section className="section-glass relative section-surface border-y border-weha-border py-24 md:py-32" data-testid="section-how">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <Reveal>
             <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">How it works</span>
-            <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">Three steps to your time back.</h2>
+            <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">From first call to handoff, without the drag.</h2>
           </Reveal>
           <div className="mt-16 grid gap-12 md:grid-cols-3 md:gap-8">
             {steps.map((s, i) => (
@@ -221,6 +451,7 @@ export default function Home() {
                 <div className="relative" data-cursor="hover">
                   <span className="weha-display text-7xl text-weha-teal/25">{s.no}</span>
                   <h3 className="weha-display text-3xl mt-2 text-weha-text">{s.title}</h3>
+                  <p className="mt-2 font-mono text-xs uppercase tracking-[0.18em] text-weha-faint">{s.meta}</p>
                   <p className="mt-4 text-weha-muted leading-relaxed text-base">{s.body}</p>
                 </div>
               </Reveal>
@@ -230,49 +461,188 @@ export default function Home() {
       </section>
       </ScrollSection>
 
-      {/* DIFFERENCE - dark moment */}
-      <ScrollSection direction="left" settle depth={1} intensity={0.6}>
-      <section className="section-glass relative py-28 md:py-40 overflow-hidden" style={{ background: "#171614", "--weha-bg": "#171614", "--weha-text": "#f7f6f2" }}>
-        <div
-          className="absolute inset-0 opacity-[0.55]"
-          style={{ background: "radial-gradient(circle at 75% 50%, rgba(155,128,224,0.30), transparent 55%)" }}
-        />
-        <div className="relative max-w-7xl mx-auto px-5 sm:px-8 grid gap-14 md:grid-cols-2 md:gap-20 md:items-center">
+      {/* SECTION 7 · SERVICES */}
+      <ScrollSection direction="left" settle depth={0.6} intensity={0.45}>
+      <section className="section-solid relative py-24 md:py-32" data-testid="section-services">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <Reveal>
-            <h2 className="weha-display text-4xl md:text-6xl text-[#f7f6f2] leading-[1.05]">
-              Built to run without us, and{" "}
-              <span className="italic" style={{ color: "#9b80e0" }}>without lock-in.</span>
-            </h2>
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Ways to work with us</span>
+            <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">Start free. Scale when it proves itself.</h2>
           </Reveal>
-          <Reveal delay={0.12}>
-            <ul className="space-y-7">
-              {whyWeha.map((t, i) => (
-                <li key={i} className="flex gap-4">
-                  <span style={{ color: "#9b80e0" }} className="text-xl leading-none mt-1">✦</span>
-                  <span className="text-lg text-[#e9e6df] leading-relaxed">{t}</span>
-                </li>
-              ))}
-            </ul>
+          <div className="mt-14 grid gap-6 md:grid-cols-3">
+            {/* Card 1 - the free audit */}
+            <Reveal>
+              <div className="weha-card p-7 h-full flex flex-col" data-cursor="hover">
+                <span className="self-start rounded-full px-3 py-1 text-xs font-semibold" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
+                  Start here · Free
+                </span>
+                <h3 className="weha-display text-2xl mt-5 text-weha-text">The AI Audit</h3>
+                <p className="mt-3 text-weha-muted leading-relaxed flex-1">
+                  A 90-minute working session. We map your three most automatable workflows and
+                  build one live on the call. You leave with a prioritized plan whether you hire us
+                  or not.
+                </p>
+                <div className="mt-6">
+                  <Magnetic>
+                    <button type="button" onClick={openBooking} className="btn-teal" data-cursor="hover">
+                      Book the audit <ArrowRight size={15} />
+                    </button>
+                  </Magnetic>
+                </div>
+              </div>
+            </Reveal>
+            {/* Card 2 - the build sprint */}
+            <Reveal delay={0.08}>
+              <div className="weha-card p-7 h-full flex flex-col" data-cursor="hover">
+                <span className="self-start rounded-full px-3 py-1 text-xs font-semibold" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
+                  Fixed scope
+                </span>
+                <h3 className="weha-display text-2xl mt-5 text-weha-text">The Build Sprint</h3>
+                <p className="mt-3 text-weha-muted leading-relaxed flex-1">
+                  We take the workflows from your audit and ship them as working automations. Scoped
+                  and priced before we start, so there are no surprise invoices.
+                </p>
+                <div className="mt-6">
+                  <Link to="/services" className="btn-ghost" data-cursor="hover">
+                    See how we build <ArrowRight size={15} />
+                  </Link>
+                </div>
+              </div>
+            </Reveal>
+            {/* Card 3 - the automation partner */}
+            <Reveal delay={0.16}>
+              <div className="weha-card p-7 h-full flex flex-col" data-cursor="hover">
+                <span className="self-start rounded-full px-3 py-1 text-xs font-semibold" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
+                  Ongoing
+                </span>
+                <h3 className="weha-display text-2xl mt-5 text-weha-text">The Automation Partner</h3>
+                <p className="mt-3 text-weha-muted leading-relaxed flex-1">
+                  We keep your systems running, catch what breaks before you notice, and keep
+                  finding the next thing worth automating as you grow.
+                </p>
+                <div className="mt-6">
+                  <Link to="/services" className="btn-ghost" data-cursor="hover">
+                    Explore the partnership <ArrowRight size={15} />
+                  </Link>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+      </ScrollSection>
+
+      {/* SECTION 8 · WHO THIS IS FOR */}
+      <ScrollSection direction="right" settle depth={0} intensity={0.35}>
+      <section className="section-glass relative section-surface border-y border-weha-border py-24 md:py-32" data-testid="section-who">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <Reveal>
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Who this is for</span>
+            <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">Built for digital-first businesses.</h2>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <p className="mt-5 text-weha-muted max-w-xl leading-relaxed">
+              If your leads, sales and delivery already happen online, automation compounds fastest.
+              That is where we play.
+            </p>
+          </Reveal>
+          <div className="mt-14 flex md:grid md:grid-cols-2 gap-5 overflow-x-auto md:overflow-visible hide-scrollbar -mx-5 px-5 md:mx-0 md:px-0">
+            {industries.map((v, i) => (
+              <Reveal key={v.title} delay={(i % 2) * 0.08}>
+                <div className="weha-card p-7 min-w-[78vw] sm:min-w-[340px] md:min-w-0 h-full" data-cursor="hover">
+                  <h3 className="weha-display text-2xl text-weha-text">{v.title}</h3>
+                  <p className="mt-4 text-weha-muted leading-relaxed">{v.body}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal delay={0.1}>
+            <div className="mt-6 rounded-2xl border border-dashed border-weha-border p-6 md:p-7 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <p className="text-weha-muted leading-relaxed max-w-2xl">
+                A different business? The bottlenecks rhyme. If it is manual and it repeats, we can
+                probably automate it.
+              </p>
+              <button type="button" onClick={openBooking} className="btn-ghost shrink-0" data-cursor="hover">
+                Book the free audit <ArrowRight size={15} />
+              </button>
+            </div>
           </Reveal>
         </div>
       </section>
       </ScrollSection>
 
-      {/* WHAT WE AUTOMATE */}
-      <ScrollSection direction="right" settle depth={0} intensity={0.4}>
-      <section className="section-glass relative section-surface border-b border-weha-border py-24 md:py-32">
+      {/* SECTION 9 · PROOF - dogfooding, over the network */}
+      <ScrollSection direction="left" settle depth={0.7} intensity={0.5}>
+      <section className="relative section-glass py-24 md:py-32" data-testid="section-proof">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <Reveal>
-            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">What we automate</span>
-            <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">From first enquiry to final report.</h2>
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Proof, not promises</span>
+            <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">This website is the demo.</h2>
           </Reveal>
-          <div className="mt-14 flex md:grid md:grid-cols-3 gap-5 overflow-x-auto md:overflow-visible hide-scrollbar -mx-5 px-5 md:mx-0 md:px-0">
-            {capabilities.map((v, i) => (
-              <Reveal key={v.name} delay={(i % 3) * 0.08}>
-                <div className="weha-card p-7 min-w-[78vw] sm:min-w-[320px] md:min-w-0 h-full" data-cursor="hover">
-                  <h3 className="weha-display text-2xl text-weha-text">{v.name}</h3>
-                  <p className="mt-4 text-weha-muted leading-relaxed">{v.example}</p>
-                </div>
+          <Reveal delay={0.08}>
+            <p className="mt-5 text-weha-muted max-w-xl leading-relaxed">
+              When you book an audit here, no human lifts a finger. Our own automations do the work:
+            </p>
+          </Reveal>
+          <div className="mt-14 md:mt-16">
+            <FlowDiagram steps={proofSteps} autoPlay />
+          </div>
+          <Reveal delay={0.1}>
+            <p className="mt-14 weha-display text-2xl md:text-3xl text-weha-text max-w-3xl leading-snug">
+              We did not hire anyone to run this. We automated it.{" "}
+              <span className="italic text-weha-teal">That is the point.</span>
+            </p>
+          </Reveal>
+          <Reveal delay={0.16}>
+            <p className="mt-4 text-weha-muted leading-relaxed max-w-2xl">
+              The systems we sell are the systems we run on.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+      </ScrollSection>
+
+      {/* SECTION 10 · WHY WEHA - dark moment (strongest entrance) */}
+      <ScrollSection direction="right" settle depth={1} intensity={0.6}>
+      <section className="section-glass relative py-28 md:py-40 overflow-hidden" style={{ background: "#171614", "--weha-bg": "#171614", "--weha-text": "#f7f6f2" }}>
+        <div
+          className="absolute inset-0 opacity-[0.55]"
+          style={{ background: "radial-gradient(circle at 75% 50%, rgba(155,128,224,0.30), transparent 55%)" }}
+        />
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-8">
+          <div className="grid gap-14 md:grid-cols-2 md:gap-20 md:items-center">
+            <Reveal>
+              <h2 className="weha-display text-4xl md:text-6xl text-[#f7f6f2] leading-[1.05]">
+                Not a freelancer. Not a big agency.{" "}
+                <span className="italic" style={{ color: "#9b80e0" }}>Better placed than both.</span>
+              </h2>
+            </Reveal>
+            <Reveal delay={0.12}>
+              <div>
+                <p className="text-lg text-[#e9e6df] leading-relaxed max-w-xl">
+                  A freelancer connects two tools and calls it done. A big agency quotes a six-month
+                  roadmap with a retainer to match. We sit in between: engineered properly, shipped
+                  in days, and owned entirely by you.
+                </p>
+                <ul className="mt-8 space-y-7">
+                  {whyWeha.map((t, i) => (
+                    <li key={i} className="flex gap-4">
+                      <span style={{ color: "#9b80e0" }} className="text-xl leading-none mt-1">✦</span>
+                      <span className="text-lg text-[#e9e6df] leading-relaxed">{t}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+          </div>
+          {/* Proof row */}
+          <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-y-10 gap-x-6">
+            {stats.map((s, i) => (
+              <Reveal key={s.label} delay={i * 0.06}>
+                <p className="weha-display text-4xl md:text-5xl text-[#9b80e0]">
+                  <CountUp value={s.value} suffix={s.suffix} />
+                </p>
+                <p className="mt-2 text-[#c9c5bd]">{s.label}</p>
               </Reveal>
             ))}
           </div>
@@ -280,23 +650,59 @@ export default function Home() {
       </section>
       </ScrollSection>
 
-      {/* METRICS - over the network */}
-      <ScrollSection direction="left" settle depth={0.7} intensity={0.5}>
-      <section className="relative section-glass py-20 md:py-28">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-2 md:grid-cols-4 gap-y-10 gap-x-6">
-          {metrics.map(([n, label], i) => (
-            <Parallax key={label} speed={18 + i * 8}>
-              <Reveal delay={i * 0.06}>
-                <p className="weha-display text-5xl md:text-7xl text-weha-teal">{n}</p>
-                <p className="mt-2 text-weha-muted">{label}</p>
-              </Reveal>
-            </Parallax>
-          ))}
+      {/* SECTION 11 · FAQ */}
+      <ScrollSection direction="left" settle depth={0} intensity={0.3}>
+      <section className="section-solid relative py-24 md:py-32" data-testid="section-faq">
+        <div className="max-w-3xl mx-auto px-5 sm:px-8">
+          <Reveal>
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Straight answers</span>
+            <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">The questions everyone actually asks.</h2>
+          </Reveal>
+          <div className="mt-12">
+            {faqs.map((item, i) => {
+              const open = openFaq === i;
+              return (
+                <div key={i} className="border-b border-weha-border">
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaq(open ? -1 : i)}
+                    aria-expanded={open}
+                    data-cursor="hover"
+                    className="w-full flex items-center justify-between gap-6 py-6 text-left focus-visible:outline-none focus-visible:shadow-[0_0_0_3px_var(--weha-teal-soft)] rounded-lg"
+                  >
+                    <span className="weha-display text-xl md:text-2xl text-weha-text">{item.q}</span>
+                    <Plus
+                      size={22}
+                      className="shrink-0 text-weha-teal"
+                      style={{
+                        transform: open ? "rotate(45deg)" : "rotate(0deg)",
+                        transition: "transform 0.25s cubic-bezier(0.22,1,0.36,1)",
+                      }}
+                    />
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {open && (
+                      <motion.div
+                        key="answer"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: EASE }}
+                        style={{ overflow: "hidden" }}
+                      >
+                        <p className="pb-6 pr-8 text-weha-muted leading-relaxed">{item.a}</p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
       </ScrollSection>
 
-      {/* CTA BANNER */}
+      {/* SECTION 12 · CTA BANNER */}
       <ScrollSection direction="right" settle depth={0.35} intensity={0.45}>
       <section className="section-glass section-solid px-5 sm:px-8 pb-24">
         <div className="max-w-7xl mx-auto rounded-3xl px-8 py-16 md:px-16 md:py-24 relative overflow-hidden" style={{ background: "var(--weha-teal)" }}>
@@ -307,8 +713,8 @@ export default function Home() {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-6 text-white/85 text-lg max-w-2xl leading-relaxed">
-              Book a free AI Audit. We'll map your top 3 automatable workflows, and build one
-              live on the call.
+              Book a free AI Audit. We will map your top three workflows and build one live on the
+              call. No pitch deck, no obligation.
             </p>
           </Reveal>
           <Reveal delay={0.18}>
