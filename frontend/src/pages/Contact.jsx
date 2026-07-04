@@ -220,15 +220,15 @@ export default function Contact() {
                   <ul className="mt-4 space-y-3 text-weha-text">
                     <li className="flex gap-3">
                       <span className="grid place-items-center h-6 w-6 shrink-0 rounded-full bg-weha-teal-soft text-weha-teal text-xs font-semibold">1</span>
-                      We reply within 24 hours.
+                      We reply almost instantly. Like Magic.
                     </li>
                     <li className="flex gap-3">
                       <span className="grid place-items-center h-6 w-6 shrink-0 rounded-full bg-weha-teal-soft text-weha-teal text-xs font-semibold">2</span>
-                      We book a free 15 minute audit at a time that suits you.
+                      We book you a free consultation, at a time that suits you.
                     </li>
                     <li className="flex gap-3">
                       <span className="grid place-items-center h-6 w-6 shrink-0 rounded-full bg-weha-teal-soft text-weha-teal text-xs font-semibold">3</span>
-                      We map your workflows and show you what to automate first.
+                      We map your workflows and show you what automations can move the needle.
                     </li>
                   </ul>
                 </div>
