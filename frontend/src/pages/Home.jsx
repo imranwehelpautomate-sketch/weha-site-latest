@@ -63,12 +63,12 @@ const pains = [
   {
     label: "Recruitment firm · 7:20 PM",
     quote:
-      "Three hundred CVs for one role. Screening, formatting, scheduling, follow-ups — all by hand. Great candidates go cold before we even reply.",
+      "Three hundred CVs for one role. Screening, formatting, scheduling, follow-ups, all by hand. Great candidates go cold before we even reply.",
   },
   {
     label: "Marketing head · 6:05 PM",
     quote:
-      "A team of two doing the work of six. Content, campaigns, reporting — everything ships late because we are stuck stitching tools together.",
+      "A team of two doing the work of six. Content, campaigns, reporting: everything ships late because we are stuck stitching tools together.",
   },
   {
     label: "Sales head · 10:15 PM",
@@ -182,7 +182,7 @@ const industries = [
     title: "Marketing & Creative Agencies",
     body: "Client reporting that writes itself. Onboarding that runs without the founder. More retainers on the same headcount.",
     useCase:
-      "Agencies win on output and margin. We automate the repetitive delivery work — reporting, onboarding and content ops — so the same team serves more clients without burning out or hiring ahead of revenue.",
+      "Agencies win on output and margin. We automate the repetitive delivery work: reporting, onboarding and content ops. The same team serves more clients without burning out or hiring ahead of revenue.",
     painpoints: [
       "Client reporting eats a full day every month, for every account.",
       "Onboarding still depends on the founder chasing logins and assets.",
@@ -209,9 +209,9 @@ const industries = [
   {
     tag: "Recruitment",
     title: "Recruitment Agencies",
-    body: "Candidate screening, CV formatting, interview scheduling and follow-ups — automated end to end. Great candidates get a reply in minutes, not days, so you place roles faster.",
+    body: "Candidate screening, CV formatting, interview scheduling and follow-ups, automated end to end. Great candidates get a reply in minutes, not days, so you place roles faster.",
     useCase:
-      "Placement speed is everything. We automate sourcing admin, screening and scheduling so recruiters spend their day talking to people — not formatting CVs or copying data between systems.",
+      "Placement speed is everything. We automate sourcing admin, screening and scheduling so recruiters spend their day talking to people, not formatting CVs or copying data between systems.",
     painpoints: [
       "Hundreds of CVs to screen and reformat by hand for every role.",
       "Great candidates go cold before anyone finds time to reply.",
@@ -238,9 +238,9 @@ const industries = [
   {
     tag: "Remote",
     title: "Work From Home & Remote Teams",
-    body: "A workforce scattered across cities — sometimes across the globe. Automations keep everyone in sync so nothing gets lost between inboxes and no one waits on a colleague who is asleep.",
+    body: "A workforce scattered across cities, sometimes across the globe. Automations keep everyone in sync so nothing gets lost between inboxes and no one waits on a colleague who is asleep.",
     useCase:
-      "When your team is spread across cities — or continents — coordination becomes the hidden tax. We wire your tools together so handoffs, approvals and status updates move on their own, and work keeps flowing while half the team sleeps.",
+      "When your team is spread across cities, or even continents, coordination becomes the hidden tax. We wire your tools together so handoffs, approvals and status updates move on their own, and work keeps flowing while half the team sleeps.",
     painpoints: [
       "Work stalls for hours waiting on a colleague in another timezone.",
       "Status updates and approvals get buried in chat and email.",
@@ -269,7 +269,7 @@ const industries = [
     title: "Real Estate",
     body: "New enquiries answered instantly, viewings booked, listings kept in sync and follow-ups nurtured on their own. Every lead worked around the clock while you focus on closing.",
     useCase:
-      "In property, the first agent to respond usually wins the listing or the buyer. We make sure that is you — instant replies, booked viewings, synced listings and follow-ups that never let a warm lead go cold.",
+      "In property, the first agent to respond usually wins the listing or the buyer. We make sure that is you: instant replies, booked viewings, synced listings and follow-ups that never let a warm lead go cold.",
     painpoints: [
       "Enquiries arrive after hours and get answered far too late.",
       "Listings drift out of sync across portals and the website.",
@@ -298,7 +298,7 @@ const industries = [
     title: "Online Businesses",
     body: "Orders, support, reviews and retention flows running 24/7. The revenue playbook you keep meaning to run, finally on autopilot.",
     useCase:
-      "If your storefront runs online, revenue leaks quietly — unanswered messages, missed follow-ups, reviews never requested. We put the whole retention and support playbook on autopilot so nothing worth money slips through.",
+      "If your storefront runs online, revenue leaks quietly: unanswered messages, missed follow-ups, reviews never requested. We put the whole retention and support playbook on autopilot so nothing worth money slips through.",
     painpoints: [
       "Customer messages pile up across channels and get missed.",
       "Post-purchase follow-ups and review requests never get sent.",
@@ -327,7 +327,7 @@ const industries = [
     title: "Ecommerce & D2C Brands",
     body: "Abandoned carts chased, reviews requested, support triaged. The revenue playbook, finally running 24/7.",
     useCase:
-      "D2C margins live and die on repeat purchases. We automate the revenue plays — abandoned carts, reviews, support and win-backs — so your store sells around the clock without a bigger team.",
+      "D2C margins live and die on repeat purchases. We automate the revenue plays: abandoned carts, reviews, support and win-backs. Your store sells around the clock without a bigger team.",
     painpoints: [
       "Abandoned carts are never chased consistently.",
       "Support tickets spike during launches and overwhelm the team.",
@@ -385,7 +385,7 @@ const industries = [
     title: "Coaches, Consultants & Online Services",
     body: "Discovery calls booked, no-shows reminded, follow-ups sent. You sell and deliver; the admin runs itself.",
     useCase:
-      "Your time is the product. We automate everything around the session — booking, reminders, intake, follow-ups and content — so you spend your hours delivering, not doing admin.",
+      "Your time is the product. We automate everything around the session: booking, reminders, intake, follow-ups and content. You spend your hours delivering, not doing admin.",
     painpoints: [
       "Discovery calls turn into a scheduling ping-pong match.",
       "No-shows quietly kill the calendar and the revenue.",
