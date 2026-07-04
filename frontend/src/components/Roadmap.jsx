@@ -18,18 +18,18 @@ import { EASE } from "@/lib/motion";
  */
 
 const VIEW_W = 1000;
-const VIEW_H = 600;
+const VIEW_H = 1000;
 
 // Milestone coordinates in viewBox space. Alternating top / bottom.
 const NODES = [
-  { x: 140, y: 260, place: "top" },
-  { x: 380, y: 380, place: "bottom" },
-  { x: 620, y: 260, place: "top" },
-  { x: 880, y: 380, place: "bottom" },
+  { x: 140, y: 440, place: "top" },
+  { x: 380, y: 560, place: "bottom" },
+  { x: 620, y: 440, place: "top" },
+  { x: 880, y: 560, place: "bottom" },
 ];
 
 const ROAD_PATH =
-  "M 30,260 L 140,260 C 300,260 220,380 380,380 C 540,380 460,260 620,260 C 780,260 700,380 880,380 L 970,380";
+  "M 30,440 L 140,440 C 300,440 220,560 380,560 C 540,560 460,440 620,440 C 780,440 700,560 880,560 L 970,560";
 
 export default function Roadmap({ steps = [] }) {
   const nodes = steps.slice(0, 4);
@@ -37,7 +37,9 @@ export default function Roadmap({ steps = [] }) {
   return (
     <div data-testid="roadmap">
       {/* ---------- DESKTOP: horizontal curved road ---------- */}
-      <div className="relative hidden md:block" style={{ aspectRatio: `${VIEW_W} / ${VIEW_H}` }}>
+      {/* Fixed height (not aspect-ratio) so the tall top/bottom cards always
+          have reserved room and never spill into the section below. */}
+      <div className="relative hidden md:block" style={{ height: `${VIEW_H}px` }}>
         <svg
           className="absolute inset-0 h-full w-full"
           viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
