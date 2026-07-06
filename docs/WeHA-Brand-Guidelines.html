@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow">
+<title>WeHA Brand Guidelines — Internal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --weha-bg:#f7f6f2;
+  --weha-surface:#f9f8f5;
+  --weha-elevated:#ffffff;
+  --weha-text:#28251d;
+  --weha-muted:rgba(40,37,29,0.62);
+  --weha-faint:rgba(40,37,29,0.40);
+  --weha-border:rgba(40,37,29,0.12);
+  --weha-teal:#5b3fa6;
+  --weha-teal-light:#9b80e0;
+  --weha-teal-soft:rgba(91,63,166,0.10);
+  --font-display:'Instrument Serif',Georgia,serif;
+  --font-body:'Plus Jakarta Sans',ui-sans-serif,system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+  --radius-card:14px;
+  --radius-input:10px;
+  --maxw:1080px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-body);
+  background:var(--weha-bg);
+  color:var(--weha-text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.6;
+  font-weight:400;
+}
+::selection{background:var(--weha-teal);color:#fff}
+.display{font-family:var(--font-display);font-weight:400;letter-spacing:-0.01em;line-height:1.04}
+.mono{font-family:var(--font-mono);font-size:0.82rem;letter-spacing:0}
+
+/* ---------- Layout ---------- */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+section{padding:88px 0;border-top:1px solid var(--weha-border)}
+section:first-of-type{border-top:none}
+.eyebrow{
+  font-family:var(--font-mono);
+  font-size:0.72rem;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--weha-teal);
+  margin-bottom:18px;
+  display:block;
+}
+h2.sec{font-family:var(--font-display);font-size:2.6rem;line-height:1.05;letter-spacing:-0.01em;margin-bottom:14px}
+h3.sub{font-size:1.05rem;font-weight:600;letter-spacing:-0.01em;margin:44px 0 16px}
+.lead{font-size:1.12rem;color:var(--weha-muted);max-width:60ch;margin-bottom:8px}
+p{max-width:68ch;margin-bottom:14px}
+p.muted{color:var(--weha-muted)}
+.small{font-size:0.86rem}
+
+/* ---------- Cover ---------- */
+.cover{
+  min-height:82vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:100px 0 80px;
+  position:relative;
+  overflow:hidden;
+}
+.cover::after{
+  content:"";
+  position:absolute;
+  right:-12%;
+  top:8%;
+  width:520px;height:520px;
+  background:radial-gradient(circle,var(--weha-teal-soft) 0%,transparent 68%);
+  pointer-events:none;
+}
+.cover-logo{font-size:3.4rem;font-weight:700;font-family:var(--font-body);letter-spacing:-0.045em;display:inline-flex;align-items:center;line-height:1;margin-bottom:40px}
+.cover-logo .bar{display:inline-block;width:3px;height:1.4em;background:var(--weha-teal);margin:0 0.2em;border-radius:2px;transform:translateY(0.06em)}
+.cover h1{font-family:var(--font-display);font-size:clamp(3rem,7vw,5.4rem);line-height:0.98;letter-spacing:-0.02em;margin-bottom:24px;max-width:16ch}
+.cover h1 em{font-style:italic;color:var(--weha-teal)}
+.cover .sub{font-size:1.25rem;color:var(--weha-muted);max-width:52ch;margin-bottom:40px}
+.cover .meta{display:flex;gap:40px;flex-wrap:wrap;font-family:var(--font-mono);font-size:0.78rem;color:var(--weha-faint);letter-spacing:0.04em}
+.cover .meta strong{color:var(--weha-text);font-weight:500;display:block;margin-bottom:3px;font-family:var(--font-body)}
+
+/* ---------- TOC ---------- */
+.toc{background:var(--weha-surface)}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:2px 40px;margin-top:24px;counter-reset:toc}
+.toc-grid a{
+  counter-increment:toc;
+  display:flex;
+  align-items:baseline;
+  gap:14px;
+  padding:14px 0;
+  border-bottom:1px solid var(--weha-border);
+  color:var(--weha-text);
+  text-decoration:none;
+  transition:color .2s ease,padding-left .2s ease;
+}
+.toc-grid a::before{content:counter(toc,decimal-leading-zero);font-family:var(--font-mono);font-size:0.72rem;color:var(--weha-teal)}
+.toc-grid a:hover{color:var(--weha-teal);padding-left:6px}
+
+/* ---------- Color swatches ---------- */
+.swatch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-top:24px}
+.swatch{border:1px solid var(--weha-border);border-radius:var(--radius-card);overflow:hidden;background:var(--weha-elevated)}
+.swatch .chip{height:96px;display:flex;align-items:flex-end;padding:10px}
+.swatch .chip span{font-family:var(--font-mono);font-size:0.66rem;background:rgba(255,255,255,0.85);padding:2px 6px;border-radius:4px;color:#28251d}
+.swatch .body{padding:12px 14px}
+.swatch .body .name{font-weight:600;font-size:0.9rem}
+.swatch .body .role{font-size:0.78rem;color:var(--weha-muted);margin-top:2px}
+.swatch .body .token{font-family:var(--font-mono);font-size:0.7rem;color:var(--weha-faint);margin-top:6px;display:block}
+
+/* ---------- Do / Don't ---------- */
+.dd{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:24px}
+.dd .card{border:1px solid var(--weha-border);border-radius:var(--radius-card);padding:20px 22px;background:var(--weha-elevated)}
+.dd .card.do{border-color:rgba(91,63,166,0.35)}
+.dd .card.dont{border-color:rgba(180,40,40,0.28)}
+.dd .tag{font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;font-weight:500}
+.dd .card.do .tag{color:var(--weha-teal)}
+.dd .card.dont .tag{color:#b03535}
+.dd ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.dd li{position:relative;padding-left:22px;font-size:0.92rem;color:var(--weha-text)}
+.dd .card.do li::before{content:"✓";position:absolute;left:0;color:var(--weha-teal);font-weight:600}
+.dd .card.dont li::before{content:"✕";position:absolute;left:0;color:#b03535;font-weight:600}
+
+/* ---------- Spec table ---------- */
+.spec{width:100%;border-collapse:collapse;margin-top:24px;font-size:0.9rem}
+.spec th,.spec td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--weha-border);vertical-align:top}
+.spec th{font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--weha-muted);font-weight:500}
+.spec td.tok{font-family:var(--font-mono);font-size:0.78rem;color:var(--weha-teal);white-space:nowrap}
+.spec tr:last-child td{border-bottom:none}
+
+/* ---------- Type specimens ---------- */
+.specimen{border:1px solid var(--weha-border);border-radius:var(--radius-card);padding:28px 30px;background:var(--weha-elevated);margin-top:18px}
+.specimen .label{font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--weha-faint);margin-bottom:14px}
+.specimen .row{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:10px 0;border-top:1px solid var(--weha-border)}
+.specimen .row:first-of-type{border-top:none}
+.specimen .row .meta{font-family:var(--font-mono);font-size:0.72rem;color:var(--weha-faint);white-space:nowrap}
+
+/* ---------- Components preview ---------- */
+.btn-teal{display:inline-flex;align-items:center;gap:0.5rem;background:var(--weha-teal);color:#fff;border-radius:999px;padding:0.85rem 1.6rem;font-weight:500;font-size:0.95rem;line-height:1;text-decoration:none;border:none}
+.btn-ghost{display:inline-flex;align-items:center;gap:0.4rem;color:var(--weha-text);font-weight:500;font-size:0.95rem;border-bottom:1px solid var(--weha-teal);padding-bottom:2px;text-decoration:none}
+.demo-card{background:var(--weha-surface);border:1px solid var(--weha-border);border-radius:var(--radius-card);padding:22px 24px}
+.demo-input{width:100%;background:var(--weha-elevated);border:1px solid var(--weha-border);border-radius:var(--radius-input);padding:0.8rem 0.95rem;font-size:1rem;color:var(--weha-text);font-family:var(--font-body)}
+.demo-input::placeholder{color:var(--weha-faint)}
+.comp-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:24px}
+.comp-cell{border:1px solid var(--weha-border);border-radius:var(--radius-card);padding:24px;background:var(--weha-elevated)}
+.comp-cell .clabel{font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--weha-faint);margin-bottom:18px}
+
+/* ---------- Callout ---------- */
+.callout{border-left:3px solid var(--weha-teal);background:var(--weha-teal-soft);padding:18px 22px;border-radius:0 10px 10px 0;margin:24px 0;font-size:0.94rem}
+.callout .ct{font-weight:600;margin-bottom:4px;display:block}
+
+/* ---------- Voice pairs ---------- */
+.voice-pair{display:grid;grid-template-columns:1fr 1fr;gap:2px;border:1px solid var(--weha-border);border-radius:var(--radius-card);overflow:hidden;margin-top:8px}
+.voice-pair>div{padding:18px 22px;background:var(--weha-elevated)}
+.voice-pair .we{border-left:3px solid var(--weha-teal)}
+.voice-pair .not{background:var(--weha-surface);color:var(--weha-muted)}
+.voice-pair .vlabel{font-family:var(--font-mono);font-size:0.66rem;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;font-weight:500}
+.voice-pair .we .vlabel{color:var(--weha-teal)}
+.voice-pair .not .vlabel{color:var(--weha-faint)}
+
+/* ---------- Grid demo ---------- */
+.grid-demo{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}
+.grid-demo .g{background:var(--weha-teal-soft);border:1px dashed rgba(91,63,166,0.35);border-radius:8px;height:56px;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:0.7rem;color:var(--weha-teal)}
+
+/* ---------- Footer ---------- */
+footer{background:#171614;color:#f3f1ea;padding:64px 0 48px}
+footer .wrap{max-width:var(--maxw)}
+footer .flogo{font-size:2rem;font-weight:700;letter-spacing:-0.045em;display:inline-flex;align-items:center;line-height:1;margin-bottom:20px}
+footer .flogo .bar{display:inline-block;width:3px;height:1.4em;background:var(--weha-teal-light);margin:0 0.2em;border-radius:2px;transform:translateY(0.06em)}
+footer p{color:rgba(243,241,234,0.6);max-width:56ch}
+footer .fmeta{font-family:var(--font-mono);font-size:0.72rem;color:rgba(243,241,234,0.4);margin-top:28px;letter-spacing:0.04em}
+
+/* ---------- Responsive ---------- */
+@media(max-width:720px){
+  .wrap{padding:0 22px}
+  section{padding:60px 0}
+  h2.sec{font-size:2rem}
+  .dd,.comp-grid,.voice-pair{grid-template-columns:1fr}
+  .grid-demo{grid-template-columns:repeat(2,1fr)}
+  .cover .meta{gap:24px}
+}
+@media print{
+  .toc{page-break-after:always}
+  section{page-break-inside:avoid;padding:40px 0}
+  .cover{min-height:auto;page-break-after:always}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<header class="cover">
+  <div class="wrap">
+    <div class="cover-logo">We<span class="bar"></span>HA</div>
+    <h1>The <em>brand</em> book.</h1>
+    <p class="sub">How We Help Automate looks, sounds, and behaves. The single source of truth for anyone building anything under the WeHA name.</p>
+    <div class="meta">
+      <div><strong>Version 1.0</strong>Internal reference</div>
+      <div><strong>Maintained by</strong>WeHA Brand &amp; Marketing</div>
+      <div><strong>Status</strong>Confidential — not for public distribution</div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ TOC ============ -->
+<section class="toc">
+  <div class="wrap">
+    <span class="eyebrow">Contents</span>
+    <h2 class="sec">What's inside</h2>
+    <div class="toc-grid">
+      <a href="#identity">Brand Identity</a>
+      <a href="#logo">Logo System</a>
+      <a href="#color">Color System</a>
+      <a href="#type">Typography</a>
+      <a href="#motion">Motion Language</a>
+      <a href="#components">UI Components</a>
+      <a href="#voice">Voice &amp; Messaging</a>
+      <a href="#channels">Channel Guidelines</a>
+      <a href="#layout">Layout &amp; Grid</a>
+      <a href="#governance">Standards &amp; Governance</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ IDENTITY ============ -->
+<section id="identity">
+  <div class="wrap">
+    <span class="eyebrow">01 — Brand Identity</span>
+    <h2 class="sec">Who WeHA is.</h2>
+    <p class="lead">WeHA — We Help Automate — is an AI process automation partner for small and mid-sized businesses. We map the manual work that quietly drains a team, then build automation that runs without them.</p>
+
+    <h3 class="sub">The essence</h3>
+    <p class="muted">Everything below is a downstream expression of one idea: <strong>automation that removes work, not attention.</strong> WeHA is the calm, competent operator who shows up, understands the real problem, and quietly makes it disappear. Not a flashy tech vendor. Not a hype machine. A partner who does the work and tells you the truth about it.</p>
+
+    <h3 class="sub">Brand pillars</h3>
+    <table class="spec">
+      <tr><th style="width:22%">Pillar</th><th>What it means in practice</th></tr>
+      <tr><td><strong>Honest</strong></td><td>We give our real opinion, even when it costs us the sale. No inflated promises, no manufactured urgency, no pitch decks. "No BS" is a brand rule, not a tagline.</td></tr>
+      <tr><td><strong>Outcome-led</strong></td><td>We talk about the result — hours saved, deals not dropped, work that runs itself — before we talk about the technology. The tool is never the headline.</td></tr>
+      <tr><td><strong>Calm &amp; precise</strong></td><td>Restraint over noise. Whitespace over clutter. Confidence expressed through clarity, not volume. The visual system is quiet on purpose.</td></tr>
+      <tr><td><strong>Approachable expertise</strong></td><td>Deep capability, delivered in plain language. We never make the buyer feel behind. Warmth and competence in the same breath.</td></tr>
+    </table>
+
+    <h3 class="sub">Positioning in one line</h3>
+    <div class="callout">
+      <span class="ct">The line we protect</span>
+      We map your most time-consuming workflows, show you what's automatable today, and build one automation live — then give you our honest opinion. No BS.
+    </div>
+
+    <h3 class="sub">The India signature</h3>
+    <p class="muted">WeHA is built in India, serving businesses across the UAE, Australia, and Singapore. The Indian flag mark in the footer is a small, deliberate signal of craft and origin — never hidden, never over-stated. It waves gently; it does not shout.</p>
+  </div>
+</section>
+
+<!-- ============ LOGO ============ -->
+<section id="logo">
+  <div class="wrap">
+    <span class="eyebrow">02 — Logo System</span>
+    <h2 class="sec">The mark.</h2>
+    <p class="lead">The WeHA wordmark is "The Cut" — <strong>We</strong>, a vertical violet stroke, and <strong>HA</strong>. The stroke is the brand's signature: a clean incision that separates "We" from "Help Automate," collapsed into a compact, confident mark.</p>
+
+    <div style="border:1px solid var(--weha-border);border-radius:var(--radius-card);padding:56px;background:var(--weha-elevated);text-align:center;margin-top:24px">
+      <div style="font-size:4rem;font-weight:700;font-family:var(--font-body);letter-spacing:-0.045em;display:inline-flex;align-items:center;line-height:1">We<span style="display:inline-block;width:3px;height:1.4em;background:var(--weha-teal);margin:0 0.2em;border-radius:2px;transform:translateY(0.06em)"></span>HA</div>
+    </div>
+
+    <h3 class="sub">Construction</h3>
+    <table class="spec">
+      <tr><th style="width:30%">Element</th><th>Specification</th></tr>
+      <tr><td>Wordmark type</td><td class="mono">General Sans, 700 weight</td></tr>
+      <tr><td>Letter-spacing</td><td class="tok">-0.045em</td></tr>
+      <tr><td>The stroke (the "cut")</td><td>2–3px wide, height 1.4–1.45em, radius 1–2px, offset <span class="tok">translateY(0.06em)</span>, accent violet</td></tr>
+      <tr><td>Stroke margin</td><td class="tok">0 0.18em–0.2em</td></tr>
+      <tr><td>Case</td><td>"We" and "HA" — mixed case exactly as shown. Never all-caps, never all-lower.</td></tr>
+    </table>
+
+    <h3 class="sub">Animation states</h3>
+    <p class="muted">The mark has three defined motion behaviours. They are part of the identity, not decoration.</p>
+    <table class="spec">
+      <tr><th style="width:26%">State</th><th>Behaviour &amp; where it's used</th></tr>
+      <tr><td><strong>Morph intro</strong></td><td>Full "We Help Automate" collapses into the compact "We | HA" as it scrolls into view. The extra letters shrink to zero while the violet stroke draws in from the top. Used once, on first reveal. <span class="tok">2.8s</span> ease.</td></tr>
+      <tr><td><strong>Seamless loop</strong></td><td>After the intro, the compact mark hands off to a gentle infinite loop — the stroke re-draws and "HA" eases in from the right, then pauses and repeats. <span class="tok">4.8s</span> cycle.</td></tr>
+      <tr><td><strong>Animated (footer)</strong></td><td>The continuous looping version used in the footer as a living brand signature. Pauses on hover.</td></tr>
+    </table>
+
+    <div class="callout">
+      <span class="ct">Motion rule — read this</span>
+      The logo animation is <strong>deliberately exempt</strong> from <span class="mono">prefers-reduced-motion</span>. It is a small, essential brand mark and must animate consistently on every OS and browser. (Many Windows machines report "reduce" by default, which previously left the mark frozen.) Larger decorative effects elsewhere still respect reduced-motion — the logo does not.
+    </div>
+
+    <h3 class="sub">Usage</h3>
+    <div class="dd">
+      <div class="card do">
+        <div class="tag">Always</div>
+        <ul>
+          <li>Keep the violet stroke at full accent color — it is the identity</li>
+          <li>Preserve the exact spacing and mixed case</li>
+          <li>Give it clear space of at least the height of the "H" on all sides</li>
+          <li>Use on the off-white base or the near-black dark base only</li>
+          <li>Let the mark animate — never ship a frozen version to save effort</li>
+        </ul>
+      </div>
+      <div class="card dont">
+        <div class="tag">Never</div>
+        <ul>
+          <li>Recolor the stroke to anything but the accent violet</li>
+          <li>Add a gradient, shadow, outline, or glow to the wordmark</li>
+          <li>Stretch, condense, rotate, or re-space the letters</li>
+          <li>Place it on a busy photo or a low-contrast background</li>
+          <li>Recreate it in a different typeface</li>
+          <li>Spell it "Weha", "WEHA", or "weha" in the mark</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COLOR ============ -->
+<section id="color">
+  <div class="wrap">
+    <span class="eyebrow">03 — Color System</span>
+    <h2 class="sec">The palette.</h2>
+    <p class="lead">WeHA runs on a warm, restrained neutral base with a single decisive accent: <strong>Ink Violet</strong>. The palette is quiet by design — the violet does all the talking, and only where it matters.</p>
+
+    <h3 class="sub">Core — Light theme</h3>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="chip" style="background:#5b3fa6"><span>#5b3fa6</span></div><div class="body"><div class="name">Ink Violet</div><div class="role">Primary accent. CTAs, links, focus, the stroke.</div><span class="token">--weha-teal</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#f7f6f2"><span>#f7f6f2</span></div><div class="body"><div class="name">Canvas</div><div class="role">Page background. The default surface.</div><span class="token">--weha-bg</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#f9f8f5"><span>#f9f8f5</span></div><div class="body"><div class="name">Surface</div><div class="role">Raised sections, alternating bands.</div><span class="token">--weha-surface</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#ffffff"><span>#ffffff</span></div><div class="body"><div class="name">Elevated</div><div class="role">Cards, inputs, modals.</div><span class="token">--weha-elevated</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#28251d"><span>#28251d</span></div><div class="body"><div class="name">Ink</div><div class="role">Primary text.</div><span class="token">--weha-text</span></div></div>
+      <div class="swatch"><div class="chip" style="background:rgba(40,37,29,0.62)"><span>62% ink</span></div><div class="body"><div class="name">Muted</div><div class="role">Secondary text, descriptions.</div><span class="token">--weha-muted</span></div></div>
+      <div class="swatch"><div class="chip" style="background:rgba(40,37,29,0.40)"><span>40% ink</span></div><div class="body"><div class="name">Faint</div><div class="role">Placeholders, meta labels.</div><span class="token">--weha-faint</span></div></div>
+      <div class="swatch"><div class="chip" style="background:rgba(40,37,29,0.12);border-bottom:1px solid var(--weha-border)"><span>12% ink</span></div><div class="body"><div class="name">Border</div><div class="role">Hairlines, dividers, card edges.</div><span class="token">--weha-border</span></div></div>
+    </div>
+
+    <h3 class="sub">Core — Dark theme</h3>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="chip" style="background:#9b80e0"><span>#9b80e0</span></div><div class="body"><div class="name">Ink Violet (light)</div><div class="role">Accent on dark. Lifted for contrast.</div><span class="token">--weha-teal · dark</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#171614"><span>#171614</span></div><div class="body"><div class="name">Canvas (dark)</div><div class="role">Dark page background. Near-black, warm.</div><span class="token">--weha-bg · dark</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#1f1d1a"><span>#1f1d1a</span></div><div class="body"><div class="name">Surface (dark)</div><div class="role">Raised bands on dark.</div><span class="token">--weha-surface · dark</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#262421"><span>#262421</span></div><div class="body"><div class="name">Elevated (dark)</div><div class="role">Cards and inputs on dark.</div><span class="token">--weha-elevated · dark</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#f3f1ea"><span>#f3f1ea</span></div><div class="body"><div class="name">Ink (dark)</div><div class="role">Primary text on dark.</div><span class="token">--weha-text · dark</span></div></div>
+      <div class="swatch"><div class="chip" style="background:rgba(155,128,224,0.12);border:1px solid rgba(155,128,224,0.3)"><span>violet 12%</span></div><div class="body"><div class="name">Accent Soft</div><div class="role">Focus rings, tint fills, callouts.</div><span class="token">--weha-teal-soft</span></div></div>
+    </div>
+
+    <div class="callout">
+      <span class="ct">The 90 / 8 / 2 rule</span>
+      Roughly <strong>90%</strong> of any WeHA surface is neutral (canvas, surface, ink). About <strong>8%</strong> is structure (borders, muted text). Only <strong>2%</strong> is Ink Violet. If a screen looks purple, it's wrong — the accent earns its impact by being rare.
+    </div>
+
+    <h3 class="sub">Accent discipline</h3>
+    <div class="dd">
+      <div class="card do">
+        <div class="tag">Do</div>
+        <ul>
+          <li>Reserve Ink Violet for the one action you want taken</li>
+          <li>Use the soft violet tint for focus states and gentle callouts</li>
+          <li>Switch to the lighter violet (#9b80e0) on dark backgrounds for AA contrast</li>
+          <li>Let neutrals carry the layout; let whitespace breathe</li>
+        </ul>
+      </div>
+      <div class="card dont">
+        <div class="tag">Don't</div>
+        <ul>
+          <li>Use violet for large fills or full-bleed backgrounds</li>
+          <li>Introduce a second accent color (no teal, coral, blue, etc.)</li>
+          <li>Put two competing violet CTAs in the same viewport</li>
+          <li>Drop below WCAG AA contrast for body text on any surface</li>
+        </ul>
+      </div>
+    </div>
+    <p class="small muted" style="margin-top:18px">Historical note: WeHA briefly explored a coral (#f0552d) direction and a teal (#01696f) origin. Both were retired. The variable is still named <span class="mono">--weha-teal</span> for legacy reasons — <strong>the value is Ink Violet</strong>. Never reintroduce coral or teal.</p>
+  </div>
+</section>
+
+<!-- ============ TYPE ============ -->
+<section id="type">
+  <div class="wrap">
+    <span class="eyebrow">04 — Typography</span>
+    <h2 class="sec">The type system.</h2>
+    <p class="lead">Two voices in type: a warm editorial serif for expression, a clean humanist sans for everything functional. The contrast between them is the entire personality of the system.</p>
+
+    <div class="specimen">
+      <div class="label">Display — Instrument Serif</div>
+      <div style="font-family:var(--font-display);font-size:3.4rem;line-height:1.04;letter-spacing:-0.01em">Automate the work<br>that runs you.</div>
+      <div class="row"><span>Regular &amp; Italic</span><span class="meta">headlines · pull quotes · big statements</span></div>
+      <div class="row" style="border-top:none"><span style="font-family:var(--font-display);font-style:italic;color:var(--weha-teal);font-size:1.4rem">No BS.</span><span class="meta">italic + violet = the signature emphasis</span></div>
+    </div>
+
+    <div class="specimen">
+      <div class="label">Body — Plus Jakarta Sans</div>
+      <div style="font-size:1.05rem;max-width:60ch">We respond within 24 hours. No sales scripts. No pitch decks. Just a conversation about your workflow — and one automation built live on the call.</div>
+      <div class="row"><span style="font-weight:600">Semibold 600</span><span class="meta">sub-heads · labels · buttons</span></div>
+      <div class="row"><span style="font-weight:400">Regular 400</span><span class="meta">body copy · UI text</span></div>
+      <div class="row"><span style="font-weight:300">Light 300</span><span class="meta">large lead paragraphs</span></div>
+    </div>
+
+    <div class="specimen">
+      <div class="label">Mono — for meta &amp; data</div>
+      <div class="mono" style="font-size:1rem">hello@wehelpautomate.com · +91 81808 61084</div>
+      <div class="row" style="border-top:none"><span class="mono" style="font-size:0.8rem">EYEBROWS · TIMESTAMPS · TOKENS · TECHNICAL LABELS</span><span class="meta">used sparingly, always uppercase-tracked</span></div>
+    </div>
+
+    <div class="callout" style="margin-top:28px">
+      <span class="ct">The logo is not the display face</span>
+      The wordmark uses <strong>General Sans 700</strong> — a distinct choice from the body sans (Plus Jakarta Sans) and the display serif (Instrument Serif). Don't set headlines in General Sans, and don't set the logo in Instrument Serif.
+    </div>
+
+    <h3 class="sub">Type scale</h3>
+    <table class="spec">
+      <tr><th>Role</th><th>Face</th><th>Size / spec</th></tr>
+      <tr><td>Hero display</td><td>Instrument Serif</td><td class="tok">clamp(3rem, 7vw, 5.4rem) · -0.02em</td></tr>
+      <tr><td>Section heading</td><td>Instrument Serif</td><td class="tok">2.6rem · line 1.05</td></tr>
+      <tr><td>Sub-heading</td><td>Plus Jakarta Sans 600</td><td class="tok">1.05rem · -0.01em</td></tr>
+      <tr><td>Lead paragraph</td><td>Plus Jakarta Sans 300/400</td><td class="tok">1.12rem · muted</td></tr>
+      <tr><td>Body</td><td>Plus Jakarta Sans 400</td><td class="tok">1rem · line 1.6</td></tr>
+      <tr><td>Eyebrow / meta</td><td>JetBrains Mono</td><td class="tok">0.72rem · 0.18em · uppercase</td></tr>
+    </table>
+    <p class="small muted" style="margin-top:14px">Note: the live site's body stack loads Plus Jakarta Sans as the primary UI face; General Sans is reserved for the logo lockup. This document mirrors that exactly.</p>
+  </div>
+</section>
+
+<!-- ============ MOTION ============ -->
+<section id="motion">
+  <div class="wrap">
+    <span class="eyebrow">05 — Motion Language</span>
+    <h2 class="sec">How the brand moves.</h2>
+    <p class="lead">WeHA motion is <strong>calm, purposeful, and slow</strong>. Nothing bounces, nothing races. Movement exists to guide attention and signal life — never to perform. If an animation draws attention to itself, it's wrong.</p>
+
+    <h3 class="sub">Motion principles</h3>
+    <table class="spec">
+      <tr><th style="width:26%">Principle</th><th>In practice</th></tr>
+      <tr><td><strong>Ease, don't snap</strong></td><td>Standard curve is a soft cubic-bezier <span class="tok">(.5,.1,.2,1)</span>. Transitions land gently. No linear, no harsh springs.</td></tr>
+      <tr><td><strong>Slow over fast</strong></td><td>UI transitions sit at 0.2–0.4s. Ambient loops run 3.6–5s. The pace is unhurried on purpose.</td></tr>
+      <tr><td><strong>One thing at a time</strong></td><td>Reveals are staggered, not simultaneous. The eye is led, never flooded.</td></tr>
+      <tr><td><strong>Respect the user</strong></td><td>Large decorative motion honours <span class="mono">prefers-reduced-motion</span>. The logo mark is the single deliberate exception.</td></tr>
+    </table>
+
+    <h3 class="sub">The motion inventory</h3>
+    <table class="spec">
+      <tr><th style="width:26%">Element</th><th>Motion</th><th>Timing</th></tr>
+      <tr><td>Smooth scroll</td><td>Lenis-driven inertial scrolling across the whole site</td><td class="tok">—</td></tr>
+      <tr><td>Custom cursor</td><td>Soft trailing cursor that reacts to interactive elements</td><td class="tok">—</td></tr>
+      <tr><td>Hero network</td><td>Three.js NetworkScene — a slow, living constellation behind the hero</td><td class="tok">ambient</td></tr>
+      <tr><td>Reveal on scroll</td><td>Content eases up + fades in as it enters the viewport</td><td class="tok">staggered</td></tr>
+      <tr><td>Integration marquee</td><td>Continuous logo ticker, masked at both edges, pauses on hover</td><td class="tok">38s loop</td></tr>
+      <tr><td>Scroll cue</td><td>The dot drifts down inside the pill, then resets</td><td class="tok">1.8s</td></tr>
+      <tr><td>India flag</td><td>Gentle cloth wave pinned to the pole side</td><td class="tok">5s</td></tr>
+      <tr><td>WhatsApp pulse</td><td>Soft halo expands and fades — a quiet "we're here"</td><td class="tok">3.6s</td></tr>
+      <tr><td>Button hover</td><td>Lifts 2px with a soft violet shadow bloom</td><td class="tok">0.25s</td></tr>
+      <tr><td>Card hover</td><td>Lifts 3px, border warms toward violet</td><td class="tok">0.3s</td></tr>
+    </table>
+
+    <div class="callout">
+      <span class="ct">The feeling to protect</span>
+      Someone using a WeHA surface should feel like things are <strong>gliding into place</strong> — competent, unhurried, quietly alive. Never jittery, never attention-seeking, never "look what this can do."
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPONENTS ============ -->
+<section id="components">
+  <div class="wrap">
+    <span class="eyebrow">06 — UI Components</span>
+    <h2 class="sec">The building blocks.</h2>
+    <p class="lead">A small, consistent kit. Rounded, soft-edged, generously spaced. Every component shares the same border, radius, and hover language so the whole system feels like one hand made it.</p>
+
+    <div class="comp-grid">
+      <div class="comp-cell">
+        <div class="clabel">Primary button · btn-teal</div>
+        <a href="#" class="btn-teal" onclick="return false">Book a Free Audit →</a>
+        <p class="small muted" style="margin-top:16px">Pill radius (999px), Ink Violet fill, white text, 500 weight. The one action per view. Lifts on hover.</p>
+      </div>
+      <div class="comp-cell">
+        <div class="clabel">Ghost button · btn-ghost</div>
+        <a href="#" class="btn-ghost" onclick="return false">See our work →</a>
+        <p class="small muted" style="margin-top:16px">Text + violet underline. Secondary actions. The underline gap widens gently on hover.</p>
+      </div>
+      <div class="comp-cell">
+        <div class="clabel">Card · weha-card</div>
+        <div class="demo-card">A raised surface with a hairline border and 14px radius. Lifts 3px on hover, border warms toward violet.</div>
+      </div>
+      <div class="comp-cell">
+        <div class="clabel">Input · weha-input</div>
+        <input class="demo-input" placeholder="you@company.com" onclick="return false">
+        <p class="small muted" style="margin-top:16px">10px radius, 16px text (prevents iOS zoom), soft violet focus ring.</p>
+      </div>
+    </div>
+
+    <h3 class="sub">Shared tokens</h3>
+    <table class="spec">
+      <tr><th>Token</th><th>Value</th><th>Applies to</th></tr>
+      <tr><td class="tok">--radius-card</td><td>14px</td><td>Cards, modals, panels</td></tr>
+      <tr><td class="tok">--radius-input</td><td>10px</td><td>Inputs, small controls</td></tr>
+      <tr><td>Pill radius</td><td>999px</td><td>Buttons, tags, chips</td></tr>
+      <tr><td>Focus ring</td><td class="mono">0 0 0 3px violet-soft</td><td>All focusable fields</td></tr>
+      <tr><td>Card lift</td><td class="mono">translateY(-3px)</td><td>Hover state</td></tr>
+      <tr><td>Glass</td><td class="mono">blur(22px) saturate(1.4)</td><td>Overlays, sticky headers</td></tr>
+    </table>
+
+    <div class="callout">
+      <span class="ct">Form rule — never fail silently</span>
+      Every form must surface its errors. If validation fails, show the message; never leave a button frozen with no feedback. This is a hard rule, learned the hard way — a dead button is a lost lead.
+    </div>
+  </div>
+</section>
+
+<!-- ============ VOICE ============ -->
+<section id="voice">
+  <div class="wrap">
+    <span class="eyebrow">07 — Voice &amp; Messaging</span>
+    <h2 class="sec">How WeHA talks.</h2>
+    <p class="lead">Direct, warm, and refreshingly honest. WeHA sounds like a sharp operator who respects your time, tells you the truth, and skips the theatre. Plain words. Real outcomes. Zero fluff.</p>
+
+    <h3 class="sub">Voice attributes</h3>
+    <table class="spec">
+      <tr><th style="width:24%">We are</th><th>We are not</th></tr>
+      <tr><td>Direct &amp; plain-spoken</td><td>Jargon-heavy or buzzwordy</td></tr>
+      <tr><td>Honest, even when it costs us</td><td>Salesy or over-promising</td></tr>
+      <tr><td>Outcome-focused</td><td>Feature-obsessed</td></tr>
+      <tr><td>Warm &amp; human</td><td>Cold or corporate</td></tr>
+      <tr><td>Confident &amp; calm</td><td>Hyped or urgent</td></tr>
+    </table>
+
+    <h3 class="sub">Voice in practice</h3>
+    <div class="voice-pair">
+      <div class="we"><div class="vlabel">WeHA says</div>We map your most time-consuming workflows and build one automation live on the call.</div>
+      <div class="not"><div class="vlabel">Not</div>Leverage our cutting-edge AI-powered synergies to revolutionize your digital transformation journey.</div>
+    </div>
+    <div class="voice-pair" style="margin-top:16px">
+      <div class="we"><div class="vlabel">WeHA says</div>No sales scripts. No pitch decks. Just a conversation about your workflow.</div>
+      <div class="not"><div class="vlabel">Not</div>Book a discovery call to unlock a bespoke consultation with our solutions experts.</div>
+    </div>
+    <div class="voice-pair" style="margin-top:16px">
+      <div class="we"><div class="vlabel">WeHA says</div>We'll give you our honest opinion — even if the answer is "you don't need us for this."</div>
+      <div class="not"><div class="vlabel">Not</div>Our proprietary framework guarantees 10x ROI across all verticals.</div>
+    </div>
+
+    <h3 class="sub">Hard writing rules</h3>
+    <div class="dd">
+      <div class="card do">
+        <div class="tag">Always</div>
+        <ul>
+          <li>Lead with the outcome, not the technology</li>
+          <li>Write like you'd talk to a smart friend who's busy</li>
+          <li>Use short sentences and real numbers (hours, days, deals)</li>
+          <li>Say "No BS" and mean it — honesty is the differentiator</li>
+          <li>Cut every word that isn't earning its place</li>
+        </ul>
+      </div>
+      <div class="card dont">
+        <div class="tag">Never</div>
+        <ul>
+          <li>Use em-dashes in any customer-facing copy — ever</li>
+          <li>Manufacture urgency ("act now," "limited spots")</li>
+          <li>Stack buzzwords (synergy, revolutionary, seamless, next-gen)</li>
+          <li>Over-promise or imply guarantees we can't keep</li>
+          <li>Talk down to the reader or make them feel behind</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:24px">
+      <span class="ct">The em-dash rule</span>
+      WeHA customer-facing copy contains <strong>zero em-dashes</strong>. Use a period, a comma, or restructure the sentence. This is non-negotiable and applies to the site, emails, social, and every asset.
+    </div>
+
+    <h3 class="sub">Signature phrases</h3>
+    <p class="muted">These are established WeHA lines. Reuse them for consistency; don't reinvent the wheel each time.</p>
+    <table class="spec">
+      <tr><td>"No BS."</td><td>The italic-violet emphasis line. Our honesty, condensed.</td></tr>
+      <tr><td>"No sales scripts. No pitch decks."</td><td>What a WeHA conversation isn't.</td></tr>
+      <tr><td>"We respond within 24 hours."</td><td>Our response promise. Concrete, kept.</td></tr>
+      <tr><td>"Just a conversation about your workflow."</td><td>The low-pressure invitation.</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ============ CHANNELS ============ -->
+<section id="channels">
+  <div class="wrap">
+    <span class="eyebrow">08 — Channel Guidelines</span>
+    <h2 class="sec">The brand in the wild.</h2>
+    <p class="lead">The system stays consistent everywhere WeHA shows up — email, social, transactional messages. Same voice, same restraint, same violet.</p>
+
+    <h3 class="sub">Transactional email</h3>
+    <p class="muted">All WeHA automated email (booking confirmations, audit requests, reminders) follows one template: off-white background, single accent color, clean sans body, no heavy imagery, always with a plain-text fallback. Short — under eight visible lines of core copy.</p>
+    <table class="spec">
+      <tr><th style="width:26%">Property</th><th>Standard</th></tr>
+      <tr><td>From name / address</td><td class="mono">WeHA &lt;hello@wehelpautomate.com&gt;</td></tr>
+      <tr><td>Reply-to</td><td class="mono">hello@wehelpautomate.com</td></tr>
+      <tr><td>Accent</td><td>Ink Violet #5b3fa6, one accent element per email</td></tr>
+      <tr><td>Sign-off</td><td>"– The WeHA team"</td></tr>
+      <tr><td>Tone</td><td>Warm, brief, sets clear expectations of what happens next</td></tr>
+    </table>
+
+    <h3 class="sub">Email signature</h3>
+    <div style="border:1px solid var(--weha-border);border-radius:var(--radius-card);padding:26px 28px;background:var(--weha-elevated);margin-top:16px">
+      <div style="font-size:1.5rem;font-weight:700;font-family:var(--font-body);letter-spacing:-0.045em;display:inline-flex;align-items:center;line-height:1;margin-bottom:10px">We<span style="display:inline-block;width:2px;height:1.4em;background:var(--weha-teal);margin:0 0.18em;border-radius:2px;transform:translateY(0.06em)"></span>HA</div>
+      <div style="font-weight:600;font-size:0.95rem">[Name] · [Role]</div>
+      <div class="mono" style="font-size:0.78rem;color:var(--weha-muted);margin-top:6px">hello@wehelpautomate.com · wehelpautomate.com</div>
+      <div class="small" style="color:var(--weha-faint);margin-top:8px">We Help Automate — AI automation that runs without you.</div>
+    </div>
+
+    <h3 class="sub">Social &amp; LinkedIn</h3>
+    <div class="dd">
+      <div class="card do">
+        <div class="tag">Do</div>
+        <ul>
+          <li>Lead posts with a real result or a sharp observation</li>
+          <li>Keep visuals on the neutral base with one violet accent</li>
+          <li>Write the way we speak — plain, direct, honest</li>
+          <li>Use whitespace; let one idea land per post</li>
+        </ul>
+      </div>
+      <div class="card dont">
+        <div class="tag">Don't</div>
+        <ul>
+          <li>Use engagement-bait or fake urgency</li>
+          <li>Overload a graphic with violet or clutter</li>
+          <li>Post generic "AI is the future" filler</li>
+          <li>Break the em-dash rule in captions</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="sub">WhatsApp presence</h3>
+    <p class="muted">WhatsApp is a primary, human channel for WeHA. The floating button uses the soft violet pulse — a quiet "we're here," never a demanding notification. Replies are prompt, personal, and match the site voice. The established line is <span class="mono">+91 81808 61084</span>.</p>
+  </div>
+</section>
+
+<!-- ============ LAYOUT ============ -->
+<section id="layout">
+  <div class="wrap">
+    <span class="eyebrow">09 — Layout &amp; Grid</span>
+    <h2 class="sec">Space &amp; structure.</h2>
+    <p class="lead">WeHA layouts breathe. Generous whitespace is not empty space — it's the confidence to let one thing matter at a time. Content lives on a calm, centered measure with clear vertical rhythm.</p>
+
+    <h3 class="sub">The spacing scale</h3>
+    <p class="muted">Spacing steps in a consistent rhythm. Sections are separated by large vertical space; elements within them by smaller, proportional steps.</p>
+    <div class="grid-demo">
+      <div class="g">8</div><div class="g">16</div><div class="g">24</div><div class="g">32</div>
+      <div class="g">44</div><div class="g">64</div><div class="g">88</div><div class="g">120</div>
+    </div>
+    <p class="small muted" style="margin-top:14px">Base unit 8px. Section padding sits at 88px (desktop) / 60px (mobile). Content max-width holds around 1080px with 32px gutters.</p>
+
+    <h3 class="sub">Layout principles</h3>
+    <table class="spec">
+      <tr><th style="width:26%">Principle</th><th>In practice</th></tr>
+      <tr><td><strong>One idea per band</strong></td><td>Each full-width section makes a single point. Alternating canvas / surface bands create rhythm.</td></tr>
+      <tr><td><strong>Generous gutters</strong></td><td>Never crowd the edges. Whitespace signals premium restraint.</td></tr>
+      <tr><td><strong>Hairline structure</strong></td><td>Dividers and card edges are thin 12%-ink borders, never heavy rules.</td></tr>
+      <tr><td><strong>Left-aligned reading</strong></td><td>Body copy is left-aligned on a comfortable measure (~68ch). Center only short display moments.</td></tr>
+      <tr><td><strong>Consistent radius</strong></td><td>14px cards, 10px inputs, 999px pills. No sharp corners anywhere in the UI.</td></tr>
+    </table>
+
+    <div class="callout">
+      <span class="ct">Accessibility floor</span>
+      Body text meets WCAG AA contrast on every surface, light and dark. Inputs use 16px minimum text. Focus states are always visible (soft violet ring). Large decorative motion respects reduced-motion. These are requirements, not preferences.
+    </div>
+  </div>
+</section>
+
+<!-- ============ GOVERNANCE ============ -->
+<section id="governance">
+  <div class="wrap">
+    <span class="eyebrow">10 — Standards &amp; Governance</span>
+    <h2 class="sec">Keeping it WeHA.</h2>
+    <p class="lead">A brand is only as strong as its consistency. This section is the checklist anyone should run before shipping something under the WeHA name.</p>
+
+    <h3 class="sub">The pre-ship checklist</h3>
+    <table class="spec">
+      <tr><th style="width:6%">✓</th><th>Check</th></tr>
+      <tr><td>☐</td><td>Ink Violet is the only accent, and it's used sparingly (the 90/8/2 rule)</td></tr>
+      <tr><td>☐</td><td>Logo is the correct "We | HA" cut, with the violet stroke, unmodified</td></tr>
+      <tr><td>☐</td><td>Display type is Instrument Serif; body is Plus Jakarta Sans</td></tr>
+      <tr><td>☐</td><td>Zero em-dashes in any customer-facing copy</td></tr>
+      <tr><td>☐</td><td>Copy leads with an outcome, sounds honest, skips the buzzwords</td></tr>
+      <tr><td>☐</td><td>Corners are rounded (14 / 10 / 999), borders are hairline</td></tr>
+      <tr><td>☐</td><td>Motion is calm and eased; large decorative motion respects reduced-motion</td></tr>
+      <tr><td>☐</td><td>Contrast meets WCAG AA; focus states are visible</td></tr>
+      <tr><td>☐</td><td>Any form surfaces its errors — no silent failures</td></tr>
+    </table>
+
+    <h3 class="sub">Common misuse — catch these</h3>
+    <div class="dd">
+      <div class="card dont">
+        <div class="tag">Red flags</div>
+        <ul>
+          <li>Coral or teal appearing anywhere (both retired)</li>
+          <li>A frozen, non-animating logo</li>
+          <li>Purple used as a background fill instead of an accent</li>
+          <li>Buzzword-heavy or urgency-driven copy</li>
+          <li>Em-dashes in captions or headlines</li>
+        </ul>
+      </div>
+      <div class="card do">
+        <div class="tag">Green flags</div>
+        <ul>
+          <li>A page that looks 90% neutral with a single violet action</li>
+          <li>Copy a busy founder would actually want to read</li>
+          <li>Motion you barely notice but subtly feel</li>
+          <li>Consistent radius, spacing, and hairline borders</li>
+          <li>The animated "We | HA" mark, alive in the footer</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="sub">Source of truth &amp; ownership</h3>
+    <table class="spec">
+      <tr><td style="width:30%"><strong>Design tokens</strong></td><td>The live site's <span class="mono">index.css</span> and <span class="mono">tailwind.config.js</span> are the canonical values. This document mirrors them.</td></tr>
+      <tr><td><strong>Repository</strong></td><td class="mono">imranwehelpautomate-sketch/weha-site-latest</td></tr>
+      <tr><td><strong>Maintainer</strong></td><td>WeHA Brand &amp; Marketing</td></tr>
+      <tr><td><strong>This document</strong></td><td>Internal reference. Confidential. Not for public distribution or search indexing.</td></tr>
+    </table>
+
+    <div class="callout">
+      <span class="ct">When in doubt</span>
+      Choose the quieter option. WeHA earns trust through restraint and honesty, not through volume. If something feels loud, flashy, or over-promised, it isn't WeHA.
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="flogo">We<span class="bar"></span>HA</div>
+    <p>We Help Automate — AI automation that runs without you. This brand book is the single source of truth for the WeHA identity. Build with restraint, write with honesty, and keep the violet rare.</p>
+    <div class="fmeta">WeHA Brand Guidelines v1.0 · Internal &amp; Confidential · Maintained by WeHA Brand &amp; Marketing · hello@wehelpautomate.com</div>
+  </div>
+</footer>
+
+</body>
+</html>
