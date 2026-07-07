@@ -332,7 +332,7 @@ export default function About() {
             </Reveal>
             <Reveal delay={0.1}>
               <p className="mt-6 text-lg text-weha-muted leading-relaxed max-w-md">
-                We are a small firm run by people who have actually done the work. That shows up in
+                We are a fast growing firm run by people who have actually done the work. That shows up in
                 how fast we move, how little we lock you in, and how clearly we explain everything.
               </p>
             </Reveal>
