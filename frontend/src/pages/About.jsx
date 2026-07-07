@@ -8,7 +8,8 @@ import CountUp from "@/components/CountUp";
 import FlowDiagram from "@/components/FlowDiagram";
 import Seo from "@/components/Seo";
 import { motion } from "framer-motion";
-import { Linkedin, Search, Wrench, BadgeCheck, KeyRound, FileText, GraduationCap, Workflow } from "lucide-react";
+import { Linkedin, Search, Wrench, BadgeCheck, KeyRound, FileText, GraduationCap, Workflow, Users, Zap, Layers, MessageSquare, LifeBuoy, ArrowRight } from "lucide-react";
+import { useBooking } from "@/context/BookingContext";
 import { PLAYBOOK_URL } from "@/lib/resourceLinks";
 import { ORG, SITE, breadcrumb, graph } from "@/lib/seoSchemas";
 
@@ -75,7 +76,17 @@ const deliverables = [
   { icon: GraduationCap, title: "A team that can run it", body: "We walk your people through it so they can operate and tweak it with confidence." },
 ];
 
+const reasons = [
+  { icon: Users, title: "Operators, not theorists", body: "We've run marketing and operations ourselves, so we build systems that hold up in the real world, not slideware." },
+  { icon: Zap, title: "Live in days, not months", body: "You see a working automation fast. We expand from proven results, never from promises." },
+  { icon: Layers, title: "Built on your tools", body: "We automate on top of the stack you already use wherever we can. No rip-outs, no forced migrations." },
+  { icon: KeyRound, title: "You own everything", body: "Code, docs and accounts are handed over. No lock-in, and no monthly hostage fees." },
+  { icon: MessageSquare, title: "Plain English, always", body: "No jargon in calls, proposals or docs. You always know exactly what is running and why." },
+  { icon: LifeBuoy, title: "We stick around", body: "Support after every handoff, so your systems keep running smoothly as your business grows." },
+];
+
 export default function About() {
+  const { openBooking } = useBooking();
   return (
     <div data-testid="about-page" className="overflow-x-hidden">
       <Seo
@@ -338,6 +349,74 @@ export default function About() {
                 </motion.div>
               </Reveal>
             ))}
+          </div>
+        </div>
+      </section>
+      </ScrollSection>
+
+      {/* SECTION 4.5 - REASONS TO CHOOSE WEHA (two-column, animated grid) */}
+      <ScrollSection direction="left">
+      <section className="section-glass relative section-solid py-20 md:py-28" data-testid="about-reasons">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16 lg:items-start">
+          {/* Left: intro + CTA (sticks on desktop) */}
+          <div className="lg:sticky lg:top-28">
+            <Reveal>
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Why teams pick us</span>
+              <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text leading-[1.05]">
+                Reasons to build{" "}
+                <span className="italic text-weha-teal">with WeHA.</span>
+              </h2>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p className="mt-6 text-lg text-weha-muted leading-relaxed max-w-md">
+                We are a small studio run by people who have actually done the work. That shows up in
+                how fast we move, how little we lock you in, and how clearly we explain everything.
+              </p>
+            </Reveal>
+            <Reveal delay={0.18}>
+              <div className="mt-8">
+                <Magnetic>
+                  <button
+                    type="button"
+                    onClick={openBooking}
+                    className="btn-teal"
+                    data-cursor="hover"
+                    data-testid="about-reasons-cta"
+                  >
+                    Talk to the founders <ArrowRight size={16} />
+                  </button>
+                </Magnetic>
+              </div>
+            </Reveal>
+          </div>
+
+          {/* Right: 2-col animated reason cards */}
+          <div className="grid gap-5 sm:grid-cols-2">
+            {reasons.map((r, i) => {
+              const Icon = r.icon;
+              return (
+                <Reveal key={r.title} delay={(i % 2) * 0.06}>
+                  <motion.div
+                    className="weha-card h-full p-6 md:p-7"
+                    data-cursor="hover"
+                    data-testid={`about-reason-${i + 1}`}
+                    whileHover={{ y: -6 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 24 }}
+                  >
+                    <motion.span
+                      className="grid h-11 w-11 place-items-center rounded-xl"
+                      style={{ background: "var(--weha-teal-soft)" }}
+                      whileHover={{ rotate: -8, scale: 1.08 }}
+                      transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                    >
+                      <Icon size={20} className="text-weha-teal" />
+                    </motion.span>
+                    <h3 className="weha-display text-xl md:text-2xl mt-4 text-weha-text">{r.title}</h3>
+                    <p className="mt-2.5 text-sm text-weha-muted leading-relaxed">{r.body}</p>
+                  </motion.div>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
