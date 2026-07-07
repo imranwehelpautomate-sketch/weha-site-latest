@@ -205,7 +205,7 @@ export default function BookingModal({ open, onOpenChange }) {
                   <p className="text-sm leading-snug">
                     <span className="font-semibold text-weha-text">Outcome-guaranteed engagements.</span>
                     <br />
-                    <span className="text-weha-muted">Fixed scope. Flexible pricing. No surprises.</span>
+                    <span className="text-weha-muted">No obligation, no sales script. Just an honest look at where AI can save you time.</span>
                   </p>
                 </div>
               </div>
