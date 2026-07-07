@@ -55,7 +55,7 @@ const values = [
 ];
 
 const stats = [
-  { value: 8, suffix: "+", label: "years across marketing & automation" },
+  { value: 10, suffix: "+", label: "years across marketing & automation" },
   { value: 30, suffix: "+", label: "tools we build and automate across" },
   { value: 100, suffix: "%", label: "yours: code, docs and accounts" },
   { value: 0, text: "Days", label: "to your first live automation" },
