@@ -224,6 +224,18 @@ export default function AIWorkforce() {
         italicWord="We manage everything else."
         subtitle="A Workforce agent does the work, not just the talking. It runs across your tools end to end, checks itself, and stays out of your way. We deploy it, monitor it and keep it running, so you get the output without the overhead."
         showForm={false}
+        ctaSlot={
+          <div className="flex flex-wrap gap-3">
+            <Magnetic>
+              <button type="button" onClick={openBooking} className="btn-teal" data-cursor="hover" data-testid="workforce-hero-cta">
+                Book my free audit <ArrowRight size={15} />
+              </button>
+            </Magnetic>
+            <Link to="/services" className="btn-ghost" data-cursor="hover">
+              See how we build <ArrowUpRight size={15} />
+            </Link>
+          </div>
+        }
         rightSlot={
           <div className="weha-card p-6 md:p-7">
             <div className="flex items-center gap-2">
@@ -256,20 +268,6 @@ export default function AIWorkforce() {
           </div>
         }
       />
-
-      {/* hero CTAs sit just under the hero copy on their own row */}
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 -mt-6 md:-mt-10 pb-4">
-        <div className="flex flex-wrap gap-3">
-          <Magnetic>
-            <button type="button" onClick={openBooking} className="btn-teal" data-cursor="hover" data-testid="workforce-hero-cta">
-              Book my free audit <ArrowRight size={15} />
-            </button>
-          </Magnetic>
-          <Link to="/services" className="btn-ghost" data-cursor="hover">
-            See how we build <ArrowUpRight size={15} />
-          </Link>
-        </div>
-      </div>
 
       <IntegrationStrip heading="Works across your whole stack" />
 

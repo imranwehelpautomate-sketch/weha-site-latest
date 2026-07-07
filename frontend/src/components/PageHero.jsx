@@ -14,6 +14,7 @@ export default function PageHero({
   formSource = "page-hero",
   formDownloadUrl,
   rightSlot,
+  ctaSlot,
 }) {
   const hasRight = showForm || !!rightSlot;
   return (
@@ -47,6 +48,11 @@ export default function PageHero({
           {subtitle && (
             <Reveal delay={0.14}>
               <p className="mt-6 text-lg md:text-xl text-weha-muted max-w-2xl leading-relaxed">{subtitle}</p>
+            </Reveal>
+          )}
+          {ctaSlot && (
+            <Reveal delay={0.2}>
+              <div className="mt-8">{ctaSlot}</div>
             </Reveal>
           )}
         </div>
