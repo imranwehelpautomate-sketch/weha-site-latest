@@ -588,6 +588,15 @@ export default function Home() {
     "your onboarding",
     "your invoicing",
     "your lead routing",
+    "your ads",
+    "your email marketing",
+    "your SEO",
+    "your content marketing",
+    "your proposals",
+    "your recruitment",
+    "your bookings",
+    "your client management",
+    "your worries",
     "your stress",
   ];
   const [wordIndex, setWordIndex] = useState(0);
