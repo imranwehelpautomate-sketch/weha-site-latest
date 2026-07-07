@@ -747,7 +747,7 @@ export default function Home() {
                 </Magnetic>
                 <Magnetic strength={0.3}>
                   <Link to="/services" className="btn-ghost max-sm:!text-sm whitespace-nowrap" data-testid="hero-secondary-cta" data-cursor="hover">
-                    See How It Works <ArrowRight size={15} />
+                    Explore Services <ArrowRight size={15} />
                   </Link>
                 </Magnetic>
               </div>
