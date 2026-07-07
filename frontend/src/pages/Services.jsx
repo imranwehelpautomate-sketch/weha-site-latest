@@ -998,7 +998,7 @@ export default function Services() {
       <section className="section-glass relative py-24 md:py-32" data-testid="services-pillars">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <Reveal>
-            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">What we build</span>
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Our Engagement Models</span>
             <h2 className="weha-display text-3xl md:text-5xl mt-3 text-weha-text max-w-3xl">
               Three kinds of automation. We recommend the one you actually need.
             </h2>
