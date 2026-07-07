@@ -745,9 +745,10 @@ export default function Home() {
                 >
                   <ShieldCheck size={18} />
                 </span>
-                <p className="text-sm leading-snug">
-                  <span className="font-semibold text-weha-text">Outcome-guaranteed engagements.</span>{" "}
-                  <span className="text-weha-muted">No outcome, no invoice.</span>
+                <p className="text-sm leading-snug max-w-md">
+                  <span className="font-semibold text-weha-text">Outcome-guaranteed engagements.</span>
+                  <br />
+                  <span className="text-weha-muted">Realistic timelines, real deliverables, reviewed together at every stage.</span>
                 </p>
               </div>
             </Reveal>

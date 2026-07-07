@@ -665,6 +665,7 @@ const systems = [
       "Approved content queues itself and publishes on the schedule you set.",
     ],
     timeline: "First automation live in days. Full content engine running in about a week.",
+    trust: "Realistic timelines, real deliverables, reviewed together at every stage.",
     milestones: [
       { icon: Lightbulb, title: "Brief in", caption: "One idea or long piece" },
       { icon: Sparkles, title: "AI drafts", caption: "On-brand, every format" },
@@ -697,6 +698,7 @@ const systems = [
       "AI drafts the follow-ups; your reps just review and send.",
     ],
     timeline: "Instant follow-up live in 48 hours. Full pipeline automation inside 2 weeks.",
+    trust: "We define success together before you sign. No surprises, no scope creep.",
     milestones: [
       { icon: Inbox, title: "Lead lands", caption: "Any channel" },
       { icon: Mail, title: "Instant reply", caption: "Within minutes" },
@@ -729,6 +731,7 @@ const systems = [
       "Positive replies route straight to your booking link and your CRM.",
     ],
     timeline: "First campaign sending within a week. Optimized engine inside 2 weeks.",
+    trust: "Fixed scope. Fixed price. No hidden hours.",
     milestones: [
       { icon: Search, title: "Find leads", caption: "Your ideal profile" },
       { icon: Sparkles, title: "Personalize", caption: "AI, at scale" },
@@ -793,6 +796,7 @@ const systems = [
       "Onboarding kicks off automatically the moment an offer is accepted.",
     ],
     timeline: "First HR workflow live in days. Full people-ops setup inside 2 weeks.",
+    trust: "We define success together before you sign. No surprises, no scope creep.",
     milestones: [
       { icon: Search, title: "Screen", caption: "CVs, automatically" },
       { icon: CalendarCheck, title: "Schedule", caption: "Interviews, hands-free" },
@@ -1216,9 +1220,9 @@ export default function Services() {
                         <ShieldCheck size={22} />
                       </span>
                       <div>
-                        <p className="weha-display text-lg text-weha-text leading-tight">Outcome-guaranteed engagements</p>
+                        <p className="weha-display text-lg text-weha-text leading-tight">Outcome-guaranteed engagements.</p>
                         <p className="mt-0.5 text-sm text-weha-muted leading-snug">
-                          We put the result in writing before we start. No outcome, no invoice.
+                          {systems[expandedSystem].trust}
                         </p>
                       </div>
                     </div>
