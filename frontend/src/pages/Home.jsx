@@ -852,67 +852,6 @@ export default function Home() {
       </section>
       </ScrollSection>
 
-      {/* SECTION 7 · SERVICES */}
-      <ScrollSection direction="left" settle depth={0.6} intensity={0.45}>
-      <section className="section-solid relative py-24 md:py-32" data-testid="section-services">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <Reveal>
-            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Ways to work with us</span>
-            <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">Start free. Scale when it proves itself.</h2>
-          </Reveal>
-          <div className="mt-14 grid gap-6 md:grid-cols-3">
-            {/* Card 1 - the free audit */}
-            <Reveal>
-              <div className="weha-card p-7 h-full flex flex-col" data-cursor="hover">
-                <span className="self-start rounded-full px-3 py-1 text-xs font-semibold" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
-                  Start here · Free
-                </span>
-                <h3 className="weha-display text-2xl mt-5 text-weha-text">The AI Audit</h3>
-                <p className="mt-3 text-weha-muted leading-relaxed flex-1">
-                  A 30-minute conversation. We map your most automatable workflows and maybe
-                  build one live on the call. You leave with a prioritized plan whether you hire us
-                  or not.
-                </p>
-                <div className="mt-6">
-                  <Magnetic>
-                    <button type="button" onClick={openBooking} className="btn-teal" data-cursor="hover">
-                      Book my free audit <ArrowRight size={15} />
-                    </button>
-                  </Magnetic>
-                </div>
-              </div>
-            </Reveal>
-            {/* Card 2 - the build sprint */}
-            <Reveal delay={0.08}>
-              <div className="weha-card p-7 h-full flex flex-col" data-cursor="hover">
-                <span className="self-start rounded-full px-3 py-1 text-xs font-semibold" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
-                  Fixed scope
-                </span>
-                <h3 className="weha-display text-2xl mt-5 text-weha-text">The Build Sprint</h3>
-                <p className="mt-3 text-weha-muted leading-relaxed flex-1">
-                  We take the workflows from your audit and ship them as working automations. Scoped
-                  and priced before we start, so there are no surprise invoices.
-                </p>
-              </div>
-            </Reveal>
-            {/* Card 3 - the automation partner */}
-            <Reveal delay={0.16}>
-              <div className="weha-card p-7 h-full flex flex-col" data-cursor="hover">
-                <span className="self-start rounded-full px-3 py-1 text-xs font-semibold" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
-                  Ongoing
-                </span>
-                <h3 className="weha-display text-2xl mt-5 text-weha-text">The Automation Partner</h3>
-                <p className="mt-3 text-weha-muted leading-relaxed flex-1">
-                  We keep your systems running, catch what breaks before you notice, and keep
-                  finding the next thing worth automating as you grow.
-                </p>
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-      </ScrollSection>
-
       {/* SECTION 8 · WHO THIS IS FOR */}
       <ScrollSection direction="right" settle depth={0} intensity={0.35}>
       <section className="section-glass relative section-surface border-y border-weha-border py-24 md:py-32" data-testid="section-who">
@@ -1111,6 +1050,67 @@ export default function Home() {
             </AnimatePresence>,
             document.body
           )}
+        </div>
+      </section>
+      </ScrollSection>
+
+      {/* SECTION 9 · SERVICES - Ways to work with us (moved below "Who this is for") */}
+      <ScrollSection direction="left" settle depth={0.6} intensity={0.45}>
+      <section className="section-solid relative py-24 md:py-32" data-testid="section-services">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <Reveal>
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Ways to work with us</span>
+            <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">Start free. Scale when it proves itself.</h2>
+          </Reveal>
+          <div className="mt-14 grid gap-6 md:grid-cols-3">
+            {/* Card 1 - the free audit */}
+            <Reveal>
+              <div className="weha-card p-7 h-full flex flex-col" data-cursor="hover">
+                <span className="self-start rounded-full px-3 py-1 text-xs font-semibold" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
+                  Start here · Free
+                </span>
+                <h3 className="weha-display text-2xl mt-5 text-weha-text">The AI Audit</h3>
+                <p className="mt-3 text-weha-muted leading-relaxed flex-1">
+                  A 30-minute conversation. We map your most automatable workflows and maybe
+                  build one live on the call. You leave with a prioritized plan whether you hire us
+                  or not.
+                </p>
+                <div className="mt-6">
+                  <Magnetic>
+                    <button type="button" onClick={openBooking} className="btn-teal" data-cursor="hover">
+                      Book my free audit <ArrowRight size={15} />
+                    </button>
+                  </Magnetic>
+                </div>
+              </div>
+            </Reveal>
+            {/* Card 2 - the build sprint */}
+            <Reveal delay={0.08}>
+              <div className="weha-card p-7 h-full flex flex-col" data-cursor="hover">
+                <span className="self-start rounded-full px-3 py-1 text-xs font-semibold" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
+                  Fixed scope
+                </span>
+                <h3 className="weha-display text-2xl mt-5 text-weha-text">The Build Sprint</h3>
+                <p className="mt-3 text-weha-muted leading-relaxed flex-1">
+                  We take the workflows from your audit and ship them as working automations. Scoped
+                  and priced before we start, so there are no surprise invoices.
+                </p>
+              </div>
+            </Reveal>
+            {/* Card 3 - the automation partner */}
+            <Reveal delay={0.16}>
+              <div className="weha-card p-7 h-full flex flex-col" data-cursor="hover">
+                <span className="self-start rounded-full px-3 py-1 text-xs font-semibold" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
+                  Ongoing
+                </span>
+                <h3 className="weha-display text-2xl mt-5 text-weha-text">The Automation Partner</h3>
+                <p className="mt-3 text-weha-muted leading-relaxed flex-1">
+                  We keep your systems running, catch what breaks before you notice, and keep
+                  finding the next thing worth automating as you grow.
+                </p>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
       </ScrollSection>
