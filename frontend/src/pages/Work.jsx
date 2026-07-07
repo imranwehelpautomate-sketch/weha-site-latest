@@ -10,6 +10,31 @@ import { Sparkles, Check, ArrowRight, TrendingUp } from "lucide-react";
 import { ORG, SITE, breadcrumb, graph } from "@/lib/seoSchemas";
 
 /* ------------------------------------------------------------------ *
+ * "What teams say" testimonials (shared copy with AI Workforce page).
+ * ------------------------------------------------------------------ */
+const testimonials = [
+  {
+    quote:
+      "It genuinely runs on its own. We handed it our lead inbox and stopped thinking about response times entirely.",
+    name: "Operations lead",
+    role: "B2B services company",
+  },
+  {
+    quote:
+      "The difference is that WeHA manages the agent. We do not babysit prompts or wake up to broken automations.",
+    name: "Founder",
+    role: "Recruitment agency",
+  },
+  {
+    quote:
+      "Live in under two weeks, on the tools we already had. It felt less like buying software and more like a hire.",
+    name: "Head of growth",
+    role: "SaaS startup",
+  },
+];
+
+
+/* ------------------------------------------------------------------ *
  * Time & Capacity Calculator (Work hero).
  * Transparent model focused on time and people. A 0.85 realism factor
  * is applied (never assume full automation), and freed time is framed
@@ -391,6 +416,35 @@ export default function Work() {
           ))}
         </div>
       </section>
+
+      {/* WHAT TEAMS SAY: testimonials (replicated from AI Workforce) */}
+      <ScrollSection direction="right" settle depth={0.4} intensity={0.4}>
+        <section className="section-solid relative py-24 md:py-32" data-testid="work-testimonials">
+          <div className="max-w-7xl mx-auto px-5 sm:px-8">
+            <Reveal>
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">What teams say</span>
+              <h2 className="weha-display text-3xl md:text-5xl mt-3 text-weha-text max-w-3xl">
+                Run by teams that moved first.
+              </h2>
+            </Reveal>
+            <div className="mt-12 grid gap-6 md:grid-cols-3">
+              {testimonials.map((t, i) => (
+                <Reveal key={i} delay={(i % 3) * 0.06}>
+                  <figure className="weha-card h-full p-7 flex flex-col" data-cursor="hover">
+                    <blockquote className="text-weha-text leading-relaxed flex-1">
+                      &ldquo;{t.quote}&rdquo;
+                    </blockquote>
+                    <figcaption className="mt-6 pt-5 border-t border-weha-border">
+                      <p className="weha-display text-lg text-weha-text">{t.name}</p>
+                      <p className="text-sm text-weha-faint">{t.role}</p>
+                    </figcaption>
+                  </figure>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      </ScrollSection>
 
       {/* BOTTOM FILLER: tie together, bridge to Services */}
       <ScrollSection direction="left">
