@@ -1139,7 +1139,7 @@ export default function Home() {
 
       {/* SECTION 10 · WHY WEHA - dark moment (strongest entrance) */}
       <ScrollSection direction="right" settle depth={1} intensity={0.6}>
-      <section className="section-glass relative py-28 md:py-40 overflow-hidden" style={{ background: "#171614", "--weha-bg": "#171614", "--weha-text": "#f7f6f2" }}>
+      <section className="section-glass relative py-12 md:py-16 overflow-hidden" style={{ background: "#171614", "--weha-bg": "#171614", "--weha-text": "#f7f6f2" }}>
         <div
           className="absolute inset-0 opacity-[0.6]"
           style={{ background: "radial-gradient(circle at 78% 42%, rgba(155,128,224,0.32), transparent 55%)" }}
@@ -1152,20 +1152,20 @@ export default function Home() {
                 <span className="text-xs font-semibold tracking-[0.24em] uppercase" style={{ color: "#9b80e0" }}>
                   The WeHA difference
                 </span>
-                <h2 className="weha-display text-4xl md:text-6xl mt-4 text-[#f7f6f2] leading-[1.04]">
+                <h2 className="weha-display text-4xl md:text-5xl mt-3 text-[#f7f6f2] leading-[1.04]">
                   Not a freelancer. Not a big agency.{" "}
                   <span className="italic" style={{ color: "#9b80e0" }}>Better placed than both.</span>
                 </h2>
               </Reveal>
               <Reveal delay={0.12}>
-                <p className="mt-6 text-lg text-[#c9c5bd] leading-relaxed max-w-xl">
+                <p className="mt-4 text-[0.95rem] md:text-base text-[#c9c5bd] leading-relaxed max-w-xl">
                   A freelancer connects two tools and calls it done. A big agency quotes a six-month
                   roadmap with a retainer to match. We sit in between: engineered properly, shipped
                   in days, and owned entirely by you.
                 </p>
               </Reveal>
               <Reveal delay={0.18}>
-                <ul className="mt-9 grid gap-x-8 gap-y-5 sm:grid-cols-2">
+                <ul className="mt-5 grid gap-x-8 gap-y-3.5 sm:grid-cols-2">
                   {whyWeha.map((t, i) => (
                     <li key={i} className="flex gap-3">
                       <span
@@ -1180,7 +1180,7 @@ export default function Home() {
                 </ul>
               </Reveal>
               <Reveal delay={0.26}>
-                <div className="mt-10">
+                <div className="mt-6">
                   <Magnetic>
                     <button
                       type="button"
@@ -1198,7 +1198,7 @@ export default function Home() {
 
             {/* RIGHT: circular guarantee visual */}
             <Reveal delay={0.2}>
-              <div className="relative mx-auto aspect-square w-full max-w-[440px]">
+              <div className="relative mx-auto aspect-square w-full max-w-[360px]">
                 {/* soft glow */}
                 <div className="absolute inset-0 rounded-full" style={{ background: "radial-gradient(circle, rgba(155,128,224,0.22), transparent 62%)" }} />
                 {/* concentric rings */}
@@ -1253,7 +1253,7 @@ export default function Home() {
 
           {/* Proof row */}
           <div
-            className="mt-20 md:mt-24 grid grid-cols-2 md:grid-cols-4 gap-y-10 border-t pt-12"
+            className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-y-7 border-t pt-8"
             style={{ borderColor: "rgba(155,128,224,0.15)" }}
           >
             {stats.map((s, i) => (
