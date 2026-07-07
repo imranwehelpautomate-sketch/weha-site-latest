@@ -189,7 +189,7 @@ export default function BookingModal({ open, onOpenChange }) {
                   <span className="italic text-weha-text">No BS.</span>
                 </p>
                 <div
-                  className="mt-5 flex items-center gap-3 rounded-2xl border px-4 py-3"
+                  className="mt-5 flex items-start gap-3 rounded-2xl border px-4 py-3.5"
                   style={{
                     borderColor: "color-mix(in srgb, var(--weha-teal) 28%, transparent)",
                     background: "var(--weha-teal-soft)",
@@ -197,16 +197,15 @@ export default function BookingModal({ open, onOpenChange }) {
                   data-testid="booking-trust-badge"
                 >
                   <span
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-xl shrink-0"
+                    className="inline-flex h-8 w-8 items-center justify-center rounded-xl shrink-0 mt-0.5"
                     style={{ background: "var(--weha-bg)", color: "var(--weha-teal)" }}
                   >
-                    <ShieldCheck size={18} />
+                    <ShieldCheck size={16} />
                   </span>
-                  <p className="text-sm leading-snug">
-                    <span className="font-semibold text-weha-text">Outcome-guaranteed engagements.</span>
-                    <br />
-                    <span className="text-weha-muted">No obligation, no sales script. Just an honest look at where AI can save you time.</span>
-                  </p>
+                  <div className="min-w-0">
+                    <p className="text-[0.9rem] font-semibold text-weha-text leading-snug">Outcome-guaranteed engagements.</p>
+                    <p className="mt-1 text-[0.78rem] text-weha-muted leading-relaxed">No obligation, no sales script. Just an honest look at where AI can save you time.</p>
+                  </div>
                 </div>
               </div>
               <ul className="mt-8 space-y-3.5 text-[0.95rem]">
