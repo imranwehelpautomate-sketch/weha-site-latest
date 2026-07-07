@@ -546,7 +546,7 @@ function StackLogo({ name, slug, domain, ext = "svg" }) {
 // Why WeHA (dark section) bullets, unchanged.
 const whyWeha = [
   "You own every system we build, no lock-in, no monthly hostage fees.",
-  "We build on the tools you already use wherever we can. If something new is genuinely the right call, you buy it and own the account directly, no markup, no middleman.",
+  "We build on the tools you already use wherever we can.",
   "Live systems in days, not months. You see value almost immediately.",
   "Every automation is documented and handed off, so your team stays in control.",
 ];
