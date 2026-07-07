@@ -8,7 +8,7 @@ import ScrollSection from "@/components/ScrollSection";
 import Seo from "@/components/Seo";
 import ResourceDownloadModal from "@/components/ResourceDownloadModal";
 import { DRIVE } from "@/lib/resourceLinks";
-import { SITE, breadcrumb, graph } from "@/lib/seoSchemas";
+import { ORG, WEBSITE, SITE, breadcrumb, graph } from "@/lib/seoSchemas";
 
 const items = [
   {
@@ -58,10 +58,15 @@ export default function ResourceWorkbooks() {
         description="Free printable WeHA workbooks to map, score, and prioritize the manual workflows worth automating first."
         path="/resources/workbooks"
         jsonLd={graph([
+          ORG,
+          WEBSITE,
           {
             "@type": "CollectionPage",
+            "@id": `${SITE}/resources/workbooks#webpage`,
             name: "Free Workbooks",
             url: `${SITE}/resources/workbooks`,
+            isPartOf: { "@id": `${SITE}/#website` },
+            about: { "@id": `${SITE}/#organization` },
             mainEntity: {
               "@type": "ItemList",
               itemListElement: items.map((it, i) => ({
@@ -75,7 +80,7 @@ export default function ResourceWorkbooks() {
             { name: "Home", path: "/" },
             { name: "Resources", path: "/resources" },
             { name: "Workbooks", path: "/resources/workbooks" },
-          ]),
+          ], "/resources/workbooks"),
         ])}
       />
       <PageHero

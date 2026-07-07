@@ -25,7 +25,7 @@ import IntegrationStrip from "@/components/IntegrationStrip";
 import CostSlider from "@/components/CostSlider";
 import Seo from "@/components/Seo";
 import { useBooking } from "@/context/BookingContext";
-import { ORG, SITE, breadcrumb, graph } from "@/lib/seoSchemas";
+import { ORG, WEBSITE, SITE, breadcrumb, webPage, graph } from "@/lib/seoSchemas";
 
 /* ------------------------------------------------------------------ *
  * Section 2: what makes a Workforce agent different from a chatbot.
@@ -199,6 +199,13 @@ export default function AIWorkforce() {
         path="/ai-workforce"
         jsonLd={graph([
           ORG,
+          WEBSITE,
+          webPage({
+            path: "/ai-workforce",
+            name: "AI Workforce | Managed Agentic Coworkers",
+            description:
+              "Hire a WeHA Workforce agent: a managed, agentic AI coworker that works across your tools end to end, deployed in days and fully owned by you.",
+          }),
           {
             "@type": "Service",
             "@id": `${SITE}/ai-workforce#service`,
@@ -213,7 +220,7 @@ export default function AIWorkforce() {
           breadcrumb([
             { name: "Home", path: "/" },
             { name: "AI Workforce", path: "/ai-workforce" },
-          ]),
+          ], "/ai-workforce"),
         ])}
       />
 

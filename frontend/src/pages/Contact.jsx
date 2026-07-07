@@ -8,7 +8,7 @@ import Seo from "@/components/Seo";
 import MarketingConsent from "@/components/MarketingConsent";
 import { submitContactMessage } from "@/lib/api";
 import { checkContactFields } from "@/lib/spamGuard";
-import { ORG, SITE, breadcrumb, faqPage, graph } from "@/lib/seoSchemas";
+import { ORG, WEBSITE, breadcrumb, webPage, faqPage, graph } from "@/lib/seoSchemas";
 import {
   Accordion,
   AccordionContent,
@@ -88,19 +88,20 @@ export default function Contact() {
         description="Book a free 60 minute AI Audit with WeHA. We map your most painful manual workflows and show you what one automation would look like, live."
         path="/contact"
         jsonLd={graph([
-          {
-            ...ORG,
-            contactPoint: {
-              "@type": "ContactPoint",
-              email: "hello@wehelpautomate.com",
-              contactType: "customer service",
-            },
-          },
+          ORG,
+          WEBSITE,
+          webPage({
+            path: "/contact",
+            name: "Contact WeHA, book a free AI Audit",
+            description:
+              "Book a free AI Audit with WeHA. We map your most painful manual workflows and show you what one automation would look like, live.",
+            type: "ContactPage",
+          }),
           faqPage(faqs),
           breadcrumb([
             { name: "Home", path: "/" },
             { name: "Contact", path: "/contact" },
-          ]),
+          ], "/contact"),
         ])}
       />
       <PageHero

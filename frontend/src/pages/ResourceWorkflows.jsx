@@ -8,7 +8,7 @@ import ScrollSection from "@/components/ScrollSection";
 import Seo from "@/components/Seo";
 import ResourceDownloadModal from "@/components/ResourceDownloadModal";
 import { DRIVE } from "@/lib/resourceLinks";
-import { SITE, breadcrumb, graph } from "@/lib/seoSchemas";
+import { ORG, WEBSITE, SITE, breadcrumb, graph } from "@/lib/seoSchemas";
 
 const items = [
   {
@@ -58,10 +58,15 @@ export default function ResourceWorkflows() {
         description="Free, ready to import n8n workflow automation templates you can plug into your own stack in minutes. Each download includes the template plus a setup guide."
         path="/resources/workflow-automations"
         jsonLd={graph([
+          ORG,
+          WEBSITE,
           {
             "@type": "CollectionPage",
+            "@id": `${SITE}/resources/workflow-automations#webpage`,
             name: "Free Workflow Automations",
             url: `${SITE}/resources/workflow-automations`,
+            isPartOf: { "@id": `${SITE}/#website` },
+            about: { "@id": `${SITE}/#organization` },
             mainEntity: {
               "@type": "ItemList",
               itemListElement: items.map((it, i) => ({
@@ -75,7 +80,7 @@ export default function ResourceWorkflows() {
             { name: "Home", path: "/" },
             { name: "Resources", path: "/resources" },
             { name: "Workflow Automations", path: "/resources/workflow-automations" },
-          ]),
+          ], "/resources/workflow-automations"),
         ])}
       />
       <PageHero

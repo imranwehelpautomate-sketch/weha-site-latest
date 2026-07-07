@@ -42,7 +42,7 @@ import CostSlider from "@/components/CostSlider";
 import Seo from "@/components/Seo";
 import { EASE } from "@/lib/motion";
 import { useBooking } from "@/context/BookingContext";
-import { ORG, SITE, breadcrumb, graph } from "@/lib/seoSchemas";
+import { ORG, WEBSITE, breadcrumb, webPage, faqPage, graph } from "@/lib/seoSchemas";
 
 // Three persona confessions (label = persona + time, then the quote).
 const pains = [
@@ -536,14 +536,15 @@ export default function Home() {
         path="/"
         jsonLd={graph([
           ORG,
-          {
-            "@type": "WebSite",
-            "@id": `${SITE}/#website`,
-            url: SITE,
-            name: "We Help Automate",
-            publisher: { "@id": `${SITE}/#organization` },
-          },
-          breadcrumb([{ name: "Home", path: "/" }]),
+          WEBSITE,
+          webPage({
+            path: "/",
+            name: "We Help Automate | Done For You AI Automation Services",
+            description:
+              "WeHA turns your messiest manual workflows into AI systems that run themselves, built in days, not months. Book a free AI Audit.",
+          }),
+          faqPage(faqs),
+          breadcrumb([{ name: "Home", path: "/" }], "/"),
         ])}
       />
       {/* HERO - over the live floating tech network */}

@@ -73,13 +73,16 @@
     "include": [
       "/",
       "/services",
-      "/work",
+      "/ai-workforce",
+      "/success-stories",
       "/about",
       "/contact",
       "/resources",
       "/resources/workbooks",
       "/resources/workflow-automations",
-      "/resources/ebooks"
+      "/resources/ebooks",
+      "/privacy-policy",
+      "/terms-of-service"
     ],
     "inlineCss": false,
     "skipThirdPartyRequests": true,

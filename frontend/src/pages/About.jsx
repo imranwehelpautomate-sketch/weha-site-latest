@@ -11,7 +11,7 @@ import { motion } from "framer-motion";
 import { Linkedin, Search, Wrench, BadgeCheck, KeyRound, FileText, GraduationCap, Workflow, Users, Zap, Layers, ArrowRight } from "lucide-react";
 import { useBooking } from "@/context/BookingContext";
 import { PLAYBOOK_URL } from "@/lib/resourceLinks";
-import { ORG, SITE, breadcrumb, graph } from "@/lib/seoSchemas";
+import { ORG, WEBSITE, SITE, breadcrumb, webPage, graph } from "@/lib/seoSchemas";
 
 const ASSET = (p) => `${process.env.PUBLIC_URL || ""}${p}`;
 
@@ -85,23 +85,33 @@ export default function About() {
         path="/about"
         jsonLd={graph([
           ORG,
+          WEBSITE,
+          webPage({
+            path: "/about",
+            name: "About WeHA",
+            description:
+              "Meet WeHA, an AI automation agency built by two operators. We build practical systems on the tools you already use, and hand them over to you.",
+            type: "AboutPage",
+          }),
           {
             "@type": "Person",
             name: "Imran Shaikh",
             jobTitle: "Co-Founder",
+            image: `${SITE}/founders/imran.jpeg`,
             worksFor: { "@id": `${SITE}/#organization` },
           },
           {
             "@type": "Person",
             name: "Selena Thomas",
             jobTitle: "Co-Founder & COO",
+            image: `${SITE}/founders/selena.jpeg`,
             worksFor: { "@id": `${SITE}/#organization` },
             sameAs: ["https://www.linkedin.com/in/selena-thomas-9839472b8/"],
           },
           breadcrumb([
             { name: "Home", path: "/" },
             { name: "About", path: "/about" },
-          ]),
+          ], "/about"),
         ])}
       />
       <PageHero

@@ -44,7 +44,7 @@ import Roadmap from "@/components/Roadmap";
 import Seo from "@/components/Seo";
 import { EASE } from "@/lib/motion";
 import { useBooking } from "@/context/BookingContext";
-import { ORG, SITE, breadcrumb, faqPage, graph } from "@/lib/seoSchemas";
+import { ORG, WEBSITE, SITE, breadcrumb, webPage, faqPage, graph } from "@/lib/seoSchemas";
 import {
   Accordion,
   AccordionContent,
@@ -813,6 +813,13 @@ export default function Services() {
         path="/services"
         jsonLd={graph([
           ORG,
+          WEBSITE,
+          webPage({
+            path: "/services",
+            name: "AI Automation Services",
+            description:
+              "Three ways WeHA fixes what slows you down: deterministic tool-to-tool automation, agentic AI, or an advisory automation roadmap.",
+          }),
           {
             "@type": "ItemList",
             name: "WeHA AI automation services",
@@ -848,7 +855,7 @@ export default function Services() {
           breadcrumb([
             { name: "Home", path: "/" },
             { name: "Services", path: "/services" },
-          ]),
+          ], "/services"),
         ])}
       />
 

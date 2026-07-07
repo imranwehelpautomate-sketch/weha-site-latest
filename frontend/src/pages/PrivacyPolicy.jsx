@@ -2,6 +2,7 @@ import PageHero from "@/components/PageHero";
 import ScrollSection from "@/components/ScrollSection";
 import Reveal from "@/components/Reveal";
 import Seo from "@/components/Seo";
+import { ORG, WEBSITE, breadcrumb, webPage, graph } from "@/lib/seoSchemas";
 
 const LAST_UPDATED = "June 30, 2026";
 const CONTACT_EMAIL = "imran@wehelpautomate.com";
@@ -82,6 +83,20 @@ export default function PrivacyPolicy() {
         title="Privacy Policy"
         description="How We Help Automate collects, uses, and safeguards your information."
         path="/privacy-policy"
+        jsonLd={graph([
+          ORG,
+          WEBSITE,
+          webPage({
+            path: "/privacy-policy",
+            name: "Privacy Policy",
+            description:
+              "How We Help Automate collects, uses, and safeguards your information.",
+          }),
+          breadcrumb([
+            { name: "Home", path: "/" },
+            { name: "Privacy Policy", path: "/privacy-policy" },
+          ], "/privacy-policy"),
+        ])}
       />
       <PageHero
         kicker="Legal"

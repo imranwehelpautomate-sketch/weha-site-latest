@@ -7,7 +7,7 @@ import ScrollSection from "@/components/ScrollSection";
 import IntegrationStrip from "@/components/IntegrationStrip";
 import Seo from "@/components/Seo";
 import { PLAYBOOK_URL } from "@/lib/resourceLinks";
-import { ORG, SITE, breadcrumb, graph } from "@/lib/seoSchemas";
+import { ORG, WEBSITE, SITE, breadcrumb, webPage, graph } from "@/lib/seoSchemas";
 
 const resources = [
   {
@@ -42,33 +42,35 @@ export default function Resources() {
         path="/resources"
         jsonLd={graph([
           ORG,
+          WEBSITE,
+          webPage({
+            path: "/resources",
+            name: "Resources, free workbooks, automations and eBooks",
+            description:
+              "Free WeHA resources: the AI Transformation Playbook, workbooks, ready-to-import workflow automations, and eBooks on automating any business.",
+            type: "CollectionPage",
+          }),
           {
-            "@type": "CollectionPage",
-            name: "WeHA Resources",
-            url: `${SITE}/resources`,
-            about: { "@id": `${SITE}/#organization` },
-            mainEntity: {
-              "@type": "ItemList",
-              itemListElement: [
-                { name: "AI Transformation Playbook", path: "/resources" },
-                { name: "Free Workbooks", path: "/resources/workbooks" },
-                { name: "Free Workflow Automations", path: "/resources/workflow-automations" },
-                { name: "Free eBooks", path: "/resources/ebooks" },
-              ].map((r, i) => ({
-                "@type": "ListItem",
-                position: i + 1,
-                item: {
-                  "@type": "CreativeWork",
-                  name: r.name,
-                  url: `${SITE}${r.path}`,
-                },
-              })),
-            },
+            "@type": "ItemList",
+            itemListElement: [
+              { name: "AI Transformation Playbook", path: "/resources" },
+              { name: "Free Workbooks", path: "/resources/workbooks" },
+              { name: "Free Workflow Automations", path: "/resources/workflow-automations" },
+              { name: "Free eBooks", path: "/resources/ebooks" },
+            ].map((r, i) => ({
+              "@type": "ListItem",
+              position: i + 1,
+              item: {
+                "@type": "CreativeWork",
+                name: r.name,
+                url: `${SITE}${r.path}`,
+              },
+            })),
           },
           breadcrumb([
             { name: "Home", path: "/" },
             { name: "Resources", path: "/resources" },
-          ]),
+          ], "/resources"),
         ])}
       />
       <PageHero

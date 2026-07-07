@@ -2,6 +2,7 @@ import PageHero from "@/components/PageHero";
 import ScrollSection from "@/components/ScrollSection";
 import Reveal from "@/components/Reveal";
 import Seo from "@/components/Seo";
+import { ORG, WEBSITE, breadcrumb, webPage, graph } from "@/lib/seoSchemas";
 
 const LAST_UPDATED = "March 17, 2026";
 const CONTACT_EMAIL = "imran@wehelpautomate.com";
@@ -86,6 +87,20 @@ export default function TermsOfService() {
         title="Terms of Service"
         description="The terms that govern your use of We Help Automate services."
         path="/terms-of-service"
+        jsonLd={graph([
+          ORG,
+          WEBSITE,
+          webPage({
+            path: "/terms-of-service",
+            name: "Terms of Service",
+            description:
+              "The terms that govern your use of We Help Automate services.",
+          }),
+          breadcrumb([
+            { name: "Home", path: "/" },
+            { name: "Terms of Service", path: "/terms-of-service" },
+          ], "/terms-of-service"),
+        ])}
       />
       <PageHero
         kicker="Legal"

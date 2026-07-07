@@ -7,7 +7,7 @@ import IntegrationStrip from "@/components/IntegrationStrip";
 import ValueCalculator from "@/components/ValueCalculator";
 import Seo from "@/components/Seo";
 import { Sparkles, Check, ArrowRight, TrendingUp } from "lucide-react";
-import { ORG, SITE, breadcrumb, graph } from "@/lib/seoSchemas";
+import { ORG, WEBSITE, SITE, breadcrumb, webPage, graph } from "@/lib/seoSchemas";
 
 /* ------------------------------------------------------------------ *
  * "What teams say" testimonials (shared copy with AI Workforce page).
@@ -341,6 +341,14 @@ export default function Work() {
         path="/success-stories"
         jsonLd={graph([
           ORG,
+          WEBSITE,
+          webPage({
+            path: "/success-stories",
+            name: "Success Stories",
+            description:
+              "Automation success stories from WeHA: SEO and content engines, lead generation, proposal automation, and AI recruitment pipelines built for real teams.",
+            type: "CollectionPage",
+          }),
           {
             "@type": "ItemList",
             name: "WeHA automation success stories",
@@ -351,6 +359,7 @@ export default function Work() {
                 "@type": "CreativeWork",
                 name: s.title,
                 abstract: s.challenge,
+                description: s.built,
                 creator: { "@id": `${SITE}/#organization` },
               },
             })),
@@ -358,7 +367,7 @@ export default function Work() {
           breadcrumb([
             { name: "Home", path: "/" },
             { name: "Success Stories", path: "/success-stories" },
-          ]),
+          ], "/success-stories"),
         ])}
       />
 

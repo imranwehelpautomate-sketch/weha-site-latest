@@ -8,7 +8,7 @@ import ScrollSection from "@/components/ScrollSection";
 import Seo from "@/components/Seo";
 import ResourceDownloadModal from "@/components/ResourceDownloadModal";
 import { DRIVE } from "@/lib/resourceLinks";
-import { SITE, breadcrumb, graph } from "@/lib/seoSchemas";
+import { ORG, WEBSITE, SITE, breadcrumb, graph } from "@/lib/seoSchemas";
 
 const items = [
   {
@@ -54,10 +54,15 @@ export default function ResourceEbooks() {
         description="Free WeHA eBooks: practical guides on automating any business, what to automate first, and how to keep control of the tools you already own."
         path="/resources/ebooks"
         jsonLd={graph([
+          ORG,
+          WEBSITE,
           {
             "@type": "CollectionPage",
+            "@id": `${SITE}/resources/ebooks#webpage`,
             name: "Free eBooks",
             url: `${SITE}/resources/ebooks`,
+            isPartOf: { "@id": `${SITE}/#website` },
+            about: { "@id": `${SITE}/#organization` },
             mainEntity: {
               "@type": "ItemList",
               itemListElement: items.map((it, i) => ({
@@ -71,7 +76,7 @@ export default function ResourceEbooks() {
             { name: "Home", path: "/" },
             { name: "Resources", path: "/resources" },
             { name: "eBooks", path: "/resources/ebooks" },
-          ]),
+          ], "/resources/ebooks"),
         ])}
       />
       <PageHero
