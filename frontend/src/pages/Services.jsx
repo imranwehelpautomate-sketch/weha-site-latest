@@ -639,6 +639,209 @@ const faqs = [
   ],
 ];
 
+/* ------------------------------------------------------------------ *
+ * Section 3.5: "Systems We Help Automate".
+ * Six automation systems. Cards expand into a centered modal (same
+ * pattern as "Who we build for") with six sub-sections, including an
+ * animated milestone FlowDiagram (same component as "Proof, not
+ * promises"). Content is plain-English and conversion-led.
+ * ------------------------------------------------------------------ */
+const systems = [
+  {
+    icon: PenLine,
+    tag: "Marketing",
+    title: "Marketing & Content Automation",
+    body: "Turn one idea into a week of content, published everywhere, on schedule. Your brand stays visible without anyone babysitting a calendar.",
+    whatWeAutomate: [
+      "One long piece repurposed into posts, emails and short clips",
+      "Scheduling and publishing across every social channel",
+      "Email and newsletter campaigns that send themselves",
+      "Campaign performance pulled into one live dashboard",
+    ],
+    howWeAutomate: [
+      "We connect your content tools so a single brief fans out into every format automatically.",
+      "AI drafts on-brand copy and captions; a human approves before anything goes live.",
+      "Approved content queues itself and publishes on the schedule you set.",
+    ],
+    timeline: "First automation live in about a week. Full content engine running in 2 to 3 weeks.",
+    milestones: [
+      { icon: Lightbulb, title: "Brief in", caption: "One idea or long piece" },
+      { icon: Sparkles, title: "AI drafts", caption: "On-brand, every format" },
+      { icon: UserCheck, title: "You approve", caption: "One click" },
+      { icon: CalendarClock, title: "Auto-published", caption: "Everywhere, on schedule" },
+    ],
+    stack: [
+      { name: "OpenAI", slug: "openai" },
+      { name: "Notion", slug: "notion" },
+      { name: "Zapier", slug: "zapier" },
+      { name: "Slack", slug: "slack" },
+      { name: "Google Sheets", slug: "googlesheets" },
+      { name: "Buffer", domain: "buffer.com" },
+    ],
+  },
+  {
+    icon: Workflow,
+    tag: "Sales",
+    title: "Sales & Pipeline Automation",
+    body: "Every lead followed up in minutes, every deal moved forward on its own. Your pipeline updates itself, so nothing slips and no revenue leaks.",
+    whatWeAutomate: [
+      "Instant follow-up the moment a lead enquires",
+      "Deal stages and CRM fields updated automatically",
+      "Meeting booking and reminders with zero back-and-forth",
+      "Pipeline reports and forecasts refreshed in real time",
+    ],
+    howWeAutomate: [
+      "We wire your forms, inbox and CRM together so new leads route and reply instantly.",
+      "Rules move deals between stages as things happen, so no one drags cards by hand.",
+      "AI drafts the follow-ups; your reps just review and send.",
+    ],
+    timeline: "Instant follow-up live in days. Full pipeline automation in 2 to 4 weeks.",
+    milestones: [
+      { icon: Inbox, title: "Lead lands", caption: "Any channel" },
+      { icon: Mail, title: "Instant reply", caption: "Within minutes" },
+      { icon: CalendarCheck, title: "Meeting booked", caption: "No back-and-forth" },
+      { icon: RefreshCw, title: "CRM updated", caption: "Automatically" },
+    ],
+    stack: [
+      { name: "HubSpot", slug: "hubspot" },
+      { name: "Slack", slug: "slack" },
+      { name: "Gmail", domain: "mail.google.com" },
+      { name: "Calendly", domain: "calendly.com" },
+      { name: "Zapier", slug: "zapier" },
+      { name: "OpenAI", slug: "openai" },
+    ],
+  },
+  {
+    icon: Search,
+    tag: "Lead Gen",
+    title: "Cold Outreach & Lead Gen Automation",
+    body: "A steady flow of qualified conversations, booked straight into your calendar. We build the engine that finds, contacts and warms up your ideal customers on autopilot.",
+    whatWeAutomate: [
+      "Targeted prospect lists built and verified from your ideal-customer profile",
+      "Personalized cold email and LinkedIn sequences at scale",
+      "Replies sorted, and interested prospects booked automatically",
+      "Inbox health monitored so you keep landing in the inbox, not spam",
+    ],
+    howWeAutomate: [
+      "We pull and enrich targeted lead lists, then verify every email before a single send.",
+      "AI personalizes each message using real signals about the prospect and their company.",
+      "Positive replies route straight to your booking link and your CRM.",
+    ],
+    timeline: "First campaign sending in 1 to 2 weeks. Optimized engine within a month.",
+    milestones: [
+      { icon: Search, title: "Find leads", caption: "Your ideal profile" },
+      { icon: Sparkles, title: "Personalize", caption: "AI, at scale" },
+      { icon: Mail, title: "Sequenced send", caption: "Email + LinkedIn" },
+      { icon: CalendarCheck, title: "Calls booked", caption: "Warm replies only" },
+    ],
+    stack: [
+      { name: "Clay", slug: "clay", ext: "png" },
+      { name: "OpenAI", slug: "openai" },
+      { name: "LinkedIn", domain: "linkedin.com" },
+      { name: "Instantly", domain: "instantly.ai" },
+      { name: "HubSpot", slug: "hubspot" },
+      { name: "Slack", slug: "slack" },
+    ],
+  },
+  {
+    icon: Inbox,
+    tag: "Support",
+    title: "Customer Support Automation",
+    body: "Common questions answered instantly, day or night. Your team only touches the tickets that truly need a human, so customers stay happy and costs stay flat.",
+    whatWeAutomate: [
+      "Instant answers to repetitive questions across chat, email and WhatsApp",
+      "Tickets tagged, prioritized and routed to the right person",
+      "Order, account and status updates fetched automatically",
+      "Clean escalations to a human, with the full history attached",
+    ],
+    howWeAutomate: [
+      "An AI assistant trained on your own docs handles first response 24/7.",
+      "It pulls live data from your systems to answer real questions, not just canned FAQs.",
+      "Anything it cannot solve is handed to your team with the full context, so no one repeats themselves.",
+    ],
+    timeline: "AI assistant live in 1 to 2 weeks. Full routing and integrations in 3 to 4 weeks.",
+    milestones: [
+      { icon: Inbox, title: "Question in", caption: "Any channel" },
+      { icon: Sparkles, title: "AI answers", caption: "From your docs + data" },
+      { icon: ListOrdered, title: "Sorted & routed", caption: "Right person, right priority" },
+      { icon: UserCheck, title: "Human handoff", caption: "With full context" },
+    ],
+    stack: [
+      { name: "OpenAI", slug: "openai" },
+      { name: "WhatsApp", slug: "whatsapp" },
+      { name: "Slack", slug: "slack" },
+      { name: "Notion", slug: "notion" },
+      { name: "Zendesk", domain: "zendesk.com" },
+      { name: "HubSpot", slug: "hubspot" },
+    ],
+  },
+  {
+    icon: UserCheck,
+    tag: "HR & People",
+    title: "Human Resources Automation",
+    body: "Hiring, onboarding and the endless admin, handled. Give every new joiner a smooth first week and give your people team their time back.",
+    whatWeAutomate: [
+      "Candidate screening, CV parsing and shortlisting",
+      "Interview scheduling without the calendar tennis",
+      "New-hire onboarding: accounts, documents and checklists",
+      "Leave, expenses and HR requests routed and tracked",
+    ],
+    howWeAutomate: [
+      "AI screens applicants against your criteria and reformats CVs into your template.",
+      "Scheduling links and reminders remove the endless back-and-forth.",
+      "Onboarding kicks off automatically the moment an offer is accepted.",
+    ],
+    timeline: "First HR workflow live in about a week. Full people-ops setup in 3 to 4 weeks.",
+    milestones: [
+      { icon: Search, title: "Screen", caption: "CVs, automatically" },
+      { icon: CalendarCheck, title: "Schedule", caption: "Interviews, hands-free" },
+      { icon: FileText, title: "Onboard", caption: "Docs + accounts ready" },
+      { icon: RefreshCw, title: "Stay in sync", caption: "HR records updated" },
+    ],
+    stack: [
+      { name: "OpenAI", slug: "openai" },
+      { name: "Slack", slug: "slack" },
+      { name: "Notion", slug: "notion" },
+      { name: "Gmail", domain: "mail.google.com" },
+      { name: "Calendly", domain: "calendly.com" },
+      { name: "Google Sheets", slug: "googlesheets" },
+    ],
+  },
+  {
+    icon: Database,
+    tag: "Data & CRM",
+    title: "CRM & Lead Enrichment Automation",
+    body: "A CRM that is always clean, complete and up to date, without anyone typing. Every contact enriched with the data your team needs to close.",
+    whatWeAutomate: [
+      "New contacts enriched with company and role data automatically",
+      "Duplicate cleanup and field standardization across your stack",
+      "Data synced between your CRM, spreadsheets and tools",
+      "Lead scoring so reps work the hottest prospects first",
+    ],
+    howWeAutomate: [
+      "Every new lead is enriched from live data sources the moment it lands.",
+      "Rules dedupe, format and fill missing fields, so records stay clean on their own.",
+      "Scoring flags priority leads and pings the right rep instantly.",
+    ],
+    timeline: "Enrichment live in days. Full CRM hygiene and scoring in 2 to 3 weeks.",
+    milestones: [
+      { icon: Inbox, title: "Contact added", caption: "Any source" },
+      { icon: Search, title: "Enriched", caption: "Company + contact data" },
+      { icon: Database, title: "Cleaned & synced", caption: "Across your stack" },
+      { icon: ListOrdered, title: "Scored & routed", caption: "Hottest leads first" },
+    ],
+    stack: [
+      { name: "Clay", slug: "clay", ext: "png" },
+      { name: "HubSpot", slug: "hubspot" },
+      { name: "Airtable", slug: "airtable" },
+      { name: "Google Sheets", slug: "googlesheets" },
+      { name: "OpenAI", slug: "openai" },
+      { name: "Slack", slug: "slack" },
+    ],
+  },
+];
+
+
 export default function Services() {
   const { openBooking } = useBooking();
   const navigate = useNavigate();
@@ -690,6 +893,22 @@ export default function Services() {
       window.removeEventListener("keydown", onKey);
     };
   }, [expandedIndustry]);
+
+  // Section 3.5: index of the expanded automation system (null = closed).
+  const [expandedSystem, setExpandedSystem] = useState(null);
+  useEffect(() => {
+    if (expandedSystem === null) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e) => {
+      if (e.key === "Escape") setExpandedSystem(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [expandedSystem]);
 
   return (
     <div
@@ -872,6 +1091,231 @@ export default function Services() {
         </div>
       </section>
       </ScrollSection>
+
+      {/* SECTION 3.5 · SYSTEMS WE HELP AUTOMATE */}
+      <ScrollSection direction="left" settle depth={0} intensity={0.35}>
+      <section className="section-solid relative py-24 md:py-32" data-testid="section-systems">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <Reveal>
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">What we automate</span>
+            <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">Systems We Help Automate.</h2>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <p className="mt-5 text-weha-muted max-w-2xl leading-relaxed">
+              Six systems that quietly remove the manual work slowing you down. Pick the one that hurts
+              most and see exactly how we automate it, end to end.
+            </p>
+          </Reveal>
+
+          {/* Grid of system cards. Clicking a card opens a centered modal that
+              grows into view over a dimmed page (same pattern as "Who we build for"). */}
+          <div className="mt-12">
+            <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-5 overflow-x-auto md:overflow-visible hide-scrollbar -mx-5 px-5 md:mx-0 md:px-0">
+              {systems.map((s, i) => {
+                const Icon = s.icon;
+                return (
+                  <Reveal key={s.title} delay={(i % 3) * 0.06}>
+                    <motion.div
+                      onClick={() => setExpandedSystem(i)}
+                      className="weha-card p-7 min-w-[78vw] sm:min-w-[340px] md:min-w-0 h-full flex flex-col cursor-pointer"
+                      data-cursor="hover"
+                      whileHover={{ y: -6 }}
+                      transition={{ type: "spring", stiffness: 300, damping: 24 }}
+                      data-testid={`system-card-${i}`}
+                    >
+                      <span
+                        className="inline-flex h-12 w-12 items-center justify-center rounded-xl"
+                        style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}
+                      >
+                        <Icon size={22} />
+                      </span>
+                      <h3 className="weha-display text-2xl mt-5 text-weha-text">{s.title}</h3>
+                      <p className="mt-3 text-weha-muted leading-relaxed flex-1">{s.body}</p>
+                      <div className="mt-6">
+                        <span className="btn-ghost" data-cursor="hover" data-testid={`system-expand-${i}`}>
+                          Expand <Plus size={15} />
+                        </span>
+                      </div>
+                    </motion.div>
+                  </Reveal>
+                );
+              })}
+            </div>
+
+            <div className="mt-6 rounded-2xl border border-dashed border-weha-border p-6 md:p-7 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <p className="text-weha-muted leading-relaxed max-w-2xl">
+                Not sure which system you need first? That is exactly what the free audit is for. We
+                map your workflows and show you the fastest win.
+              </p>
+              <button type="button" onClick={openBooking} className="btn-ghost shrink-0" data-cursor="hover">
+                Book my free audit <ArrowRight size={15} />
+              </button>
+            </div>
+          </div>
+
+          {/* Centered, viewport-fixed modal (portaled outside the transformed
+              section so it always sits dead-center). */}
+          {createPortal(
+            <AnimatePresence>
+              {expandedSystem !== null && [
+                <motion.div
+                  key="sys-backdrop"
+                  className="fixed inset-0 z-[120] backdrop-blur-sm"
+                  style={{ background: "color-mix(in srgb, var(--weha-bg) 74%, transparent)" }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0, transition: { duration: 0.2, ease: EASE } }}
+                  transition={{ duration: 0.35, ease: EASE }}
+                  onClick={() => setExpandedSystem(null)}
+                />,
+                <motion.div
+                  key="sys-panel-wrap"
+                  className="fixed inset-0 z-[130] flex items-center justify-center p-4 sm:p-6 pointer-events-none"
+                  initial={{ opacity: 0, scale: 0.8, y: 28 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9, y: 12, transition: { duration: 0.28, ease: EASE } }}
+                  transition={{ duration: 0.55, ease: EASE }}
+                >
+                  <div
+                    className="weha-card w-full max-w-4xl max-h-[88vh] overflow-y-auto p-7 md:p-10 pointer-events-auto shadow-2xl"
+                    data-testid="system-detail"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {/* header */}
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <span
+                          className="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold tracking-wide"
+                          style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}
+                        >
+                          {systems[expandedSystem].tag}
+                        </span>
+                        <h3 className="weha-display text-3xl md:text-4xl mt-4 text-weha-text">
+                          {systems[expandedSystem].title}
+                        </h3>
+                        <p className="mt-3 text-weha-muted leading-relaxed max-w-2xl">
+                          {systems[expandedSystem].body}
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setExpandedSystem(null)}
+                        aria-label="Close"
+                        className="shrink-0 inline-flex items-center gap-2 rounded-full border border-weha-border px-4 py-2 text-sm text-weha-muted hover:text-weha-text hover:border-weha-teal transition-colors"
+                        data-cursor="hover"
+                        data-testid="system-detail-close"
+                      >
+                        <X size={16} /> Close
+                      </button>
+                    </div>
+
+                    <div className="mt-8 grid gap-9 md:gap-10 md:grid-cols-2">
+                      {/* What we automate here */}
+                      <div>
+                        <div className="flex items-center gap-2.5">
+                          <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
+                            <LayoutDashboard size={16} />
+                          </span>
+                          <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">What we automate here</h4>
+                        </div>
+                        <ul className="mt-4 space-y-3">
+                          {systems[expandedSystem].whatWeAutomate.map((p) => (
+                            <li key={p} className="flex gap-3 text-weha-muted leading-relaxed">
+                              <span className="mt-2 h-1.5 w-1.5 rounded-full shrink-0" style={{ background: "var(--weha-teal)" }} />
+                              <span>{p}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {/* How we automate it */}
+                      <div>
+                        <div className="flex items-center gap-2.5">
+                          <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
+                            <Workflow size={16} />
+                          </span>
+                          <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">How we automate it</h4>
+                        </div>
+                        <ul className="mt-4 space-y-3">
+                          {systems[expandedSystem].howWeAutomate.map((p) => (
+                            <li key={p} className="flex gap-3 text-weha-muted leading-relaxed">
+                              <Check size={16} className="mt-1 shrink-0" style={{ color: "var(--weha-teal)" }} />
+                              <span>{p}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+
+                    {/* Timeline of typical engagement */}
+                    <div className="mt-9 md:mt-10 rounded-2xl border border-weha-border bg-weha-surface p-6 flex items-start gap-3.5">
+                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg shrink-0" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
+                        <CalendarClock size={16} />
+                      </span>
+                      <div>
+                        <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">Timeline of typical engagement</h4>
+                        <p className="mt-2 text-weha-text leading-relaxed">{systems[expandedSystem].timeline}</p>
+                      </div>
+                    </div>
+
+                    {/* Typical milestones (animated flow, same component as "Proof, not promises") */}
+                    <div className="mt-9 md:mt-10">
+                      <div className="flex items-center gap-2.5">
+                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
+                          <ListOrdered size={16} />
+                        </span>
+                        <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">Typical milestones</h4>
+                      </div>
+                      <div className="mt-6">
+                        <FlowDiagram steps={systems[expandedSystem].milestones} replayKey={expandedSystem} autoPlay />
+                      </div>
+                    </div>
+
+                    {/* Tech stack used */}
+                    <div className="mt-9 md:mt-10">
+                      <div className="flex items-center gap-2.5">
+                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
+                          <Share2 size={16} />
+                        </span>
+                        <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">Tech stack used</h4>
+                      </div>
+                      <div className="mt-4 flex flex-wrap gap-2.5">
+                        {systems[expandedSystem].stack.map((st) => (
+                          <StackLogo key={st.name} {...st} />
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* CTA */}
+                    <div className="mt-9 md:mt-10 rounded-2xl border border-weha-border p-6 md:p-7 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between" style={{ background: "var(--weha-teal-soft)" }}>
+                      <p className="text-weha-text leading-relaxed max-w-md">
+                        Want this running in your business? See exactly what to automate first, free.
+                      </p>
+                      <Magnetic>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setExpandedSystem(null);
+                            openBooking();
+                          }}
+                          className="btn-teal shrink-0"
+                          data-cursor="hover"
+                          data-testid="system-book-audit"
+                        >
+                          Book your free audit <ArrowRight size={15} />
+                        </button>
+                      </Magnetic>
+                    </div>
+                  </div>
+                </motion.div>,
+              ]}
+            </AnimatePresence>,
+            document.body
+          )}
+        </div>
+      </section>
+      </ScrollSection>
+
 
       {/* SECTION 4 · WHO THIS IS FOR (ported from Home) */}
       <ScrollSection direction="right" settle depth={0} intensity={0.35}>
