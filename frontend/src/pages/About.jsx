@@ -349,6 +349,17 @@ export default function About() {
                 </Magnetic>
               </div>
             </Reveal>
+            <Reveal delay={0.26}>
+              <div
+                className="mt-6 inline-flex items-center gap-3 rounded-full border border-weha-border bg-weha-surface px-4 py-2.5"
+                data-testid="about-reasons-trust"
+              >
+                <BadgeCheck size={18} className="text-weha-teal shrink-0" />
+                <span className="text-sm font-medium text-weha-text">
+                  Free audit &middot; No lock-in &middot; You own everything
+                </span>
+              </div>
+            </Reveal>
           </div>
 
           {/* Right: 2-col animated reason cards */}
