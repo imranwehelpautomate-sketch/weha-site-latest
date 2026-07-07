@@ -544,7 +544,7 @@ function StackLogo({ name, slug, domain, ext = "svg" }) {
 // Why WeHA (dark section) bullets, unchanged.
 const whyWeha = [
   "You own every system we build, no lock-in, no monthly hostage fees.",
-  "We automate on top of the tools you already use. No rip-and-replace.",
+  "We build on the tools you already use wherever we can. If something new is genuinely the right call, you buy it and own the account directly, no markup, no middleman.",
   "Live systems in days, not months. You see value almost immediately.",
   "Every automation is documented and handed off, so your team stays in control.",
 ];
@@ -554,7 +554,7 @@ const stats = [
   { value: 90, suffix: " min", label: "to your first live automation" },
   { value: 100, suffix: "%", label: "yours: code, docs and accounts" },
   { value: 30, suffix: " days", label: "of support after every handoff" },
-  { value: 0, suffix: "", label: "new software to buy" },
+  { value: 0, suffix: "", label: "markup on any tool you need" },
 ];
 
 // FAQ.
