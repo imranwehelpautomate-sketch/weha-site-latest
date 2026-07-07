@@ -254,7 +254,7 @@ export default function Header() {
 
           <Magnetic strength={0.3} className="hidden sm:inline-flex">
             <Link to="/contact" className="btn-teal text-[0.8rem] px-4 py-2.5 md:text-[0.95rem] md:px-[1.6rem] md:py-[0.85rem]" data-testid="header-cta" data-cursor="hover" onClick={(e) => { e.preventDefault(); openBooking(); }}>
-              Book a Free Audit <ArrowRight size={16} />
+              Talk To Us <ArrowRight size={16} />
             </Link>
           </Magnetic>
 
@@ -336,7 +336,7 @@ export default function Header() {
             className="btn-teal mt-4 justify-center"
             data-testid="mobile-cta"
           >
-            Book a Free Audit <ArrowRight size={16} />
+            Talk To Us <ArrowRight size={16} />
           </Link>
         </div>
       </div>
