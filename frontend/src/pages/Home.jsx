@@ -1358,7 +1358,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto rounded-3xl px-8 py-16 md:px-16 md:py-24 relative overflow-hidden" style={{ background: "var(--weha-teal)" }}>
           <Reveal>
             <h2 className="weha-display text-4xl md:text-6xl text-white max-w-3xl leading-[1.05]">
-              See your first automation built in 90 minutes.
+              See your first automation built within hours post our call.
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
