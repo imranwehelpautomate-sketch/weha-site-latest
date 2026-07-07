@@ -8,7 +8,7 @@ import CountUp from "@/components/CountUp";
 import FlowDiagram from "@/components/FlowDiagram";
 import Seo from "@/components/Seo";
 import { motion } from "framer-motion";
-import { Linkedin, Search, Wrench, BadgeCheck, KeyRound, FileText, GraduationCap, Workflow, Users, Zap, Layers, MessageSquare, LifeBuoy, ArrowRight } from "lucide-react";
+import { Linkedin, Search, Wrench, BadgeCheck, KeyRound, FileText, GraduationCap, Workflow, Users, Zap, Layers, ArrowRight } from "lucide-react";
 import { useBooking } from "@/context/BookingContext";
 import { PLAYBOOK_URL } from "@/lib/resourceLinks";
 import { ORG, SITE, breadcrumb, graph } from "@/lib/seoSchemas";
@@ -73,8 +73,6 @@ const reasons = [
   { icon: Zap, title: "Live in days, not months", body: "You see a working automation fast. We expand from proven results, never from promises." },
   { icon: Layers, title: "Built on your tools", body: "We automate on top of the stack you already use wherever we can. No rip-outs, no forced migrations." },
   { icon: KeyRound, title: "You own everything", body: "Code, docs and accounts are handed over. No lock-in, and no monthly hostage fees." },
-  { icon: MessageSquare, title: "Plain English, always", body: "No jargon in calls, proposals or docs. You always know exactly what is running and why." },
-  { icon: LifeBuoy, title: "We stick around", body: "Support after every handoff, so your systems keep running smoothly as your business grows." },
 ];
 
 export default function About() {
