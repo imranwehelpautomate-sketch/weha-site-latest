@@ -22,6 +22,7 @@ import Reveal from "@/components/Reveal";
 import ScrollSection from "@/components/ScrollSection";
 import Magnetic from "@/components/Magnetic";
 import IntegrationStrip from "@/components/IntegrationStrip";
+import CostSlider from "@/components/CostSlider";
 import Seo from "@/components/Seo";
 import { useBooking } from "@/context/BookingContext";
 import { ORG, SITE, breadcrumb, graph } from "@/lib/seoSchemas";
@@ -271,6 +272,40 @@ export default function AIWorkforce() {
       </div>
 
       <IntegrationStrip heading="Works across your whole stack" />
+
+      {/* SECTION 1.5 · TIME-BACK CALCULATOR (reuses the home "real cost" module) */}
+      <ScrollSection direction="right" settle depth={0} intensity={0.35}>
+        <section className="section-surface border-y border-weha-border py-24 md:py-32" data-testid="workforce-cost">
+          <div className="max-w-7xl mx-auto px-5 sm:px-8">
+            <Reveal>
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">The case for a teammate that never clocks out</span>
+              <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">Hours your team should never touch again.</h2>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <p className="mt-5 text-weha-muted max-w-xl leading-relaxed">
+                A digital teammate works around the clock, no breaks, no ramp-up. Slide to see how
+                much repetitive work you could hand off in a year.
+              </p>
+            </Reveal>
+            <Reveal delay={0.14}>
+              <div className="mt-10">
+                <CostSlider
+                  title="How much could an AI teammate take off your plate?"
+                  peopleLabel="People stuck on repetitive work"
+                  hoursLabel="Hours each spends on it, per week"
+                  footnote="An AI teammate handles this around the clock. That is time your people get back for work only humans can do."
+                />
+              </div>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p className="mt-12 weha-display text-2xl md:text-4xl text-weha-text max-w-3xl leading-snug">
+                That is not more headcount. That is a{" "}
+                <span className="italic text-weha-teal">workforce that scales itself.</span>
+              </p>
+            </Reveal>
+          </div>
+        </section>
+      </ScrollSection>
 
       {/* SECTION 2 · A DIFFERENT CATEGORY */}
       <ScrollSection direction="left" settle depth={0.5} intensity={0.45}>
