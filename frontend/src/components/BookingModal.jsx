@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { ArrowRight, Calendar as CalendarIcon, Clock, Globe, Check, Loader2 } from "lucide-react";
+import { ArrowRight, Calendar as CalendarIcon, Clock, Globe, Check, Loader2, ShieldCheck } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Calendar } from "@/components/ui/calendar";
 import { fetchAvailability, submitBookingRequest } from "@/lib/api";
@@ -182,12 +182,32 @@ export default function BookingModal({ open, onOpenChange }) {
             <aside className="hidden md:flex flex-col justify-between p-7 lg:p-8 bg-weha-surface border-r border-weha-border">
               <div>
                 <h2 className="weha-display text-3xl lg:text-4xl leading-tight">
-                  Book your <span className="italic text-weha-teal">AI Audit.</span>
+                  Lets <span className="italic text-weha-teal">Chat.</span>
                 </h2>
                 <p className="mt-4 text-weha-muted leading-relaxed text-[0.95rem]">
                   On call we will understand your pain-points, discover your automation and agentic workflow needs, and give you our honest opinion.{" "}
                   <span className="italic text-weha-text">No BS.</span>
                 </p>
+                <div
+                  className="mt-5 flex items-center gap-3 rounded-2xl border px-4 py-3"
+                  style={{
+                    borderColor: "color-mix(in srgb, var(--weha-teal) 28%, transparent)",
+                    background: "var(--weha-teal-soft)",
+                  }}
+                  data-testid="booking-trust-badge"
+                >
+                  <span
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-xl shrink-0"
+                    style={{ background: "var(--weha-bg)", color: "var(--weha-teal)" }}
+                  >
+                    <ShieldCheck size={18} />
+                  </span>
+                  <p className="text-sm leading-snug">
+                    <span className="font-semibold text-weha-text">Outcome-guaranteed engagements.</span>
+                    <br />
+                    <span className="text-weha-muted">Fixed scope. Flexible pricing. No surprises.</span>
+                  </p>
+                </div>
               </div>
               <ul className="mt-8 space-y-3.5 text-[0.95rem]">
                 {[
