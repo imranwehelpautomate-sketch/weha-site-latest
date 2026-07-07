@@ -828,35 +828,6 @@ export default function Home() {
       </section>
       </ScrollSection>
 
-      {/* SECTION 4 · THE COST - agitation */}
-      <ScrollSection direction="right" settle depth={0} intensity={0.35}>
-      <section className="section-surface border-y border-weha-border py-24 md:py-32" data-testid="section-cost">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <Reveal>
-            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">The real cost</span>
-            <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">Small leaks. Serious math.</h2>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <p className="mt-5 text-weha-muted max-w-xl leading-relaxed">
-              A few hours here, a couple of people there. Slide to see what the manual work adds up
-              to in a year.
-            </p>
-          </Reveal>
-          <Reveal delay={0.14}>
-            <div className="mt-10">
-              <CostSlider footnote="Based on your inputs. Most teams underestimate by half." />
-            </div>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <p className="mt-12 weha-display text-2xl md:text-4xl text-weha-text max-w-3xl leading-snug">
-              That is not a software problem. That is a{" "}
-              <span className="italic text-weha-teal">systems problem.</span> And systems can be fixed.
-            </p>
-          </Reveal>
-        </div>
-      </section>
-      </ScrollSection>
-
       {/* SECTION 5 · THE FLOW - flagship, over the network */}
       <ScrollSection direction="left" settle depth={0.7} intensity={0.5}>
       <section className="relative section-glass py-24 md:py-32" data-testid="section-flow">
@@ -1209,6 +1180,35 @@ export default function Home() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+      </ScrollSection>
+
+      {/* SECTION · THE COST - agitation (moved above FAQ) */}
+      <ScrollSection direction="right" settle depth={0} intensity={0.35}>
+      <section className="section-surface border-y border-weha-border py-24 md:py-32" data-testid="section-cost">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <Reveal>
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">The real cost</span>
+            <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">Small leaks. Serious math.</h2>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <p className="mt-5 text-weha-muted max-w-xl leading-relaxed">
+              A few hours here, a couple of people there. Slide to see what the manual work adds up
+              to in a year.
+            </p>
+          </Reveal>
+          <Reveal delay={0.14}>
+            <div className="mt-10">
+              <CostSlider footnote="Based on your inputs. Most teams underestimate by half." />
+            </div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="mt-12 weha-display text-2xl md:text-4xl text-weha-text max-w-3xl leading-snug">
+              That is not a software problem. That is a{" "}
+              <span className="italic text-weha-teal">systems problem.</span> And systems can be fixed.
+            </p>
+          </Reveal>
         </div>
       </section>
       </ScrollSection>
