@@ -1284,13 +1284,14 @@ export default function Services() {
                           <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
                             <Share2 size={16} />
                           </span>
-                          <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">Tech stack used</h4>
+                          <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">Typical tech stack used</h4>
                         </div>
                         <div className="mt-3 flex flex-wrap gap-2">
                           {systems[expandedSystem].stack.map((st) => (
                             <StackLogo key={st.name} {...st} />
                           ))}
                         </div>
+                        <p className="mt-2.5 text-xs italic text-weha-faint">*tech stacks generally vary as per the use case</p>
                       </div>
                     </div>
 
