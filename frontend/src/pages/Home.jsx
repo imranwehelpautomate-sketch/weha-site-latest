@@ -1242,9 +1242,9 @@ export default function Home() {
                   <p className="weha-display text-2xl md:text-[1.7rem] italic leading-tight" style={{ color: "#9b80e0" }}>
                     engagements.
                   </p>
-                  <span className="mt-4 h-px w-10" style={{ background: "rgba(155,128,224,0.4)" }} />
-                  <p className="mt-4 text-sm text-[#c9c5bd] leading-snug">
-                    We only propose what we&apos;re confident we can deliver — and we put it in writing.
+                  <span className="mt-2.5 h-px w-10" style={{ background: "rgba(155,128,224,0.4)" }} />
+                  <p className="mt-2.5 text-sm text-[#c9c5bd] leading-snug">
+                    We only propose what we&apos;re confident we can deliver, and we put it in writing.
                   </p>
                 </div>
               </div>
