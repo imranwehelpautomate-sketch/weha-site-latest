@@ -1244,7 +1244,7 @@ export default function Home() {
                   </p>
                   <span className="mt-4 h-px w-10" style={{ background: "rgba(155,128,224,0.4)" }} />
                   <p className="mt-4 text-sm text-[#c9c5bd] leading-snug">
-                    Agreed in writing, before we start.
+                    We only propose what we&apos;re confident we can deliver — and we put it in writing.
                   </p>
                 </div>
               </div>
