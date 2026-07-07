@@ -4,8 +4,11 @@ import Reveal from "@/components/Reveal";
 import ScrollSection from "@/components/ScrollSection";
 import IntegrationStrip from "@/components/IntegrationStrip";
 import Magnetic from "@/components/Magnetic";
+import CountUp from "@/components/CountUp";
+import FlowDiagram from "@/components/FlowDiagram";
 import Seo from "@/components/Seo";
-import { Linkedin } from "lucide-react";
+import { motion } from "framer-motion";
+import { Linkedin, Search, Wrench, BadgeCheck, KeyRound, FileText, GraduationCap, Workflow } from "lucide-react";
 import { PLAYBOOK_URL } from "@/lib/resourceLinks";
 import { ORG, SITE, breadcrumb, graph } from "@/lib/seoSchemas";
 
@@ -49,6 +52,27 @@ const values = [
   ["Your tools stay", "We automate on top of what you already use. No forced migrations."],
   ["Prove it first", "Every engagement starts with one workflow and proven results before you expand."],
   ["Plain English, always", "No jargon in calls, proposals, or docs. You always understand what's running."],
+];
+
+const stats = [
+  { value: 8, suffix: "+", label: "years across marketing & automation" },
+  { value: 30, suffix: "+", label: "tools we build and automate across" },
+  { value: 100, suffix: "%", label: "yours: code, docs and accounts" },
+  { value: 0, text: "Days", label: "to your first live automation" },
+];
+
+const howWeWork = [
+  { icon: Search, title: "Listen", caption: "We map how you actually work" },
+  { icon: Wrench, title: "Build", caption: "One system, on your tools" },
+  { icon: BadgeCheck, title: "Prove", caption: "We show it works on real data" },
+  { icon: KeyRound, title: "Hand over", caption: "Docs, accounts and keys to you" },
+];
+
+const deliverables = [
+  { icon: Workflow, title: "A working system", body: "Built and running on the tools you already use, doing real work from day one." },
+  { icon: FileText, title: "Full documentation", body: "Every workflow written up in plain English, so nothing lives only in someone's head." },
+  { icon: KeyRound, title: "All your accounts", body: "Every credential, key and login handed to you. You own the whole thing, no strings." },
+  { icon: GraduationCap, title: "A team that can run it", body: "We walk your people through it so they can operate and tweak it with confidence." },
 ];
 
 export default function About() {
@@ -119,6 +143,36 @@ export default function About() {
       </section>
       </ScrollSection>
 
+      {/* SECTION 1.5 - BY THE NUMBERS (animated stats) */}
+      <ScrollSection direction="right">
+      <section className="section-glass relative py-16 md:py-24 overflow-hidden" style={{ background: "#171614", "--weha-bg": "#171614", "--weha-text": "#f7f6f2" }} data-testid="about-stats">
+        <div
+          className="absolute inset-0 opacity-[0.5] pointer-events-none"
+          style={{ background: "radial-gradient(circle at 20% 30%, rgba(155,128,224,0.28), transparent 55%)" }}
+        />
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-8">
+          <Reveal>
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase" style={{ color: "#9b80e0" }}>Where we stand</span>
+            <h2 className="weha-display text-3xl md:text-4xl mt-3 text-[#f7f6f2] max-w-2xl leading-snug">
+              Small studio. Serious operators.
+            </h2>
+          </Reveal>
+          <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-y-10">
+            {stats.map((s, i) => (
+              <Reveal key={s.label} delay={i * 0.08}>
+                <div className={i > 0 ? "md:border-l md:pl-8" : ""} style={i > 0 ? { borderColor: "rgba(155,128,224,0.15)" } : undefined}>
+                  <p className="weha-display text-5xl md:text-6xl" style={{ color: "#9b80e0" }}>
+                    <CountUp value={s.value} suffix={s.suffix} text={s.text} />
+                  </p>
+                  <p className="mt-3 text-[#c9c5bd] leading-snug">{s.label}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+      </ScrollSection>
+
       {/* SECTION 2 - MISSION & VISION */}
       <ScrollSection direction="right">
       <section className="section-glass py-20 md:py-28 bg-weha-surface border-y border-weha-border" data-testid="about-mission-vision">
@@ -139,6 +193,31 @@ export default function About() {
       </section>
       </ScrollSection>
 
+      {/* SECTION 2.5 - HOW WE WORK (animated process) */}
+      <ScrollSection direction="left">
+      <section className="section-glass relative section-solid py-20 md:py-28" data-testid="about-process">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <Reveal>
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">How we work</span>
+            <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text leading-tight">
+              Four steps. No mystery.
+            </h2>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <p className="mt-5 text-lg text-weha-muted max-w-2xl leading-relaxed">
+              Every engagement follows the same simple path, from understanding how you work to
+              handing you the keys. You always know exactly where things stand.
+            </p>
+          </Reveal>
+          <Reveal delay={0.14}>
+            <div className="mt-14">
+              <FlowDiagram steps={howWeWork} />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+      </ScrollSection>
+
       {/* SECTION 3 - MEET THE FOUNDERS */}
       <ScrollSection direction="left">
       <section className="section-glass relative section-solid py-20 md:py-28" data-testid="about-founders">
@@ -150,13 +229,19 @@ export default function About() {
           <div className="mt-12 grid gap-8 md:grid-cols-2">
             {founders.map((f, i) => (
               <Reveal key={f.name} delay={(i % 2) * 0.1}>
-                <article className="weha-card h-full p-7 md:p-8" data-testid={`founder-card-${i + 1}`}>
+                <motion.article
+                  className="weha-card group h-full p-7 md:p-8"
+                  data-testid={`founder-card-${i + 1}`}
+                  data-cursor="hover"
+                  whileHover={{ y: -6 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 24 }}
+                >
                   <div className="overflow-hidden rounded-2xl border border-weha-border bg-weha-surface aspect-square w-32 md:w-40">
                     <img
                       src={f.photo}
                       alt={f.alt}
                       loading="lazy"
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                       data-testid={`founder-photo-${i + 1}`}
                     />
                   </div>
@@ -180,9 +265,50 @@ export default function About() {
                   </div>
                   <p className="mt-1 text-sm uppercase tracking-wider text-weha-teal">{f.role}</p>
                   <p className="mt-4 text-weha-muted leading-relaxed">{f.bio}</p>
-                </article>
+                </motion.article>
               </Reveal>
             ))}
+          </div>
+        </div>
+      </section>
+      </ScrollSection>
+
+      {/* SECTION 3.5 - WHAT YOU WALK AWAY WITH (animated cards) */}
+      <ScrollSection direction="right">
+      <section className="section-glass py-20 md:py-28 bg-weha-surface border-y border-weha-border" data-testid="about-deliverables">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <Reveal>
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">What you walk away with</span>
+            <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text leading-tight">
+              You keep everything. Literally.
+            </h2>
+          </Reveal>
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {deliverables.map((d, i) => {
+              const Icon = d.icon;
+              return (
+                <Reveal key={d.title} delay={(i % 4) * 0.06}>
+                  <motion.div
+                    className="weha-card h-full p-7"
+                    data-cursor="hover"
+                    data-testid={`deliverable-${i + 1}`}
+                    whileHover={{ y: -6 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 24 }}
+                  >
+                    <motion.span
+                      className="grid h-12 w-12 place-items-center rounded-xl"
+                      style={{ background: "var(--weha-teal-soft)" }}
+                      whileHover={{ rotate: -8, scale: 1.08 }}
+                      transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                    >
+                      <Icon size={22} className="text-weha-teal" />
+                    </motion.span>
+                    <h3 className="weha-display text-2xl mt-5 text-weha-text">{d.title}</h3>
+                    <p className="mt-3 text-sm text-weha-muted leading-relaxed">{d.body}</p>
+                  </motion.div>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -198,13 +324,18 @@ export default function About() {
           <div className="mt-12 divide-y divide-weha-border border-t border-weha-border">
             {values.map(([title, body], i) => (
               <Reveal key={title} delay={(i % 3) * 0.06}>
-                <div className="py-7 grid gap-2 md:grid-cols-[auto_1fr] md:gap-10 items-baseline">
+                <motion.div
+                  className="py-7 grid gap-2 md:grid-cols-[auto_1fr] md:gap-10 items-baseline"
+                  data-cursor="hover"
+                  whileHover={{ x: 10 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 22 }}
+                >
                   <span className="weha-display text-2xl text-weha-teal/40 w-12">{String(i + 1).padStart(2, "0")}</span>
                   <div>
                     <h3 className="weha-display text-2xl md:text-3xl text-weha-text">{title}</h3>
                     <p className="mt-1.5 text-weha-muted text-lg">{body}</p>
                   </div>
-                </div>
+                </motion.div>
               </Reveal>
             ))}
           </div>
