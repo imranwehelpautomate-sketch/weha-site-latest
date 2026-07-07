@@ -718,29 +718,7 @@ export default function Home() {
               </p>
             </Reveal>
             <Reveal delay={0.45}>
-              <div
-                className="mt-9 inline-flex items-center gap-3 rounded-2xl border px-4 py-3 pointer-events-auto"
-                style={{
-                  borderColor: "color-mix(in srgb, var(--weha-teal) 28%, transparent)",
-                  background: "var(--weha-teal-soft)",
-                }}
-                data-testid="hero-trust-badge"
-              >
-                <span
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-xl shrink-0"
-                  style={{ background: "var(--weha-bg)", color: "var(--weha-teal)" }}
-                >
-                  <ShieldCheck size={18} />
-                </span>
-                <p className="text-sm leading-snug max-w-md">
-                  <span className="font-semibold text-weha-text">Outcome-guaranteed engagements.</span>
-                  <br />
-                  <span className="text-weha-muted">Fixed scope. Flexible pricing. No surprises.</span>
-                </p>
-              </div>
-            </Reveal>
-            <Reveal delay={0.55}>
-              <div className="mt-6 flex flex-nowrap items-center gap-3 sm:gap-5 pointer-events-auto">
+              <div className="mt-9 flex flex-nowrap items-center gap-3 sm:gap-5 pointer-events-auto">
                 <Magnetic>
                   <button type="button" onClick={openBooking} className="btn-teal max-sm:!px-4 max-sm:!text-sm" data-testid="hero-primary-cta" data-cursor="hover">
                     Book a Free AI Audit <ArrowRight size={16} />
