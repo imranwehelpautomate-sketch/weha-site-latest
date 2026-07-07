@@ -325,36 +325,7 @@ export default function About() {
       </section>
       </ScrollSection>
 
-      {/* SECTION 4 - VALUES */}
-      <ScrollSection direction="right">
-      <section className="section-glass py-20 md:py-28 bg-weha-surface border-y border-weha-border" data-testid="about-values">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <Reveal>
-            <h2 className="weha-display text-4xl md:text-5xl text-weha-text">What we believe.</h2>
-          </Reveal>
-          <div className="mt-12 divide-y divide-weha-border border-t border-weha-border">
-            {values.map(([title, body], i) => (
-              <Reveal key={title} delay={(i % 3) * 0.06}>
-                <motion.div
-                  className="py-7 grid gap-2 md:grid-cols-[auto_1fr] md:gap-10 items-baseline"
-                  data-cursor="hover"
-                  whileHover={{ x: 10 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 22 }}
-                >
-                  <span className="weha-display text-2xl text-weha-teal/40 w-12">{String(i + 1).padStart(2, "0")}</span>
-                  <div>
-                    <h3 className="weha-display text-2xl md:text-3xl text-weha-text">{title}</h3>
-                    <p className="mt-1.5 text-weha-muted text-lg">{body}</p>
-                  </div>
-                </motion.div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-      </ScrollSection>
-
-      {/* SECTION 4.5 - REASONS TO CHOOSE WEHA (two-column, animated grid) */}
+      {/* SECTION 4 - REASONS TO CHOOSE WEHA (two-column, animated grid) */}
       <ScrollSection direction="left">
       <section className="section-glass relative section-solid py-20 md:py-28" data-testid="about-reasons">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16 lg:items-start">
@@ -417,6 +388,35 @@ export default function About() {
                 </Reveal>
               );
             })}
+          </div>
+        </div>
+      </section>
+      </ScrollSection>
+
+      {/* SECTION 4.5 - VALUES */}
+      <ScrollSection direction="right">
+      <section className="section-glass py-20 md:py-28 bg-weha-surface border-y border-weha-border" data-testid="about-values">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <Reveal>
+            <h2 className="weha-display text-4xl md:text-5xl text-weha-text">What we believe.</h2>
+          </Reveal>
+          <div className="mt-12 divide-y divide-weha-border border-t border-weha-border">
+            {values.map(([title, body], i) => (
+              <Reveal key={title} delay={(i % 3) * 0.06}>
+                <motion.div
+                  className="py-7 grid gap-2 md:grid-cols-[auto_1fr] md:gap-10 items-baseline"
+                  data-cursor="hover"
+                  whileHover={{ x: 10 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 22 }}
+                >
+                  <span className="weha-display text-2xl text-weha-teal/40 w-12">{String(i + 1).padStart(2, "0")}</span>
+                  <div>
+                    <h3 className="weha-display text-2xl md:text-3xl text-weha-text">{title}</h3>
+                    <p className="mt-1.5 text-weha-muted text-lg">{body}</p>
+                  </div>
+                </motion.div>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
