@@ -28,6 +28,7 @@ import {
   ChevronRight,
   X,
   ShieldCheck,
+  Check,
 } from "lucide-react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import Reveal from "@/components/Reveal";
@@ -1140,43 +1141,129 @@ export default function Home() {
       <ScrollSection direction="right" settle depth={1} intensity={0.6}>
       <section className="section-glass relative py-28 md:py-40 overflow-hidden" style={{ background: "#171614", "--weha-bg": "#171614", "--weha-text": "#f7f6f2" }}>
         <div
-          className="absolute inset-0 opacity-[0.55]"
-          style={{ background: "radial-gradient(circle at 75% 50%, rgba(155,128,224,0.30), transparent 55%)" }}
+          className="absolute inset-0 opacity-[0.6]"
+          style={{ background: "radial-gradient(circle at 78% 42%, rgba(155,128,224,0.32), transparent 55%)" }}
         />
         <div className="relative max-w-7xl mx-auto px-5 sm:px-8">
-          <div className="grid gap-14 md:grid-cols-2 md:gap-20 md:items-center">
-            <Reveal>
-              <h2 className="weha-display text-4xl md:text-6xl text-[#f7f6f2] leading-[1.05]">
-                Not a freelancer. Not a big agency.{" "}
-                <span className="italic" style={{ color: "#9b80e0" }}>Better placed than both.</span>
-              </h2>
-            </Reveal>
-            <Reveal delay={0.12}>
-              <div>
-                <p className="text-lg text-[#e9e6df] leading-relaxed max-w-xl">
+          <div className="grid gap-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20 lg:items-center">
+            {/* LEFT: message */}
+            <div>
+              <Reveal>
+                <span className="text-xs font-semibold tracking-[0.24em] uppercase" style={{ color: "#9b80e0" }}>
+                  The WeHA difference
+                </span>
+                <h2 className="weha-display text-4xl md:text-6xl mt-4 text-[#f7f6f2] leading-[1.04]">
+                  Not a freelancer. Not a big agency.{" "}
+                  <span className="italic" style={{ color: "#9b80e0" }}>Better placed than both.</span>
+                </h2>
+              </Reveal>
+              <Reveal delay={0.12}>
+                <p className="mt-6 text-lg text-[#c9c5bd] leading-relaxed max-w-xl">
                   A freelancer connects two tools and calls it done. A big agency quotes a six-month
                   roadmap with a retainer to match. We sit in between: engineered properly, shipped
                   in days, and owned entirely by you.
                 </p>
-                <ul className="mt-8 space-y-7">
+              </Reveal>
+              <Reveal delay={0.18}>
+                <ul className="mt-9 grid gap-x-8 gap-y-5 sm:grid-cols-2">
                   {whyWeha.map((t, i) => (
-                    <li key={i} className="flex gap-4">
-                      <span style={{ color: "#9b80e0" }} className="text-xl leading-none mt-1">✦</span>
-                      <span className="text-lg text-[#e9e6df] leading-relaxed">{t}</span>
+                    <li key={i} className="flex gap-3">
+                      <span
+                        className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-lg mt-0.5"
+                        style={{ background: "rgba(155,128,224,0.16)", color: "#9b80e0" }}
+                      >
+                        <Check size={14} />
+                      </span>
+                      <span className="text-[0.95rem] text-[#e9e6df] leading-snug">{t}</span>
                     </li>
                   ))}
                 </ul>
+              </Reveal>
+              <Reveal delay={0.26}>
+                <div className="mt-10">
+                  <Magnetic>
+                    <button
+                      type="button"
+                      onClick={openBooking}
+                      className="btn-teal"
+                      data-cursor="hover"
+                      data-testid="whyweha-cta"
+                    >
+                      Book a Free AI Audit <ArrowRight size={16} />
+                    </button>
+                  </Magnetic>
+                </div>
+              </Reveal>
+            </div>
+
+            {/* RIGHT: circular guarantee visual */}
+            <Reveal delay={0.2}>
+              <div className="relative mx-auto aspect-square w-full max-w-[440px]">
+                {/* soft glow */}
+                <div className="absolute inset-0 rounded-full" style={{ background: "radial-gradient(circle, rgba(155,128,224,0.22), transparent 62%)" }} />
+                {/* concentric rings */}
+                <div className="absolute inset-0 rounded-full border" style={{ borderColor: "rgba(155,128,224,0.16)" }} />
+                <div className="absolute inset-[9%] rounded-full border" style={{ borderColor: "rgba(155,128,224,0.22)" }} />
+                {/* rotating dashed ring + orbiting dot */}
+                <motion.div
+                  className="absolute inset-[4%] rounded-full"
+                  style={{ border: "1px dashed rgba(155,128,224,0.35)" }}
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 44, repeat: Infinity, ease: "linear" }}
+                />
+                <motion.div
+                  className="absolute inset-[4%]"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                >
+                  <span
+                    className="absolute left-1/2 top-0 h-2.5 w-2.5 -translate-x-1/2 rounded-full"
+                    style={{ background: "#9b80e0", boxShadow: "0 0 14px rgba(155,128,224,0.9)" }}
+                  />
+                </motion.div>
+                {/* center medallion */}
+                <div
+                  className="absolute inset-[19%] rounded-full flex flex-col items-center justify-center text-center px-7"
+                  style={{
+                    background: "radial-gradient(circle at 50% 35%, rgba(155,128,224,0.16), rgba(23,22,20,0.72))",
+                    border: "1px solid rgba(155,128,224,0.28)",
+                    backdropFilter: "blur(2px)",
+                  }}
+                >
+                  <span
+                    className="inline-flex h-12 w-12 items-center justify-center rounded-2xl"
+                    style={{ background: "rgba(155,128,224,0.18)", color: "#9b80e0" }}
+                  >
+                    <ShieldCheck size={26} />
+                  </span>
+                  <p className="weha-display text-2xl md:text-[1.7rem] mt-4 text-[#f7f6f2] leading-tight">
+                    Outcome-guaranteed
+                  </p>
+                  <p className="weha-display text-2xl md:text-[1.7rem] italic leading-tight" style={{ color: "#9b80e0" }}>
+                    engagements.
+                  </p>
+                  <span className="mt-4 h-px w-10" style={{ background: "rgba(155,128,224,0.4)" }} />
+                  <p className="mt-4 text-sm text-[#c9c5bd] leading-snug">
+                    Agreed in writing, before we start.
+                  </p>
+                </div>
               </div>
             </Reveal>
           </div>
+
           {/* Proof row */}
-          <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-y-10 gap-x-6">
+          <div
+            className="mt-20 md:mt-24 grid grid-cols-2 md:grid-cols-4 gap-y-10 border-t pt-12"
+            style={{ borderColor: "rgba(155,128,224,0.15)" }}
+          >
             {stats.map((s, i) => (
               <Reveal key={s.label} delay={i * 0.06}>
-                <p className="weha-display text-4xl md:text-5xl text-[#9b80e0]">
-                  <CountUp value={s.value} suffix={s.suffix} text={s.text} />
-                </p>
-                <p className="mt-2 text-[#c9c5bd]">{s.label}</p>
+                <div className={i > 0 ? "md:border-l md:pl-8" : "md:pl-0"} style={i > 0 ? { borderColor: "rgba(155,128,224,0.15)" } : undefined}>
+                  <p className="weha-display text-4xl md:text-5xl" style={{ color: "#9b80e0" }}>
+                    <CountUp value={s.value} suffix={s.suffix} text={s.text} />
+                  </p>
+                  <p className="mt-2 text-[#c9c5bd]">{s.label}</p>
+                </div>
               </Reveal>
             ))}
           </div>
