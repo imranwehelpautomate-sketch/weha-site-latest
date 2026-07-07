@@ -731,7 +731,7 @@ const systems = [
       "Positive replies route straight to your booking link and your CRM.",
     ],
     timeline: "First campaign sending within a week. Optimized engine inside 2 weeks.",
-    trust: "Fixed scope. Fixed price. No hidden hours.",
+    trust: "Fixed scope. Flexible pricing. No hidden hours.",
     milestones: [
       { icon: Search, title: "Find leads", caption: "Your ideal profile" },
       { icon: Sparkles, title: "Personalize", caption: "AI, at scale" },
@@ -764,6 +764,7 @@ const systems = [
       "Anything it cannot solve is handed to your team with the full context, so no one repeats themselves.",
     ],
     timeline: "AI assistant live in about a week. Full routing and integrations inside 2 weeks.",
+    trust: "Realistic timelines, real deliverables, reviewed together at every stage.",
     milestones: [
       { icon: Inbox, title: "Question in", caption: "Any channel" },
       { icon: Sparkles, title: "AI answers", caption: "From your docs + data" },
@@ -829,6 +830,7 @@ const systems = [
       "Scoring flags priority leads and pings the right rep instantly.",
     ],
     timeline: "Enrichment live in 48 hours. Full CRM hygiene and scoring inside 2 weeks.",
+    trust: "Fixed scope. Flexible pricing. No hidden hours.",
     milestones: [
       { icon: Inbox, title: "Contact added", caption: "Any source" },
       { icon: Search, title: "Enriched", caption: "Company + contact data" },

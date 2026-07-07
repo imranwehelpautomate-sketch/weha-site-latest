@@ -748,7 +748,7 @@ export default function Home() {
                 <p className="text-sm leading-snug max-w-md">
                   <span className="font-semibold text-weha-text">Outcome-guaranteed engagements.</span>
                   <br />
-                  <span className="text-weha-muted">Realistic timelines, real deliverables, reviewed together at every stage.</span>
+                  <span className="text-weha-muted">Fixed scope. No surprises, Flexible pricing. No surprises.</span>
                 </p>
               </div>
             </Reveal>
