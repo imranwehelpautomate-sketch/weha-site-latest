@@ -30,6 +30,7 @@ import {
   Workflow,
   Compass,
   Check,
+  ShieldCheck,
 } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import CTABanner from "@/components/CTABanner";
@@ -663,7 +664,7 @@ const systems = [
       "AI drafts on-brand copy and captions; a human approves before anything goes live.",
       "Approved content queues itself and publishes on the schedule you set.",
     ],
-    timeline: "First automation live in about a week. Full content engine running in 2 to 3 weeks.",
+    timeline: "First automation live in days. Full content engine running in about a week.",
     milestones: [
       { icon: Lightbulb, title: "Brief in", caption: "One idea or long piece" },
       { icon: Sparkles, title: "AI drafts", caption: "On-brand, every format" },
@@ -695,7 +696,7 @@ const systems = [
       "Rules move deals between stages as things happen, so no one drags cards by hand.",
       "AI drafts the follow-ups; your reps just review and send.",
     ],
-    timeline: "Instant follow-up live in days. Full pipeline automation in 2 to 4 weeks.",
+    timeline: "Instant follow-up live in 48 hours. Full pipeline automation inside 2 weeks.",
     milestones: [
       { icon: Inbox, title: "Lead lands", caption: "Any channel" },
       { icon: Mail, title: "Instant reply", caption: "Within minutes" },
@@ -727,7 +728,7 @@ const systems = [
       "AI personalizes each message using real signals about the prospect and their company.",
       "Positive replies route straight to your booking link and your CRM.",
     ],
-    timeline: "First campaign sending in 1 to 2 weeks. Optimized engine within a month.",
+    timeline: "First campaign sending within a week. Optimized engine inside 2 weeks.",
     milestones: [
       { icon: Search, title: "Find leads", caption: "Your ideal profile" },
       { icon: Sparkles, title: "Personalize", caption: "AI, at scale" },
@@ -759,7 +760,7 @@ const systems = [
       "It pulls live data from your systems to answer real questions, not just canned FAQs.",
       "Anything it cannot solve is handed to your team with the full context, so no one repeats themselves.",
     ],
-    timeline: "AI assistant live in 1 to 2 weeks. Full routing and integrations in 3 to 4 weeks.",
+    timeline: "AI assistant live in about a week. Full routing and integrations inside 2 weeks.",
     milestones: [
       { icon: Inbox, title: "Question in", caption: "Any channel" },
       { icon: Sparkles, title: "AI answers", caption: "From your docs + data" },
@@ -791,7 +792,7 @@ const systems = [
       "Scheduling links and reminders remove the endless back-and-forth.",
       "Onboarding kicks off automatically the moment an offer is accepted.",
     ],
-    timeline: "First HR workflow live in about a week. Full people-ops setup in 3 to 4 weeks.",
+    timeline: "First HR workflow live in days. Full people-ops setup inside 2 weeks.",
     milestones: [
       { icon: Search, title: "Screen", caption: "CVs, automatically" },
       { icon: CalendarCheck, title: "Schedule", caption: "Interviews, hands-free" },
@@ -823,7 +824,7 @@ const systems = [
       "Rules dedupe, format and fill missing fields, so records stay clean on their own.",
       "Scoring flags priority leads and pings the right rep instantly.",
     ],
-    timeline: "Enrichment live in days. Full CRM hygiene and scoring in 2 to 3 weeks.",
+    timeline: "Enrichment live in 48 hours. Full CRM hygiene and scoring inside 2 weeks.",
     milestones: [
       { icon: Inbox, title: "Contact added", caption: "Any source" },
       { icon: Search, title: "Enriched", caption: "Company + contact data" },
@@ -1177,7 +1178,7 @@ export default function Services() {
                   transition={{ duration: 0.55, ease: EASE }}
                 >
                   <div
-                    className="weha-card w-full max-w-4xl max-h-[88vh] overflow-y-auto p-7 md:p-10 pointer-events-auto shadow-2xl"
+                    className="weha-card w-full max-w-4xl max-h-[88vh] overflow-y-auto p-6 md:p-8 pointer-events-auto shadow-2xl"
                     data-testid="system-detail"
                     onClick={(e) => e.stopPropagation()}
                   >
@@ -1190,10 +1191,10 @@ export default function Services() {
                         >
                           {systems[expandedSystem].tag}
                         </span>
-                        <h3 className="weha-display text-3xl md:text-4xl mt-4 text-weha-text">
+                        <h3 className="weha-display text-2xl md:text-3xl mt-3 text-weha-text">
                           {systems[expandedSystem].title}
                         </h3>
-                        <p className="mt-3 text-weha-muted leading-relaxed max-w-2xl">
+                        <p className="mt-2 text-sm text-weha-muted leading-relaxed max-w-2xl">
                           {systems[expandedSystem].body}
                         </p>
                       </div>
@@ -1209,7 +1210,31 @@ export default function Services() {
                       </button>
                     </div>
 
-                    <div className="mt-8 grid gap-9 md:gap-10 md:grid-cols-2">
+                    {/* Trust badge (WeHA styled) */}
+                    <div
+                      className="mt-5 rounded-2xl border p-4 md:p-4 flex items-center gap-4"
+                      style={{
+                        borderColor: "color-mix(in srgb, var(--weha-teal) 32%, transparent)",
+                        background: "var(--weha-teal-soft)",
+                      }}
+                      data-testid="system-trust-badge"
+                    >
+                      <span
+                        className="inline-flex h-11 w-11 items-center justify-center rounded-xl shrink-0"
+                        style={{ background: "var(--weha-bg)", color: "var(--weha-teal)" }}
+                      >
+                        <ShieldCheck size={22} />
+                      </span>
+                      <div>
+                        <p className="weha-display text-lg text-weha-text leading-tight">Outcome-guaranteed engagements</p>
+                        <p className="mt-0.5 text-sm text-weha-muted leading-snug">
+                          We put the result in writing before we start. No outcome, no invoice.
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Compact 2x2 detail grid (no scrolling needed) */}
+                    <div className="mt-5 grid gap-x-8 gap-y-5 md:grid-cols-2">
                       {/* What we automate here */}
                       <div>
                         <div className="flex items-center gap-2.5">
@@ -1218,10 +1243,10 @@ export default function Services() {
                           </span>
                           <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">What we automate here</h4>
                         </div>
-                        <ul className="mt-4 space-y-3">
+                        <ul className="mt-3 space-y-2">
                           {systems[expandedSystem].whatWeAutomate.map((p) => (
-                            <li key={p} className="flex gap-3 text-weha-muted leading-relaxed">
-                              <span className="mt-2 h-1.5 w-1.5 rounded-full shrink-0" style={{ background: "var(--weha-teal)" }} />
+                            <li key={p} className="flex gap-2.5 text-sm text-weha-muted leading-snug">
+                              <span className="mt-1.5 h-1.5 w-1.5 rounded-full shrink-0" style={{ background: "var(--weha-teal)" }} />
                               <span>{p}</span>
                             </li>
                           ))}
@@ -1236,59 +1261,46 @@ export default function Services() {
                           </span>
                           <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">How we automate it</h4>
                         </div>
-                        <ul className="mt-4 space-y-3">
+                        <ul className="mt-3 space-y-2">
                           {systems[expandedSystem].howWeAutomate.map((p) => (
-                            <li key={p} className="flex gap-3 text-weha-muted leading-relaxed">
-                              <Check size={16} className="mt-1 shrink-0" style={{ color: "var(--weha-teal)" }} />
+                            <li key={p} className="flex gap-2.5 text-sm text-weha-muted leading-snug">
+                              <Check size={15} className="mt-0.5 shrink-0" style={{ color: "var(--weha-teal)" }} />
                               <span>{p}</span>
                             </li>
                           ))}
                         </ul>
                       </div>
-                    </div>
 
-                    {/* Timeline of typical engagement */}
-                    <div className="mt-9 md:mt-10 rounded-2xl border border-weha-border bg-weha-surface p-6 flex items-start gap-3.5">
-                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg shrink-0" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
-                        <CalendarClock size={16} />
-                      </span>
+                      {/* Timeline of typical engagement */}
                       <div>
-                        <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">Timeline of typical engagement</h4>
-                        <p className="mt-2 text-weha-text leading-relaxed">{systems[expandedSystem].timeline}</p>
+                        <div className="flex items-center gap-2.5">
+                          <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
+                            <CalendarClock size={16} />
+                          </span>
+                          <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">Timeline of typical engagement</h4>
+                        </div>
+                        <p className="mt-3 text-sm text-weha-text leading-snug">{systems[expandedSystem].timeline}</p>
                       </div>
-                    </div>
 
-                    {/* Typical milestones (animated flow, same component as "Proof, not promises") */}
-                    <div className="mt-9 md:mt-10">
-                      <div className="flex items-center gap-2.5">
-                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
-                          <ListOrdered size={16} />
-                        </span>
-                        <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">Typical milestones</h4>
-                      </div>
-                      <div className="mt-6">
-                        <FlowDiagram steps={systems[expandedSystem].milestones} replayKey={expandedSystem} autoPlay />
-                      </div>
-                    </div>
-
-                    {/* Tech stack used */}
-                    <div className="mt-9 md:mt-10">
-                      <div className="flex items-center gap-2.5">
-                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
-                          <Share2 size={16} />
-                        </span>
-                        <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">Tech stack used</h4>
-                      </div>
-                      <div className="mt-4 flex flex-wrap gap-2.5">
-                        {systems[expandedSystem].stack.map((st) => (
-                          <StackLogo key={st.name} {...st} />
-                        ))}
+                      {/* Tech stack used */}
+                      <div>
+                        <div className="flex items-center gap-2.5">
+                          <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
+                            <Share2 size={16} />
+                          </span>
+                          <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">Tech stack used</h4>
+                        </div>
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          {systems[expandedSystem].stack.map((st) => (
+                            <StackLogo key={st.name} {...st} />
+                          ))}
+                        </div>
                       </div>
                     </div>
 
                     {/* CTA */}
-                    <div className="mt-9 md:mt-10 rounded-2xl border border-weha-border p-6 md:p-7 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between" style={{ background: "var(--weha-teal-soft)" }}>
-                      <p className="text-weha-text leading-relaxed max-w-md">
+                    <div className="mt-5 rounded-2xl border border-weha-border p-4 md:p-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between" style={{ background: "var(--weha-teal-soft)" }}>
+                      <p className="text-sm text-weha-text leading-snug max-w-md">
                         Want this running in your business? See exactly what to automate first, free.
                       </p>
                       <Magnetic>
