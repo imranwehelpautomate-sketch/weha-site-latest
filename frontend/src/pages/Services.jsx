@@ -1142,16 +1142,6 @@ export default function Services() {
                 );
               })}
             </div>
-
-            <div className="mt-6 rounded-2xl border border-dashed border-weha-border p-6 md:p-7 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <p className="text-weha-muted leading-relaxed max-w-2xl">
-                Not sure which system you need first? That is exactly what the free audit is for. We
-                map your workflows and show you the fastest win.
-              </p>
-              <button type="button" onClick={openBooking} className="btn-ghost shrink-0" data-cursor="hover">
-                Book my free audit <ArrowRight size={15} />
-              </button>
-            </div>
           </div>
 
           {/* Centered, viewport-fixed modal (portaled outside the transformed
