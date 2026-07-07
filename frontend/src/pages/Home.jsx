@@ -548,7 +548,7 @@ const whyWeha = [
   "You own every system we build, no lock-in, no monthly hostage fees.",
   "We build on the tools you already use wherever we can.",
   "Live systems in days, not months. You see value almost immediately.",
-  "Every automation is documented and handed off, so you are in control.",
+  "Automations are documented and delivered, so you are in control.",
 ];
 
 // Dogfooding stats row inside the dark section.
