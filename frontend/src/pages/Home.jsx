@@ -554,7 +554,7 @@ const stats = [
   { value: 90, suffix: " min", label: "to your first live automation" },
   { value: 100, suffix: "%", label: "yours: code, docs and accounts" },
   { value: 30, suffix: " days", label: "of support after every handoff" },
-  { value: 0, suffix: "", label: "markup on any tool you need" },
+  { value: 0, suffix: "", text: "Zero", label: "markup on any tool you need" },
 ];
 
 // FAQ.
@@ -1171,7 +1171,7 @@ export default function Home() {
             {stats.map((s, i) => (
               <Reveal key={s.label} delay={i * 0.06}>
                 <p className="weha-display text-4xl md:text-5xl text-[#9b80e0]">
-                  <CountUp value={s.value} suffix={s.suffix} />
+                  <CountUp value={s.value} suffix={s.suffix} text={s.text} />
                 </p>
                 <p className="mt-2 text-[#c9c5bd]">{s.label}</p>
               </Reveal>

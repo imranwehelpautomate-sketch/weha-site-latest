@@ -13,6 +13,7 @@ export default function CountUp({
   suffix = "",
   decimals = 0,
   className = "",
+  text = null,
 }) {
   const reduceMotion = useReducedMotion();
   const ref = useRef(null);
@@ -56,7 +57,7 @@ export default function CountUp({
       className={className}
       style={{ fontVariantNumeric: "tabular-nums" }}
     >
-      {format(display)}
+      {text != null ? `${prefix}${text}${suffix}` : format(display)}
     </span>
   );
 }
