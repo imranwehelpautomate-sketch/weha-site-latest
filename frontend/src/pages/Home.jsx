@@ -717,22 +717,8 @@ export default function Home() {
               </p>
             </Reveal>
             <Reveal delay={0.45}>
-              <div className="mt-9 flex flex-nowrap items-center gap-3 sm:gap-5 pointer-events-auto">
-                <Magnetic>
-                  <button type="button" onClick={openBooking} className="btn-teal max-sm:!px-4 max-sm:!text-sm" data-testid="hero-primary-cta" data-cursor="hover">
-                    Book a Free AI Audit <ArrowRight size={16} />
-                  </button>
-                </Magnetic>
-                <Magnetic strength={0.3}>
-                  <Link to="/services" className="btn-ghost max-sm:!text-sm whitespace-nowrap" data-testid="hero-secondary-cta" data-cursor="hover">
-                    See How It Works <ArrowRight size={15} />
-                  </Link>
-                </Magnetic>
-              </div>
-            </Reveal>
-            <Reveal delay={0.55}>
               <div
-                className="mt-6 inline-flex items-center gap-3 rounded-2xl border px-4 py-3 pointer-events-auto"
+                className="mt-9 inline-flex items-center gap-3 rounded-2xl border px-4 py-3 pointer-events-auto"
                 style={{
                   borderColor: "color-mix(in srgb, var(--weha-teal) 28%, transparent)",
                   background: "var(--weha-teal-soft)",
@@ -750,6 +736,20 @@ export default function Home() {
                   <br />
                   <span className="text-weha-muted">Fixed scope. Flexible pricing. No surprises.</span>
                 </p>
+              </div>
+            </Reveal>
+            <Reveal delay={0.55}>
+              <div className="mt-6 flex flex-nowrap items-center gap-3 sm:gap-5 pointer-events-auto">
+                <Magnetic>
+                  <button type="button" onClick={openBooking} className="btn-teal max-sm:!px-4 max-sm:!text-sm" data-testid="hero-primary-cta" data-cursor="hover">
+                    Book a Free AI Audit <ArrowRight size={16} />
+                  </button>
+                </Magnetic>
+                <Magnetic strength={0.3}>
+                  <Link to="/services" className="btn-ghost max-sm:!text-sm whitespace-nowrap" data-testid="hero-secondary-cta" data-cursor="hover">
+                    See How It Works <ArrowRight size={15} />
+                  </Link>
+                </Magnetic>
               </div>
             </Reveal>
           </div>
