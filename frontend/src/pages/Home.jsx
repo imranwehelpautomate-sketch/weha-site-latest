@@ -27,6 +27,7 @@ import {
   ChevronLeft,
   ChevronRight,
   X,
+  ShieldCheck,
 } from "lucide-react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import Reveal from "@/components/Reveal";
@@ -727,6 +728,27 @@ export default function Home() {
                     See How It Works <ArrowRight size={15} />
                   </Link>
                 </Magnetic>
+              </div>
+            </Reveal>
+            <Reveal delay={0.55}>
+              <div
+                className="mt-6 inline-flex items-center gap-3 rounded-2xl border px-4 py-3 pointer-events-auto"
+                style={{
+                  borderColor: "color-mix(in srgb, var(--weha-teal) 28%, transparent)",
+                  background: "var(--weha-teal-soft)",
+                }}
+                data-testid="hero-trust-badge"
+              >
+                <span
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-xl shrink-0"
+                  style={{ background: "var(--weha-bg)", color: "var(--weha-teal)" }}
+                >
+                  <ShieldCheck size={18} />
+                </span>
+                <p className="text-sm leading-snug">
+                  <span className="font-semibold text-weha-text">Outcome-guaranteed engagements.</span>{" "}
+                  <span className="text-weha-muted">No outcome, no invoice.</span>
+                </p>
               </div>
             </Reveal>
           </div>
