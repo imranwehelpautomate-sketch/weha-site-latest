@@ -813,7 +813,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <Reveal>
             <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">See it work</span>
-            <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">Watch one workflow fix itself.</h2>
+            <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">Watch a business problem fix itself.</h2>
           </Reveal>
           <Reveal delay={0.08}>
             <p className="mt-5 text-weha-muted max-w-xl leading-relaxed">
