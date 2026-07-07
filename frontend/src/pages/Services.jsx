@@ -1222,7 +1222,7 @@ export default function Services() {
                         <ShieldCheck size={22} />
                       </span>
                       <div>
-                        <p className="weha-display text-lg text-weha-text leading-tight">Outcome-guaranteed engagements.</p>
+                        <p className="weha-display text-lg text-weha-text leading-tight">Built the way we said we would.</p>
                         <p className="mt-0.5 text-sm text-weha-muted leading-snug">
                           {systems[expandedSystem].trust}
                         </p>

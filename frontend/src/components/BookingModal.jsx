@@ -182,7 +182,7 @@ export default function BookingModal({ open, onOpenChange }) {
             <aside className="hidden md:flex flex-col justify-between p-7 lg:p-8 bg-weha-surface border-r border-weha-border">
               <div>
                 <h2 className="weha-display text-3xl lg:text-4xl leading-tight">
-                  Lets <span className="italic text-weha-teal">Chat.</span>
+                  Let&apos;s <span className="italic text-weha-teal">Chat.</span>
                 </h2>
                 <p className="mt-4 text-weha-muted leading-relaxed text-[0.95rem]">
                   On call we will understand your pain-points, discover your automation and agentic workflow needs, and give you our honest opinion.{" "}
