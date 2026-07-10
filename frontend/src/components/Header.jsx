@@ -290,7 +290,7 @@ export default function Header() {
           open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >
-        <div className="px-6 pt-6 pb-6 flex flex-col gap-1">
+        <div className="px-6 pt-4 pb-4 flex flex-col gap-1">
           {links.map((l, i) => {
             if (l.label === "Resources") {
               return (
@@ -300,12 +300,12 @@ export default function Header() {
                     onClick={() => setOpen(false)}
                     data-testid="mobile-nav-resources"
                     className={({ isActive }) =>
-                      `weha-display text-2xl py-2 block ${isActive ? "text-weha-teal" : "text-weha-text"}`
+                      `weha-display text-xl py-1.5 block ${isActive ? "text-weha-teal" : "text-weha-text"}`
                     }
                   >
                     Resources
                   </NavLink>
-                  <div className="pb-3 pl-2 flex flex-col gap-0.5">
+                  <div className="pb-2 pl-2 flex flex-col gap-0.5">
                     {RESOURCE_CHILDREN.map((c) => {
                       const Icon = c.icon;
                       return (
@@ -315,10 +315,10 @@ export default function Header() {
                           onClick={() => setOpen(false)}
                           data-testid={`mobile-nav-resources-${c.key}`}
                           className={({ isActive }) =>
-                            `flex items-center gap-3 py-1.5 text-base ${isActive ? "text-weha-teal" : "text-weha-muted"}`
+                            `flex items-center gap-3 py-1 text-sm ${isActive ? "text-weha-teal" : "text-weha-muted"}`
                           }
                         >
-                          <Icon size={16} className="text-weha-teal" /> {c.title}
+                          <Icon size={15} className="text-weha-teal" /> {c.title}
                         </NavLink>
                       );
                     })}
@@ -334,7 +334,7 @@ export default function Header() {
                 onClick={() => setOpen(false)}
                 data-testid={`mobile-nav-${l.label.toLowerCase().replace(/\s+/g, "-")}`}
                 className={({ isActive }) =>
-                  `weha-display text-2xl py-2 border-b border-weha-border ${
+                  `weha-display text-xl py-1.5 border-b border-weha-border ${
                     isActive ? "text-weha-teal" : "text-weha-text"
                   }`
                 }
@@ -347,7 +347,7 @@ export default function Header() {
           <Link
             to="/contact"
             onClick={(e) => { e.preventDefault(); setOpen(false); openBooking(); }}
-            className="btn-teal mt-4 justify-center"
+            className="btn-teal mt-3 justify-center"
             data-testid="mobile-cta"
           >
             Talk To Us <ArrowRight size={16} />
