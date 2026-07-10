@@ -4,6 +4,7 @@ import {
   ArrowRight,
   Plus,
   Check,
+  X,
   Inbox,
   Sparkles,
   Database,
@@ -16,12 +17,18 @@ import {
   Clock,
   FileText,
   ClipboardCheck,
+  CalendarCheck,
+  Video,
+  Mail,
+  BellRing,
+  Table,
 } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import ScrollSection from "@/components/ScrollSection";
 import Magnetic from "@/components/Magnetic";
 import TabSwitch from "@/components/TabSwitch";
 import FlowDiagram from "@/components/FlowDiagram";
+import Roadmap from "@/components/Roadmap";
 import CTABanner from "@/components/CTABanner";
 import Seo from "@/components/Seo";
 import { EASE } from "@/lib/motion";
@@ -134,26 +141,76 @@ function CtaButton({ onClick, testid }) {
   );
 }
 
-// Section 3: what happens on the 90-minute call.
-const HOW_STEPS = [
+// Section 3: the interactive 90-minute phase switcher.
+const PHASES = [
   {
-    n: "01",
-    title: "You walk us through it",
-    body: "Tell us the workflow that eats the most time. No prep needed.",
+    id: "p1",
+    label: "Minutes 0 to 15",
+    title: "We listen",
+    body: "You walk us through the workflow that eats the most time. Where it starts, who touches it, where it breaks. No slides, no discovery script.",
   },
   {
-    n: "02",
-    title: "We build one, live",
-    body: "While you watch, we automate the first real step of it, on your actual tools.",
+    id: "p2",
+    label: "Minutes 15 to 75",
+    title: "We build, live",
+    body: "We pick the highest-impact piece and automate its first real step on your actual tools, screen shared, while you watch. You see exactly how we work before you spend a rupee.",
   },
   {
-    n: "03",
+    id: "p3",
+    label: "Minutes 75 to 90",
     title: "You get the map",
-    body: "A prioritized list of what to automate next, and what it would take. Yours to keep, even if we never work together again.",
+    body: "We walk you through a prioritized map of your top three workflows. What to automate, in what order, and roughly what it takes. Yours to keep either way.",
   },
 ];
 
-// Section 4: what you leave the call with.
+// Section 4: the journey map (Roadmap stations, { num, name, meta, body }).
+const JOURNEY = [
+  {
+    num: "01",
+    name: "Pick your slot",
+    meta: "under a minute",
+    body: "Live calendar, takes under a minute. Just the basics, no long forms.",
+  },
+  {
+    num: "02",
+    name: "Confirmed in seconds",
+    meta: "instant, automatic",
+    body: "Google Meet link, branded confirmation, and reminders at 24 hours and 1 hour. All automatic.",
+  },
+  {
+    num: "03",
+    name: "The build call",
+    meta: "90 minutes",
+    body: "90 minutes. We listen, then build one automation live on your own tools.",
+  },
+  {
+    num: "04",
+    name: "The map lands",
+    meta: "in your inbox",
+    body: "Your prioritized automation map arrives in your inbox. What you do with it is entirely up to you.",
+  },
+];
+
+// Section 5: the booking-is-the-demo flow. Replicated verbatim from the
+// proofSteps array defined in Services.jsx (first six steps).
+const BOOKING_PROOF_STEPS = [
+  { icon: CalendarCheck, title: "You pick a slot", caption: "Live availability" },
+  { icon: Database, title: "Lead saved", caption: "Into our database" },
+  { icon: Video, title: "Meet link created", caption: "Automatically" },
+  { icon: Mail, title: "Confirmation sent", caption: "Branded and instant" },
+  { icon: BellRing, title: "Reminders queued", caption: "24 hours and 1 hour before" },
+  { icon: Table, title: "Records updated", caption: "Zero typing" },
+];
+
+// Section 7: this call vs a typical sales call.
+const CONTRAST = [
+  { ours: "You watch a real automation get built", theirs: "You watch a slide deck" },
+  { ours: "Your workflows set the agenda", theirs: "Their pitch sets the agenda" },
+  { ours: "You leave with a plan you keep", theirs: "You leave with a follow-up sequence" },
+  { ours: "No is a perfectly fine answer", theirs: "No triggers three more calls" },
+];
+
+// Section 6: what you leave the call with.
 const WALKAWAY = [
   "A recorded map of your top 3 automatable workflows",
   "One real automation already partially built",
@@ -161,7 +218,7 @@ const WALKAWAY = [
   "No pitch deck, no obligation, no follow-up pressure you didn't ask for",
 ];
 
-// Section 5: FAQ.
+// FAQ (7 items).
 const AUDIT_FAQS = [
   {
     q: "Is this actually free?",
@@ -179,6 +236,18 @@ const AUDIT_FAQS = [
     q: "What do I need to prepare?",
     a: "Nothing. Just show up ready to talk about the workflow that bothers you most.",
   },
+  {
+    q: "Will you try to sell me something?",
+    a: "At the end, if there is a genuine fit, we will tell you what working together would look like. That is it. No pressure tactics, no countdown timers, no follow-up barrage. A no is a complete answer.",
+  },
+  {
+    q: "My tools are old and messy. Will this still work?",
+    a: "Almost certainly. We build on top of what you already run, including the spreadsheets. If something genuinely cannot connect, you will know at the audit, not after you have paid.",
+  },
+  {
+    q: "What happens after the call if I say no?",
+    a: "You keep the map, and we part on good terms. Some people run it themselves, some come back months later. Both are fine with us.",
+  },
 ];
 
 export default function Audit() {
@@ -187,6 +256,9 @@ export default function Audit() {
   const [segment, setSegment] = useState(null);
   // FAQ accordion: index of the open item (-1 = all closed).
   const [openFaq, setOpenFaq] = useState(0);
+  // Active phase tab in the "inside the 90 minutes" section.
+  const [phase, setPhase] = useState("p1");
+  const activePhase = PHASES.find((p) => p.id === phase) || PHASES[0];
 
   const key = segment || "default";
   const line = SEGMENT_LINE[key];
@@ -336,22 +408,96 @@ export default function Audit() {
                 What actually happens on the call.
               </h2>
             </Reveal>
-            <div className="mt-14 grid gap-6 md:grid-cols-3">
-              {HOW_STEPS.map((s, i) => (
-                <Reveal key={s.n} delay={(i % 3) * 0.08}>
-                  <div className="weha-card h-full p-7" data-cursor="hover">
-                    <span className="weha-display text-4xl text-weha-teal/40">{s.n}</span>
-                    <h3 className="weha-display text-2xl mt-3 text-weha-text">{s.title}</h3>
-                    <p className="mt-3 text-sm text-weha-muted leading-relaxed">{s.body}</p>
-                  </div>
-                </Reveal>
-              ))}
+            <Reveal delay={0.1}>
+              <div className="mt-10">
+                <TabSwitch tabs={PHASES} active={phase} onChange={setPhase} />
+              </div>
+            </Reveal>
+            <div className="mt-8 max-w-3xl">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activePhase.id}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.25, ease: EASE }}
+                  className="weha-card p-8 md:p-10"
+                  data-testid="audit-phase-card"
+                >
+                  <h3 className="weha-display text-3xl md:text-4xl text-weha-text">
+                    {activePhase.title}
+                  </h3>
+                  <p className="mt-4 text-lg text-weha-muted leading-relaxed">
+                    {activePhase.body}
+                  </p>
+                </motion.div>
+              </AnimatePresence>
             </div>
           </div>
         </section>
       </ScrollSection>
 
-      {/* SECTION 4 - WHAT YOU WALK AWAY WITH */}
+      {/* SECTION 4 - JOURNEY MAP */}
+      <ScrollSection direction="left" settle depth={0.5} intensity={0.45}>
+        <section className="section-solid py-24 md:py-32" data-testid="audit-journey">
+          <div className="max-w-7xl mx-auto px-5 sm:px-8">
+            <Reveal>
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">
+                From click to plan
+              </span>
+              <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">
+                What happens when you book.
+              </h2>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <p className="mt-5 text-weha-muted max-w-xl leading-relaxed">
+                The whole journey, start to finish. No surprises anywhere in it.
+              </p>
+            </Reveal>
+            <div className="mt-8 md:mt-4">
+              <Roadmap steps={JOURNEY} />
+            </div>
+          </div>
+        </section>
+      </ScrollSection>
+
+      {/* SECTION 5 - THE BOOKING IS THE DEMO */}
+      <ScrollSection direction="right" settle depth={0.6} intensity={0.5}>
+        <section
+          className="section-glass border-y border-weha-border py-24 md:py-32"
+          data-testid="audit-booking-demo"
+        >
+          <div className="max-w-7xl mx-auto px-5 sm:px-8">
+            <Reveal>
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">
+                Proof, not promises
+              </span>
+              <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">
+                Even this booking is a demo.
+              </h2>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <p className="mt-5 text-weha-muted max-w-xl leading-relaxed">
+                The moment you pick a slot, our own automations take over. No
+                human touches any of this:
+              </p>
+            </Reveal>
+            <div className="mt-14 md:mt-16">
+              <FlowDiagram steps={BOOKING_PROOF_STEPS} autoPlay />
+            </div>
+            <Reveal delay={0.1}>
+              <p className="mt-14 weha-display text-2xl md:text-3xl max-w-3xl text-weha-text leading-snug">
+                The systems we sell are the systems we run on.{" "}
+                <span className="italic text-weha-teal">
+                  This booking is your first look at them, live.
+                </span>
+              </p>
+            </Reveal>
+          </div>
+        </section>
+      </ScrollSection>
+
+      {/* SECTION 6 - WHAT YOU WALK AWAY WITH */}
       <ScrollSection direction="left" settle depth={0.4} intensity={0.4}>
         <section className="section-solid py-24 md:py-32" data-testid="audit-walkaway">
           <div className="max-w-3xl mx-auto px-5 sm:px-8">
@@ -382,7 +528,75 @@ export default function Audit() {
         </section>
       </ScrollSection>
 
-      {/* SECTION 5 - FAQ */}
+      {/* SECTION 7 - CONTRAST STRIP: this call vs a typical sales call */}
+      <ScrollSection direction="left" settle depth={0} intensity={0.35}>
+        <section
+          className="section-surface border-y border-weha-border py-24 md:py-32"
+          data-testid="audit-contrast"
+        >
+          <div className="max-w-5xl mx-auto px-5 sm:px-8">
+            <Reveal>
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">
+                No ambush
+              </span>
+              <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">
+                This call vs a typical sales call.
+              </h2>
+            </Reveal>
+
+            {/* Column headers (desktop only) */}
+            <Reveal delay={0.06}>
+              <div className="mt-12 hidden md:grid md:grid-cols-2 md:gap-6">
+                <p className="weha-display text-xl text-weha-teal">This call</p>
+                <p className="weha-display text-xl text-weha-faint">A typical sales call</p>
+              </div>
+            </Reveal>
+
+            <div className="mt-4 space-y-5 md:space-y-4">
+              {CONTRAST.map((row, i) => (
+                <Reveal key={i} delay={0.08 + i * 0.06}>
+                  <div className="grid gap-3 md:grid-cols-2 md:gap-6">
+                    {/* This call */}
+                    <div className="weha-card flex items-start gap-3 p-5" data-cursor="hover">
+                      <span
+                        className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-lg"
+                        style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}
+                      >
+                        <Check size={14} />
+                      </span>
+                      <span className="text-weha-text leading-relaxed">{row.ours}</span>
+                    </div>
+                    {/* A typical sales call */}
+                    <div className="flex items-start gap-3 rounded-2xl border border-weha-border p-5">
+                      <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-weha-elevated text-weha-faint">
+                        <X size={14} />
+                      </span>
+                      <span className="text-weha-faint leading-relaxed">{row.theirs}</span>
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      </ScrollSection>
+
+      {/* SECTION 8 - TESTIMONIAL MOMENT */}
+      <section className="section-solid py-24 md:py-32" data-testid="audit-testimonial">
+        <div className="max-w-3xl mx-auto px-5 sm:px-8">
+          <Reveal>
+            <blockquote className="weha-display text-2xl md:text-3xl text-weha-text leading-snug">
+              &ldquo;Live in under two weeks, on the tools we already had. It felt
+              less like buying software and more like a hire.&rdquo;
+            </blockquote>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="mt-6 text-sm text-weha-faint">SaaS startup</p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* SECTION 9 - FAQ */}
       <ScrollSection direction="right" settle depth={0} intensity={0.3}>
         <section
           className="section-surface border-y border-weha-border py-24 md:py-32"
