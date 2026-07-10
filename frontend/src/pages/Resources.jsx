@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, BookOpen, Workflow, FileText } from "lucide-react";
+import { ArrowRight, BookOpen, Workflow, FileText, Gauge } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import CTABanner from "@/components/CTABanner";
 import Reveal from "@/components/Reveal";
@@ -118,6 +118,24 @@ export default function Resources() {
                   </Reveal>
                 );
               })}
+              <Reveal delay={resources.length * 0.08}>
+                <Link
+                  to="/readiness-check"
+                  data-testid="resource-card-readiness"
+                  data-cursor="hover"
+                  className="weha-card group block h-full p-8 transition-transform hover:-translate-y-1"
+                >
+                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-weha-teal-soft text-weha-teal">
+                    <Gauge size={22} />
+                  </span>
+                  <span className="mt-6 block text-xs font-semibold tracking-widest uppercase text-weha-faint">Interactive</span>
+                  <h3 className="weha-display text-2xl mt-2 text-weha-text">Automation Readiness Check</h3>
+                  <p className="mt-3 text-weha-muted leading-relaxed">Six questions, two minutes, an honest score. Find out what to automate first.</p>
+                  <span className="mt-6 inline-flex items-center gap-2 text-weha-teal font-medium">
+                    Take the check <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
+                  </span>
+                </Link>
+              </Reveal>
             </div>
           </div>
         </section>

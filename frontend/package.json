@@ -74,6 +74,7 @@
       "/",
       "/services",
       "/audit",
+      "/readiness-check",
       "/ai-workforce",
       "/success-stories",
       "/about",
