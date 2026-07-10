@@ -195,7 +195,7 @@ export default function Audit() {
   return (
     <div data-testid="audit-page" className="overflow-x-hidden">
       <Seo
-        title="The Free AI Audit"
+        title="AI Audit Walkthrough"
         description="Book a free 90-minute AI Audit with WeHA. We map your three most automatable workflows and build one live while you watch."
         path="/audit"
         jsonLd={graph([
@@ -203,7 +203,7 @@ export default function Audit() {
           WEBSITE,
           webPage({
             path: "/audit",
-            name: "The Free AI Audit",
+            name: "AI Audit Walkthrough",
             description:
               "Book a free 90-minute AI Audit with WeHA. We map your three most automatable workflows and build one live while you watch.",
           }),
