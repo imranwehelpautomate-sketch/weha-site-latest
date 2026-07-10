@@ -2,6 +2,8 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
+  Plus,
+  Check,
   Inbox,
   Sparkles,
   Database,
@@ -20,6 +22,7 @@ import ScrollSection from "@/components/ScrollSection";
 import Magnetic from "@/components/Magnetic";
 import TabSwitch from "@/components/TabSwitch";
 import FlowDiagram from "@/components/FlowDiagram";
+import CTABanner from "@/components/CTABanner";
 import Seo from "@/components/Seo";
 import { EASE } from "@/lib/motion";
 import { useBooking } from "@/context/BookingContext";
@@ -131,10 +134,59 @@ function CtaButton({ onClick, testid }) {
   );
 }
 
+// Section 3: what happens on the 90-minute call.
+const HOW_STEPS = [
+  {
+    n: "01",
+    title: "You walk us through it",
+    body: "Tell us the workflow that eats the most time. No prep needed.",
+  },
+  {
+    n: "02",
+    title: "We build one, live",
+    body: "While you watch, we automate the first real step of it, on your actual tools.",
+  },
+  {
+    n: "03",
+    title: "You get the map",
+    body: "A prioritized list of what to automate next, and what it would take. Yours to keep, even if we never work together again.",
+  },
+];
+
+// Section 4: what you leave the call with.
+const WALKAWAY = [
+  "A recorded map of your top 3 automatable workflows",
+  "One real automation already partially built",
+  "A rough sense of cost and timeline for each",
+  "No pitch deck, no obligation, no follow-up pressure you didn't ask for",
+];
+
+// Section 5: FAQ.
+const AUDIT_FAQS = [
+  {
+    q: "Is this actually free?",
+    a: "Yes. No card, no catch. If it is not worth automating, we will tell you that too.",
+  },
+  {
+    q: "What if I am not ready to hire anyone?",
+    a: "Then you leave with the map anyway. Plenty of people use it themselves.",
+  },
+  {
+    q: "How long is the call really?",
+    a: "90 minutes, sometimes less. We do not pad it out.",
+  },
+  {
+    q: "What do I need to prepare?",
+    a: "Nothing. Just show up ready to talk about the workflow that bothers you most.",
+  },
+];
+
 export default function Audit() {
   const { openBooking } = useBooking();
   // Active segment. null = nothing selected (default copy + default flow).
   const [segment, setSegment] = useState(null);
+  // FAQ accordion: index of the open item (-1 = all closed).
+  const [openFaq, setOpenFaq] = useState(0);
 
   const key = segment || "default";
   const line = SEGMENT_LINE[key];
@@ -269,29 +321,134 @@ export default function Audit() {
         </section>
       </ScrollSection>
 
-      {/* SECTION 3 - SECOND CTA */}
-      <ScrollSection direction="right" settle depth={0.35} intensity={0.4}>
-        <section className="section-solid py-24 md:py-32" data-testid="audit-cta">
-          <div className="max-w-3xl mx-auto px-5 sm:px-8 text-center">
+      {/* SECTION 3 - HOW THE 90 MINUTES WORKS */}
+      <ScrollSection direction="right" settle depth={0} intensity={0.35}>
+        <section
+          className="section-surface border-y border-weha-border py-24 md:py-32"
+          data-testid="audit-how"
+        >
+          <div className="max-w-7xl mx-auto px-5 sm:px-8">
             <Reveal>
-              <h2 className="weha-display text-4xl md:text-5xl text-weha-text leading-[1.05]">
-                See your first automation built{" "}
-                <span className="italic text-weha-teal">live on the call.</span>
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">
+                How it works
+              </span>
+              <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">
+                What actually happens on the call.
+              </h2>
+            </Reveal>
+            <div className="mt-14 grid gap-6 md:grid-cols-3">
+              {HOW_STEPS.map((s, i) => (
+                <Reveal key={s.n} delay={(i % 3) * 0.08}>
+                  <div className="weha-card h-full p-7" data-cursor="hover">
+                    <span className="weha-display text-4xl text-weha-teal/40">{s.n}</span>
+                    <h3 className="weha-display text-2xl mt-3 text-weha-text">{s.title}</h3>
+                    <p className="mt-3 text-sm text-weha-muted leading-relaxed">{s.body}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      </ScrollSection>
+
+      {/* SECTION 4 - WHAT YOU WALK AWAY WITH */}
+      <ScrollSection direction="left" settle depth={0.4} intensity={0.4}>
+        <section className="section-solid py-24 md:py-32" data-testid="audit-walkaway">
+          <div className="max-w-3xl mx-auto px-5 sm:px-8">
+            <Reveal>
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">
+                What you get
+              </span>
+              <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">
+                Not a pitch. A plan.
               </h2>
             </Reveal>
             <Reveal delay={0.1}>
-              <p className="mt-6 text-weha-muted text-lg leading-relaxed">
-                90 minutes, no pitch deck, no obligation. You leave with a
-                prioritized plan whether you hire us or not.
-              </p>
-            </Reveal>
-            <Reveal delay={0.18}>
-              <div className="mt-9 flex justify-center">
-                <CtaButton onClick={openBooking} testid="audit-bottom-cta" />
-              </div>
+              <ul className="mt-9 space-y-4">
+                {WALKAWAY.map((item) => (
+                  <li key={item} className="flex items-start gap-3">
+                    <span
+                      className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-lg"
+                      style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}
+                    >
+                      <Check size={14} />
+                    </span>
+                    <span className="text-lg text-weha-text leading-relaxed">{item}</span>
+                  </li>
+                ))}
+              </ul>
             </Reveal>
           </div>
         </section>
+      </ScrollSection>
+
+      {/* SECTION 5 - FAQ */}
+      <ScrollSection direction="right" settle depth={0} intensity={0.3}>
+        <section
+          className="section-surface border-y border-weha-border py-24 md:py-32"
+          data-testid="audit-faq"
+        >
+          <div className="max-w-3xl mx-auto px-5 sm:px-8">
+            <Reveal>
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">
+                Straight answers
+              </span>
+              <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">
+                Quick questions, honestly answered.
+              </h2>
+            </Reveal>
+            <div className="mt-12">
+              {AUDIT_FAQS.map((item, i) => {
+                const open = openFaq === i;
+                return (
+                  <div key={i} className="border-b border-weha-border">
+                    <button
+                      type="button"
+                      onClick={() => setOpenFaq(open ? -1 : i)}
+                      aria-expanded={open}
+                      data-cursor="hover"
+                      className="w-full flex items-center justify-between gap-6 py-6 text-left focus-visible:outline-none focus-visible:shadow-[0_0_0_3px_var(--weha-teal-soft)] rounded-lg"
+                    >
+                      <span className="weha-display text-xl md:text-2xl text-weha-text">{item.q}</span>
+                      <Plus
+                        size={22}
+                        className="shrink-0 text-weha-teal"
+                        style={{
+                          transform: open ? "rotate(45deg)" : "rotate(0deg)",
+                          transition: "transform 0.25s cubic-bezier(0.22,1,0.36,1)",
+                        }}
+                      />
+                    </button>
+                    <AnimatePresence initial={false}>
+                      {open && (
+                        <motion.div
+                          key="answer"
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3, ease: EASE }}
+                          style={{ overflow: "hidden" }}
+                        >
+                          <p className="pb-6 pr-8 text-weha-muted leading-relaxed">{item.a}</p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      </ScrollSection>
+
+      {/* SECTION 6 - CLOSING CTA */}
+      <ScrollSection direction="left" settle depth={0.35} intensity={0.45}>
+        <CTABanner
+          heading="See your first automation built live on the call."
+          sub="Book a free AI Audit. We will map your top three workflows and build one live on the call. No pitch deck, no obligation."
+          cta="Book my free audit"
+          testid="audit-cta"
+        />
       </ScrollSection>
     </div>
   );
