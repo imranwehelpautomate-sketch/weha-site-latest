@@ -591,7 +591,7 @@ export default function Audit() {
             </blockquote>
           </Reveal>
           <Reveal delay={0.1}>
-            <p className="mt-6 text-sm text-weha-faint">SaaS startup</p>
+            <p className="mt-6 text-sm text-weha-faint">Co-Founder - SaaS startup</p>
           </Reveal>
         </div>
       </section>
