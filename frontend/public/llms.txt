@@ -1,6 +1,6 @@
 # We Help Automate (WeHA)
 
-> We Help Automate (WeHA) is an AI automation studio that turns manual workflows
+> We Help Automate (WeHA) is an AI automation agency that turns manual workflows
 > into systems that run themselves. Built on the tools you already use, delivered
 > in days not months, and fully owned by you with no lock-in. We serve businesses
 > of any kind, anywhere.
@@ -30,6 +30,7 @@
 ## Key pages
 
 - Home: https://www.wehelpautomate.com/
+- Free AI Audit: https://www.wehelpautomate.com/audit
 - Services: https://www.wehelpautomate.com/services
 - AI Workforce: https://www.wehelpautomate.com/ai-workforce
 - Success Stories: https://www.wehelpautomate.com/success-stories
@@ -42,5 +43,6 @@
 
 ## Contact
 
-- Email: hi@wehelpautomate.com
-- Offer: free 60 minute AI Audit mapping your top automatable workflows.
+- Email: hello@wehelpautomate.com
+- Offer: free 90 minute AI Audit that maps your top three automatable workflows
+  and builds one live on the call. No pitch, no obligation.
