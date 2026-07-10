@@ -73,6 +73,7 @@
     "include": [
       "/",
       "/services",
+      "/audit",
       "/ai-workforce",
       "/success-stories",
       "/about",
