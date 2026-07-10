@@ -9,7 +9,7 @@ const LINKEDIN_URL = "https://www.linkedin.com/company/we-help-automate";
 const CONTACT_EMAIL = "hi@wehelpautomate.com";
 
 const nav = [
-  { to: "/audit", label: "Free AI Audit" },
+  { to: "/audit", label: "AI Audit Walkthrough" },
   { to: "/services", label: "Services" },
   { to: "/ai-workforce", label: "AI Workforce" },
   { to: "/success-stories", label: "Success Stories" },
