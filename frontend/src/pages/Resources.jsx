@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, BookOpen, Workflow, FileText, Gauge } from "lucide-react";
+import { ArrowRight, BookOpen, Workflow, FileText, Gauge, Sparkles } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import CTABanner from "@/components/CTABanner";
 import Reveal from "@/components/Reveal";
@@ -119,6 +119,24 @@ export default function Resources() {
                 );
               })}
               <Reveal delay={resources.length * 0.08}>
+                <Link
+                  to="/audit"
+                  data-testid="resource-card-audit"
+                  data-cursor="hover"
+                  className="weha-card group block h-full p-8 transition-transform hover:-translate-y-1"
+                >
+                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-weha-teal-soft text-weha-teal">
+                    <Sparkles size={22} />
+                  </span>
+                  <span className="mt-6 block text-xs font-semibold tracking-widest uppercase text-weha-faint">Interactive</span>
+                  <h3 className="weha-display text-2xl mt-2 text-weha-text">AI Audit Walkthrough</h3>
+                  <p className="mt-3 text-weha-muted leading-relaxed">See exactly how the free 90-minute audit works, and what you walk away with.</p>
+                  <span className="mt-6 inline-flex items-center gap-2 text-weha-teal font-medium">
+                    See how it works <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
+                  </span>
+                </Link>
+              </Reveal>
+              <Reveal delay={(resources.length + 1) * 0.08}>
                 <Link
                   to="/readiness-check"
                   data-testid="resource-card-readiness"

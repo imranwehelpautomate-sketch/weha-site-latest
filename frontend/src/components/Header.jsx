@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Sun, Moon, ArrowRight, ChevronDown, BookOpen, Workflow, FileText } from "lucide-react";
+import { Menu, X, Sun, Moon, ArrowRight, ChevronDown, BookOpen, Workflow, FileText, Gauge, Sparkles } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
 import { useBooking } from "@/context/BookingContext";
 import { EASE } from "@/lib/motion";
@@ -19,6 +19,20 @@ const links = [
 ];
 
 const RESOURCE_CHILDREN = [
+  {
+    key: "audit",
+    to: "/audit",
+    icon: Sparkles,
+    title: "AI Audit Walkthrough",
+    desc: "See exactly how the free 90-minute audit works.",
+  },
+  {
+    key: "readiness",
+    to: "/readiness-check",
+    icon: Gauge,
+    title: "Automation Readiness Check",
+    desc: "Six questions, two minutes, an honest score.",
+  },
   {
     key: "workbooks",
     to: "/resources/workbooks",
