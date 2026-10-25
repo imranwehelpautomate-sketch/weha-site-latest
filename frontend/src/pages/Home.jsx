@@ -28,6 +28,8 @@ import {
   X,
   ShieldCheck,
   Check,
+  Users,
+  Search,
 } from "lucide-react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import Reveal from "@/components/Reveal";
@@ -76,10 +78,32 @@ const pains = [
     quote:
       "My reps spend half their day updating the CRM and chasing quotes instead of selling. Small team, no ops person, pipeline slipping through the cracks.",
   },
+  {
+    label: "Founder · 7:45 AM",
+    quote:
+      "We post every week and still don't show up on Google. I asked ChatGPT about our category and it named three competitors, not us.",
+  },
+  {
+    label: "Marketing head · 4:30 PM",
+    quote:
+      "Our SEO agency sends one PDF a month. I can't see what they did, why they did it, or what changed on the site.",
+  },
 ];
 
 // Flagship flows shown in the flow section (each replays on tab switch).
 const FLOWS = [
+  {
+    id: "seo",
+    label: "SEO Department",
+    steps: [
+      { icon: Users, title: "Daily standup", caption: "Nine specialists compare notes" },
+      { icon: Search, title: "Site checked", caption: "Technical SEO finds pages Google can't index" },
+      { icon: FileText, title: "Fixes drafted", caption: "Every change logged and can be undone" },
+      { icon: UserCheck, title: "You approve", caption: "Plans, risky changes and anything public" },
+      { icon: Share2, title: "Content published", caption: "In your voice, every fact sourced" },
+      { icon: Bell, title: "Daily brief", caption: "Your Director reports what changed" },
+    ],
+  },
   {
     id: "speed",
     label: "Speed to lead",
@@ -420,6 +444,7 @@ const whyWeha = [
   "We build on the tools you already use wherever we can.",
   "Live systems in days, not months. You see value almost immediately.",
   "Automations are documented and delivered, so you are in control.",
+  "An SEO team you can watch working, not a monthly PDF.",
 ];
 
 // Dogfooding stats row inside the dark section.
@@ -448,6 +473,14 @@ const faqs = [
     q: "We are not technical people.",
     a: "You do not need to be. You approve things from your phone and read clear summaries. The system does the technical part. That is what it is for.",
   },
+  {
+    q: "Do you do SEO?",
+    a: "Yes, through our AI SEO Department: nine AI specialists trained on your data, on your own server, led by a Director who sends you a daily brief. You approve plans, risky changes and anything public. Every change is logged and can be undone. We work with businesses in India, the US and Canada.",
+  },
+  {
+    q: "What does the AI SEO Department cost?",
+    a: "Pricing comes after the pilot. We are taking pilot partners now; book a call and ask.",
+  },
 ];
 
 export default function Home() {
@@ -464,6 +497,7 @@ export default function Home() {
     "your ads",
     "your email marketing",
     "your SEO",
+    "your AI search visibility",
     "your content marketing",
     "your proposals",
     "your recruitment",
@@ -531,15 +565,15 @@ export default function Home() {
   return (
     <div data-testid="home-page" className="overflow-x-hidden">
       <Seo
-        title=""
-        description="We Help Automate (WeHA) turns your messiest manual workflows into AI systems that run themselves, built in days, not months. Book a free AI Audit."
+        title="Sales, Marketing and RevOps Automation, plus an AI SEO Department"
+        description="We Help Automate (WeHA) automates sales, marketing and RevOps, and runs your SEO with an AI SEO Department on your own server. Book a free AI Audit."
         path="/"
         jsonLd={graph([
           ORG,
           WEBSITE,
           webPage({
             path: "/",
-            name: "We Help Automate | Done For You AI Automation Services",
+            name: "Sales, Marketing and RevOps Automation, plus an AI SEO Department | WeHA",
             description:
               "WeHA turns your messiest manual workflows into AI systems that run themselves, built in days, not months. Book a free AI Audit.",
           }),
@@ -596,8 +630,8 @@ export default function Home() {
             </h1>
             <Reveal delay={0.35}>
               <p className="mt-7 text-lg md:text-xl text-weha-muted max-w-xl leading-relaxed">
-                We turn your messiest, most time-consuming workflows into systems that run
-                themselves. Built in days, not months.
+                We automate the busywork across sales, marketing and RevOps, and our AI SEO
+                Department runs your SEO every day. Built in days, not months.
               </p>
             </Reveal>
             <Reveal delay={0.45}>
@@ -613,6 +647,10 @@ export default function Home() {
                   </Link>
                 </Magnetic>
               </div>
+              <p className="mt-6 text-sm text-weha-faint pointer-events-auto" data-testid="hero-offers">
+                Sales Automation · Marketing Automation · RevOps Automation ·{" "}
+                <Link to="/ai-seo-department" className="text-weha-teal hover:underline">AI SEO Department</Link>
+              </p>
             </Reveal>
           </div>
         </motion.div>
@@ -808,7 +846,8 @@ export default function Home() {
           <Reveal delay={0.08}>
             <p className="mt-5 text-weha-muted max-w-xl leading-relaxed">
               If your leads, sales and delivery already happen online, automation compounds fastest.
-              That is where we play.
+              That is where we play. And if customers find you through search, the AI SEO
+              Department works for every business below.
             </p>
           </Reveal>
 
@@ -846,8 +885,8 @@ export default function Home() {
 
             <div className="mt-6 rounded-2xl border border-dashed border-weha-border p-6 md:p-7 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <p className="text-weha-muted leading-relaxed max-w-2xl">
-                A different business? The bottlenecks rhyme. If it is manual and it repeats, we can
-                probably automate it.
+                A different business? The bottlenecks rhyme. If it is manual and it repeats, or if
+                you need to be found, we can probably help.
               </p>
               <button type="button" onClick={openBooking} className="btn-ghost shrink-0" data-cursor="hover">
                 Book my free audit <ArrowRight size={15} />
@@ -1007,7 +1046,7 @@ export default function Home() {
             <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Ways to work with us</span>
             <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">Start free. Scale when it proves itself.</h2>
           </Reveal>
-          <div className="mt-14 grid gap-6 md:grid-cols-3">
+          <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {/* Card 1 - the free audit */}
             <Reveal>
               <div className="weha-card p-7 h-full flex flex-col" data-cursor="hover">
@@ -1055,6 +1094,22 @@ export default function Home() {
                 </p>
               </div>
             </Reveal>
+            {/* Card 4 - the AI SEO Department */}
+            <Reveal delay={0.24}>
+              <div className="weha-card p-7 h-full flex flex-col" data-cursor="hover" data-testid="home-way-ai-seo">
+                <span className="self-start rounded-full px-3 py-1 text-xs font-semibold" style={{ background: "var(--weha-teal)", color: "var(--weha-bg)" }}>
+                  New · Ongoing
+                </span>
+                <h3 className="weha-display text-2xl mt-5 text-weha-text">The AI SEO Department</h3>
+                <p className="mt-3 text-weha-muted leading-relaxed flex-1">
+                  A full SEO team on your own server: nine AI specialists and a Director who briefs
+                  you every day. Packages from one Generalist to the whole team. Now taking pilot partners.
+                </p>
+                <Link to="/ai-seo-department" className="mt-6 inline-flex items-center gap-1.5 font-medium text-weha-teal" data-cursor="hover">
+                  Meet the Department <ArrowRight size={15} />
+                </Link>
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -1084,7 +1139,8 @@ export default function Home() {
                 <p className="mt-4 text-[0.95rem] md:text-base text-[#c9c5bd] leading-relaxed max-w-xl">
                   A freelancer connects two tools and calls it done. A big agency quotes a six-month
                   roadmap with a retainer to match. We sit in between: engineered properly, shipped
-                  in days, and owned entirely by you.
+                  in days, and owned entirely by you. And for search, we built what neither offers: a
+                  full AI SEO team that works every day on your own server.
                 </p>
               </Reveal>
               <Reveal delay={0.18}>
@@ -1281,13 +1337,13 @@ export default function Home() {
         <div className="max-w-7xl mx-auto rounded-3xl px-8 py-16 md:px-16 md:py-24 relative overflow-hidden" style={{ background: "var(--weha-teal)" }}>
           <Reveal>
             <h2 className="weha-display text-4xl md:text-6xl text-white max-w-3xl leading-[1.05]">
-              See your first automation built within hours post our call.
+              See your first automation built within hours of our call.
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-6 text-white/85 text-lg max-w-2xl leading-relaxed">
               Book a free AI Audit. We will map your top three workflows and build one live on the
-              call. No pitch deck, no obligation.
+              call. No pitch deck, no obligation. Ask about the AI SEO Department on the same call.
             </p>
           </Reveal>
           <Reveal delay={0.18}>
