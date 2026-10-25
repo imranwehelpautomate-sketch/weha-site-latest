@@ -130,7 +130,7 @@ export default function Resources() {
                   </span>
                   <span className="mt-6 block text-xs font-semibold tracking-widest uppercase text-weha-faint">Interactive</span>
                   <h3 className="weha-display text-2xl mt-2 text-weha-text">AI Audit Walkthrough</h3>
-                  <p className="mt-3 text-weha-muted leading-relaxed">See exactly how the free 90-minute audit works, and what you walk away with.</p>
+                  <p className="mt-3 text-weha-muted leading-relaxed">See exactly how the free 30-minute audit works, and what you walk away with.</p>
                   <span className="mt-6 inline-flex items-center gap-2 text-weha-teal font-medium">
                     See how it works <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
                   </span>

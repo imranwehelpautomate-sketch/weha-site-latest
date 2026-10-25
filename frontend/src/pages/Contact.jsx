@@ -85,7 +85,7 @@ export default function Contact() {
     <div data-testid="contact-page" className="overflow-x-hidden">
       <Seo
         title="Contact, book a free AI Audit"
-        description="Book a free 90-minute AI Audit with WeHA. We map your most painful manual workflows and show you what one automation would look like, live."
+        description="Book a free 30-minute AI Audit with WeHA. We map your most painful manual workflows and show you what one automation would look like, live."
         path="/contact"
         jsonLd={graph([
           ORG,

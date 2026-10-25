@@ -1514,7 +1514,7 @@ export default function Services() {
           >
             <div className="max-w-7xl mx-auto px-5 sm:px-8 py-3 flex flex-col sm:flex-row items-center gap-3 sm:gap-5">
               <p className="text-sm md:text-base text-weha-text text-center sm:text-left flex-1">
-                Map your top workflows in 90 minutes, free.
+                Map your top workflows in 30 minutes, free.
               </p>
               <div className="flex items-center gap-2 w-full sm:w-auto">
                 <Magnetic strength={0.3} className="flex-1 sm:flex-none">

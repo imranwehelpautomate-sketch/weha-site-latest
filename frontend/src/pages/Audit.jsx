@@ -141,23 +141,23 @@ function CtaButton({ onClick, testid }) {
   );
 }
 
-// Section 3: the interactive 90-minute phase switcher.
+// Section 3: the interactive 30-minute phase switcher.
 const PHASES = [
   {
     id: "p1",
-    label: "Minutes 0 to 15",
+    label: "Minutes 0 to 5",
     title: "We listen",
     body: "You walk us through the workflow that eats the most time. Where it starts, who touches it, where it breaks. No slides, no discovery script.",
   },
   {
     id: "p2",
-    label: "Minutes 15 to 75",
+    label: "Minutes 5 to 25",
     title: "We build, live",
     body: "We pick the highest-impact piece and automate its first real step on your actual tools, screen shared, while you watch. You see exactly how we work before you spend a rupee.",
   },
   {
     id: "p3",
-    label: "Minutes 75 to 90",
+    label: "Minutes 25 to 30",
     title: "You get the map",
     body: "We walk you through a prioritized map of your top three workflows. What to automate, in what order, and roughly what it takes. Yours to keep either way.",
   },
@@ -180,8 +180,8 @@ const JOURNEY = [
   {
     num: "03",
     name: "The build call",
-    meta: "90 minutes",
-    body: "90 minutes. We listen, then build one automation live on your own tools.",
+    meta: "30 minutes",
+    body: "30 minutes. We listen, then build one automation live on your own tools.",
   },
   {
     num: "04",
@@ -230,7 +230,7 @@ const AUDIT_FAQS = [
   },
   {
     q: "How long is the call really?",
-    a: "90 minutes, sometimes less. We do not pad it out.",
+    a: "30 minutes, sometimes less. We do not pad it out.",
   },
   {
     q: "What do I need to prepare?",
@@ -256,7 +256,7 @@ export default function Audit() {
   const [segment, setSegment] = useState(null);
   // FAQ accordion: index of the open item (-1 = all closed).
   const [openFaq, setOpenFaq] = useState(0);
-  // Active phase tab in the "inside the 90 minutes" section.
+  // Active phase tab in the "inside the 30 minutes" section.
   const [phase, setPhase] = useState("p1");
   const activePhase = PHASES.find((p) => p.id === phase) || PHASES[0];
 
@@ -268,7 +268,7 @@ export default function Audit() {
     <div data-testid="audit-page" className="overflow-x-hidden">
       <Seo
         title="AI Audit Walkthrough"
-        description="Book a free 90-minute AI Audit with WeHA. We map your three most automatable workflows and build one live while you watch."
+        description="Book a free 30-minute AI Audit with WeHA. We map your three most automatable workflows and build one live while you watch."
         path="/audit"
         jsonLd={graph([
           ORG,
@@ -277,7 +277,7 @@ export default function Audit() {
             path: "/audit",
             name: "AI Audit Walkthrough",
             description:
-              "Book a free 90-minute AI Audit with WeHA. We map your three most automatable workflows and build one live while you watch.",
+              "Book a free 30-minute AI Audit with WeHA. We map your three most automatable workflows and build one live while you watch.",
           }),
           breadcrumb(
             [
@@ -305,7 +305,7 @@ export default function Audit() {
           </Reveal>
           <Reveal delay={0.08}>
             <p className="mt-6 text-lg md:text-xl text-weha-muted max-w-2xl leading-relaxed">
-              90 minutes. One call. We map your three most automatable workflows
+              30 minutes. One call. We map your three most automatable workflows
               and build one live while you watch.
             </p>
           </Reveal>
@@ -393,7 +393,7 @@ export default function Audit() {
         </section>
       </ScrollSection>
 
-      {/* SECTION 3 - HOW THE 90 MINUTES WORKS */}
+      {/* SECTION 3 - HOW THE 30 MINUTES WORKS */}
       <ScrollSection direction="right" settle depth={0} intensity={0.35}>
         <section
           className="section-surface border-y border-weha-border py-24 md:py-32"

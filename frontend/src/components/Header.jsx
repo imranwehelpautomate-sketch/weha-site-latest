@@ -25,7 +25,7 @@ const RESOURCE_CHILDREN = [
     to: "/audit",
     icon: Sparkles,
     title: "AI Audit Walkthrough",
-    desc: "See exactly how the free 90-minute audit works.",
+    desc: "See exactly how the free 30-minute audit works.",
   },
   {
     key: "readiness",
