@@ -159,11 +159,11 @@ export default function About() {
       <section className="section-glass relative py-16 md:py-24 overflow-hidden" style={{ background: "#171614", "--weha-bg": "#171614", "--weha-text": "#f7f6f2" }} data-testid="about-stats">
         <div
           className="absolute inset-0 opacity-[0.5] pointer-events-none"
-          style={{ background: "radial-gradient(circle at 20% 30%, rgba(155,128,224,0.28), transparent 55%)" }}
+          style={{ background: "radial-gradient(circle at 20% 30%, rgba(179,154,240,0.28), transparent 55%)" }}
         />
         <div className="relative max-w-7xl mx-auto px-5 sm:px-8">
           <Reveal>
-            <span className="text-xs font-semibold tracking-[0.2em] uppercase" style={{ color: "#9b80e0" }}>Where we stand</span>
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase" style={{ color: "#B39AF0" }}>Where we stand</span>
             <h2 className="weha-display text-3xl md:text-4xl mt-3 text-[#f7f6f2] max-w-2xl leading-snug">
               Small studio. Serious operators.
             </h2>
@@ -171,8 +171,8 @@ export default function About() {
           <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-y-10">
             {stats.map((s, i) => (
               <Reveal key={s.label} delay={i * 0.08}>
-                <div className={i > 0 ? "md:border-l md:pl-8" : ""} style={i > 0 ? { borderColor: "rgba(155,128,224,0.15)" } : undefined}>
-                  <p className="weha-display text-5xl md:text-6xl" style={{ color: "#9b80e0" }}>
+                <div className={i > 0 ? "md:border-l md:pl-8" : ""} style={i > 0 ? { borderColor: "rgba(179,154,240,0.15)" } : undefined}>
+                  <p className="weha-display text-5xl md:text-6xl" style={{ color: "#B39AF0" }}>
                     <CountUp value={s.value} suffix={s.suffix} text={s.text} />
                   </p>
                   <p className="mt-3 text-[#c9c5bd] leading-snug">{s.label}</p>
