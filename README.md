@@ -161,7 +161,7 @@ Google integrations, is in `docs/DEPLOYMENT.md`.
 Build command (configured in the Cloudflare Pages project):
 
 ```
-cd frontend && yarn install && CI=false ./node_modules/.bin/craco build
+cd frontend && yarn install && CI=false yarn build
 ```
 
 Build output directory: `frontend/build`.

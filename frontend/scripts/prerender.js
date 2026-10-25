@@ -44,6 +44,8 @@ run({
     process.exit(0);
   })
   .catch((err) => {
-    console.error(err);
-    process.exit(1);
+    // Never block a deploy on prerender: ship the plain SPA and say so loudly.
+    console.error("PRERENDER FAILED, deploying SPA without static HTML:", err);
+    writeSpaFallback();
+    process.exit(0);
   });

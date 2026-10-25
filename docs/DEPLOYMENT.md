@@ -25,7 +25,7 @@ Local mirror of the repo lives at `~/weha-LIVE`.
 
 ### Cloudflare Pages project settings
 - Production branch: `main`
-- Build command: `cd frontend && yarn install && CI=false ./node_modules/.bin/craco build`
+- Build command: `cd frontend && yarn install && CI=false yarn build`
 - Build output directory: `frontend/build`
 - Functions: auto-discovered from the root `functions/` directory (do not move it)
 
