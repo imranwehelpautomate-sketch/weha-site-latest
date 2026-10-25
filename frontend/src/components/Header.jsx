@@ -12,6 +12,7 @@ const links = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
   { to: "/services", label: "Services" },
+  { to: "/ai-seo-department", label: "AI SEO" },
   { to: "/ai-workforce", label: "AI Workforce" },
   { to: "/success-stories", label: "Success Stories" },
   { to: "/resources", label: "Resources" },

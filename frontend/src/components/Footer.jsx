@@ -11,6 +11,7 @@ const CONTACT_EMAIL = "hi@wehelpautomate.com";
 const nav = [
   { to: "/audit", label: "AI Audit Walkthrough" },
   { to: "/services", label: "Services" },
+  { to: "/ai-seo-department", label: "AI SEO Department" },
   { to: "/ai-workforce", label: "AI Workforce" },
   { to: "/success-stories", label: "Success Stories" },
   { to: "/resources", label: "Resources" },
