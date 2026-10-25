@@ -27,7 +27,7 @@ const PALETTE = {
     particle: 0x4a463e,
   },
 };
-const TEAL = 0x4a2f8f;
+const TEAL = 0x5b3fa6;
 
 function roundRect(ctx, x, y, w, h, r) {
   ctx.beginPath();
@@ -56,7 +56,7 @@ function makeChip(label, theme) {
   ctx.stroke();
   ctx.beginPath();
   ctx.arc(36, h / 2, 7, 0, Math.PI * 2);
-  ctx.fillStyle = "#4A2F8F";
+  ctx.fillStyle = "#5b3fa6";
   ctx.fill();
   ctx.fillStyle = p.chipText;
   ctx.font = '500 30px "General Sans", system-ui, sans-serif';

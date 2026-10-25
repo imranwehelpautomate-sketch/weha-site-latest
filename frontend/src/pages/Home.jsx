@@ -992,19 +992,19 @@ export default function Home() {
       <section className="section-glass relative py-12 md:py-16 overflow-hidden" style={{ background: "#171614", "--weha-bg": "#171614", "--weha-text": "#f7f6f2" }}>
         <div
           className="absolute inset-0 opacity-[0.6]"
-          style={{ background: "radial-gradient(circle at 78% 42%, rgba(179,154,240,0.32), transparent 55%)" }}
+          style={{ background: "radial-gradient(circle at 78% 42%, rgba(155,128,224,0.32), transparent 55%)" }}
         />
         <div className="relative max-w-7xl mx-auto px-5 sm:px-8">
           <div className="grid gap-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20 lg:items-center">
             {/* LEFT: message */}
             <div>
               <Reveal>
-                <span className="text-xs font-semibold tracking-[0.24em] uppercase" style={{ color: "#B39AF0" }}>
+                <span className="text-xs font-semibold tracking-[0.24em] uppercase" style={{ color: "#9b80e0" }}>
                   The WeHA difference
                 </span>
                 <h2 className="weha-display text-4xl md:text-5xl mt-3 text-[#f7f6f2] leading-[1.04]">
                   Not a freelancer. Not a big agency.{" "}
-                  <span className="italic" style={{ color: "#B39AF0" }}>Better placed than both.</span>
+                  <span className="italic" style={{ color: "#9b80e0" }}>Better placed than both.</span>
                 </h2>
               </Reveal>
               <Reveal delay={0.12}>
@@ -1020,7 +1020,7 @@ export default function Home() {
                     <li key={i} className="flex gap-3">
                       <span
                         className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-lg mt-0.5"
-                        style={{ background: "rgba(179,154,240,0.16)", color: "#B39AF0" }}
+                        style={{ background: "rgba(155,128,224,0.16)", color: "#9b80e0" }}
                       >
                         <Check size={14} />
                       </span>
@@ -1050,14 +1050,14 @@ export default function Home() {
             <Reveal delay={0.2}>
               <div className="relative mx-auto aspect-square w-full max-w-[360px]">
                 {/* soft glow */}
-                <div className="absolute inset-0 rounded-full" style={{ background: "radial-gradient(circle, rgba(179,154,240,0.22), transparent 62%)" }} />
+                <div className="absolute inset-0 rounded-full" style={{ background: "radial-gradient(circle, rgba(155,128,224,0.22), transparent 62%)" }} />
                 {/* concentric rings */}
-                <div className="absolute inset-0 rounded-full border" style={{ borderColor: "rgba(179,154,240,0.16)" }} />
-                <div className="absolute inset-[9%] rounded-full border" style={{ borderColor: "rgba(179,154,240,0.22)" }} />
+                <div className="absolute inset-0 rounded-full border" style={{ borderColor: "rgba(155,128,224,0.16)" }} />
+                <div className="absolute inset-[9%] rounded-full border" style={{ borderColor: "rgba(155,128,224,0.22)" }} />
                 {/* rotating dashed ring + orbiting dot */}
                 <motion.div
                   className="absolute inset-[4%] rounded-full"
-                  style={{ border: "1px dashed rgba(179,154,240,0.35)" }}
+                  style={{ border: "1px dashed rgba(155,128,224,0.35)" }}
                   animate={{ rotate: 360 }}
                   transition={{ duration: 44, repeat: Infinity, ease: "linear" }}
                 />
@@ -1068,31 +1068,31 @@ export default function Home() {
                 >
                   <span
                     className="absolute left-1/2 top-0 h-2.5 w-2.5 -translate-x-1/2 rounded-full"
-                    style={{ background: "#B39AF0", boxShadow: "0 0 14px rgba(179,154,240,0.9)" }}
+                    style={{ background: "#9b80e0", boxShadow: "0 0 14px rgba(155,128,224,0.9)" }}
                   />
                 </motion.div>
                 {/* center medallion */}
                 <div
                   className="absolute inset-[19%] rounded-full flex flex-col items-center justify-center text-center px-7"
                   style={{
-                    background: "radial-gradient(circle at 50% 35%, rgba(179,154,240,0.16), rgba(23,22,20,0.72))",
-                    border: "1px solid rgba(179,154,240,0.28)",
+                    background: "radial-gradient(circle at 50% 35%, rgba(155,128,224,0.16), rgba(23,22,20,0.72))",
+                    border: "1px solid rgba(155,128,224,0.28)",
                     backdropFilter: "blur(2px)",
                   }}
                 >
                   <span
                     className="inline-flex h-12 w-12 items-center justify-center rounded-2xl"
-                    style={{ background: "rgba(179,154,240,0.18)", color: "#B39AF0" }}
+                    style={{ background: "rgba(155,128,224,0.18)", color: "#9b80e0" }}
                   >
                     <ShieldCheck size={26} />
                   </span>
                   <p className="weha-display text-2xl md:text-[1.7rem] mt-4 text-[#f7f6f2] leading-tight">
                     Outcome-guaranteed
                   </p>
-                  <p className="weha-display text-2xl md:text-[1.7rem] italic leading-tight" style={{ color: "#B39AF0" }}>
+                  <p className="weha-display text-2xl md:text-[1.7rem] italic leading-tight" style={{ color: "#9b80e0" }}>
                     engagements.
                   </p>
-                  <span className="mt-1 h-px w-10" style={{ background: "rgba(179,154,240,0.4)" }} />
+                  <span className="mt-1 h-px w-10" style={{ background: "rgba(155,128,224,0.4)" }} />
                   <p className="mt-1 text-sm text-[#c9c5bd] leading-snug">
                     We only propose what we&apos;re confident we can deliver, and we put it in writing.
                   </p>
@@ -1104,12 +1104,12 @@ export default function Home() {
           {/* Proof row */}
           <div
             className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-y-7 border-t pt-8"
-            style={{ borderColor: "rgba(179,154,240,0.15)" }}
+            style={{ borderColor: "rgba(155,128,224,0.15)" }}
           >
             {stats.map((s, i) => (
               <Reveal key={s.label} delay={i * 0.06}>
-                <div className={i > 0 ? "md:border-l md:pl-8" : "md:pl-0"} style={i > 0 ? { borderColor: "rgba(179,154,240,0.15)" } : undefined}>
-                  <p className="weha-display text-4xl md:text-5xl" style={{ color: "#B39AF0" }}>
+                <div className={i > 0 ? "md:border-l md:pl-8" : "md:pl-0"} style={i > 0 ? { borderColor: "rgba(155,128,224,0.15)" } : undefined}>
+                  <p className="weha-display text-4xl md:text-5xl" style={{ color: "#9b80e0" }}>
                     <CountUp value={s.value} suffix={s.suffix} text={s.text} />
                   </p>
                   <p className="mt-2 text-[#c9c5bd]">{s.label}</p>

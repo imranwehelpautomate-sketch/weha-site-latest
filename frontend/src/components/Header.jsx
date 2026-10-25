@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Sun, Moon, ArrowRight, ChevronDown, BookOpen, Workflow, FileText, Gauge, Sparkles, Target, PenLine, BarChart3, Bot, Compass } from "lucide-react";
+import { Menu, X, Sun, Moon, ArrowRight, ChevronDown, BookOpen, Workflow, FileText, Gauge, Sparkles } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
 import { useBooking } from "@/context/BookingContext";
 import { EASE } from "@/lib/motion";
@@ -9,23 +9,14 @@ import Magnetic from "@/components/Magnetic";
 import Logo from "@/components/Logo";
 
 const links = [
-  { to: "/ai-seo-department", label: "AI SEO Department", flagship: true },
+  { to: "/", label: "Home" },
+  { to: "/about", label: "About" },
   { to: "/services", label: "Services" },
+  { to: "/ai-seo-department", label: "AI SEO" },
+  { to: "/ai-workforce", label: "AI Workforce" },
   { to: "/success-stories", label: "Success Stories" },
   { to: "/resources", label: "Resources" },
-  { to: "/about", label: "About" },
-];
-
-const SERVICE_CHILDREN = [
-  { key: "sales", to: "/services", icon: Target, title: "Sales and pipeline", desc: "Lead capture, follow-up and CRM that runs itself." },
-  { key: "marketing", to: "/services", icon: PenLine, title: "Marketing and content", desc: "Campaigns and content workflows, automated." },
-  { key: "revops", to: "/services", icon: BarChart3, title: "RevOps and reporting", desc: "One source of truth for revenue numbers." },
-  { key: "workforce", to: "/ai-workforce", icon: Bot, title: "AI Workforce", desc: "AI agents for the repetitive work in your team." },
-  { key: "advisory", to: "/services", icon: Compass, title: "Advisory", desc: "What to automate first, and what to leave alone." },
-];
-const SERVICE_START = [
-  { key: "audit", to: "/audit", title: "Free AI Audit" },
-  { key: "readiness", to: "/readiness-check", title: "Readiness Check" },
+  { to: "/contact", label: "Contact" },
 ];
 
 const RESOURCE_CHILDREN = [
@@ -67,100 +58,6 @@ const RESOURCE_CHILDREN = [
 ];
 
 function ResourcesMenu() {
-  return (
-    <HoverMenu to="/resources" label="Resources" testid="resources" width="w-[330px]">
-      {(close) => (
-        <div className="rounded-xl border border-weha-border bg-weha-bg p-2 shadow-xl">
-          {RESOURCE_CHILDREN.map((c) => {
-            const Icon = c.icon;
-            return (
-              <NavLink
-                key={c.to}
-                to={c.to}
-                onClick={close}
-                data-testid={`resources-dropdown-${c.key}`}
-                className="group flex items-start gap-3 rounded-lg p-3 transition-colors hover:bg-weha-teal-soft"
-              >
-                <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-weha-teal-soft text-weha-teal">
-                  <Icon size={18} />
-                </span>
-                <span>
-                  <span className="block text-sm font-semibold text-weha-text transition-colors group-hover:text-weha-teal">
-                    {c.title}
-                  </span>
-                  <span className="mt-0.5 block text-xs leading-snug text-weha-muted">{c.desc}</span>
-                </span>
-              </NavLink>
-            );
-          })}
-        </div>
-      )}
-    </HoverMenu>
-  );
-}
-
-function ServicesMenu() {
-  return (
-    <HoverMenu to="/services" label="Services" testid="services" width="w-[760px]">
-      {(close) => (
-        <div className="grid grid-cols-[1fr_1.15fr] gap-2 rounded-2xl border border-weha-border bg-weha-bg p-2 shadow-xl">
-          <Link
-            to="/ai-seo-department"
-            onClick={close}
-            data-testid="services-dropdown-ai-seo"
-            className="group relative flex flex-col justify-between overflow-hidden rounded-xl p-6 text-white"
-            style={{ background: "#4A2F8F" }}
-          >
-            <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-white/80">
-              <span className="h-2 w-2 rounded-full bg-weha-marigold" /> Flagship
-            </span>
-            <span>
-              <span className="weha-display block text-3xl leading-tight">AI SEO Department</span>
-              <span className="mt-2 block text-sm leading-snug text-white/80">
-                Nine AI SEO specialists on your own server, led by a Director who reports to you.
-              </span>
-              <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium transition-all group-hover:gap-2">
-                Meet the department <ArrowRight size={14} />
-              </span>
-            </span>
-          </Link>
-          <div className="p-2">
-            {SERVICE_CHILDREN.map((c) => {
-              const Icon = c.icon;
-              return (
-                <NavLink
-                  key={c.key}
-                  to={c.to}
-                  onClick={close}
-                  data-testid={`services-dropdown-${c.key}`}
-                  className="group flex items-start gap-3 rounded-lg p-2.5 transition-colors hover:bg-weha-teal-soft"
-                >
-                  <span className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-weha-teal-soft text-weha-teal">
-                    <Icon size={16} />
-                  </span>
-                  <span>
-                    <span className="block text-sm font-semibold text-weha-text group-hover:text-weha-teal">{c.title}</span>
-                    <span className="block text-xs leading-snug text-weha-muted">{c.desc}</span>
-                  </span>
-                </NavLink>
-              );
-            })}
-            <div className="mt-2 flex items-center gap-2 border-t border-weha-border px-2.5 pt-3">
-              <span className="text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-weha-faint">Start here</span>
-              {SERVICE_START.map((c) => (
-                <Link key={c.key} to={c.to} onClick={close} className="rounded-full border border-weha-border px-3 py-1 text-xs text-weha-text hover:border-weha-teal hover:text-weha-teal">
-                  {c.title}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-    </HoverMenu>
-  );
-}
-
-function HoverMenu({ to, label, testid, width, children }) {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef(null);
   const timer = useRef(null);
@@ -188,8 +85,8 @@ function HoverMenu({ to, label, testid, width, children }) {
       onBlur={(e) => { if (!wrapRef.current?.contains(e.relatedTarget)) setOpen(false); }}
     >
       <NavLink
-        to={to}
-        data-testid={`nav-${testid}`}
+        to="/resources"
+        data-testid="nav-resources"
         onFocus={openNow}
         aria-haspopup="true"
         aria-expanded={open}
@@ -201,7 +98,7 @@ function HoverMenu({ to, label, testid, width, children }) {
       >
         {({ isActive }) => (
           <span className="relative inline-flex items-center gap-1 pb-1">
-            {label}
+            Resources
             <ChevronDown size={14} className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
             {isActive && (
               <span className="absolute left-0 -bottom-[1px] h-[2px] w-full bg-weha-teal rounded-full" />
@@ -217,10 +114,33 @@ function HoverMenu({ to, label, testid, width, children }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 6 }}
             transition={{ duration: 0.18, ease: EASE }}
-            className={`absolute left-1/2 top-full z-50 ${width} -translate-x-1/2 pt-3`}
-            data-testid={`${testid}-dropdown`}
+            className="absolute left-1/2 top-full z-50 w-[330px] -translate-x-1/2 pt-3"
+            data-testid="resources-dropdown"
           >
-            {children(() => setOpen(false))}
+            <div className="rounded-xl border border-weha-border bg-weha-bg p-2 shadow-xl">
+              {RESOURCE_CHILDREN.map((c) => {
+                const Icon = c.icon;
+                return (
+                  <NavLink
+                    key={c.to}
+                    to={c.to}
+                    onClick={() => setOpen(false)}
+                    data-testid={`resources-dropdown-${c.key}`}
+                    className="group flex items-start gap-3 rounded-lg p-3 transition-colors hover:bg-weha-teal-soft"
+                  >
+                    <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-weha-teal-soft text-weha-teal">
+                      <Icon size={18} />
+                    </span>
+                    <span>
+                      <span className="block text-sm font-semibold text-weha-text transition-colors group-hover:text-weha-teal">
+                        {c.title}
+                      </span>
+                      <span className="mt-0.5 block text-xs leading-snug text-weha-muted">{c.desc}</span>
+                    </span>
+                  </NavLink>
+                );
+              })}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -255,15 +175,15 @@ export default function Header() {
   return (
     <header
       data-testid="site-header"
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${open ? "bg-weha-bg" : ""} ${scrolled && !open ? "md:pt-3" : ""}`}
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
+        open
+          ? "bg-weha-bg border-b border-weha-border"
+          : scrolled
+          ? "backdrop-blur-xl bg-weha-bg/80 border-b border-weha-border"
+          : "bg-transparent border-b border-transparent"
+      }`}
     >
-      <div
-        className={`mx-auto flex items-center justify-between transition-all duration-500 h-16 md:h-[68px] px-5 sm:px-8 ${
-          scrolled && !open
-            ? "max-w-6xl md:rounded-full border border-weha-border backdrop-blur-xl bg-weha-bg/80 shadow-[0_12px_40px_-24px_rgba(40,37,29,0.45)] md:px-6"
-            : "max-w-7xl border border-transparent"
-        }`}
-      >
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 h-16 md:h-[72px] flex items-center justify-between">
         <Link to="/" className="text-weha-text" data-testid="header-logo-link" onClick={() => setOpen(false)}>
           {/* Desktop (xl+): full-name → "We | HA" morph intro, with room to breathe */}
           <span className="hidden xl:inline-flex">
@@ -275,10 +195,9 @@ export default function Header() {
           </span>
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-6 xl:gap-7">
+        <nav className="hidden md:flex items-center gap-5 lg:gap-7">
           {links.map((l) => {
             if (l.label === "Resources") return <ResourcesMenu key={l.to} />;
-            if (l.label === "Services") return <ServicesMenu key={l.to} />;
             return (
               <NavLink
                 key={l.to}
@@ -292,12 +211,8 @@ export default function Header() {
                 }
               >
                 {({ isActive }) => (
-                  <span className="relative inline-flex items-center gap-1.5 pb-1">
-                    {l.flagship && <span className="h-2 w-2 rounded-full bg-weha-marigold" aria-hidden="true" />}
+                  <span className="relative inline-block pb-1">
                     {l.label}
-                    {l.flagship && (
-                      <span className="rounded-full bg-weha-marigold-soft px-1.5 py-0.5 text-[0.6rem] font-semibold uppercase tracking-wider text-weha-marigold-text">New</span>
-                    )}
                     {isActive && (
                       <span className="absolute left-0 -bottom-[1px] h-[2px] w-full bg-weha-teal rounded-full" />
                     )}
@@ -362,7 +277,7 @@ export default function Header() {
             onClick={() => setOpen((v) => !v)}
             data-testid="mobile-menu-toggle"
             aria-label="Menu"
-            className="lg:hidden h-9 w-9 grid place-items-center rounded-full border border-weha-border text-weha-text"
+            className="md:hidden h-9 w-9 grid place-items-center rounded-full border border-weha-border text-weha-text"
           >
             {open ? <X size={18} /> : <Menu size={18} />}
           </button>
@@ -372,12 +287,12 @@ export default function Header() {
       {/* Mobile full-screen overlay */}
       <div
         data-testid="mobile-menu"
-        className={`lg:hidden fixed inset-0 top-16 z-40 bg-weha-bg overflow-y-auto transition-all duration-300 ${
+        className={`md:hidden fixed inset-0 top-16 z-40 bg-weha-bg overflow-y-auto transition-all duration-300 ${
           open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >
         <div className="px-6 pt-4 pb-4 flex flex-col gap-1">
-          {[...links, { to: "/ai-workforce", label: "AI Workforce" }, { to: "/contact", label: "Contact" }].map((l, i) => {
+          {links.map((l, i) => {
             if (l.label === "Resources") {
               return (
                 <div key={l.to} className="border-b border-weha-border">
@@ -426,7 +341,6 @@ export default function Header() {
                 }
                 style={{ transitionDelay: `${i * 40}ms` }}
               >
-                {l.flagship && <span className="mr-2 inline-block h-2 w-2 rounded-full bg-weha-marigold align-middle" aria-hidden="true" />}
                 {l.label}
               </NavLink>
             );
