@@ -6,7 +6,10 @@ import { openCookiePreferences } from "@/components/CookieConsent";
 
 // Placeholder — replace with the real company LinkedIn URL.
 const LINKEDIN_URL = "https://www.linkedin.com/company/we-help-automate";
-const CONTACT_EMAIL = "hi@wehelpautomate.com";
+const CONTACT_EMAIL = "hello@wehelpautomate.com";
+
+// Footer marquee words; even items are filled with the brand colour.
+const MARQUEE = ["We Help Automate", "AI SEO Department", "Automation without the busywork", "Sales, marketing, RevOps"];
 
 const nav = [
   { to: "/audit", label: "AI Audit Walkthrough" },
@@ -21,7 +24,14 @@ const nav = [
 
 export default function Footer() {
   return (
-    <footer data-testid="site-footer" className="border-t border-weha-border bg-weha-surface">
+    <footer data-testid="site-footer" className="border-t border-weha-border bg-weha-surface overflow-hidden">
+      <div className="weha-foot-marquee" aria-hidden="true">
+        <div className="weha-foot-marquee__track">
+          {[...MARQUEE, ...MARQUEE].map((w, i) => (
+            <span key={i}>{w}</span>
+          ))}
+        </div>
+      </div>
       <div className="max-w-7xl mx-auto px-5 sm:px-8 py-16">
         <div className="grid gap-12 md:grid-cols-[1.5fr_1fr_1fr]">
           <div>
@@ -87,11 +97,11 @@ export default function Footer() {
               </li>
             </ul>
             <a
-              href="mailto:hello@wehelpautomate.com"
+              href={`mailto:${CONTACT_EMAIL}`}
               className="mt-5 inline-block text-weha-text hover:text-weha-teal transition-colors"
               data-testid="footer-email"
             >
-              hello@wehelpautomate.com
+              {CONTACT_EMAIL}
             </a>
             <p
               className="mt-4 flex items-center gap-2 text-sm text-weha-muted"

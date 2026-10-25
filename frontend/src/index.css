@@ -408,6 +408,31 @@
         .weha-marquee__track { animation: none; }
     }
 
+    /* Footer marquee: big outlined serif words, alternate ones filled */
+    .weha-foot-marquee {
+        overflow: hidden;
+        border-bottom: 1px solid var(--weha-border);
+    }
+    .weha-foot-marquee__track {
+        display: flex;
+        width: max-content;
+        gap: 3rem;
+        padding: 2.25rem 0 1.25rem;
+        font-family: "Instrument Serif", Georgia, serif;
+        font-size: clamp(3rem, 8vw, 7.5rem);
+        line-height: 1;
+        white-space: nowrap;
+        color: transparent;
+        -webkit-text-stroke: 1px color-mix(in srgb, var(--weha-text) 30%, transparent);
+    }
+    .weha-foot-marquee__track span:nth-child(even) {
+        color: var(--weha-pop);
+        -webkit-text-stroke: 0;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+        .weha-foot-marquee__track { animation: weha-marquee 40s linear infinite; }
+    }
+
     /* Footer "built in India" flag — a continuous, gentle cloth wave. Pinned to
        the pole side (left) so it reads like a flag, not a wobble. */
     .weha-flag {
