@@ -581,21 +581,6 @@ export default function Audit() {
         </section>
       </ScrollSection>
 
-      {/* SECTION 8 - TESTIMONIAL MOMENT */}
-      <section className="section-solid py-24 md:py-32" data-testid="audit-testimonial">
-        <div className="max-w-3xl mx-auto px-5 sm:px-8">
-          <Reveal>
-            <blockquote className="weha-display text-2xl md:text-3xl text-weha-text leading-snug">
-              &ldquo;Live in under two weeks, on the tools we already had. It felt
-              less like buying software and more like a hire.&rdquo;
-            </blockquote>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <p className="mt-6 text-sm text-weha-faint">Co-Founder - SaaS startup</p>
-          </Reveal>
-        </div>
-      </section>
-
       {/* SECTION 9 - FAQ */}
       <ScrollSection direction="right" settle depth={0} intensity={0.3}>
         <section

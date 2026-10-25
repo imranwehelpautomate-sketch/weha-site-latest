@@ -18,7 +18,11 @@ export default function CountUp({
   const reduceMotion = useReducedMotion();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
-  const [display, setDisplay] = useState(0);
+  // Prerender (react-snap) has no scroll, so it would bake "0" into the HTML.
+  // Start at the final value there so crawlers and no-JS readers see real numbers.
+  const [display, setDisplay] = useState(() =>
+    typeof navigator !== "undefined" && navigator.userAgent === "ReactSnap" ? value : 0
+  );
   // Whether the first count-up has already fired; subsequent runs count from
   // the current displayed value rather than restarting at 0.
   const started = useRef(false);

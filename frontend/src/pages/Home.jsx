@@ -576,6 +576,17 @@ export default function Home() {
                 </span>
               </span>
             </Reveal>
+            <Reveal delay={0.02}>
+              <Link
+                to="/ai-seo-department"
+                className="pointer-events-auto mt-4 inline-flex items-center gap-2 rounded-full border border-weha-border px-3 py-1 text-xs font-semibold text-weha-text hover:border-weha-teal hover:text-weha-teal transition-colors"
+                data-testid="hero-ai-seo-link"
+                data-cursor="hover"
+              >
+                <span className="rounded-full px-2 py-0.5" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>New</span>
+                AI SEO Department, now taking pilot partners <ArrowRight size={13} />
+              </Link>
+            </Reveal>
             <h1 className="weha-display text-5xl sm:text-7xl lg:text-[5.5rem] mt-6 text-weha-text leading-[1.02]">
               <MaskReveal delay={0.05}>Your business probably</MaskReveal>
               <MaskReveal delay={0.13}>runs on 47 manual steps.</MaskReveal>
@@ -621,6 +632,68 @@ export default function Home() {
 
       {/* INTEGRATION LOGO TICKER - tool fluency */}
       <IntegrationStrip />
+
+      {/* SECTION 2b · FLAGSHIP - the AI SEO Department */}
+      <section className="section-solid relative py-24 md:py-32" data-testid="section-ai-seo">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 grid gap-12 lg:grid-cols-[1.1fr_1fr] items-center">
+          <div>
+            <Reveal>
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Our flagship · AI SEO Department</span>
+              <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">
+                A whole SEO team. <span className="italic text-weha-teal">On your own server.</span>
+              </h2>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <p className="mt-5 text-weha-muted max-w-xl leading-relaxed">
+                Nine AI SEO specialists, trained on your own data and led by a Director who is your one
+                point of contact. They audit, fix, write and measure every day, and your approver signs
+                off on plans, risky changes and anything public.
+              </p>
+            </Reveal>
+            <Reveal delay={0.12}>
+              <ul className="mt-7 space-y-3">
+                {[
+                  "A daily brief from your Director, plus weekly and monthly meetings",
+                  "A team room you can watch and a knowledge base you can correct",
+                  "Every site change logged, and it can be undone",
+                  "For businesses in India, the United States and Canada",
+                ].map((x) => (
+                  <li key={x} className="flex gap-3 text-weha-muted leading-relaxed">
+                    <Check size={18} className="mt-0.5 shrink-0 text-weha-teal" /> {x}
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+            <Reveal delay={0.16}>
+              <div className="mt-9">
+                <Magnetic>
+                  <Link to="/ai-seo-department" className="btn-teal" data-cursor="hover" data-testid="home-ai-seo-cta">
+                    Meet the department <ArrowRight size={15} />
+                  </Link>
+                </Magnetic>
+              </div>
+            </Reveal>
+          </div>
+          <Reveal delay={0.1}>
+            <div className="weha-card p-6 md:p-7">
+              <p className="text-sm font-semibold text-weha-text">Your SEO Director</p>
+              <p className="text-xs text-weha-faint">Daily brief · example</p>
+              <ul className="mt-5 space-y-3">
+                {[
+                  "Technical SEO fixed two pages Google could not index.",
+                  "Content Writer drafted the pricing guide. It waits for your approval.",
+                  "The AEO/GEO Specialist found three questions where AI answers cite a competitor.",
+                  "Next: the Analyst's weekly report on Friday.",
+                ].map((x) => (
+                  <li key={x} className="flex gap-3 text-sm text-weha-muted leading-relaxed">
+                    <Check size={16} className="mt-0.5 shrink-0 text-weha-teal" /> {x}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
+        </div>
+      </section>
 
       {/* SECTION 3 · PAINS - glass cards floating over the network */}
       <ScrollSection direction="left" settle depth={0.25} intensity={0.4}>
@@ -1087,14 +1160,14 @@ export default function Home() {
                     <ShieldCheck size={26} />
                   </span>
                   <p className="weha-display text-2xl md:text-[1.7rem] mt-4 text-[#f7f6f2] leading-tight">
-                    Outcome-guaranteed
+                    Yours to keep,
                   </p>
                   <p className="weha-display text-2xl md:text-[1.7rem] italic leading-tight" style={{ color: "#9b80e0" }}>
-                    engagements.
+                    from day one.
                   </p>
                   <span className="mt-1 h-px w-10" style={{ background: "rgba(155,128,224,0.4)" }} />
                   <p className="mt-1 text-sm text-[#c9c5bd] leading-snug">
-                    We only propose what we&apos;re confident we can deliver, and we put it in writing.
+                    Your code, docs and accounts stay yours, and we put the scope in writing.
                   </p>
                 </div>
               </div>

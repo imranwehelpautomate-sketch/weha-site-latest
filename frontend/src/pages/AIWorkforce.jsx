@@ -107,27 +107,12 @@ const threads = [
 ];
 
 /* ------------------------------------------------------------------ *
- * Section 5: testimonials.
+ * Section 5: what you can count on (plain promises, no quotes).
  * ------------------------------------------------------------------ */
-const testimonials = [
-  {
-    quote:
-      "It genuinely runs on its own. We handed it our lead inbox and stopped thinking about response times entirely.",
-    name: "Operations lead",
-    role: "B2B services company",
-  },
-  {
-    quote:
-      "The difference is that WeHA manages the agent. We do not babysit prompts or wake up to broken automations.",
-    name: "Founder",
-    role: "Recruitment agency",
-  },
-  {
-    quote:
-      "Live in under two weeks, on the tools we already had. It felt less like buying software and more like a hire.",
-    name: "Head of growth",
-    role: "SaaS startup",
-  },
+const promises = [
+  { title: "Yours to keep", body: "Your code, docs and accounts stay yours, from day one." },
+  { title: "Built on your tools", body: "We build on the tools you already use wherever we can." },
+  { title: "Support after handoff", body: "30 days of support after every handoff, and we keep the agent sharp after that." },
 ];
 
 /* ------------------------------------------------------------------ *
@@ -441,28 +426,23 @@ export default function AIWorkforce() {
         </section>
       </ScrollSection>
 
-      {/* SECTION 5 · TESTIMONIALS + CALLOUT */}
+      {/* SECTION 5 · PROMISES + CALLOUT */}
       <ScrollSection direction="right" settle depth={0.4} intensity={0.4}>
         <section className="section-solid relative py-24 md:py-32" data-testid="workforce-proof">
           <div className="max-w-7xl mx-auto px-5 sm:px-8">
             <Reveal>
-              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">What teams say</span>
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">What you can count on</span>
               <h2 className="weha-display text-3xl md:text-5xl mt-3 text-weha-text max-w-3xl">
-                Run by teams that moved first.
+                Plain promises, in writing.
               </h2>
             </Reveal>
             <div className="mt-12 grid gap-6 md:grid-cols-3">
-              {testimonials.map((t, i) => (
-                <Reveal key={i} delay={(i % 3) * 0.06}>
-                  <figure className="weha-card h-full p-7 flex flex-col" data-cursor="hover">
-                    <blockquote className="text-weha-text leading-relaxed flex-1">
-                      &ldquo;{t.quote}&rdquo;
-                    </blockquote>
-                    <figcaption className="mt-6 pt-5 border-t border-weha-border">
-                      <p className="weha-display text-lg text-weha-text">{t.name}</p>
-                      <p className="text-sm text-weha-faint">{t.role}</p>
-                    </figcaption>
-                  </figure>
+              {promises.map((p, i) => (
+                <Reveal key={p.title} delay={(i % 3) * 0.06}>
+                  <div className="weha-card h-full p-7" data-cursor="hover">
+                    <h3 className="weha-display text-2xl text-weha-text">{p.title}</h3>
+                    <p className="mt-3 text-sm text-weha-muted leading-relaxed">{p.body}</p>
+                  </div>
                 </Reveal>
               ))}
             </div>

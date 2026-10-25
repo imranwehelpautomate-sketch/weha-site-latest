@@ -16,6 +16,15 @@ import {
   FileCheck,
   BadgeCheck,
   Check,
+  Sunrise,
+  CalendarDays,
+  MessageCircle,
+  Eye,
+  Scale,
+  BookOpen,
+  Lightbulb,
+  Undo2,
+  Package,
 } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import CTABanner from "@/components/CTABanner";
@@ -49,6 +58,29 @@ const guarantees = [
   { icon: ShieldCheck, title: "You approve what matters", body: "Plans, risky site changes and anything public wait for your named approver. Nothing important goes out on its own." },
   { icon: FileCheck, title: "Every fact has a source", body: "The knowledge base is built from your own material, and every fact in it points back to where it came from." },
   { icon: BadgeCheck, title: "Reads only what you grant", body: "Agents see only the data you give them access to. Nothing more." },
+];
+
+/* ------------------------------------------------------------------ *
+ * Section 3b: how the department works with you, day to day.
+ * ------------------------------------------------------------------ */
+const rhythm = [
+  { icon: Sunrise, title: "Daily standup, then your brief", body: "The team meets every morning. Then the Director sends you a short brief: what was done, what waits for you, what is next." },
+  { icon: CalendarDays, title: "Weekly and monthly meetings", body: "A weekly review of progress and a monthly look at results and the plan, led by the Director." },
+  { icon: MessageCircle, title: "Reach the Director any time", body: "Ask a question or change a priority whenever you like. The Director answers and passes it to the team." },
+];
+
+const openBook = [
+  { icon: Eye, title: "A team room you can watch", body: "Every conversation between the specialists is recorded and visible to you, failures included." },
+  { icon: Scale, title: "Debates, settled in writing", body: "When specialists disagree, the Manager runs a fair debate and records the decision and the reasons in a decision log." },
+  { icon: BookOpen, title: "A knowledge base you can correct", body: "See every fact the team knows about your business, where it came from, and fix anything that is wrong." },
+  { icon: Lightbulb, title: "What we learned, every week", body: "A weekly note on what the team learned about your market, your customers and what worked." },
+  { icon: Undo2, title: "Every site change can be undone", body: "On WordPress our plugin applies approved changes, logs each one and can undo it. On other platforms you get change packs, and a re-crawl confirms they went live." },
+];
+
+const packages = [
+  { tag: "A", title: "The Generalist", body: "One AI SEO Executive who covers technical SEO, content strategy and writing. Suits smaller sites." },
+  { tag: "B", title: "The full department", body: "The Director and all eight specialists, each doing one job." },
+  { tag: "C", title: "A focused team", body: "The Director plus the specialists your site needs most. The rest of the team covers any role you leave out." },
 ];
 
 const steps = [
@@ -201,10 +233,98 @@ export default function AISeoDepartment() {
                 );
               })}
             </div>
+          </div>
+        </section>
+      </ScrollSection>
+
+      {/* SECTION 3b · HOW IT WORKS WITH YOU */}
+      <ScrollSection direction="left" settle depth={0.5} intensity={0.45}>
+        <section className="section-glass relative section-surface border-y border-weha-border py-24 md:py-32" data-testid="seo-rhythm">
+          <div className="max-w-7xl mx-auto px-5 sm:px-8">
+            <Reveal>
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">A day in the department</span>
+              <h2 className="weha-display text-3xl md:text-5xl mt-3 text-weha-text max-w-3xl">
+                It works like a team you hired.
+              </h2>
+            </Reveal>
+            <div className="mt-12 grid gap-6 md:grid-cols-3">
+              {rhythm.map((r, i) => {
+                const Icon = r.icon;
+                return (
+                  <Reveal key={r.title} delay={(i % 3) * 0.06}>
+                    <div className="weha-card h-full p-7" data-cursor="hover">
+                      <span className="grid h-11 w-11 place-items-center rounded-xl" style={{ background: "var(--weha-teal-soft)" }}>
+                        <Icon size={20} className="text-weha-teal" />
+                      </span>
+                      <h3 className="weha-display text-2xl mt-5 text-weha-text">{r.title}</h3>
+                      <p className="mt-3 text-sm text-weha-muted leading-relaxed">{r.body}</p>
+                    </div>
+                  </Reveal>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      </ScrollSection>
+
+      {/* SECTION 3c · NOTHING HIDDEN */}
+      <ScrollSection direction="right" settle depth={0.4} intensity={0.4}>
+        <section className="section-solid relative py-24 md:py-32" data-testid="seo-open-book">
+          <div className="max-w-7xl mx-auto px-5 sm:px-8">
+            <Reveal>
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Nothing hidden</span>
+              <h2 className="weha-display text-3xl md:text-5xl mt-3 text-weha-text max-w-4xl">
+                See how the work gets done, not just the report.
+              </h2>
+            </Reveal>
+            <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {openBook.map((o, i) => {
+                const Icon = o.icon;
+                return (
+                  <Reveal key={o.title} delay={(i % 3) * 0.06}>
+                    <div className="weha-card h-full p-7" data-cursor="hover">
+                      <span className="grid h-11 w-11 place-items-center rounded-xl" style={{ background: "var(--weha-teal-soft)" }}>
+                        <Icon size={20} className="text-weha-teal" />
+                      </span>
+                      <h3 className="weha-display text-2xl mt-5 text-weha-text">{o.title}</h3>
+                      <p className="mt-3 text-sm text-weha-muted leading-relaxed">{o.body}</p>
+                    </div>
+                  </Reveal>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      </ScrollSection>
+
+      {/* SECTION 3d · PACKAGES */}
+      <ScrollSection direction="left" settle depth={0.5} intensity={0.45}>
+        <section className="section-glass relative section-surface border-y border-weha-border py-24 md:py-32" data-testid="seo-packages">
+          <div className="max-w-7xl mx-auto px-5 sm:px-8">
+            <Reveal>
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Three ways to start</span>
+              <h2 className="weha-display text-3xl md:text-5xl mt-3 text-weha-text max-w-3xl">
+                Pick the team that fits your site.
+              </h2>
+            </Reveal>
+            <div className="mt-12 grid gap-6 md:grid-cols-3">
+              {packages.map((k, i) => (
+                <Reveal key={k.tag} delay={(i % 3) * 0.06}>
+                  <div className="weha-card h-full p-7" data-cursor="hover" data-testid={`seo-package-${k.tag}`}>
+                    <span className="grid h-11 w-11 place-items-center rounded-xl weha-display text-xl text-weha-teal" style={{ background: "var(--weha-teal-soft)" }}>
+                      {k.tag}
+                    </span>
+                    <h3 className="weha-display text-2xl mt-5 text-weha-text">{k.title}</h3>
+                    <p className="mt-3 text-sm text-weha-muted leading-relaxed">{k.body}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
             <Reveal delay={0.1}>
-              <p className="mt-10 text-sm text-weha-muted max-w-3xl leading-relaxed">
-                Works with WordPress through our plugin. On other platforms, the team prepares ready-to-apply
-                change packs for your developer.
+              <p className="mt-10 flex gap-3 text-sm text-weha-muted max-w-3xl leading-relaxed">
+                <Package size={16} className="mt-0.5 shrink-0 text-weha-teal" />
+                Add Local SEO to any package. Every role you choose starts on day one. Pricing comes later;
+                for now we are choosing pilot partners.
               </p>
             </Reveal>
           </div>
@@ -212,8 +332,8 @@ export default function AISeoDepartment() {
       </ScrollSection>
 
       {/* SECTION 4 · HOW IT STARTS */}
-      <ScrollSection direction="left" settle depth={0.5} intensity={0.45}>
-        <section className="section-glass relative section-surface border-y border-weha-border py-24 md:py-32" data-testid="seo-steps">
+      <ScrollSection direction="right" settle depth={0.4} intensity={0.4}>
+        <section className="section-solid relative py-24 md:py-32" data-testid="seo-steps">
           <div className="max-w-7xl mx-auto px-5 sm:px-8">
             <Reveal>
               <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">How it starts</span>
