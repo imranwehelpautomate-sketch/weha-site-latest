@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import PageHero from "@/components/PageHero";
 import CTABanner from "@/components/CTABanner";
@@ -435,6 +436,28 @@ export default function Work() {
                 The fastest way to see it is on your own workflow. Bring us the manual process eating
                 your week, and we will map the automated version with you.
               </p>
+            </Reveal>
+          </div>
+        </section>
+      </ScrollSection>
+
+      {/* AI SEO DEPARTMENT BAND */}
+      <ScrollSection direction="right">
+        <section className="py-20 md:py-24" data-testid="ai-seo-band">
+          <div className="max-w-7xl mx-auto px-5 sm:px-8">
+            <Reveal>
+              <div className="weha-card rounded-2xl p-8 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                <div className="max-w-2xl">
+                  <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Next up</span>
+                  <h2 className="weha-display text-3xl md:text-4xl mt-3 text-weha-text">The AI SEO Department.</h2>
+                  <p className="mt-4 text-weha-muted leading-relaxed">
+                    wehelpautomate.com is its first site, before any client. We are taking pilot partners.
+                  </p>
+                </div>
+                <Link to="/ai-seo-department" className="btn-teal shrink-0" data-cursor="hover">
+                  Meet the Department <ArrowRight size={15} />
+                </Link>
+              </div>
             </Reveal>
           </div>
         </section>

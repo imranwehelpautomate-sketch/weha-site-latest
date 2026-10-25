@@ -218,8 +218,12 @@ const WALKAWAY = [
   "No pitch deck, no obligation, no follow-up pressure you didn't ask for",
 ];
 
-// FAQ (7 items).
+// FAQ (8 items).
 const AUDIT_FAQS = [
+  {
+    q: "Can the audit cover SEO?",
+    a: "Yes. Tell us when you book. With SEO included, the audit runs 30 to 60 minutes. We look at how you show up in search and in AI answers today, and whether the AI SEO Department fits.",
+  },
   {
     q: "Is this actually free?",
     a: "Yes. No card, no catch. If it is not worth automating, we will tell you that too.",
@@ -230,7 +234,7 @@ const AUDIT_FAQS = [
   },
   {
     q: "How long is the call really?",
-    a: "30 minutes, sometimes less. We do not pad it out.",
+    a: "30 minutes, sometimes less. With SEO included, 30 to 60 minutes. We do not pad it out.",
   },
   {
     q: "What do I need to prepare?",

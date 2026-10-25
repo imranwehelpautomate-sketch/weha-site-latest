@@ -19,6 +19,7 @@ const story = [
   "Look at almost any capable team and you'll find the same thing: smart people losing hours every week to work software should be doing for them. Copying data between tools. Chasing the same follow-ups. Rebuilding the same report by hand, every single week.",
   "Most businesses already sense that AI could help. What they don't have is a clear place to start. And too many AI agencies make it worse, overcomplicating simple problems or locking clients into tools they can never leave.",
   "WeHA was started by two operators who had spent years building marketing and automation systems for other people. They decided to build the agency they wished existed: one that builds practical systems on the tools you already use, proves they work, then hands them over.",
+  "The same idea built our flagship, the AI SEO Department: nine AI specialists who run a company's SEO every day, on that company's own server. Our own site is its first client.",
 ];
 
 const belief = "Automation should give you ownership and time back, not another subscription you're trapped in.";
@@ -81,7 +82,7 @@ export default function About() {
     <div data-testid="about-page" className="overflow-x-hidden">
       <Seo
         title="About WeHA"
-        description="Meet WeHA, an AI automation studio built by two operators. We build practical systems on the tools you already use, and hand them over to you."
+        description="Meet WeHA, an AI automation studio built by two operators. We build practical systems on the tools you already use, and hand them over to you. Our flagship is the AI SEO Department."
         path="/about"
         jsonLd={graph([
           ORG,
@@ -341,7 +342,8 @@ export default function About() {
             <Reveal delay={0.1}>
               <p className="mt-6 text-lg text-weha-muted leading-relaxed max-w-md">
                 We are a fast growing firm run by people who have actually done the work. That shows up in
-                how fast we move, how little we lock you in, and how clearly we explain everything.
+                how fast we move, how little we lock you in, and how clearly we explain everything. It is also why
+                we built the AI SEO Department, and why it reports to you every day.
               </p>
             </Reveal>
             <Reveal delay={0.18}>

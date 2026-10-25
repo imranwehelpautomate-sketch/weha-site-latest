@@ -162,7 +162,7 @@ export default function Resources() {
       <ScrollSection direction="right" settle depth={0.35} intensity={0.45}>
         <CTABanner
           heading="Want something built for your exact workflow?"
-          sub="Book a free AI Audit and we will map your top 3 automatable workflows, live."
+          sub="Book a free AI Audit and we will map your top 3 automatable workflows, live. Ask about the AI SEO Department too."
           testid="resources-cta"
         />
       </ScrollSection>

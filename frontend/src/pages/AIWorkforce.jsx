@@ -399,6 +399,28 @@ export default function AIWorkforce() {
         </section>
       </ScrollSection>
 
+      {/* AI SEO DEPARTMENT BAND */}
+      <ScrollSection direction="right">
+        <section className="py-20 md:py-24" data-testid="ai-seo-band">
+          <div className="max-w-7xl mx-auto px-5 sm:px-8">
+            <Reveal>
+              <div className="weha-card rounded-2xl p-8 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                <div className="max-w-2xl">
+                  <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Our biggest Workforce build</span>
+                  <h2 className="weha-display text-3xl md:text-4xl mt-3 text-weha-text">A whole SEO department, made of agents.</h2>
+                  <p className="mt-4 text-weha-muted leading-relaxed">
+                    Nine specialists with a Director who briefs you daily, a Lead who reviews every output, and a team room you can watch.
+                  </p>
+                </div>
+                <Link to="/ai-seo-department" className="btn-teal shrink-0" data-cursor="hover">
+                  Meet the AI SEO Department <ArrowRight size={15} />
+                </Link>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+      </ScrollSection>
+
       {/* SECTION 4 · REAL THREADS */}
       <ScrollSection direction="left" settle depth={0.5} intensity={0.45}>
         <section className="section-glass relative section-surface border-y border-weha-border py-24 md:py-32" data-testid="workforce-threads">

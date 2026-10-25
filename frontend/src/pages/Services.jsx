@@ -23,6 +23,8 @@ import {
   ClipboardList,
   ListOrdered,
   FileText,
+  Users,
+  Undo2,
   CalendarCheck,
   Video,
   BellRing,
@@ -132,9 +134,26 @@ const computeRoi = (v) => {
 };
 
 /* ------------------------------------------------------------------ *
- * Section 2 data: the three service cards, always fully open, click to focus.
+ * Section 2 data: the four service cards, always fully open, click to focus.
  * ------------------------------------------------------------------ */
 const serviceCards = [
+  {
+    icon: Users,
+    name: "AI SEO Department",
+    tagline: "A whole SEO team, on your own server.",
+    description:
+      "Nine AI specialists, trained on your data and running on your server. The Director sends you a brief every day. You approve plans, risky site changes and public content before anything goes live.",
+    looks: [
+      "Daily team standup, then the Director's brief",
+      "Technical fixes with a change log and undo",
+      "Content planned, written and reviewed",
+      "Tracking how AI answers mention you",
+      "A knowledge base you can see and correct",
+    ],
+    footLabel: "Packages",
+    foot: "The Generalist, the full team, or the Director with a smaller team. Local SEO add-on.",
+    cta: { label: "Meet the Department", to: "/ai-seo-department" },
+  },
   {
     icon: Workflow,
     name: "Deterministic Automation",
@@ -507,8 +526,12 @@ const faqs = [
     "It is handled. Everything ships with documentation and 30 days of support, and we stay reachable after that. You will never be stuck with a black box you cannot fix.",
   ],
   [
-    "What is the difference between the three?",
-    "Connect your tools follows fixed rules reliably. Put AI to work handles tasks needing judgment. Get a clear plan is advice only. We recommend the right fit for each workflow, and often it is a mix.",
+    "What is the difference between them?",
+    "Connect your tools follows fixed rules reliably. Put AI to work handles tasks needing judgment. Get a clear plan is advice only. We recommend the right fit for each workflow, and often it is a mix. The AI SEO Department is a standing team for search, not a one-off build.",
+  ],
+  [
+    "Is the AI SEO Department separate from your automation work?",
+    "It is our flagship: nine AI specialists who run your SEO every day on your own server, trained on your data. Start with it on its own, or alongside sales, marketing and RevOps automation.",
   ],
   [
     "Can you just advise, without building?",
@@ -532,6 +555,38 @@ const faqs = [
  * promises"). Content is plain-English and conversion-led.
  * ------------------------------------------------------------------ */
 const systems = [
+  {
+    icon: Search,
+    tag: "SEO & AI Search",
+    title: "SEO & AI Search: the AI SEO Department",
+    featured: true,
+    body: "A standing team of nine AI specialists that runs your SEO every day, on your own server, trained on your data. You approve what goes live.",
+    whatWeAutomate: [
+      "Technical checks and fixes",
+      "Content plans and drafts",
+      "AI answer visibility tracking",
+      "A weekly \"what we learned\" report",
+    ],
+    howWeAutomate: [
+      "The team works in a room you can watch, failures included.",
+      "Disagreements are settled by a debate that goes into a decision log.",
+      "On WordPress, changes go through our plugin with undo. Other CMSs get change packs you apply, then a re-crawl confirms them.",
+    ],
+    timeline: "Taking pilot partners now. Start with the free AI Audit.",
+    trust: "Every fact has a source. You approve what goes live.",
+    milestones: [
+      { icon: Users, title: "Standup", caption: "Nine specialists" },
+      { icon: Search, title: "Site checked", caption: "Search and AI answers" },
+      { icon: FileText, title: "Fixes drafted", caption: "Reviewed by the Lead" },
+      { icon: UserCheck, title: "You approve", caption: "Plans and risky changes" },
+      { icon: Undo2, title: "Live with undo", caption: "Every change logged" },
+    ],
+    stack: [
+      { name: "WordPress", domain: "wordpress.org" },
+      { name: "Claude", slug: "claude" },
+      { name: "OpenRouter", slug: "openrouter" },
+    ],
+  },
   {
     icon: PenLine,
     tag: "Marketing",
@@ -739,7 +794,7 @@ export default function Services() {
   const prefersReducedMotion = useReducedMotion();
 
   // Section 2: which pillar tab is active.
-  const [activeCard, setActiveCard] = useState(1);
+  const [activeCard, setActiveCard] = useState(0);
 
   // Addition 2: sticky-bottom CTA bar. Appears after the hero scrolls out of
   // view, can be dismissed for the session.
@@ -808,8 +863,8 @@ export default function Services() {
       style={{ paddingBottom: stickyVisible ? "5.5rem" : undefined }}
     >
       <Seo
-        title="AI Automation Services"
-        description="Three ways WeHA fixes what slows you down: connect your tools with deterministic automation, put AI to work with agents, or get a clear advisory roadmap."
+        title="Sales, Marketing and RevOps Automation, plus the AI SEO Department"
+        description="Four ways WeHA takes busywork off your team: the AI SEO Department, sales and marketing automation, AI agents that do the work, or a clear advisory roadmap."
         path="/services"
         jsonLd={graph([
           ORG,
@@ -818,7 +873,7 @@ export default function Services() {
             path: "/services",
             name: "AI Automation Services",
             description:
-              "Three ways WeHA fixes what slows you down: deterministic tool-to-tool automation, agentic AI, or an advisory automation roadmap.",
+              "Four ways WeHA takes busywork off your team: the AI SEO Department, deterministic tool-to-tool automation, agentic AI, or an advisory automation roadmap.",
           }),
           {
             "@type": "ItemList",
@@ -864,7 +919,7 @@ export default function Services() {
         kicker="Services"
         title="Automation that fixes"
         italicWord="what is actually slowing you down."
-        subtitle="We start with your bottleneck, not our tech stack. Then we build the smallest system that removes it, on the tools you already use. Three ways to work with us, one goal: your team stops doing work a system should."
+        subtitle="We start with your bottleneck, not our tech stack. Then we build the smallest system that removes it, on the tools you already use. For sales, marketing and RevOps, that means automation and AI agents. For search, it means the AI SEO Department, a team that runs your SEO every day."
         showForm={false}
         rightSlot={
           <ValueCalculator
@@ -884,25 +939,25 @@ export default function Services() {
 
       <IntegrationStrip heading="Plays nice with your whole toolbox" />
 
-      {/* SECTION 2 · WHAT WE BUILD (three always-open, click-to-focus cards) */}
+      {/* SECTION 2 · WHAT WE BUILD (four always-open, click-to-focus cards) */}
       <ScrollSection direction="left" settle depth={0.5} intensity={0.45}>
       <section className="section-glass relative py-24 md:py-32" data-testid="services-pillars">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <Reveal>
             <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Our Engagement Models</span>
             <h2 className="weha-display text-3xl md:text-5xl mt-3 text-weha-text max-w-3xl">
-              Three kinds of automation. We recommend the one you actually need.
+              Four ways to work with us. We recommend the one you actually need.
             </h2>
           </Reveal>
           <Reveal delay={0.08}>
             <p className="mt-5 text-weha-muted max-w-2xl leading-relaxed">
-              From simple tool to tool automation, to AI that reasons and acts, to a plain roadmap
+              A whole SEO team on your own server, simple tool to tool automation, AI that reasons and acts, or a plain roadmap
               when you are not sure where to start. Tap a card to bring it forward.
             </p>
           </Reveal>
 
           <Reveal delay={0.14}>
-            <div className="mt-12 grid gap-6 md:grid-cols-3 md:items-start">
+            <div className="mt-12 grid gap-6 md:grid-cols-2 md:items-start">
               {serviceCards.map((card, i) => {
                 const Icon = card.icon;
                 const isActive = i === activeCard;
@@ -1000,7 +1055,7 @@ export default function Services() {
           </Reveal>
           <Reveal delay={0.08}>
             <p className="mt-5 text-weha-muted max-w-2xl leading-relaxed">
-              Six systems that quietly remove the manual work slowing you down. Pick the one that hurts
+              Seven systems that quietly remove the manual work slowing you down. Pick the one that hurts
               most and see exactly how we automate it, end to end.
             </p>
           </Reveal>
@@ -1012,7 +1067,7 @@ export default function Services() {
               {systems.map((s, i) => {
                 const Icon = s.icon;
                 return (
-                  <Reveal key={s.title} delay={(i % 3) * 0.06}>
+                  <Reveal key={s.title} delay={(i % 3) * 0.06} className={s.featured ? "md:col-span-2 lg:col-span-3" : ""}>
                     <motion.div
                       onClick={() => setExpandedSystem(i)}
                       className="weha-card p-7 min-w-[78vw] sm:min-w-[340px] md:min-w-0 h-full flex flex-col cursor-pointer"
@@ -1493,7 +1548,7 @@ export default function Services() {
       <ScrollSection direction="left">
       <CTABanner
         heading="Not sure where to start? Let's map it out together."
-        sub="Book a free AI Audit. We map how you work, then show you what is worth automating first."
+        sub="Book a free AI Audit. We map how you work, then show you what is worth automating first, including whether the AI SEO Department fits."
         cta="Book my free audit"
         testid="services-cta"
       />

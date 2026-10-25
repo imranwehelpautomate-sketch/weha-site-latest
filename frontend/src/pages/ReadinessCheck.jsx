@@ -455,6 +455,13 @@ export default function ReadinessCheck() {
                     <p className="mt-4 text-weha-muted leading-relaxed max-w-xl mx-auto">
                       {band.verdict}
                     </p>
+                    <p className="mt-4 text-sm text-weha-muted">
+                      If search is where you are losing ground, see the{" "}
+                      <Link to="/ai-seo-department" className="text-weha-teal underline underline-offset-4">
+                        AI SEO Department
+                      </Link>
+                      .
+                    </p>
                   </div>
 
                   <div className="mt-12">
