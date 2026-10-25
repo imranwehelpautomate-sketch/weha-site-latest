@@ -449,7 +449,6 @@ const whyWeha = [
 
 // Dogfooding stats row inside the dark section.
 const stats = [
-  { value: 90, suffix: " min", label: "to your first live automation" },
   { value: 100, suffix: "%", label: "yours: code, docs and accounts" },
   { value: 30, suffix: " days", label: "of support after every handoff" },
   { value: 0, suffix: "", text: "Zero", label: "markup on any tool you need" },
@@ -1232,12 +1231,12 @@ export default function Home() {
 
           {/* Proof row */}
           <div
-            className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-y-7 border-t pt-8"
+            className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-y-7 border-t pt-8"
             style={{ borderColor: "rgba(155,128,224,0.15)" }}
           >
             {stats.map((s, i) => (
               <Reveal key={s.label} delay={i * 0.06}>
-                <div className={i > 0 ? "md:border-l md:pl-8" : "md:pl-0"} style={i > 0 ? { borderColor: "rgba(155,128,224,0.15)" } : undefined}>
+                <div className={i > 0 ? "sm:border-l sm:pl-8" : "sm:pl-0"} style={i > 0 ? { borderColor: "rgba(155,128,224,0.15)" } : undefined}>
                   <p className="weha-display text-4xl md:text-5xl" style={{ color: "#9b80e0" }}>
                     <CountUp value={s.value} suffix={s.suffix} text={s.text} />
                   </p>
