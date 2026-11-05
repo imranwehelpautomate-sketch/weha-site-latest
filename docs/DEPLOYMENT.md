@@ -28,6 +28,8 @@ Local mirror of the repo lives at `~/weha-LIVE`.
 - Build command: `cd frontend && yarn install && CI=false yarn build`
 - Build output directory: `frontend/build`
 - Functions: auto-discovered from the root `functions/` directory (do not move it)
+- After every deploy, check each sitemap URL ships a title and an h1 (plain and Googlebot):
+  `frontend/scripts/check-seo-html.sh https://wehelpautomate.com` (exit 0 = PASS)
 
 ---
 

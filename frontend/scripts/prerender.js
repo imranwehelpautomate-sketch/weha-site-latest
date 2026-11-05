@@ -1,5 +1,10 @@
 /**
- * Prerender wrapper for react-snap (postbuild step).
+ * Prerender wrapper for react-snap, run by the "build" script itself.
+ *
+ * Not a "postbuild" hook: the Cloudflare Pages build skipped that hook, so
+ * every page shipped an empty shell while the build still passed (D137).
+ * A failed or empty prerender now fails the build, so Pages keeps the last
+ * good deployment live (D138).
  *
  * Why a wrapper instead of the bare `react-snap` bin:
  *   The Chromium executable differs per environment.
@@ -40,12 +45,22 @@ run({
     undefined,
 })
   .then(() => {
+    // react-snap can "succeed" and still save an empty shell; check every
+    // route has a <title> and an <h1> (the FR-024 check, at build time).
+    const buildDir = path.resolve(__dirname, "..", "build");
+    const empty = (pkg.reactSnap.include || []).filter((route) => {
+      const file = path.join(buildDir, route, "index.html");
+      const html = fs.existsSync(file) ? fs.readFileSync(file, "utf8") : "";
+      return !/<title[^>]*>[^<]+<\/title>/i.test(html) || !/<h1[ >]/i.test(html);
+    });
+    if (empty.length) {
+      console.error("PRERENDER FAILED, no title or h1 in:", empty.join(" "));
+      process.exit(1);
+    }
     writeSpaFallback();
     process.exit(0);
   })
   .catch((err) => {
-    // Never block a deploy on prerender: ship the plain SPA and say so loudly.
-    console.error("PRERENDER FAILED, deploying SPA without static HTML:", err);
-    writeSpaFallback();
-    process.exit(0);
+    console.error("PRERENDER FAILED, build stopped:", err);
+    process.exit(1);
   });

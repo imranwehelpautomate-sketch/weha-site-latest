@@ -64,8 +64,7 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "craco build",
-    "postbuild": "node scripts/prerender.js",
+    "build": "craco build && node scripts/prerender.js",
     "test": "craco test"
   },
   "reactSnap": {

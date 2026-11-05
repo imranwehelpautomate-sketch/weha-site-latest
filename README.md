@@ -35,7 +35,7 @@ consent-gated analytics. Everything runs on Cloudflare's free tier plus Resend.
 - Tailwind CSS + shadcn/ui (Radix primitives)
 - Three.js (hero `NetworkScene`) + Lenis smooth scroll + Framer Motion
 - Custom cursor, custom animation primitives (see `docs/ARCHITECTURE.md`)
-- `react-snap` / `scripts/prerender.js` postbuild step for static prerendering
+- `react-snap` / `scripts/prerender.js` static prerender, run by the `build` script; a failed or empty prerender fails the build
 
 **Backend and infrastructure (all Cloudflare-native)**
 - Cloudflare Pages (hosting + CI on push)
@@ -66,7 +66,7 @@ consent-gated analytics. Everything runs on Cloudflare's free tier plus Resend.
 │   │   └── index.css         # design tokens (source of truth for colors/type)
 │   ├── migrations/           # D1 column migrations (0001–0003)
 │   ├── schema.sql            # D1 schema (idempotent, IF NOT EXISTS)
-│   ├── scripts/prerender.js  # postbuild static prerender
+│   ├── scripts/prerender.js  # static prerender (part of `yarn build`)
 │   └── package.json
 ├── functions/                # Cloudflare Pages Functions (THE production API)
 │   ├── api/                  # one file per endpoint
@@ -192,10 +192,6 @@ live site; listed so they are not mistaken for intentional design later.
   local-dev reference and can be removed once no longer useful. The various
   `backend_test*.py` files at the repo root test this legacy scaffold, not the
   live Functions.
-- **Prerender route list is slightly stale.** `frontend/package.json`
-  (`reactSnap.include`) still lists `/work` rather than `/success-stories`, and
-  does not list `/ai-workforce`. Update this list when convenient so the
-  prerender step covers the current routes.
 - **`audit_requests` is orphaned.** The `LeadForm.jsx` component that would POST
   to `/api/audit-requests` is not rendered anywhere, so that table never
   receives production data. Harmless; safe to remove in a future cleanup.
