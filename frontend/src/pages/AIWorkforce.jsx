@@ -53,8 +53,8 @@ const capabilities = [
   },
   {
     icon: Gauge,
-    title: "Fully managed",
-    body: "We deploy, monitor and maintain the agent for you. When an API changes or something drifts, we fix it before it becomes your problem.",
+    title: "Engineered and maintained",
+    body: "Our engineers deploy, monitor and maintain the agent. When an API changes or something drifts, we fix it before it becomes your problem.",
   },
   {
     icon: Sparkles,
@@ -121,7 +121,7 @@ const promises = [
 const steps = [
   {
     n: "01",
-    title: "We deploy your Workforce agent",
+    title: "We build your Workforce agent",
     body: "We map one high-value workflow, wire the agent into your existing stack and get it doing real work, fast.",
   },
   {
@@ -179,26 +179,26 @@ export default function AIWorkforce() {
   return (
     <div data-testid="ai-workforce-page" className="overflow-x-hidden">
       <Seo
-        title="AI Workforce | Managed Agentic Coworkers"
-        description="Hire a WeHA Workforce agent: a managed, agentic AI coworker that works across your tools end to end. Proactive, self-checking and fully maintained by us. Deployed in days, not months."
+        title="AI Workforce | Custom Agent Builds by WeHA"
+        description="Custom builds from WeHA's engineering team: an agentic AI coworker that works across your tools end to end, with monitoring and upkeep. Owned by you."
         path="/ai-workforce"
         jsonLd={graph([
           ORG,
           WEBSITE,
           webPage({
             path: "/ai-workforce",
-            name: "AI Workforce | Managed Agentic Coworkers",
+            name: "AI Workforce | Custom Agent Builds by WeHA",
             description:
-              "Hire a WeHA Workforce agent: a managed, agentic AI coworker that works across your tools end to end, deployed in days and fully owned by you.",
+              "A custom-built WeHA Workforce agent: an agentic AI coworker that works across your tools end to end, engineered in days and fully owned by you.",
           }),
           {
             "@type": "Service",
             "@id": `${SITE}/ai-workforce#service`,
             name: "AI Workforce",
-            serviceType: "Managed agentic AI automation",
+            serviceType: "Custom agentic AI automation build",
             provider: { "@id": `${SITE}/#organization` },
             description:
-              "Managed agentic AI coworkers that work across your existing tools end to end. Proactive, self-checking, monitored and maintained by We Help Automate, and fully owned by you.",
+              "Custom-built agentic AI coworkers that work across your existing tools end to end. Proactive, self-checking, with monitoring and upkeep from the WeHA engineering team, and fully owned by you.",
             areaServed: "Worldwide",
             url: `${SITE}/ai-workforce`,
           },
@@ -211,20 +211,20 @@ export default function AIWorkforce() {
 
       {/* HERO */}
       <PageHero
-        kicker="AI Workforce"
-        title="Hire an agentic coworker."
-        italicWord="We manage everything else."
-        subtitle="A Workforce agent does the work, not just the talking. It runs across your tools end to end, checks itself, and stays out of your way. We deploy it, monitor it and keep it running, so you get the output without the overhead."
+        kicker="AI Workforce · custom builds"
+        title="Build an agentic coworker."
+        italicWord="We engineer the rest."
+        subtitle="A Workforce agent does the work, not just the talking. It runs across your tools end to end, checks itself, and stays out of your way. Our engineers build it, monitor it and keep it running, so you get the output without the overhead."
         showForm={false}
         ctaSlot={
           <div className="flex flex-wrap gap-3">
             <Magnetic>
               <button type="button" onClick={openBooking} className="btn-teal" data-cursor="hover" data-testid="workforce-hero-cta">
-                Book my free audit <ArrowRight size={15} />
+                Scope a custom build <ArrowRight size={15} />
               </button>
             </Magnetic>
             <Link to="/services" className="btn-ghost" data-cursor="hover">
-              See how we build <ArrowUpRight size={15} />
+              See custom automation <ArrowUpRight size={15} />
             </Link>
           </div>
         }
@@ -345,7 +345,7 @@ export default function AIWorkforce() {
             </Reveal>
             <Reveal delay={0.08}>
               <p className="mt-5 text-weha-muted max-w-2xl leading-relaxed">
-                A Workforce agent is the opposite. It runs itself, and we run it for you.
+                A Workforce agent is the opposite. It runs itself, and our engineers keep it running.
               </p>
             </Reveal>
 
@@ -406,14 +406,14 @@ export default function AIWorkforce() {
             <Reveal>
               <div className="weha-card rounded-2xl p-8 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
                 <div className="max-w-2xl">
-                  <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Our biggest Workforce build</span>
-                  <h2 className="weha-display text-3xl md:text-4xl mt-3 text-weha-text">A whole SEO department, made of agents.</h2>
+                  <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Our flagship product</span>
+                  <h2 className="weha-display text-3xl md:text-4xl mt-3 text-weha-text">Ragnar, an AI SEO director and crew.</h2>
                   <p className="mt-4 text-weha-muted leading-relaxed">
-                    Nine specialists with a Director who briefs you daily, a Lead who reviews every output, and a team room you can watch.
+                    Software we build and license: nine AI roles led by Ragnar, who briefs you daily, a Lead who reviews every output, and a team room you can watch.
                   </p>
                 </div>
                 <Link to="/ai-seo-department" className="btn-teal shrink-0" data-cursor="hover">
-                  Meet the AI SEO Department <ArrowRight size={15} />
+                  Meet Ragnar <ArrowRight size={15} />
                 </Link>
               </div>
             </Reveal>
@@ -476,7 +476,7 @@ export default function AIWorkforce() {
                 data-testid="workforce-callout"
               >
                 <h3 className="weha-display text-3xl md:text-4xl text-white max-w-3xl mx-auto leading-tight">
-                  Your agent manages itself, and we manage your agent.
+                  Your agent manages itself, and our engineers maintain it.
                 </h3>
                 <p className="mt-4 text-white/85 max-w-2xl mx-auto leading-relaxed">
                   You get a teammate that never sleeps and a team behind it that keeps it sharp. No
@@ -514,9 +514,9 @@ export default function AIWorkforce() {
       </ScrollSection>
 
       <CTABanner
-        heading="Ready to hire your first Workforce agent?"
-        sub="Start with a free audit. We map the workflow worth handing over, then deploy and manage the agent that runs it. You keep the plan either way."
-        cta="Book my free audit"
+        heading="Ready to build your first Workforce agent?"
+        sub="Talk to our engineers. We map the workflow worth handing over, then build and maintain the agent that runs it. You keep the plan either way."
+        cta="Scope a custom build"
         testid="workforce-cta"
       />
     </div>

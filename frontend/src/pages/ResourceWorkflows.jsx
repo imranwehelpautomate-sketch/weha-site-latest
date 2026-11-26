@@ -128,7 +128,7 @@ export default function ResourceWorkflows() {
       </ScrollSection>
 
       <ScrollSection direction="right" settle depth={0.35} intensity={0.45}>
-        <CTABanner heading="Need a custom automation?" sub="Book a free AI Audit and we will build a rough version live, on your stack." testid="workflows-cta" />
+        <CTABanner heading="Need a custom automation build?" sub="Book a free scoping call and our engineers will build a rough version live, on your stack." testid="workflows-cta" />
       </ScrollSection>
 
       <ResourceDownloadModal open={!!asset} onOpenChange={(v) => { if (!v) setAsset(null); }} asset={asset} />

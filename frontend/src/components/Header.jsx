@@ -11,8 +11,8 @@ import Logo from "@/components/Logo";
 const links = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
-  { to: "/services", label: "Services" },
-  { to: "/ai-seo-department", label: "AI SEO" },
+  { to: "/services", label: "Custom Automation", id: "services" },
+  { to: "/ai-seo-department", label: "Ragnar", id: "ai-seo" },
   { to: "/ai-workforce", label: "AI Workforce" },
   { to: "/success-stories", label: "Success Stories" },
   { to: "/resources", label: "Resources" },
@@ -24,8 +24,8 @@ const RESOURCE_CHILDREN = [
     key: "audit",
     to: "/audit",
     icon: Sparkles,
-    title: "AI Audit Walkthrough",
-    desc: "See exactly how the free 30-minute audit works.",
+    title: "Scoping Call Walkthrough",
+    desc: "See exactly how the free 30-minute scoping call works.",
   },
   {
     key: "readiness",
@@ -203,7 +203,7 @@ export default function Header() {
                 key={l.to}
                 to={l.to}
                 end={l.to === "/"}
-                data-testid={`nav-${l.label.toLowerCase().replace(/\s+/g, "-")}`}
+                data-testid={`nav-${l.id || l.label.toLowerCase().replace(/\s+/g, "-")}`}
                 className={({ isActive }) =>
                   `relative text-sm font-medium transition-colors duration-200 hover:text-weha-teal ${
                     isActive ? "text-weha-teal" : "text-weha-text"
@@ -269,7 +269,7 @@ export default function Header() {
 
           <Magnetic strength={0.3} className="hidden sm:inline-flex">
             <Link to="/contact" className="btn-teal text-[0.8rem] px-4 py-2.5 md:text-[0.95rem] md:px-[1.6rem] md:py-[0.85rem]" data-testid="header-cta" data-cursor="hover" onClick={(e) => { e.preventDefault(); openBooking(); }}>
-              Talk To Us <ArrowRight size={16} />
+              Join the Ragnar Pilot <ArrowRight size={16} />
             </Link>
           </Magnetic>
 
@@ -333,7 +333,7 @@ export default function Header() {
                 to={l.to}
                 end={l.to === "/"}
                 onClick={() => setOpen(false)}
-                data-testid={`mobile-nav-${l.label.toLowerCase().replace(/\s+/g, "-")}`}
+                data-testid={`mobile-nav-${l.id || l.label.toLowerCase().replace(/\s+/g, "-")}`}
                 className={({ isActive }) =>
                   `weha-display text-xl py-1.5 border-b border-weha-border ${
                     isActive ? "text-weha-teal" : "text-weha-text"
@@ -351,7 +351,7 @@ export default function Header() {
             className="btn-teal mt-3 justify-center"
             data-testid="mobile-cta"
           >
-            Talk To Us <ArrowRight size={16} />
+            Join the Ragnar Pilot <ArrowRight size={16} />
           </Link>
         </div>
       </div>

@@ -458,7 +458,7 @@ export default function ReadinessCheck() {
                     <p className="mt-4 text-sm text-weha-muted">
                       If search is where you are losing ground, see the{" "}
                       <Link to="/ai-seo-department" className="text-weha-teal underline underline-offset-4">
-                        AI SEO Department
+                        Ragnar, our AI SEO software
                       </Link>
                       .
                     </p>
@@ -486,11 +486,11 @@ export default function ReadinessCheck() {
                         data-cursor="hover"
                         data-testid="readiness-book"
                       >
-                        Book my free audit <ArrowRight size={17} />
+                        Talk to our engineers <ArrowRight size={17} />
                       </button>
                     </Magnetic>
                     <p className="mt-4 text-sm text-weha-muted">
-                      We will map your exact top three on the call and build one
+                      Our engineers map your exact top three on the call and build one
                       live.
                     </p>
                   </div>
@@ -591,9 +591,9 @@ export default function ReadinessCheck() {
       {/* SECTION 5 - CLOSING CTA */}
       <ScrollSection direction="right" settle depth={0.35} intensity={0.45}>
         <CTABanner
-          heading="Not sure where to start? Let's map it out together."
-          sub="Book a free AI Audit. We map how you work, then show you what is worth automating first."
-          cta="Book my free audit"
+          heading="Not sure where to start? Talk to our engineers."
+          sub="Book a free scoping call. Our engineers map how you work, then show you what is worth automating first."
+          cta="Talk to our engineers"
           testid="readiness-cta"
         />
       </ScrollSection>

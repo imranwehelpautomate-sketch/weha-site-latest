@@ -135,7 +135,7 @@ function CtaButton({ onClick, testid }) {
         data-cursor="hover"
         data-testid={testid}
       >
-        Book my free audit <ArrowRight size={17} />
+        Book my free scoping call <ArrowRight size={17} />
       </button>
     </Magnetic>
   );
@@ -221,15 +221,15 @@ const WALKAWAY = [
 // FAQ (8 items).
 const AUDIT_FAQS = [
   {
-    q: "Can the audit cover SEO?",
-    a: "Yes. Tell us when you book. With SEO included, the audit runs 30 to 60 minutes. We look at how you show up in search and in AI answers today, and whether the AI SEO Department fits.",
+    q: "Can the call cover SEO?",
+    a: "Yes. Tell us when you book. With SEO included, the call runs 30 to 60 minutes. We look at how you show up in search and in AI answers today, and whether Ragnar, our AI SEO software, fits.",
   },
   {
     q: "Is this actually free?",
     a: "Yes. No card, no catch. If it is not worth automating, we will tell you that too.",
   },
   {
-    q: "What if I am not ready to hire anyone?",
+    q: "What if I am not ready to build anything?",
     a: "Then you leave with the map anyway. Plenty of people use it themselves.",
   },
   {
@@ -242,11 +242,11 @@ const AUDIT_FAQS = [
   },
   {
     q: "Will you try to sell me something?",
-    a: "At the end, if there is a genuine fit, we will tell you what working together would look like. That is it. No pressure tactics, no countdown timers, no follow-up barrage. A no is a complete answer.",
+    a: "At the end, if there is a genuine fit, we will tell you what a custom build with our engineers would look like. That is it. No pressure tactics, no countdown timers, no follow-up barrage. A no is a complete answer.",
   },
   {
     q: "My tools are old and messy. Will this still work?",
-    a: "Almost certainly. We build on top of what you already run, including the spreadsheets. If something genuinely cannot connect, you will know at the audit, not after you have paid.",
+    a: "Almost certainly. We build on top of what you already run, including the spreadsheets. If something genuinely cannot connect, you will know on the call, not after you have paid.",
   },
   {
     q: "What happens after the call if I say no?",
@@ -271,22 +271,22 @@ export default function Audit() {
   return (
     <div data-testid="audit-page" className="overflow-x-hidden">
       <Seo
-        title="AI Audit Walkthrough"
-        description="Book a free 30-minute AI Audit with WeHA. We map your three most automatable workflows and build one live while you watch."
+        title="Free Automation Scoping Call | WeHA"
+        description="Book a free 30-minute scoping call with WeHA engineers. We map your three most automatable workflows and build one live while you watch."
         path="/audit"
         jsonLd={graph([
           ORG,
           WEBSITE,
           webPage({
             path: "/audit",
-            name: "AI Audit Walkthrough",
+            name: "Free Automation Scoping Call",
             description:
-              "Book a free 30-minute AI Audit with WeHA. We map your three most automatable workflows and build one live while you watch.",
+              "Book a free 30-minute scoping call with WeHA engineers. We map your three most automatable workflows and build one live while you watch.",
           }),
           breadcrumb(
             [
               { name: "Home", path: "/" },
-              { name: "Free AI Audit", path: "/audit" },
+              { name: "Free scoping call", path: "/audit" },
             ],
             "/audit"
           ),
@@ -301,15 +301,15 @@ export default function Audit() {
         <div className="max-w-5xl mx-auto px-5 sm:px-8">
           <Reveal>
             <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">
-              Free AI Audit
+              Free scoping call
             </span>
             <h1 className="weha-display text-5xl sm:text-6xl md:text-7xl mt-4 text-weha-text leading-[1.02]">
-              The Free AI Audit.
+              The Free Scoping Call.
             </h1>
           </Reveal>
           <Reveal delay={0.08}>
             <p className="mt-6 text-lg md:text-xl text-weha-muted max-w-2xl leading-relaxed">
-              30 minutes. One call. We map your three most automatable workflows
+              30 minutes. One call with our engineers. We map your three most automatable workflows
               and build one live while you watch.
             </p>
           </Reveal>
@@ -347,6 +347,13 @@ export default function Audit() {
             <div className="mt-8">
               <CtaButton onClick={openBooking} testid="audit-hero-cta" />
             </div>
+            <p className="mt-4 text-sm text-weha-muted max-w-xl leading-relaxed">
+              This call is for custom automation builds. To apply for the Ragnar pilot, go to{" "}
+              <a href="/ai-seo-department" className="text-weha-teal underline underline-offset-4">
+                the Ragnar page
+              </a>
+              .
+            </p>
           </Reveal>
         </div>
       </section>
@@ -648,8 +655,8 @@ export default function Audit() {
       <ScrollSection direction="left" settle depth={0.35} intensity={0.45}>
         <CTABanner
           heading="See your first automation built live on the call."
-          sub="Book a free AI Audit. We will map your top three workflows and build one live on the call. No pitch deck, no obligation."
-          cta="Book my free audit"
+          sub="Book a free scoping call. Our engineers map your top three workflows and build one live on the call. No pitch deck, no obligation."
+          cta="Book my free scoping call"
           testid="audit-cta"
         />
       </ScrollSection>

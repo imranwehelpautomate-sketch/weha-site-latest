@@ -2,7 +2,7 @@
 // Opens chat with +91 81808 61084 in a new tab.
 const WHATSAPP_NUMBER = "918180861084";
 const WHATSAPP_PREFILL =
-  "Hi WeHA — I'd like to learn about your AI automation services.";
+  "Hi WeHA, I'd like to learn about Ragnar and your custom AI automation.";
 
 export default function FloatingWhatsApp() {
   const href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_PREFILL)}`;

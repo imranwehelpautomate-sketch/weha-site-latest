@@ -133,7 +133,7 @@ export default function ResourceWorkbooks() {
       </ScrollSection>
 
       <ScrollSection direction="right" settle depth={0.35} intensity={0.45}>
-        <CTABanner heading="Prefer we map it with you?" sub="Book a free AI Audit and we will fill out the workbook live, for your business." testid="workbooks-cta" />
+        <CTABanner heading="Prefer we map it with you?" sub="Book a free scoping call and our engineers will fill out the workbook live, for your business." testid="workbooks-cta" />
       </ScrollSection>
 
       <ResourceDownloadModal open={!!asset} onOpenChange={(v) => { if (!v) setAsset(null); }} asset={asset} />

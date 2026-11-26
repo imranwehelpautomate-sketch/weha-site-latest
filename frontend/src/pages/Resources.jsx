@@ -129,8 +129,8 @@ export default function Resources() {
                     <Sparkles size={22} />
                   </span>
                   <span className="mt-6 block text-xs font-semibold tracking-widest uppercase text-weha-faint">Interactive</span>
-                  <h3 className="weha-display text-2xl mt-2 text-weha-text">AI Audit Walkthrough</h3>
-                  <p className="mt-3 text-weha-muted leading-relaxed">See exactly how the free 30-minute audit works, and what you walk away with.</p>
+                  <h3 className="weha-display text-2xl mt-2 text-weha-text">Scoping Call Walkthrough</h3>
+                  <p className="mt-3 text-weha-muted leading-relaxed">See exactly how the free 30-minute scoping call works, and what you walk away with.</p>
                   <span className="mt-6 inline-flex items-center gap-2 text-weha-teal font-medium">
                     See how it works <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
                   </span>
@@ -161,8 +161,8 @@ export default function Resources() {
 
       <ScrollSection direction="right" settle depth={0.35} intensity={0.45}>
         <CTABanner
-          heading="Want something built for your exact workflow?"
-          sub="Book a free AI Audit and we will map your top 3 automatable workflows, live. Ask about the AI SEO Department too."
+          heading="Want a custom build for your exact workflow?"
+          sub="Book a free scoping call and our engineers will map your top 3 automatable workflows, live. Or see how Ragnar, our AI SEO software, works."
           testid="resources-cta"
         />
       </ScrollSection>

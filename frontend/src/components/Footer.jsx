@@ -10,19 +10,20 @@ const LINKEDIN_URL = "https://www.linkedin.com/company/we-help-automate";
 const CONTACT_EMAIL = "hello@wehelpautomate.com";
 
 // Footer marquee words; even items are filled with the brand colour.
-const MARQUEE = ["We Help Automate", "AI SEO Department", "Sales Automation", "Marketing Automation", "RevOps Automation", "AI Workforce"];
+const MARQUEE = ["We Help Automate", "Ragnar", "AI SEO Software", "Custom Automation", "AI Workforce"];
 
 // Offer cards. The first is the flagship and renders tall and filled.
 const offers = [
   {
     to: "/ai-seo-department",
-    title: "AI SEO Department",
-    body: "A team of nine AI specialists on your own server, trained on your data. The Director sends you a brief every day. You approve what goes live.",
-    cta: "Meet the Department",
+    id: "ai-seo-department",
+    title: "Ragnar, by WeHA",
+    body: "Your AI SEO director and his crew of specialists, installed on your own server and trained on your data. Ragnar sends you a brief every day. You approve what goes live.",
+    cta: "Meet Ragnar",
   },
-  { to: "/services", title: "Sales Automation", body: "Leads routed, followed up and logged without anyone copying notes.", cta: "See Sales" },
-  { to: "/services", title: "Marketing Automation", body: "Campaigns, content and reporting that run on a schedule.", cta: "See Marketing" },
-  { to: "/services", title: "RevOps Automation", body: "One clean pipeline, tidy CRM data and reports that build themselves.", cta: "See RevOps" },
+  { to: "/services", title: "Sales Automation", body: "Custom builds: leads routed, followed up and logged without anyone copying notes.", cta: "See Sales" },
+  { to: "/services", title: "Marketing Automation", body: "Custom builds: campaigns, content and reporting that run on a schedule.", cta: "See Marketing" },
+  { to: "/services", title: "RevOps Automation", body: "Custom builds: one clean pipeline, tidy CRM data and reports that build themselves.", cta: "See RevOps" },
   { to: "/ai-workforce", title: "AI Workforce", body: "AI agents that take on the repeat work across your team.", cta: "See AI Workforce" },
 ];
 
@@ -30,7 +31,7 @@ const columns = [
   {
     heading: "Start Here",
     links: [
-      { to: "/audit", label: "Free AI Audit" },
+      { to: "/audit", label: "Scoping Call", id: "free-ai-audit" },
       { to: "/readiness-check", label: "Readiness Check" },
       { to: "/contact", label: "Contact" },
     ],
@@ -47,7 +48,7 @@ const columns = [
     heading: "Company",
     links: [
       { to: "/about", label: "About" },
-      { to: "/services", label: "Services" },
+      { to: "/services", label: "Custom Automation", id: "services" },
       { to: "/success-stories", label: "Success Stories" },
     ],
   },
@@ -69,13 +70,13 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-5 sm:px-8 py-16">
         <div className="grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:items-end">
           <h2 className="weha-display text-4xl md:text-6xl leading-[1.05] text-weha-text text-balance">
-            We automate sales, marketing and RevOps.{" "}
-            <em className="text-weha-pop">And we built you an SEO department.</em>
+            We build AI software.{" "}
+            <em className="text-weha-pop">Starting with an SEO director named Ragnar.</em>
           </h2>
           <div>
             <p className="text-weha-muted leading-relaxed">
-              Fewer tools to babysit, fewer tasks done by hand. Start with a free 30-minute AI Audit and leave
-              with a plan.
+              Fewer tools to babysit, fewer tasks done by hand. Ragnar is in pilot and we are taking pilot
+              partners now.
             </p>
             <button
               type="button"
@@ -84,7 +85,7 @@ export default function Footer() {
               data-cursor="hover"
               className="btn-teal mt-5"
             >
-              Book the Free AI Audit
+              Join the Ragnar Pilot
             </button>
           </div>
         </div>
@@ -96,7 +97,7 @@ export default function Footer() {
               <li key={o.title} className={flag ? "sm:row-span-2" : ""}>
                 <Link
                   to={o.to}
-                  data-testid={`footer-offer-${slug(o.title)}`}
+                  data-testid={`footer-offer-${o.id || slug(o.title)}`}
                   data-cursor="hover"
                   className={`group flex h-full flex-col gap-2 rounded-2xl border p-6 transition-[transform,border-color] duration-200 motion-safe:hover:-translate-y-1 ${
                     flag
@@ -134,7 +135,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="mt-5 text-weha-muted max-w-xs text-base leading-relaxed">
-              Automation Without the Busywork.
+              AI software that takes the busywork off your team.
             </p>
             <div className="mt-6 flex items-center gap-3">
               <a
@@ -166,7 +167,7 @@ export default function Footer() {
                   <li key={n.to}>
                     <Link
                       to={n.to}
-                      data-testid={`footer-nav-${slug(n.label)}`}
+                      data-testid={`footer-nav-${n.id || slug(n.label)}`}
                       className="text-weha-muted hover:text-weha-teal transition-colors"
                     >
                       {n.label}

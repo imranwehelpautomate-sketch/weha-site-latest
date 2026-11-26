@@ -8,7 +8,7 @@ import { EASE } from "@/lib/motion";
 // Reuse the same WhatsApp identity as the floating button.
 const WHATSAPP_NUMBER = "918180861084";
 const WHATSAPP_PREFILL =
-  "Hi WeHA — I got a little lost on your site (a 404, oops). I'd love some help automating my way out of manual work!";
+  "Hi WeHA, I got a little lost on your site (a 404, oops). I'd like to hear about Ragnar and your custom automation.";
 const WA_HREF = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_PREFILL)}`;
 
 // Witty "busywork" chips that drift in the background — the kind of manual
@@ -47,8 +47,8 @@ export default function NotFound() {
       className="relative min-h-[100svh] flex items-center justify-center overflow-hidden px-5 py-28 md:py-32"
     >
       <Seo
-        title="404 — Lost in manual work"
-        description="This page wandered off. Don't worry — WeHA helps you automate your way out of manual work. Connect with us on WhatsApp."
+        title="404 | Page not found"
+        description="This page wandered off. WeHA builds AI software, including Ragnar, your AI SEO director. Connect with us on WhatsApp."
         path="/404"
         noindex
       />
@@ -115,7 +115,7 @@ export default function NotFound() {
           transition={{ duration: 0.5, ease: EASE }}
           className="inline-flex items-center gap-2 rounded-full border border-weha-border bg-weha-surface/70 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-weha-teal backdrop-blur-sm"
         >
-          Error 404 — Workflow not found
+          Error 404: Page not found
         </motion.span>
 
         {/* 4 ⚙ 4 — the cog is the only thing still running */}
@@ -151,8 +151,8 @@ export default function NotFound() {
           transition={{ duration: 0.5, ease: EASE }}
           className="mx-auto mt-5 max-w-xl text-lg text-weha-muted leading-relaxed"
         >
-          We automate just about everything around here — yet this URL somehow
-          slipped through the cracks. Honestly? Very on-brand for manual work.
+          We build software that handles the busywork, yet this URL somehow
+          slipped through the cracks. Very on-brand for manual work.
         </motion.p>
 
         {/* The requested message */}
@@ -162,7 +162,7 @@ export default function NotFound() {
           className="mx-auto mt-8 max-w-xl text-xl sm:text-2xl font-medium text-weha-text leading-snug"
           data-testid="notfound-message"
         >
-          Lost in manual work? Don&apos;t worry — if you think you&apos;re lost,
+          Lost? Don&apos;t worry. If you think you&apos;re lost,
           we&apos;re here to help. <span className="text-weha-teal">Connect on WhatsApp</span> 👇
         </motion.p>
 
@@ -215,7 +215,7 @@ export default function NotFound() {
             data-testid="notfound-services"
             className="inline-flex items-center gap-2 font-medium text-weha-muted transition-colors hover:text-weha-teal"
           >
-            See what we automate <ArrowRight size={15} />
+            See custom automation <ArrowRight size={15} />
           </Link>
         </motion.div>
       </motion.div>

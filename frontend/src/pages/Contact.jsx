@@ -18,10 +18,10 @@ import {
 
 const faqs = [
   ["Do I need to buy new software?", "No. We build on the tools you already use. No rip and replace, no forced migration."],
-  ["How long does a typical automation take?", "Most first automations are live within days, not months. You often see a working demo in the very first session."],
+  ["How long does a custom automation take?", "Most first automations are live within days, not months. You often see a working demo in the very first session."],
   ["What if I want changes after it is built?", "Everything we build is documented and handed over to you, and we offer support so you are never left stranded."],
-  ["Do you only build, or can you just advise?", "Both. Our consulting track is purely advisory if you want a clear AI roadmap without a build."],
-  ["What happens at the free audit?", "We map your most painful manual workflows with you and show you what one automation would look like for your business. No pitch, no obligation."],
+  ["Is Ragnar available now?", "Ragnar is in pilot. It runs on our own website first, and we are choosing a small number of pilot partners in India, the United States and Canada. Pricing comes with general release."],
+  ["What happens in the first call?", "For a custom build, our engineers map your most painful manual workflows and show what one automation would look like. For the Ragnar pilot, we check fit and what Ragnar would work on first. No pitch, no obligation."],
 ];
 
 const initial = {
@@ -84,17 +84,17 @@ export default function Contact() {
   return (
     <div data-testid="contact-page" className="overflow-x-hidden">
       <Seo
-        title="Contact, book a free AI Audit"
-        description="Book a free 30-minute AI Audit with WeHA. We map your most painful manual workflows and show you what one automation would look like, live."
+        title="Contact WeHA | Ragnar Pilot and Custom Builds"
+        description="Talk to WeHA about the Ragnar pilot or a custom automation build. Our engineers map your workflow and show what one automation would look like."
         path="/contact"
         jsonLd={graph([
           ORG,
           WEBSITE,
           webPage({
             path: "/contact",
-            name: "Contact WeHA, book a free AI Audit",
+            name: "Contact WeHA | Ragnar Pilot and Custom Builds",
             description:
-              "Book a free AI Audit with WeHA. We map your most painful manual workflows and show you what one automation would look like, live.",
+              "Talk to WeHA about the Ragnar pilot or a custom automation build. Our engineers map your workflow and show what one automation would look like.",
             type: "ContactPage",
           }),
           faqPage(faqs),
@@ -106,9 +106,9 @@ export default function Contact() {
       />
       <PageHero
         kicker="Contact"
-        title="Let's find your"
-        italicWord="first automation."
-        subtitle="Book a free 30-minute AI Audit. We map your most painful manual workflows and show you what one automation would look like, live. Asking about the AI SEO Department? Say so in the form; we are taking pilot partners."
+        title="Let's talk about"
+        italicWord="your next build."
+        subtitle="Join the Ragnar pilot, or scope a custom automation build with our engineers. Tell us which in the form. Ragnar is in pilot and we are taking pilot partners."
         showForm={false}
       />
 
@@ -121,7 +121,7 @@ export default function Contact() {
                 {done ? (
                   <div data-testid="contact-success" className="py-10">
                     <span className="text-xs font-semibold tracking-widest uppercase text-weha-teal">Received</span>
-                    <h2 className="weha-display text-3xl md:text-4xl mt-3 text-weha-text">Thanks, your audit request is in.</h2>
+                    <h2 className="weha-display text-3xl md:text-4xl mt-3 text-weha-text">Thanks, your request is in.</h2>
                     <p className="mt-4 text-weha-muted leading-relaxed">
                       We respond to queries instantly. No Secrets, <em className="italic">it&apos;s Automated</em>
                     </p>
@@ -159,7 +159,7 @@ export default function Contact() {
                     </div>
 
                     <div>
-                      <label className="weha-label" htmlFor="process">The manual process you want to fix</label>
+                      <label className="weha-label" htmlFor="process">The manual process, or the SEO problem, you want to fix</label>
                       <textarea id="process" rows={4} className="weha-input resize-none" value={form.process} onChange={update("process")} placeholder="e.g. Every morning we copy new enquiries from email into our CRM and a spreadsheet by hand." data-testid="input-process" />
                     </div>
 
@@ -225,11 +225,11 @@ export default function Contact() {
                     </li>
                     <li className="flex gap-3">
                       <span className="grid place-items-center h-6 w-6 shrink-0 rounded-full bg-weha-teal-soft text-weha-teal text-xs font-semibold">2</span>
-                      We book you a free consultation, at a time that suits you.
+                      We book a call at a time that suits you.
                     </li>
                     <li className="flex gap-3">
                       <span className="grid place-items-center h-6 w-6 shrink-0 rounded-full bg-weha-teal-soft text-weha-teal text-xs font-semibold">3</span>
-                      We map your workflows and show you what automations can move the needle.
+                      Our engineers map your workflows, or check pilot fit for Ragnar, and show what can move the needle.
                     </li>
                   </ul>
                 </div>

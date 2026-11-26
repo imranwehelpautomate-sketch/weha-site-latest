@@ -125,7 +125,7 @@ export default function ResourceEbooks() {
       </ScrollSection>
 
       <ScrollSection direction="right" settle depth={0.35} intensity={0.45}>
-        <CTABanner heading="Have a question the eBook did not answer?" sub="Book a free AI Audit with a human." testid="ebooks-cta" />
+        <CTABanner heading="Have a question the eBook did not answer?" sub="Book a free scoping call with our engineers." testid="ebooks-cta" />
       </ScrollSection>
 
       <ResourceDownloadModal open={!!asset} onOpenChange={(v) => { if (!v) setAsset(null); }} asset={asset} />

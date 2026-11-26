@@ -139,20 +139,20 @@ const computeRoi = (v) => {
 const serviceCards = [
   {
     icon: Users,
-    name: "AI SEO Department",
-    tagline: "A whole SEO team, on your own server.",
+    name: "Ragnar, our AI SEO software",
+    tagline: "A whole SEO team, installed on your own server.",
     description:
-      "Nine AI specialists, trained on your data and running on your server. The Director sends you a brief every day. You approve plans, risky site changes and public content before anything goes live.",
+      "Ragnar leads nine AI specialists, trained on your data and running on your server. He sends you a brief every day. You approve plans, risky site changes and public content before anything goes live.",
     looks: [
-      "Daily team standup, then the Director's brief",
+      "Daily team standup, then Ragnar's brief",
       "Technical fixes with a change log and undo",
       "Content planned, written and reviewed",
       "Tracking how AI answers mention you",
       "A knowledge base you can see and correct",
     ],
     footLabel: "Packages",
-    foot: "The Generalist, the full team, or the Director with a smaller team. Local SEO add-on.",
-    cta: { label: "Meet the Department", to: "/ai-seo-department" },
+    foot: "Ragnar Solo, the full crew, or a focused crew. Local SEO add-on.",
+    cta: { label: "Meet Ragnar", to: "/ai-seo-department" },
   },
   {
     icon: Workflow,
@@ -189,10 +189,10 @@ const serviceCards = [
   },
   {
     icon: Compass,
-    name: "Advisory & Strategic Consulting",
+    name: "Automation Roadmap",
     tagline: "A clear AI roadmap, without the guesswork.",
     description:
-      "Purely advisory. We help you understand where AI fits in your business, what to automate first, how to sequence it, and how to avoid expensive mistakes. This is consulting and strategy only. We advise, we do not build, in this engagement.",
+      "Purely advisory. We help you understand where AI fits in your business, what to automate first, how to sequence it, and how to avoid expensive mistakes. This is a planning engagement only. Our engineers write the plan, not the build.",
     looks: [
       "AI readiness assessment",
       "Opportunity mapping",
@@ -470,13 +470,13 @@ function StackLogo({ name, slug, domain, ext = "svg" }) {
   );
 }
 
-// Section 5: how an engagement works (Audit to Build to Deliver to Support).
+// Section 5: how a custom build works (Audit to Build to Deliver to Support).
 const engagement = [
   {
     num: "01",
-    name: "Audit",
+    name: "Scope",
     meta: "30 MINUTES, free",
-    body: "A conversation, not a sales call. We map your most automatable workflows and maybe build one live while you watch. You leave with a prioritized plan whether you hire us or not.",
+    body: "A scoping call with our engineers, not a sales call. We map your most automatable workflows and maybe build one live while you watch. You leave with a prioritized plan whether you build with us or not.",
     chip: "You keep the workflow map either way.",
   },
   {
@@ -519,7 +519,7 @@ const proofSteps = [
 const faqs = [
   [
     "Do I have to switch tools or software?",
-    "No. We build on top of what you already use, including the spreadsheets. If something genuinely cannot connect, you will know at the audit, not after you have paid.",
+    "No. We build on top of what you already use, including the spreadsheets. If something genuinely cannot connect, you will know on the scoping call, not after you have paid.",
   ],
   [
     "What happens when an automation breaks or drifts?",
@@ -527,15 +527,15 @@ const faqs = [
   ],
   [
     "What is the difference between them?",
-    "Connect your tools follows fixed rules reliably. Put AI to work handles tasks needing judgment. Get a clear plan is advice only. We recommend the right fit for each workflow, and often it is a mix. The AI SEO Department is a standing team for search, not a one-off build.",
+    "Connect your tools follows fixed rules reliably. Put AI to work handles tasks needing judgment. Get a clear plan is advice only. We recommend the right fit for each workflow, and often it is a mix. Ragnar is a software product for search, not a one-off build.",
   ],
   [
-    "Is the AI SEO Department separate from your automation work?",
-    "It is our flagship: nine AI specialists who run your SEO every day on your own server, trained on your data. Start with it on its own, or alongside sales, marketing and RevOps automation.",
+    "Is Ragnar separate from your custom automation work?",
+    "Yes. Ragnar is our flagship software product: an AI Director and nine AI specialists who run your SEO every day on your own server, trained on your data. Custom builds are separate engineering projects for sales, marketing and RevOps.",
   ],
   [
-    "Can you just advise, without building?",
-    "Yes. The advisory track gives you a roadmap with no build attached. No pressure to continue.",
+    "Can you just plan, without building?",
+    "Yes. The roadmap track gives you a plan with no build attached. No pressure to continue.",
   ],
   [
     "How fast do we see something working?",
@@ -543,7 +543,7 @@ const faqs = [
   ],
   [
     "How do we start?",
-    "Book the free AI Audit. We map your workflows and show you what is worth automating first.",
+    "Book a free scoping call. Our engineers map your workflows and show you what is worth automating first.",
   ],
 ];
 
@@ -558,9 +558,9 @@ const systems = [
   {
     icon: Search,
     tag: "SEO & AI Search",
-    title: "SEO & AI Search: the AI SEO Department",
+    title: "SEO & AI Search: Ragnar, our software",
     featured: true,
-    body: "A standing team of nine AI specialists that runs your SEO every day, on your own server, trained on your data. You approve what goes live.",
+    body: "Ragnar, our AI SEO software, leads nine AI specialists who run your SEO every day, on your own server, trained on your data. You approve what goes live.",
     whatWeAutomate: [
       "Technical checks and fixes",
       "Content plans and drafts",
@@ -572,7 +572,7 @@ const systems = [
       "Disagreements are settled by a debate that goes into a decision log.",
       "On WordPress, changes go through our plugin with undo. Other CMSs get change packs you apply, then a re-crawl confirms them.",
     ],
-    timeline: "Taking pilot partners now. Start with the free AI Audit.",
+    timeline: "In pilot, taking pilot partners now. Apply on the Ragnar page.",
     trust: "Every fact has a source. You approve what goes live.",
     milestones: [
       { icon: Users, title: "Standup", caption: "Nine specialists" },
@@ -863,21 +863,21 @@ export default function Services() {
       style={{ paddingBottom: stickyVisible ? "5.5rem" : undefined }}
     >
       <Seo
-        title="Sales, Marketing and RevOps Automation, plus the AI SEO Department"
-        description="Four ways WeHA takes busywork off your team: the AI SEO Department, sales and marketing automation, AI agents that do the work, or a clear advisory roadmap."
+        title="Custom AI Automation Builds | WeHA"
+        description="WeHA builds software. Beyond our product Ragnar, our engineers build custom AI automations for sales, marketing and RevOps that you own."
         path="/services"
         jsonLd={graph([
           ORG,
           WEBSITE,
           webPage({
             path: "/services",
-            name: "AI Automation Services",
+            name: "Custom AI Automation Builds",
             description:
-              "Four ways WeHA takes busywork off your team: the AI SEO Department, deterministic tool-to-tool automation, agentic AI, or an advisory automation roadmap.",
+              "WeHA builds software. Beyond Ragnar, our AI SEO software, our engineers build custom automations for sales, marketing and RevOps that the client owns.",
           }),
           {
             "@type": "ItemList",
-            name: "WeHA AI automation services",
+            name: "WeHA custom automation builds",
             itemListElement: [
               {
                 name: "Connect your tools",
@@ -909,17 +909,17 @@ export default function Services() {
           faqPage(faqs),
           breadcrumb([
             { name: "Home", path: "/" },
-            { name: "Services", path: "/services" },
+            { name: "Custom automation", path: "/services" },
           ], "/services"),
         ])}
       />
 
       {/* SECTION 1 · HERO */}
       <PageHero
-        kicker="Services"
-        title="Automation that fixes"
+        kicker="Custom automation"
+        title="Custom builds that fix"
         italicWord="what is actually slowing you down."
-        subtitle="We start with your bottleneck, not our tech stack. Then we build the smallest system that removes it, on the tools you already use. For sales, marketing and RevOps, that means automation and AI agents. For search, it means the AI SEO Department, a team that runs your SEO every day."
+        subtitle="WeHA builds software. Ragnar is our flagship product. Our engineering team also builds custom AI automations for sales, marketing and RevOps on the tools you already use, delivered as systems you own."
         showForm={false}
         rightSlot={
           <ValueCalculator
@@ -944,14 +944,14 @@ export default function Services() {
       <section className="section-glass relative py-24 md:py-32" data-testid="services-pillars">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <Reveal>
-            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Our Engagement Models</span>
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Custom automation</span>
             <h2 className="weha-display text-3xl md:text-5xl mt-3 text-weha-text max-w-3xl">
-              Four ways to work with us. We recommend the one you actually need.
+              Ragnar, plus three kinds of custom build.
             </h2>
           </Reveal>
           <Reveal delay={0.08}>
             <p className="mt-5 text-weha-muted max-w-2xl leading-relaxed">
-              A whole SEO team on your own server, simple tool to tool automation, AI that reasons and acts, or a plain roadmap
+              Ragnar, our software product, is a whole SEO team on your own server (<a href="/ai-seo-department" onClick={(e) => { e.preventDefault(); navigate("/ai-seo-department"); }} className="text-weha-teal underline underline-offset-4">see how Ragnar works</a>). Our engineers also build tool to tool automation, AI that reasons and acts, or a plain roadmap
               when you are not sure where to start. Tap a card to bring it forward.
             </p>
           </Reveal>
@@ -1056,7 +1056,7 @@ export default function Services() {
           <Reveal delay={0.08}>
             <p className="mt-5 text-weha-muted max-w-2xl leading-relaxed">
               Seven systems that quietly remove the manual work slowing you down. Pick the one that hurts
-              most and see exactly how we automate it, end to end.
+              most and see exactly how we build it, end to end.
             </p>
           </Reveal>
 
@@ -1244,7 +1244,7 @@ export default function Services() {
                     {/* CTA */}
                     <div className="mt-5 rounded-2xl border border-weha-border p-4 md:p-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between" style={{ background: "var(--weha-teal-soft)" }}>
                       <p className="text-sm text-weha-text leading-snug max-w-md">
-                        Want this running in your business? See exactly what to automate first, free.
+                        Want this built for your business? Talk to our engineers and see what to automate first, free.
                       </p>
                       <Magnetic>
                         <button
@@ -1257,7 +1257,7 @@ export default function Services() {
                           data-cursor="hover"
                           data-testid="system-book-audit"
                         >
-                          Book your free audit <ArrowRight size={15} />
+                          Scope a custom build <ArrowRight size={15} />
                         </button>
                       </Magnetic>
                     </div>
@@ -1283,7 +1283,7 @@ export default function Services() {
           <Reveal delay={0.08}>
             <p className="mt-5 text-weha-muted max-w-xl leading-relaxed">
               If your leads, sales and delivery already happen online, automation compounds fastest.
-              That is where we play.
+              That is where our custom builds fit.
             </p>
           </Reveal>
 
@@ -1325,7 +1325,7 @@ export default function Services() {
                 probably automate it.
               </p>
               <button type="button" onClick={openBooking} className="btn-ghost shrink-0" data-cursor="hover">
-                Book my free audit <ArrowRight size={15} />
+                Scope a custom build <ArrowRight size={15} />
               </button>
             </div>
           </div>
@@ -1458,7 +1458,7 @@ export default function Services() {
                               data-cursor="hover"
                               data-testid="industry-book-audit"
                             >
-                              Book my free audit <ArrowRight size={15} />
+                              Scope a custom build <ArrowRight size={15} />
                             </button>
                           </Magnetic>
                         </div>
@@ -1480,7 +1480,7 @@ export default function Services() {
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <Reveal>
             <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">How it works</span>
-            <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">From first call to fully handed off.</h2>
+            <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">From scoping call to fully handed off.</h2>
           </Reveal>
           <div className="mt-16">
             <Roadmap steps={engagement} />
@@ -1499,7 +1499,7 @@ export default function Services() {
           </Reveal>
           <Reveal delay={0.08}>
             <p className="mt-5 text-weha-muted max-w-2xl leading-relaxed">
-              The audit you can book on this site runs on the exact automations we sell. No human
+              The scoping call you can book on this site runs on the exact automations we build. No human
               touches it:
             </p>
           </Reveal>
@@ -1547,9 +1547,9 @@ export default function Services() {
       {/* SECTION 8 · CTA BANNER */}
       <ScrollSection direction="left">
       <CTABanner
-        heading="Not sure where to start? Let's map it out together."
-        sub="Book a free AI Audit. We map how you work, then show you what is worth automating first, including whether the AI SEO Department fits."
-        cta="Book my free audit"
+        heading="Not sure where to start? Talk to our engineers."
+        sub="Book a free scoping call. Our engineers map how you work, then show you what is worth automating first. Ragnar pilot applications go through the Ragnar page."
+        cta="Scope a custom build"
         testid="services-cta"
       />
       </ScrollSection>
@@ -1580,7 +1580,7 @@ export default function Services() {
                     data-cursor="hover"
                     data-testid="sticky-cta-book"
                   >
-                    Book my free audit <ArrowRight size={15} />
+                    Scope a custom build <ArrowRight size={15} />
                   </button>
                 </Magnetic>
                 <button

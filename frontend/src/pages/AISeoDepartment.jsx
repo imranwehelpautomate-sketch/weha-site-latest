@@ -39,7 +39,7 @@ import { ORG, WEBSITE, SITE, breadcrumb, webPage, graph } from "@/lib/seoSchemas
  * Section 2: the team. The Director is the only one who talks to you.
  * ------------------------------------------------------------------ */
 const team = [
-  { icon: Compass, title: "SEO Director", body: "Your one point of contact. Sends the daily brief, runs the weekly and monthly meetings, and never goes silent." },
+  { icon: Compass, title: "SEO Director (Ragnar)", body: "An AI, and your one point of contact. Sends the daily brief, runs the weekly and monthly meetings, and never goes silent." },
   { icon: ClipboardList, title: "SEO Manager", body: "Plans each sprint and keeps the team on schedule." },
   { icon: Users, title: "SEO Lead", body: "Reviews the team's work before anything reaches you." },
   { icon: LineChart, title: "SEO Analyst", body: "Measures rankings, traffic and results, and reports only what the evidence shows." },
@@ -54,8 +54,8 @@ const team = [
  * Section 3: why it is safe to hand over.
  * ------------------------------------------------------------------ */
 const guarantees = [
-  { icon: Server, title: "Runs on your own server", body: "The department lives on infrastructure you control. Your data and conversations stay with you." },
-  { icon: ShieldCheck, title: "You approve what matters", body: "Plans, risky site changes and anything public wait for your named approver. Nothing important goes out on its own." },
+  { icon: Server, title: "Runs on your own server", body: "Ragnar installs on infrastructure you control. Your data and conversations stay with you." },
+  { icon: ShieldCheck, title: "You approve what matters", body: "Plans, risky site changes and anything public wait for your named approver, and every approval reads \"Go Ragnar\". Nothing important goes out on its own." },
   { icon: FileCheck, title: "Every fact has a source", body: "The knowledge base is built from your own material, and every fact in it points back to where it came from." },
   { icon: BadgeCheck, title: "Reads only what you grant", body: "Agents see only the data you give them access to. Nothing more." },
 ];
@@ -64,9 +64,9 @@ const guarantees = [
  * Section 3b: how the department works with you, day to day.
  * ------------------------------------------------------------------ */
 const rhythm = [
-  { icon: Sunrise, title: "Daily standup, then your brief", body: "The team meets every morning. Then the Director sends you a short brief: what was done, what waits for you, what is next." },
-  { icon: CalendarDays, title: "Weekly and monthly meetings", body: "A weekly review of progress and a monthly look at results and the plan, led by the Director." },
-  { icon: MessageCircle, title: "Reach the Director any time", body: "Ask a question or change a priority whenever you like. The Director answers and passes it to the team." },
+  { icon: Sunrise, title: "Daily standup, then your brief", body: "The team meets every morning. Then Ragnar sends you a short brief: what was done, what waits for you, what is next." },
+  { icon: CalendarDays, title: "Weekly and monthly meetings", body: "A weekly review of progress and a monthly look at results and the plan, led by Ragnar." },
+  { icon: MessageCircle, title: "Reach Ragnar any time", body: "Ask a question or change a priority whenever you like. Ragnar answers and passes it to the team." },
 ];
 
 const openBook = [
@@ -74,19 +74,25 @@ const openBook = [
   { icon: Scale, title: "Debates, settled in writing", body: "When specialists disagree, the Manager runs a fair debate and records the decision and the reasons in a decision log." },
   { icon: BookOpen, title: "A knowledge base you can correct", body: "See every fact the team knows about your business, where it came from, and fix anything that is wrong." },
   { icon: Lightbulb, title: "What we learned, every week", body: "A weekly note on what the team learned about your market, your customers and what worked." },
-  { icon: Undo2, title: "Every site change can be undone", body: "On WordPress our plugin applies approved changes, logs each one and can undo it. On other platforms you get change packs, and a re-crawl confirms they went live." },
+  { icon: Undo2, title: "Every site change can be undone", body: "On WordPress the Ragnar plugin applies approved changes, logs each one and can undo it. On other platforms you get change packs, and a re-crawl confirms they went live." },
 ];
 
 const packages = [
-  { tag: "A", title: "The Generalist", body: "One AI SEO Executive who covers technical SEO, content strategy and writing. Suits smaller sites." },
-  { tag: "B", title: "The full department", body: "The Director and all eight specialists, each doing one job." },
-  { tag: "C", title: "A focused team", body: "The Director plus the specialists your site needs most. The rest of the team covers any role you leave out." },
+  { tag: "A", title: "Ragnar Solo", body: "One AI SEO Executive who covers technical SEO, content strategy and writing. Suits smaller sites." },
+  { tag: "B", title: "The full department", body: "Ragnar and all eight specialists, each doing one job." },
+  { tag: "C", title: "A focused team", body: "Ragnar plus the specialists your site needs most. The rest of the team covers any role you leave out." },
+];
+
+const roadmap = [
+  { title: "Now", body: "Pilot on our own website." },
+  { title: "Next", body: "First outside pilot partners." },
+  { title: "Then", body: "General release, with pricing." },
 ];
 
 const steps = [
-  { n: "01", title: "We learn your business", body: "We build the knowledge base from your site, documents and data, with a source for every fact." },
-  { n: "02", title: "The department starts work", body: "The Director agrees the plan with you. The team audits, fixes, writes and measures, and you approve the changes that matter." },
-  { n: "03", title: "You see everything", body: "A daily brief from the Director and a dashboard showing what the team did, what changed and what is next." },
+  { n: "01", title: "Ragnar learns your business", body: "Ragnar builds its knowledge base from your site, documents and data, with a source for every fact." },
+  { n: "02", title: "The crew starts work", body: "Ragnar agrees the plan with you. The team audits, fixes, writes and measures, and you approve the changes that matter." },
+  { n: "03", title: "You see everything", body: "A daily brief from Ragnar and a dashboard showing what the team did, what changed and what is next." },
 ];
 
 export default function AISeoDepartment() {
@@ -95,52 +101,53 @@ export default function AISeoDepartment() {
   return (
     <div data-testid="ai-seo-department-page" className="overflow-x-hidden">
       <Seo
-        title="AI SEO Department | A Full SEO Team on Your Own Server"
-        description="WeHA's AI SEO Department: a team of nine AI SEO specialists, led by a Director who reports to you, running on your own server and trained on your own data. Now taking pilot partners."
+        title="Ragnar, by WeHA | AI SEO Software on Your Server"
+        description="Ragnar is software built by WeHA: an AI SEO director and nine AI specialists that install on your own server and run every day. In pilot now."
         path="/ai-seo-department"
         jsonLd={graph([
           ORG,
           WEBSITE,
           webPage({
             path: "/ai-seo-department",
-            name: "AI SEO Department | A Full SEO Team on Your Own Server",
+            name: "Ragnar, by WeHA | AI SEO Software on Your Server",
             description:
-              "A team of nine AI SEO specialists, led by a Director who reports to you, running on your own server and trained on your own data.",
+              "Ragnar is AI SEO software from WeHA: a team of nine AI roles led by Ragnar, an AI Director, installed on your own server and trained on your own data.",
           }),
           {
-            "@type": "Service",
+            "@type": "SoftwareApplication",
             "@id": `${SITE}/ai-seo-department#service`,
-            name: "AI SEO Department",
-            serviceType: "Managed AI SEO",
-            provider: { "@id": `${SITE}/#organization` },
+            name: "Ragnar, by WeHA",
+            applicationCategory: "BusinessApplication",
+            operatingSystem: "Runs on the customer's own server",
+            publisher: { "@id": `${SITE}/#organization` },
             description:
-              "A virtual SEO department of AI specialists that runs on the client's own server, is trained on the client's own data, and asks the client's approver before plans, risky changes and public content.",
+              "AI SEO software: a virtual SEO department of AI specialists that runs on the client's own server, is trained on the client's own data, and asks the client's approver before plans, risky changes and public content.",
             areaServed: ["India", "United States", "Canada"],
             url: `${SITE}/ai-seo-department`,
           },
           breadcrumb([
             { name: "Home", path: "/" },
-            { name: "AI SEO Department", path: "/ai-seo-department" },
+            { name: "Ragnar, by WeHA", path: "/ai-seo-department" },
           ], "/ai-seo-department"),
         ])}
       />
 
       {/* HERO */}
       <PageHero
-        kicker="AI SEO Department · now taking pilot partners"
-        title="A whole SEO team."
+        kicker="Ragnar, by WeHA · in pilot, taking partners"
+        title="An AI SEO director."
         italicWord="On your own server."
-        subtitle="Nine AI SEO specialists, trained on your own data, led by a Director who is your single point of contact. They audit, fix, write and measure every day. You approve what matters."
+        subtitle="Ragnar is software we build and license. It installs on your server and runs every day. A team of nine AI roles led by Ragnar, trained on your own data. It is not an agency retainer. You approve what matters."
         showForm={false}
         ctaSlot={
           <div className="flex flex-wrap gap-3">
             <Magnetic>
               <button type="button" onClick={openBooking} className="btn-teal" data-cursor="hover" data-testid="seo-hero-cta">
-                Ask about a pilot place <ArrowRight size={15} />
+                Apply for a pilot place <ArrowRight size={15} />
               </button>
             </Magnetic>
             <Link to="/success-stories" className="btn-ghost" data-cursor="hover">
-              See our SEO work <ArrowUpRight size={15} />
+              See our custom builds <ArrowUpRight size={15} />
             </Link>
           </div>
         }
@@ -151,7 +158,7 @@ export default function AISeoDepartment() {
                 <Compass size={18} className="text-weha-teal" />
               </span>
               <div>
-                <p className="text-sm font-semibold text-weha-text">Your SEO Director</p>
+                <p className="text-sm font-semibold text-weha-text">Ragnar, your AI SEO Director</p>
                 <p className="text-xs text-weha-faint">Daily brief · example</p>
               </div>
             </div>
@@ -171,20 +178,53 @@ export default function AISeoDepartment() {
         }
       />
 
+      {/* ROADMAP + WHO BUILDS */}
+      <ScrollSection direction="left" settle depth={0.5} intensity={0.45}>
+        <section className="section-glass relative section-surface border-y border-weha-border py-24 md:py-32" data-testid="seo-roadmap">
+          <div className="max-w-7xl mx-auto px-5 sm:px-8">
+            <Reveal>
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Roadmap</span>
+              <h2 className="weha-display text-3xl md:text-5xl mt-3 text-weha-text max-w-3xl">
+                Where Ragnar is today.
+              </h2>
+            </Reveal>
+            <div className="mt-12 grid gap-6 md:grid-cols-3">
+              {roadmap.map((k, i) => (
+                <Reveal key={k.title} delay={(i % 3) * 0.06}>
+                  <div className="weha-card h-full p-7" data-cursor="hover">
+                    <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">{k.title}</span>
+                    <p className="mt-3 text-sm text-weha-muted leading-relaxed">{k.body}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+            <Reveal delay={0.1}>
+              <div className="mt-12 weha-card p-7 max-w-3xl" data-testid="seo-builder">
+                <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Who builds Ragnar</span>
+                <p className="mt-3 text-sm text-weha-muted leading-relaxed">
+                  WeHA is a software company building AI products, founded by Imran Shaikh. Ragnar is our
+                  flagship. We also build custom automations for teams that need their own.
+                </p>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+      </ScrollSection>
+
       {/* SECTION 2 · THE TEAM */}
       <ScrollSection direction="left" settle depth={0.5} intensity={0.45}>
         <section className="section-glass relative section-surface border-y border-weha-border py-24 md:py-32" data-testid="seo-team">
           <div className="max-w-7xl mx-auto px-5 sm:px-8">
             <Reveal>
-              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Meet the department</span>
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Meet the crew</span>
               <h2 className="weha-display text-3xl md:text-5xl mt-3 text-weha-text max-w-3xl">
-                Nine specialists. One person to talk to.
+                Nine specialists. One director.
               </h2>
             </Reveal>
             <Reveal delay={0.08}>
               <p className="mt-5 text-weha-muted max-w-2xl leading-relaxed">
-                Each role does one job well, like a real SEO team. Only the Director talks to you. For
-                smaller sites, one Generalist covers the whole job instead.
+                Each role does one job well, like a real SEO team. Only Ragnar, the AI Director, talks to you. For
+                smaller sites, Ragnar Solo, one AI SEO executive, covers the whole job instead.
               </p>
             </Reveal>
             <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -242,7 +282,7 @@ export default function AISeoDepartment() {
         <section className="section-glass relative section-surface border-y border-weha-border py-24 md:py-32" data-testid="seo-rhythm">
           <div className="max-w-7xl mx-auto px-5 sm:px-8">
             <Reveal>
-              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">A day in the department</span>
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">A day with Ragnar</span>
               <h2 className="weha-display text-3xl md:text-5xl mt-3 text-weha-text max-w-3xl">
                 It works like a team you hired.
               </h2>
@@ -302,7 +342,7 @@ export default function AISeoDepartment() {
         <section className="section-glass relative section-surface border-y border-weha-border py-24 md:py-32" data-testid="seo-packages">
           <div className="max-w-7xl mx-auto px-5 sm:px-8">
             <Reveal>
-              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Three ways to start</span>
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Three ways to install</span>
               <h2 className="weha-display text-3xl md:text-5xl mt-3 text-weha-text max-w-3xl">
                 Pick the team that fits your site.
               </h2>
@@ -323,8 +363,8 @@ export default function AISeoDepartment() {
             <Reveal delay={0.1}>
               <p className="mt-10 flex gap-3 text-sm text-weha-muted max-w-3xl leading-relaxed">
                 <Package size={16} className="mt-0.5 shrink-0 text-weha-teal" />
-                Add Local SEO to any package. Every role you choose starts on day one. Pricing comes later;
-                for now we are choosing pilot partners.
+                Add Local SEO to any package. Every role you choose starts on day one. Pricing comes with
+                general release; for now we are choosing pilot partners.
               </p>
             </Reveal>
           </div>
@@ -338,7 +378,7 @@ export default function AISeoDepartment() {
             <Reveal>
               <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">How it starts</span>
               <h2 className="weha-display text-3xl md:text-5xl mt-3 text-weha-text max-w-3xl">
-                From your data to a working department.
+                From your data to a working crew.
               </h2>
             </Reveal>
             <div className="mt-12 grid gap-6 md:grid-cols-3">
@@ -354,7 +394,7 @@ export default function AISeoDepartment() {
             </div>
             <Reveal delay={0.1}>
               <p className="mt-10 text-sm text-weha-muted max-w-3xl leading-relaxed">
-                We run it on our own website first. Pilot places are limited, for businesses in India, the
+                Ragnar runs on our own website first. Pilot places are limited, for businesses in India, the
                 United States and Canada.
               </p>
             </Reveal>
@@ -363,9 +403,9 @@ export default function AISeoDepartment() {
       </ScrollSection>
 
       <CTABanner
-        heading="Want an SEO department without hiring one?"
-        sub="Tell us about your site. We will let you know if a pilot place fits and what the department would work on first."
-        cta="Ask about a pilot place"
+        heading="Want an AI SEO director on your server?"
+        sub="Apply for a pilot place. We will let you know if it fits and what Ragnar would work on first."
+        cta="Join the Ragnar pilot"
         testid="seo-cta"
       />
     </div>

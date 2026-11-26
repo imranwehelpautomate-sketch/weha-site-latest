@@ -8,12 +8,12 @@ export const SITE = (
 ).replace(/\/$/, "");
 
 const DESCRIPTION =
-  "AI automation agency. We turn manual workflows into systems that run themselves, built on the tools you already use and fully owned by you, with no lock-in. Built in days, not months.";
+  "Software company. WeHA builds AI software for growing businesses. Our flagship, Ragnar, is an AI SEO director and his crew of specialists, installed on your own server and trained on your data. We also build custom AI automations on the tools you already use, fully owned by you.";
 
 // Canonical Organization node. Reused (by @id) across every page. Modelled as
-// both Organization and ProfessionalService for strong entity + local SEO.
+// Organization and Corporation (a software company).
 export const ORG = {
-  "@type": ["Organization", "ProfessionalService"],
+  "@type": ["Organization", "Corporation"],
   "@id": `${SITE}/#organization`,
   name: "We Help Automate",
   alternateName: "WeHA",
@@ -29,12 +29,15 @@ export const ORG = {
     caption: "We Help Automate",
   },
   image: `${SITE}/og-default.png`,
-  slogan: "AI automation that runs itself, built on the tools you already use.",
+  slogan: "AI software for growing businesses. Meet Ragnar, your AI SEO director.",
   description: DESCRIPTION,
   email: "hello@wehelpautomate.com",
   telephone: "+91-81808-61084",
   foundingDate: "2024",
   knowsAbout: [
+    "AI software",
+    "AI SEO",
+    "Answer engine optimization",
     "AI automation",
     "Workflow automation",
     "Business process automation",
@@ -69,9 +72,8 @@ export const ORG = {
   ],
   areaServed: [
     { "@type": "Country", name: "India" },
-    { "@type": "Country", name: "United Arab Emirates" },
-    { "@type": "Country", name: "Australia" },
-    { "@type": "Country", name: "Singapore" },
+    { "@type": "Country", name: "United States" },
+    { "@type": "Country", name: "Canada" },
   ],
   founder: [
     { "@type": "Person", name: "Imran Shaikh", jobTitle: "Co-Founder" },

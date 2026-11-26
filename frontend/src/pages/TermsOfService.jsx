@@ -19,7 +19,7 @@ const SECTIONS = [
     n: 2,
     heading: "Services",
     paras: [
-      "We Help Automate provides AI-driven automation, systems implementation, and performance optimization services for businesses. The scope of work for each engagement is defined in a separate Statement of Work or service agreement.",
+      "We Help Automate builds software products and custom AI automations for businesses. Software products such as Ragnar may carry their own licence terms, which apply in addition to these Terms. The scope of work for each engagement is defined in a separate Statement of Work or service agreement.",
     ],
   },
   {
@@ -85,7 +85,7 @@ export default function TermsOfService() {
     <div data-testid="terms-of-service-page" className="overflow-x-hidden">
       <Seo
         title="Terms of Service"
-        description="The terms that govern your use of We Help Automate services."
+        description="The terms that govern your use of We Help Automate software, custom builds and website."
         path="/terms-of-service"
         jsonLd={graph([
           ORG,
@@ -94,7 +94,7 @@ export default function TermsOfService() {
             path: "/terms-of-service",
             name: "Terms of Service",
             description:
-              "The terms that govern your use of We Help Automate services.",
+              "The terms that govern your use of We Help Automate software, custom builds and website.",
           }),
           breadcrumb([
             { name: "Home", path: "/" },

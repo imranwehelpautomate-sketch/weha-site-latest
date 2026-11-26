@@ -3,7 +3,7 @@ import Reveal from "@/components/Reveal";
 import Magnetic from "@/components/Magnetic";
 import { useBooking } from "@/context/BookingContext";
 
-export default function CTABanner({ heading, sub, cta = "Book My Free Audit", testid = "cta-banner" }) {
+export default function CTABanner({ heading, sub, cta = "Join the Ragnar Pilot", testid = "cta-banner" }) {
   const { openBooking } = useBooking();
   return (
     <section className="px-5 sm:px-8 py-20 md:py-24" data-testid={testid}>

@@ -18,7 +18,7 @@ import MarketingConsent from "@/components/MarketingConsent";
 let sessionLeadCaptured = false;
 
 const DISCLAIMER =
-  "This is a conservative estimate for planning. Real results depend on your specific workflows. Book a free AI Audit for a precise model.";
+  "This is a conservative estimate for planning. Real results depend on your specific workflows. Book a free scoping call for a precise model.";
 
 /**
  * ValueCalculator

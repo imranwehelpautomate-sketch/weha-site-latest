@@ -148,9 +148,9 @@ export default function BookingModal({ open, onOpenChange }) {
         className="!p-0 !gap-0 overflow-hidden border-weha-border bg-weha-bg text-weha-text shadow-2xl rounded-2xl max-h-[92vh] overflow-y-auto"
       >
         {/* sr-only title/desc to satisfy radix a11y */}
-        <DialogTitle className="sr-only">Book a Free AI Audit</DialogTitle>
+        <DialogTitle className="sr-only">Join the Ragnar pilot or scope a custom build</DialogTitle>
         <DialogDescription className="sr-only">
-          Pick a date and time and tell us about the process you want to automate.
+          Pick a date and time and tell us about your site or the process you want to automate.
         </DialogDescription>
 
         {step === 3 ? (
@@ -158,7 +158,7 @@ export default function BookingModal({ open, onOpenChange }) {
             <div className="mx-auto h-14 w-14 rounded-full grid place-items-center bg-weha-teal text-white">
               <Check size={28} />
             </div>
-            <h2 className="weha-display text-3xl md:text-4xl mt-6">Your audit is booked.</h2>
+            <h2 className="weha-display text-3xl md:text-4xl mt-6">Your call is booked.</h2>
             {selectedSlot && (
               <p className="mt-3 text-weha-muted">
                 We&apos;ll see you on <span className="text-weha-text font-medium">{slotDisplay}</span>.
@@ -185,7 +185,7 @@ export default function BookingModal({ open, onOpenChange }) {
                   Let&apos;s <span className="italic text-weha-teal">Chat.</span>
                 </h2>
                 <p className="mt-4 text-weha-muted leading-relaxed text-[0.95rem]">
-                  On call we will understand your pain-points, discover your automation and agentic workflow needs, and give you our honest opinion.{" "}
+                  On the call we will understand your goals. For the Ragnar pilot, we check fit. For a custom build, our engineers scope your automation. You get our honest opinion.{" "}
                   <span className="italic text-weha-text">No BS.</span>
                 </p>
                 <div
@@ -203,16 +203,16 @@ export default function BookingModal({ open, onOpenChange }) {
                     <ShieldCheck size={16} />
                   </span>
                   <div className="min-w-0">
-                    <p className="text-[0.9rem] font-semibold text-weha-text leading-snug">Outcome-guaranteed engagements.</p>
-                    <p className="mt-1 text-[0.78rem] text-weha-muted leading-relaxed">No obligation, no sales script. Just an honest look at where AI can save you time.</p>
+                    <p className="text-[0.9rem] font-semibold text-weha-text leading-snug">Honest, no-obligation calls.</p>
+                    <p className="mt-1 text-[0.78rem] text-weha-muted leading-relaxed">No sales script. Just an honest look at where Ragnar or a custom build can save you time.</p>
                   </div>
                 </div>
               </div>
               <ul className="mt-8 space-y-3.5 text-[0.95rem]">
                 {[
-                  "Map your most time-consuming workflows",
-                  "Identify what is automatable today",
-                  "Get free honest consultation from an expert",
+                  "Check fit for the Ragnar pilot",
+                  "Scope a custom automation build",
+                  "Get an honest answer from our engineers",
                 ].map(x => (
                   <li key={x} className="flex gap-3"><span className="text-weha-teal mt-1">✦</span><span>{x}</span></li>
                 ))}
@@ -276,7 +276,7 @@ export default function BookingModal({ open, onOpenChange }) {
                     })}
                   </div>
                   <p className="mt-2 mb-5 text-xs text-weha-muted">
-                    Most audits fit in 15 minutes. Need a deeper dive?{" "}
+                    Most calls fit in 15 minutes. Need a deeper dive?{" "}
                     <button
                       type="button"
                       onClick={() => setDuration(30)}
@@ -436,7 +436,7 @@ export default function BookingModal({ open, onOpenChange }) {
                       value={form.email} onChange={updateForm("email")} data-testid="booking-email" />
                   </div>
                   <div>
-                    <label className="weha-label" htmlFor="bk-process">The manual process you want to fix</label>
+                    <label className="weha-label" htmlFor="bk-process">Your site, or the process you want to fix</label>
                     <textarea id="bk-process" rows={3} className="weha-input resize-none"
                       placeholder="e.g. We copy new leads into a spreadsheet every morning…"
                       value={form.process} onChange={updateForm("process")} data-testid="booking-process" />

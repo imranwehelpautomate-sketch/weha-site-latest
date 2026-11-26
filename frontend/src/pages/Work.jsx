@@ -313,22 +313,22 @@ export default function Work() {
   return (
     <div data-testid="work-page" className="overflow-x-hidden">
       <Seo
-        title="Success Stories"
-        description="Automation success stories from WeHA: SEO and content engines, lead generation, proposal automation, and AI recruitment pipelines built for real teams."
+        title="Custom Builds and Results | WeHA"
+        description="Custom automation builds by WeHA's engineering team: SEO and content engines, lead generation, proposals and recruitment. Ragnar is in pilot."
         path="/success-stories"
         jsonLd={graph([
           ORG,
           WEBSITE,
           webPage({
             path: "/success-stories",
-            name: "Success Stories",
+            name: "Custom Builds and Results | WeHA",
             description:
-              "Automation success stories from WeHA: SEO and content engines, lead generation, proposal automation, and AI recruitment pipelines built for real teams.",
+              "Custom automation builds by WeHA's engineering team: SEO and content engines, lead generation, proposals and recruitment. Ragnar is in pilot.",
             type: "CollectionPage",
           }),
           {
             "@type": "ItemList",
-            name: "WeHA automation success stories",
+            name: "WeHA custom automation builds",
             itemListElement: caseStudies.map((s, i) => ({
               "@type": "ListItem",
               position: i + 1,
@@ -349,10 +349,10 @@ export default function Work() {
       />
 
       <PageHero
-        kicker="Success Stories"
+        kicker="Custom builds · Success stories"
         title="Real systems, built for real"
         italicWord="teams."
-        subtitle="A look at automation systems we have designed and shipped. Client names stay private. The work speaks for itself."
+        subtitle="Custom automation builds from WeHA's engineering team. Ragnar is in pilot, and its results will appear here after the pilot. Client names stay private."
         showForm={false}
         rightSlot={
           <ValueCalculator
@@ -409,12 +409,12 @@ export default function Work() {
           <div className="max-w-4xl mx-auto px-5 sm:px-8">
             <Reveal>
               <span className="text-xs font-semibold tracking-[0.22em] uppercase text-weha-teal">
-                One method, any business
+                One method, every build
               </span>
             </Reveal>
             <Reveal delay={0.08}>
               <h2 className="weha-display text-3xl md:text-5xl mt-5 text-weha-text leading-[1.08]">
-                Across very different teams, the approach stays the same.
+                Across very different custom builds, the approach stays the same.
               </h2>
             </Reveal>
             <Reveal delay={0.14}>
@@ -433,8 +433,8 @@ export default function Work() {
             </Reveal>
             <Reveal delay={0.2}>
               <p className="mt-8 text-lg text-weha-muted leading-relaxed">
-                The fastest way to see it is on your own workflow. Bring us the manual process eating
-                your week, and we will map the automated version with you.
+                The fastest way to see it is on your own workflow. Bring our engineers the manual process
+                eating your week, and we will scope a custom build with you.
               </p>
             </Reveal>
           </div>
@@ -449,13 +449,13 @@ export default function Work() {
               <div className="weha-card rounded-2xl p-8 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
                 <div className="max-w-2xl">
                   <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Next up</span>
-                  <h2 className="weha-display text-3xl md:text-4xl mt-3 text-weha-text">The AI SEO Department.</h2>
+                  <h2 className="weha-display text-3xl md:text-4xl mt-3 text-weha-text">Ragnar, by WeHA.</h2>
                   <p className="mt-4 text-weha-muted leading-relaxed">
-                    wehelpautomate.com is its first site, before any client. We are taking pilot partners.
+                    Our flagship product runs on wehelpautomate.com first, before any client. We are taking pilot partners.
                   </p>
                 </div>
                 <Link to="/ai-seo-department" className="btn-teal shrink-0" data-cursor="hover">
-                  Meet the Department <ArrowRight size={15} />
+                  See how Ragnar works <ArrowRight size={15} />
                 </Link>
               </div>
             </Reveal>
@@ -465,8 +465,8 @@ export default function Work() {
 
       <CTABanner
         heading="Your workflow could be next."
-        sub="Tell us the manual process eating your week, and we will show you the automated version."
-        cta="Book a Free Audit"
+        sub="Tell our engineers the manual process eating your week, and we will scope the automated version."
+        cta="Scope a custom build"
         testid="work-cta"
       />
     </div>

@@ -6,7 +6,7 @@ import MarketingConsent from "@/components/MarketingConsent";
 
 const initial = { name: "", email: "", company: "", process: "" };
 
-export default function LeadForm({ heading = "Book your free AI Audit", testid = "lead-form", source = "lead-form" }) {
+export default function LeadForm({ heading = "Join the Ragnar pilot", testid = "lead-form", source = "lead-form" }) {
   const [form, setForm] = useState(initial);
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
@@ -32,7 +32,7 @@ export default function LeadForm({ heading = "Book your free AI Audit", testid =
         contact_method: "Email",
       });
       setDone(true);
-      toast.success("Request received — we'll reply within 24 hours.");
+      toast.success("Request received. We'll reply within 24 hours.");
       setForm(initial);
     } catch (err) {
       setError(err.message);
@@ -46,9 +46,9 @@ export default function LeadForm({ heading = "Book your free AI Audit", testid =
       {done ? (
         <div className="py-6" data-testid={`${testid}-success`}>
           <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Received</span>
-          <h3 className="weha-display text-3xl mt-3 text-weha-text">Your audit request is in.</h3>
+          <h3 className="weha-display text-3xl mt-3 text-weha-text">Your request is in.</h3>
           <p className="mt-3 text-weha-muted leading-relaxed">
-            We respond within 24 hours. No sales scripts — just a conversation about your workflow.
+            We respond within 24 hours. No sales scripts, just a conversation about your site or workflow.
           </p>
           <button onClick={() => setDone(false)} className="btn-ghost mt-5" data-testid={`${testid}-reset`}>
             Send another <ArrowRight size={15} />
@@ -57,7 +57,7 @@ export default function LeadForm({ heading = "Book your free AI Audit", testid =
       ) : (
         <form onSubmit={onSubmit} data-testid={`${testid}-form`} className="space-y-4">
           <div>
-            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Free · 60 min</span>
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Pilot · custom builds</span>
             <h3 className="weha-display text-2xl md:text-3xl mt-2 text-weha-text leading-tight">{heading}</h3>
           </div>
           <div>
@@ -75,8 +75,8 @@ export default function LeadForm({ heading = "Book your free AI Audit", testid =
             </div>
           </div>
           <div>
-            <label className="weha-label" htmlFor={`${testid}-process`}>What do you want to automate?</label>
-            <textarea id={`${testid}-process`} rows={3} className="weha-input resize-none" value={form.process} onChange={update("process")} placeholder="e.g. WhatsApp lead routing, RFQ-to-quote…" data-testid={`${testid}-process`} />
+            <label className="weha-label" htmlFor={`${testid}-process`}>What do you want to fix or automate?</label>
+            <textarea id={`${testid}-process`} rows={3} className="weha-input resize-none" value={form.process} onChange={update("process")} placeholder="e.g. SEO for our site, or WhatsApp lead routing…" data-testid={`${testid}-process`} />
           </div>
           {error && (
             <p role="alert" data-testid={`${testid}-error`} className="text-sm font-medium text-red-600 dark:text-red-400">
@@ -84,7 +84,7 @@ export default function LeadForm({ heading = "Book your free AI Audit", testid =
             </p>
           )}
           <button type="submit" disabled={submitting} className="btn-teal w-full justify-center disabled:opacity-60" data-cursor="hover" data-testid={`${testid}-submit`}>
-            {submitting ? "Sending…" : "Request My Free Audit"} <ArrowRight size={16} />
+            {submitting ? "Sending…" : "Send my request"} <ArrowRight size={16} />
           </button>
           <MarketingConsent checked={marketingOptIn} onChange={setMarketingOptIn} testid={`${testid}-marketing`} />
           <p className="text-xs text-weha-muted leading-relaxed">No pitch decks. We reply within 24 hours.</p>

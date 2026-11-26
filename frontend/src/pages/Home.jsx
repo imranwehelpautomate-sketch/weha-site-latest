@@ -94,14 +94,14 @@ const pains = [
 const FLOWS = [
   {
     id: "seo",
-    label: "SEO Department",
+    label: "Ragnar (AI SEO)",
     steps: [
       { icon: Users, title: "Daily standup", caption: "Nine specialists compare notes" },
       { icon: Search, title: "Site checked", caption: "Technical SEO finds pages Google can't index" },
       { icon: FileText, title: "Fixes drafted", caption: "Every change logged and can be undone" },
       { icon: UserCheck, title: "You approve", caption: "Plans, risky changes and anything public" },
       { icon: Share2, title: "Content published", caption: "In your voice, every fact sourced" },
-      { icon: Bell, title: "Daily brief", caption: "Your Director reports what changed" },
+      { icon: Bell, title: "Daily brief", caption: "Ragnar reports what changed" },
     ],
   },
   {
@@ -183,9 +183,9 @@ const industries = [
   {
     tag: "Agencies",
     title: "Marketing & Creative Agencies",
-    body: "Client reporting that writes itself. Onboarding that runs without the founder. More retainers on the same headcount.",
+    body: "Client reporting that writes itself. Onboarding that runs without the founder. More clients on the same headcount.",
     useCase:
-      "Agencies win on output and margin. We automate the repetitive delivery work: reporting, onboarding and content ops. The same team serves more clients without burning out or hiring ahead of revenue.",
+      "Agencies win on output and margin. We build custom automations for the repetitive delivery work: reporting, onboarding and content ops. The same team serves more clients without burning out or hiring ahead of revenue.",
     painpoints: [
       "Client reporting eats a full day every month, for every account.",
       "Onboarding still depends on the founder chasing logins and assets.",
@@ -197,7 +197,7 @@ const industries = [
       "Onboarding & asset intake",
       "Content production & scheduling",
       "Campaign QA & approvals",
-      "Billing & retainer tracking",
+      "Billing & renewal tracking",
       "Lead nurture & pitches",
     ],
     stack: [
@@ -442,43 +442,43 @@ function StackLogo({ name, slug, domain, ext = "svg" }) {
 const whyWeha = [
   "You own every system we build, no lock-in, no monthly hostage fees.",
   "We build on the tools you already use wherever we can.",
-  "Live systems in days, not months. You see value almost immediately.",
-  "Automations are documented and delivered, so you are in control.",
-  "An SEO team you can watch working, not a monthly PDF.",
+  "Custom builds go live in days, not months, so you see value almost immediately.",
+  "Every build is documented and delivered, so you are in control.",
+  "Ragnar's work is visible: a team room you can watch, not a monthly PDF.",
 ];
 
 // Dogfooding stats row inside the dark section.
 const stats = [
   { value: 100, suffix: "%", label: "yours: code, docs and accounts" },
-  { value: 30, suffix: " days", label: "of support after every handoff" },
+  { value: 30, suffix: " days", label: "of support after every custom build" },
   { value: 0, suffix: "", text: "Zero", label: "markup on any tool you need" },
 ];
 
 // FAQ.
 const faqs = [
   {
-    q: "How much does it cost?",
-    a: "The audit is free. Builds are scoped and priced before we start, so you never get a surprise invoice. And if a workflow is not worth automating, we will tell you that too.",
+    q: "How much do custom builds cost?",
+    a: "The scoping call is free. Custom builds are scoped and priced before we start, so you never get a surprise invoice. And if a workflow is not worth automating, we will tell you that too.",
   },
   {
     q: "Our tools are old and messy. Will this still work?",
-    a: "Almost certainly. We build on top of what you already run, including the spreadsheets. If something genuinely cannot connect, you will know at the audit, not after you have paid.",
+    a: "Almost certainly. Our custom builds sit on top of what you already run, including the spreadsheets. If something genuinely cannot connect, you will know on the scoping call, not after you have paid.",
   },
   {
     q: "What happens when something breaks after handoff?",
-    a: "Every build ships with plain-English documentation and 30 days of support. After that you own a system your team understands, and we are one message away.",
+    a: "Every custom build ships with plain-English documentation and 30 days of support. After that you own a system your team understands, and we are one message away.",
   },
   {
     q: "We are not technical people.",
-    a: "You do not need to be. You approve things from your phone and read clear summaries. The system does the technical part. That is what it is for.",
+    a: "You do not need to be. You approve things from your phone and read clear summaries. The software does the technical part. That is what it is for.",
   },
   {
-    q: "Do you do SEO?",
-    a: "Yes, through our AI SEO Department: nine AI specialists trained on your data, on your own server, led by a Director who sends you a daily brief. You approve plans, risky changes and anything public. Every change is logged and can be undone. We work with businesses in India, the US and Canada.",
+    q: "What is Ragnar?",
+    a: "Ragnar is our AI SEO software: an AI director and his crew of nine AI specialists, installed on your own server and trained on your data. Ragnar sends you a daily brief. You approve plans, risky changes and anything public. Every change is logged and can be undone. It is built for businesses in India, the US and Canada.",
   },
   {
-    q: "What does the AI SEO Department cost?",
-    a: "Pricing comes after the pilot. We are taking pilot partners now; book a call and ask.",
+    q: "What does Ragnar cost?",
+    a: "Pricing is not published yet. It comes with general release. Ragnar is in pilot and we are taking pilot partners now; book a call and ask.",
   },
 ];
 
@@ -564,17 +564,17 @@ export default function Home() {
   return (
     <div data-testid="home-page" className="overflow-x-hidden">
       <Seo
-        title="Sales, Marketing and RevOps Automation, plus an AI SEO Department"
-        description="We Help Automate (WeHA) automates sales, marketing and RevOps, and runs your SEO with an AI SEO Department on your own server. Book a free AI Audit."
+        title="Ragnar: AI SEO Software, Plus Custom AI Automation"
+        description="WeHA builds AI software. Ragnar is your AI SEO director and his crew of specialists, on your own server. In pilot now. Custom AI automation too."
         path="/"
         jsonLd={graph([
           ORG,
           WEBSITE,
           webPage({
             path: "/",
-            name: "Sales, Marketing and RevOps Automation, plus an AI SEO Department | WeHA",
+            name: "Ragnar: AI SEO Software, Plus Custom AI Automation | WeHA",
             description:
-              "WeHA turns your messiest manual workflows into AI systems that run themselves, built in days, not months. Book a free AI Audit.",
+              "WeHA is a software company. Ragnar, our AI SEO director and his crew of specialists, runs on your own server and is now in pilot. We also build custom AI automations.",
           }),
           faqPage(faqs),
           breadcrumb([{ name: "Home", path: "/" }], "/"),
@@ -617,38 +617,38 @@ export default function Home() {
                 data-cursor="hover"
               >
                 <span className="rounded-full px-2 py-0.5" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>New</span>
-                AI SEO Department, now taking pilot partners <ArrowRight size={13} />
+                Ragnar is in pilot, now taking pilot partners <ArrowRight size={13} />
               </Link>
             </Reveal>
             <h1 className="weha-display text-5xl sm:text-7xl lg:text-[5.5rem] mt-6 text-weha-text leading-[1.02]">
-              <MaskReveal delay={0.05}>Your business probably</MaskReveal>
-              <MaskReveal delay={0.13}>runs on 47 manual steps.</MaskReveal>
+              <MaskReveal delay={0.05}>Your SEO team,</MaskReveal>
+              <MaskReveal delay={0.13}>as software.</MaskReveal>
               <MaskReveal delay={0.21}>
-                <span className="italic text-weha-teal">Let&apos;s automate that.</span>
+                <span className="italic text-weha-teal">Meet Ragnar.</span>
               </MaskReveal>
             </h1>
             <Reveal delay={0.35}>
               <p className="mt-7 text-lg md:text-xl text-weha-muted max-w-xl leading-relaxed">
-                We automate the busywork across sales, marketing and RevOps, and our AI SEO
-                Department runs your SEO every day. Built in days, not months.
+                Ragnar, by WeHA: an AI SEO director and his crew of specialists, installed on
+                your own server. We also build custom AI automations.
               </p>
             </Reveal>
             <Reveal delay={0.45}>
               <div className="mt-9 flex flex-nowrap items-center gap-3 sm:gap-5 pointer-events-auto">
                 <Magnetic>
                   <button type="button" onClick={openBooking} className="btn-teal max-sm:!px-4 max-sm:!text-sm" data-testid="hero-primary-cta" data-cursor="hover">
-                    Book a Free AI Audit <ArrowRight size={16} />
+                    Join the Ragnar pilot <ArrowRight size={16} />
                   </button>
                 </Magnetic>
                 <Magnetic strength={0.3}>
-                  <Link to="/services" className="btn-ghost max-sm:!text-sm whitespace-nowrap" data-testid="hero-secondary-cta" data-cursor="hover">
-                    Explore Services <ArrowRight size={15} />
+                  <Link to="/ai-seo-department" className="btn-ghost max-sm:!text-sm whitespace-nowrap" data-testid="hero-secondary-cta" data-cursor="hover">
+                    See how Ragnar works <ArrowRight size={15} />
                   </Link>
                 </Magnetic>
               </div>
               <p className="mt-6 text-sm text-weha-faint pointer-events-auto" data-testid="hero-offers">
-                Sales Automation · Marketing Automation · RevOps Automation ·{" "}
-                <Link to="/ai-seo-department" className="text-weha-teal hover:underline">AI SEO Department</Link>
+                <Link to="/ai-seo-department" className="text-weha-teal hover:underline">Ragnar (AI SEO)</Link>{" "}
+                · Custom automation: Sales · Marketing · RevOps
               </p>
             </Reveal>
           </div>
@@ -675,22 +675,22 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-5 sm:px-8 grid gap-12 lg:grid-cols-[1.1fr_1fr] items-center">
           <div>
             <Reveal>
-              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Our flagship · AI SEO Department</span>
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Our flagship · Ragnar, by WeHA</span>
               <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">
                 A whole SEO team. <span className="italic text-weha-teal">On your own server.</span>
               </h2>
             </Reveal>
             <Reveal delay={0.08}>
               <p className="mt-5 text-weha-muted max-w-xl leading-relaxed">
-                Nine AI SEO specialists, trained on your own data and led by a Director who is your one
-                point of contact. They audit, fix, write and measure every day, and your approver signs
-                off on plans, risky changes and anything public.
+                Ragnar is an AI SEO director, your one point of contact, leading eight AI specialists.
+                Trained on your own data, they audit, fix, write and measure every day. Your approver
+                signs off on plans, risky changes and anything public.
               </p>
             </Reveal>
             <Reveal delay={0.12}>
               <ul className="mt-7 space-y-3">
                 {[
-                  "A daily brief from your Director, plus weekly and monthly meetings",
+                  "A daily brief from Ragnar, plus weekly and monthly meetings",
                   "A team room you can watch and a knowledge base you can correct",
                   "Every site change logged, and it can be undone",
                   "For businesses in India, the United States and Canada",
@@ -705,7 +705,7 @@ export default function Home() {
               <div className="mt-9">
                 <Magnetic>
                   <Link to="/ai-seo-department" className="btn-teal" data-cursor="hover" data-testid="home-ai-seo-cta">
-                    Meet the department <ArrowRight size={15} />
+                    Meet Ragnar <ArrowRight size={15} />
                   </Link>
                 </Magnetic>
               </div>
@@ -713,7 +713,7 @@ export default function Home() {
           </div>
           <Reveal delay={0.1}>
             <div className="weha-card p-6 md:p-7">
-              <p className="text-sm font-semibold text-weha-text">Your SEO Director</p>
+              <p className="text-sm font-semibold text-weha-text">Ragnar, your AI SEO Director</p>
               <p className="text-xs text-weha-faint">Daily brief · example</p>
               <ul className="mt-5 space-y-3">
                 {[
@@ -799,8 +799,8 @@ export default function Home() {
           </Reveal>
           <Reveal delay={0.08}>
             <p className="mt-5 text-weha-muted max-w-xl leading-relaxed">
-              Pick a bottleneck. This is what it looks like after we automate it. The first business
-              to answer usually wins the deal; these systems make sure that is you.
+              Pick a flow. The first is Ragnar at work. The others are custom builds, showing what a
+              bottleneck looks like once it is automated.
             </p>
           </Reveal>
           <Reveal delay={0.12}>
@@ -827,7 +827,7 @@ export default function Home() {
           </div>
           <Reveal delay={0.1}>
             <p className="mt-14 text-weha-muted max-w-2xl leading-relaxed">
-              Every flow above runs on your existing tools. Nothing to rip out, nothing new to learn.
+              Our custom builds run on your existing tools. Nothing to rip out, nothing new to learn.
             </p>
           </Reveal>
         </div>
@@ -844,9 +844,9 @@ export default function Home() {
           </Reveal>
           <Reveal delay={0.08}>
             <p className="mt-5 text-weha-muted max-w-xl leading-relaxed">
-              If your leads, sales and delivery already happen online, automation compounds fastest.
-              That is where we play. And if customers find you through search, the AI SEO
-              Department works for every business below.
+              If your leads, sales and delivery already happen online, custom automation compounds
+              fastest. And if customers find you through search, Ragnar works for every business
+              below.
             </p>
           </Reveal>
 
@@ -884,11 +884,11 @@ export default function Home() {
 
             <div className="mt-6 rounded-2xl border border-dashed border-weha-border p-6 md:p-7 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <p className="text-weha-muted leading-relaxed max-w-2xl">
-                A different business? The bottlenecks rhyme. If it is manual and it repeats, or if
-                you need to be found, we can probably help.
+                A different business? The bottlenecks rhyme. If it is manual and it repeats, our engineers
+                can probably build for it. If you need to be found, that is Ragnar.
               </p>
               <button type="button" onClick={openBooking} className="btn-ghost shrink-0" data-cursor="hover">
-                Book my free audit <ArrowRight size={15} />
+                Talk to our engineers <ArrowRight size={15} />
               </button>
             </div>
           </div>
@@ -964,7 +964,7 @@ export default function Home() {
                           <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
                             <AlertCircle size={16} />
                           </span>
-                          <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">Painpoints we fix</h4>
+                          <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">Pain points our custom builds fix</h4>
                         </div>
                         <ul className="mt-4 space-y-3">
                           {industries[expandedIndustry].painpoints.map((p) => (
@@ -1021,7 +1021,7 @@ export default function Home() {
                               data-cursor="hover"
                               data-testid="industry-book-audit"
                             >
-                              Book my free audit <ArrowRight size={15} />
+                              Scope a custom build <ArrowRight size={15} />
                             </button>
                           </Magnetic>
                         </div>
@@ -1043,70 +1043,71 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <Reveal>
             <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Ways to work with us</span>
-            <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">Start free. Scale when it proves itself.</h2>
+            <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text">Software first. Custom builds when you need them.</h2>
           </Reveal>
           <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {/* Card 1 - the free audit */}
+            {/* Card 1 - Ragnar */}
             <Reveal>
+              <div className="weha-card p-7 h-full flex flex-col" data-cursor="hover" data-testid="home-way-ai-seo">
+                <span className="self-start rounded-full px-3 py-1 text-xs font-semibold" style={{ background: "var(--weha-teal)", color: "var(--weha-bg)" }}>
+                  Software · In pilot
+                </span>
+                <h3 className="weha-display text-2xl mt-5 text-weha-text">Ragnar, by WeHA</h3>
+                <p className="mt-3 text-weha-muted leading-relaxed flex-1">
+                  Your AI SEO director and his crew of specialists, on your own server. Choose Ragnar
+                  Solo, the full crew or a focused crew. Now taking pilot partners.
+                </p>
+                <Link to="/ai-seo-department" className="mt-6 inline-flex items-center gap-1.5 font-medium text-weha-teal" data-cursor="hover">
+                  Meet Ragnar <ArrowRight size={15} />
+                </Link>
+              </div>
+            </Reveal>
+            {/* Card 2 - the scoping call */}
+            <Reveal delay={0.08}>
               <div className="weha-card p-7 h-full flex flex-col" data-cursor="hover">
                 <span className="self-start rounded-full px-3 py-1 text-xs font-semibold" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
-                  Start here · Free
+                  Custom automation · Free
                 </span>
-                <h3 className="weha-display text-2xl mt-5 text-weha-text">The AI Audit</h3>
+                <h3 className="weha-display text-2xl mt-5 text-weha-text">The Scoping Call</h3>
                 <p className="mt-3 text-weha-muted leading-relaxed flex-1">
-                  A 30-minute conversation. We map your most automatable workflows and maybe
-                  build one live on the call. You leave with a prioritized plan whether you hire us
-                  or not.
+                  A 30-minute call with our engineers. We map your most automatable workflows and maybe
+                  build one live on the call. You leave with a prioritized plan whether you build with
+                  us or not.
                 </p>
                 <div className="mt-6">
                   <Magnetic>
                     <button type="button" onClick={openBooking} className="btn-teal" data-cursor="hover">
-                      Book my free audit <ArrowRight size={15} />
+                      Book a scoping call <ArrowRight size={15} />
                     </button>
                   </Magnetic>
                 </div>
               </div>
             </Reveal>
-            {/* Card 2 - the build sprint */}
-            <Reveal delay={0.08}>
+            {/* Card 3 - the custom build */}
+            <Reveal delay={0.16}>
               <div className="weha-card p-7 h-full flex flex-col" data-cursor="hover">
                 <span className="self-start rounded-full px-3 py-1 text-xs font-semibold" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
                   Fixed scope
                 </span>
-                <h3 className="weha-display text-2xl mt-5 text-weha-text">The Build Sprint</h3>
+                <h3 className="weha-display text-2xl mt-5 text-weha-text">The Custom Build</h3>
                 <p className="mt-3 text-weha-muted leading-relaxed flex-1">
-                  We take the workflows from your audit and ship them as working automations. Scoped
-                  and priced before we start, so there are no surprise invoices.
+                  Our engineers take the workflows from your scoping call and ship them as working
+                  systems that you own. Scoped and priced before we start, so there are no surprise
+                  invoices.
                 </p>
               </div>
             </Reveal>
-            {/* Card 3 - the automation partner */}
-            <Reveal delay={0.16}>
+            {/* Card 4 - ongoing support */}
+            <Reveal delay={0.24}>
               <div className="weha-card p-7 h-full flex flex-col" data-cursor="hover">
                 <span className="self-start rounded-full px-3 py-1 text-xs font-semibold" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
                   Ongoing
                 </span>
-                <h3 className="weha-display text-2xl mt-5 text-weha-text">The Automation Partner</h3>
+                <h3 className="weha-display text-2xl mt-5 text-weha-text">Ongoing Support</h3>
                 <p className="mt-3 text-weha-muted leading-relaxed flex-1">
-                  We keep your systems running, catch what breaks before you notice, and keep
+                  We keep your custom systems running, catch what breaks before you notice, and keep
                   finding the next thing worth automating as you grow.
                 </p>
-              </div>
-            </Reveal>
-            {/* Card 4 - the AI SEO Department */}
-            <Reveal delay={0.24}>
-              <div className="weha-card p-7 h-full flex flex-col" data-cursor="hover" data-testid="home-way-ai-seo">
-                <span className="self-start rounded-full px-3 py-1 text-xs font-semibold" style={{ background: "var(--weha-teal)", color: "var(--weha-bg)" }}>
-                  New · Ongoing
-                </span>
-                <h3 className="weha-display text-2xl mt-5 text-weha-text">The AI SEO Department</h3>
-                <p className="mt-3 text-weha-muted leading-relaxed flex-1">
-                  A full SEO team on your own server: nine AI specialists and a Director who briefs
-                  you every day. Packages from one Generalist to the whole team. Now taking pilot partners.
-                </p>
-                <Link to="/ai-seo-department" className="mt-6 inline-flex items-center gap-1.5 font-medium text-weha-teal" data-cursor="hover">
-                  Meet the Department <ArrowRight size={15} />
-                </Link>
               </div>
             </Reveal>
           </div>
@@ -1130,16 +1131,16 @@ export default function Home() {
                   The WeHA difference
                 </span>
                 <h2 className="weha-display text-4xl md:text-5xl mt-3 text-[#f7f6f2] leading-[1.04]">
-                  Not a freelancer. Not a big agency.{" "}
-                  <span className="italic" style={{ color: "#9b80e0" }}>Better placed than both.</span>
+                  Software you own.{" "}
+                  <span className="italic" style={{ color: "#9b80e0" }}>Changes you can undo.</span>
                 </h2>
               </Reveal>
               <Reveal delay={0.12}>
                 <p className="mt-4 text-[0.95rem] md:text-base text-[#c9c5bd] leading-relaxed max-w-xl">
-                  A freelancer connects two tools and calls it done. A big agency quotes a six-month
-                  roadmap with a retainer to match. We sit in between: engineered properly, shipped
-                  in days, and owned entirely by you. And for search, we built what neither offers: a
-                  full AI SEO team that works every day on your own server.
+                  Ragnar installs on your own server and learns from your own data. Every fact has a
+                  source, every site change is logged and can be undone, and your approver signs off
+                  on anything risky or public. Our custom builds follow the same rule: engineered
+                  properly and owned entirely by you.
                 </p>
               </Reveal>
               <Reveal delay={0.18}>
@@ -1167,7 +1168,7 @@ export default function Home() {
                       data-cursor="hover"
                       data-testid="whyweha-cta"
                     >
-                      Book a Free AI Audit <ArrowRight size={16} />
+                      Join the Ragnar pilot <ArrowRight size={16} />
                     </button>
                   </Magnetic>
                 </div>
@@ -1222,7 +1223,7 @@ export default function Home() {
                   </p>
                   <span className="mt-1 h-px w-10" style={{ background: "rgba(155,128,224,0.4)" }} />
                   <p className="mt-1 text-sm text-[#c9c5bd] leading-snug">
-                    Your code, docs and accounts stay yours, and we put the scope in writing.
+                    Your data stays on your server, your code and accounts stay yours, and we put the scope in writing.
                   </p>
                 </div>
               </div>
@@ -1270,8 +1271,8 @@ export default function Home() {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-12 weha-display text-2xl md:text-4xl text-weha-text max-w-3xl leading-snug">
-              That is not a software problem. That is a{" "}
-              <span className="italic text-weha-teal">systems problem.</span> And systems can be fixed.
+              That is not a headcount problem. That is a{" "}
+              <span className="italic text-weha-teal">systems problem.</span> And systems can be built.
             </p>
           </Reveal>
         </div>
@@ -1336,13 +1337,13 @@ export default function Home() {
         <div className="max-w-7xl mx-auto rounded-3xl px-8 py-16 md:px-16 md:py-24 relative overflow-hidden" style={{ background: "var(--weha-teal)" }}>
           <Reveal>
             <h2 className="weha-display text-4xl md:text-6xl text-white max-w-3xl leading-[1.05]">
-              See your first automation built within hours of our call.
+              Meet Ragnar. Join the pilot.
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-6 text-white/85 text-lg max-w-2xl leading-relaxed">
-              Book a free AI Audit. We will map your top three workflows and build one live on the
-              call. No pitch deck, no obligation. Ask about the AI SEO Department on the same call.
+              Ragnar is in pilot, running first on our own website. We are taking pilot partners in
+              India, the United States and Canada. Need a custom automation? Ask on the same call.
             </p>
           </Reveal>
           <Reveal delay={0.18}>
@@ -1354,7 +1355,7 @@ export default function Home() {
                 data-cursor="hover"
                 className="mt-9 inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 font-medium text-[var(--weha-teal)] transition-transform hover:-translate-y-0.5"
               >
-                Book my free audit <ArrowUpRight size={17} />
+                Join the Ragnar pilot <ArrowUpRight size={17} />
               </button>
             </Magnetic>
           </Reveal>

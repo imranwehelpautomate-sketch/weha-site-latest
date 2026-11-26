@@ -17,15 +17,15 @@ const ASSET = (p) => `${process.env.PUBLIC_URL || ""}${p}`;
 
 const story = [
   "Look at almost any capable team and you'll find the same thing: smart people losing hours every week to work software should be doing for them. Copying data between tools. Chasing the same follow-ups. Rebuilding the same report by hand, every single week.",
-  "Most businesses already sense that AI could help. What they don't have is a clear place to start. And too many AI agencies make it worse, overcomplicating simple problems or locking clients into tools they can never leave.",
-  "WeHA was started by two operators who had spent years building marketing and automation systems for other people. They decided to build the agency they wished existed: one that builds practical systems on the tools you already use, proves they work, then hands them over.",
-  "The same idea built our flagship, the AI SEO Department: nine AI specialists who run a company's SEO every day, on that company's own server. Our own site is its first client.",
+  "Most businesses already sense that AI could help. What they don't have is a clear place to start. And too many AI tools make it worse, overcomplicating simple problems or locking people into systems they can never leave.",
+  "WeHA was started by two operators who had spent years building marketing and automation systems. They decided to build the software company they wished existed: one that ships practical AI products, proves they work, and puts them in your hands.",
+  "That idea built our flagship product, Ragnar: an AI SEO director and a crew of AI specialists who run a company's SEO every day, on that company's own server. Ragnar is in pilot, and our own site is its first home. Our engineering team also builds custom automations for teams that need their own.",
 ];
 
 const belief = "Automation should give you ownership and time back, not another subscription you're trapped in.";
 
 const mission =
-  "To make practical AI automation accessible to any business: built fast, built on the tools you already use, and built to be owned by you.";
+  "To make practical AI software accessible to any business: simple to adopt, built on the tools you already use, and owned by you.";
 
 const vision =
   "A world where small and mid-sized teams compete on ideas and service, not on how many hours they can grind, because the repetitive work runs itself.";
@@ -36,14 +36,14 @@ const founders = [
     role: "Co-Founder",
     photo: ASSET("/founders/imran.jpeg"),
     alt: "Portrait of Imran Shaikh, Co-Founder of WeHA",
-    bio: "Imran is a full-stack marketer and AI systems builder with 8+ years across SEO, paid media, content, analytics and RevOps. He builds AI agents and automated workflows on a modern stack including OpenClaw, n8n, Claude Code and Zapier, and believes marketing and operations should run on systems, not manual effort. An IIM Kozhikode alum (Digital Marketing for Performance & Growth), he leads what WeHA builds: the automation systems and AI agents behind every engagement.",
+    bio: "Imran is a full-stack marketer and AI systems builder with 8+ years across SEO, paid media, content, analytics and RevOps. He builds AI agents and automated workflows on a modern stack including OpenClaw, n8n, Claude Code and Zapier, and believes marketing and operations should run on systems, not manual effort. An IIM Kozhikode alum (Digital Marketing for Performance & Growth), he leads what WeHA builds: the AI products and the custom automation systems behind them.",
   },
   {
     name: "Selena Thomas",
     role: "Co-Founder & COO",
     photo: ASSET("/founders/selena.jpeg"),
     alt: "Portrait of Selena Thomas, Co-Founder and COO of WeHA",
-    bio: "Selena is a digital marketing leader with experience across Mastercard, Merkle Sokrati and Cybage. She leads operations, client relationships and go-to-market at WeHA, making sure every engagement starts with the right questions and that clients get a clear, human experience from the first call to handoff.",
+    bio: "Selena is a digital marketing leader with experience across Mastercard, Merkle Sokrati and Cybage. She leads operations, customer relationships and go-to-market at WeHA, making sure every pilot and custom build starts with the right questions and that customers get a clear, human experience from the first call to handoff.",
     linkedin: "https://www.linkedin.com/in/selena-thomas-9839472b8/",
   },
 ];
@@ -51,7 +51,7 @@ const founders = [
 const stats = [
   { value: 10, suffix: "+", label: "years across marketing & automation" },
   { value: 30, suffix: "+", label: "tools we build and automate across" },
-  { value: 100, suffix: "%", label: "yours: code, docs and accounts" },
+  { value: 100, suffix: "%", label: "yours: code, docs and accounts, on custom builds" },
   { value: 0, text: "Days", label: "to your first live automation" },
 ];
 
@@ -81,8 +81,8 @@ export default function About() {
   return (
     <div data-testid="about-page" className="overflow-x-hidden">
       <Seo
-        title="About WeHA"
-        description="Meet WeHA, an AI automation studio built by two operators. We build practical systems on the tools you already use, and hand them over to you. Our flagship is the AI SEO Department."
+        title="About WeHA | AI Software Company"
+        description="WeHA builds AI software for growing businesses. Our flagship is Ragnar, an AI SEO director and crew, now in pilot. We also build custom automations."
         path="/about"
         jsonLd={graph([
           ORG,
@@ -91,7 +91,7 @@ export default function About() {
             path: "/about",
             name: "About WeHA",
             description:
-              "Meet WeHA, an AI automation agency built by two operators. We build practical systems on the tools you already use, and hand them over to you.",
+              "WeHA is a software company building AI products. Our flagship is Ragnar, an AI SEO director and crew, in pilot now. We also build custom automations.",
             type: "AboutPage",
           }),
           {
@@ -117,9 +117,9 @@ export default function About() {
       />
       <PageHero
         kicker="About"
-        title="We help businesses do more"
-        italicWord="with less manual work."
-        subtitle="WeHA exists because too many capable teams spend their days on work software should be doing for them. We build the systems that give that time back."
+        title="We build AI software"
+        italicWord="that gives time back."
+        subtitle="WeHA exists because too many capable teams spend their days on work software should be doing for them. We build the software, and the custom systems, that give that time back."
         formHeading="Get the free AI Transformation Playbook"
         formSubheading="A practical 10-chapter framework for figuring out where AI fits, what to automate first, and how to roll it out. No jargon, no obligation."
         formTestid="about-lead-form"
@@ -166,7 +166,7 @@ export default function About() {
           <Reveal>
             <span className="text-xs font-semibold tracking-[0.2em] uppercase" style={{ color: "#9b80e0" }}>Where we stand</span>
             <h2 className="weha-display text-3xl md:text-4xl mt-3 text-[#f7f6f2] max-w-2xl leading-snug">
-              Small studio. Serious operators.
+              Small team. Serious operators.
             </h2>
           </Reveal>
           <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-y-10">
@@ -210,14 +210,14 @@ export default function About() {
       <section className="section-glass relative section-solid py-20 md:py-28" data-testid="about-process">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <Reveal>
-            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">How we work</span>
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">How we build</span>
             <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text leading-tight">
               Four steps. No mystery.
             </h2>
           </Reveal>
           <Reveal delay={0.08}>
             <p className="mt-5 text-lg text-weha-muted max-w-2xl leading-relaxed">
-              Every engagement follows the same simple path, from understanding how you work to
+              Every custom build follows the same simple path, from understanding how you work to
               handing you the keys. You always know exactly where things stand.
             </p>
           </Reveal>
@@ -292,7 +292,7 @@ export default function About() {
           <Reveal>
             <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">What you walk away with</span>
             <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text leading-tight">
-              You keep everything. Literally.
+              On custom builds, you keep everything.
             </h2>
           </Reveal>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -333,7 +333,7 @@ export default function About() {
           {/* Left: intro + CTA (sticks on desktop) */}
           <div className="lg:sticky lg:top-28">
             <Reveal>
-              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Why teams pick us</span>
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-weha-teal">Why teams pick WeHA</span>
               <h2 className="weha-display text-4xl md:text-5xl mt-3 text-weha-text leading-[1.05]">
                 Reasons to build{" "}
                 <span className="italic text-weha-teal">with WeHA.</span>
@@ -341,9 +341,9 @@ export default function About() {
             </Reveal>
             <Reveal delay={0.1}>
               <p className="mt-6 text-lg text-weha-muted leading-relaxed max-w-md">
-                We are a fast growing firm run by people who have actually done the work. That shows up in
-                how fast we move, how little we lock you in, and how clearly we explain everything. It is also why
-                we built the AI SEO Department, and why it reports to you every day.
+                We are a young software company run by people who have actually done the work. That shows up in
+                how fast we ship, how little we lock you in, and how clearly we explain everything. It is also why
+                Ragnar, our flagship, reports to you every day.
               </p>
             </Reveal>
             <Reveal delay={0.18}>
@@ -356,7 +356,7 @@ export default function About() {
                     data-cursor="hover"
                     data-testid="about-reasons-cta"
                   >
-                    Talk to the founders <ArrowRight size={16} />
+                    Join the Ragnar pilot <ArrowRight size={16} />
                   </button>
                 </Magnetic>
               </div>
@@ -368,7 +368,7 @@ export default function About() {
               >
                 <BadgeCheck size={18} className="text-weha-teal shrink-0" />
                 <span className="text-sm font-medium text-weha-text">
-                  Free audit &middot; No lock-in &middot; You own everything
+                  In pilot &middot; No lock-in &middot; You own your data
                 </span>
               </div>
             </Reveal>
@@ -410,8 +410,8 @@ export default function About() {
       <ScrollSection direction="left">
       <CTABanner
         heading="Let's give your team its time back."
-        sub="Start with a free AI Audit. We map how you work, then show you what's worth automating first."
-        cta="Book a Free Audit"
+        sub="Join the Ragnar pilot, or talk to our engineers about a custom build."
+        cta="Join the Ragnar pilot"
         testid="about-cta"
       />
       </ScrollSection>
