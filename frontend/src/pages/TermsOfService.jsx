@@ -12,7 +12,7 @@ const SECTIONS = [
     n: 1,
     heading: "Agreement to Terms",
     paras: [
-      'By accessing or using the services provided by We Help Automate Inc. ("Company," "we," "us"), you agree to be bound by these Terms of Service. If you do not agree, do not use our services.',
+      'By accessing or using the services provided by We Help Automate ("Company," "we," "us"), you agree to be bound by these Terms of Service. If you do not agree, do not use our services.',
     ],
   },
   {
@@ -136,7 +136,7 @@ export default function TermsOfService() {
                   <h2 className="weha-display text-2xl text-weha-text">11. Contact</h2>
                   <div className="mt-3 space-y-1 text-weha-muted leading-relaxed">
                     <p>Questions about these Terms? Contact us at:</p>
-                    <p className="text-weha-text">We Help Automate Inc.</p>
+                    <p className="text-weha-text">We Help Automate</p>
                     <a
                       href={`mailto:${CONTACT_EMAIL}`}
                       className="text-weha-teal hover:underline"

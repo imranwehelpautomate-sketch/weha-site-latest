@@ -12,7 +12,7 @@ const SECTIONS = [
     n: 1,
     heading: "Introduction",
     paras: [
-      'We Help Automate ("we," "our," or "us") respects your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website leftclick.ai or engage our services.',
+      'We Help Automate ("we," "our," or "us") respects your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website wehelpautomate.com, use our software, or engage us for a custom build.',
     ],
   },
   {
