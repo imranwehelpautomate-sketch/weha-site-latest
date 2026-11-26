@@ -56,7 +56,8 @@ function AnimatedRoutes() {
       >
         <Routes location={location}>
           <Route path="/" element={<Home />} />
-          <Route path="/services" element={<Services />} />
+          <Route path="/custom-automation" element={<Services />} />
+          <Route path="/services" element={<Navigate to="/custom-automation" replace />} />
           <Route path="/audit" element={<Audit />} />
           <Route path="/readiness-check" element={<ReadinessCheck />} />
           <Route path="/ai-seo-department" element={<AISeoDepartment />} />

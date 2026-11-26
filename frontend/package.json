@@ -72,7 +72,7 @@
     "source": "build",
     "include": [
       "/",
-      "/services",
+      "/custom-automation",
       "/audit",
       "/readiness-check",
       "/ai-seo-department",

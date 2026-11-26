@@ -11,7 +11,7 @@ import Logo from "@/components/Logo";
 const links = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
-  { to: "/services", label: "Custom Automation", id: "services" },
+  { to: "/custom-automation", label: "Custom Automation", id: "services" },
   { to: "/ai-seo-department", label: "Ragnar", id: "ai-seo" },
   { to: "/ai-workforce", label: "AI Workforce" },
   { to: "/success-stories", label: "Success Stories" },

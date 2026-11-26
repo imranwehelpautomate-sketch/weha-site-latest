@@ -72,7 +72,7 @@ const deliverables = [
 const reasons = [
   { icon: Users, title: "Operators, not theorists", body: "We've run marketing and operations ourselves, so we build systems that hold up in the real world, not slideware." },
   { icon: Zap, title: "Live in days, not months", body: "You see a working automation fast. We expand from proven results, never from promises." },
-  { icon: Layers, title: "Built on your tools", body: "We automate on top of the stack you already use wherever we can. No rip-outs, no forced migrations." },
+  { icon: Layers, title: "Built on your tools", body: "Our builds run on top of the stack you already use wherever we can. No rip-outs, no forced migrations." },
   { icon: KeyRound, title: "You own everything", body: "Code, docs and accounts are handed over. No lock-in, and no monthly hostage fees." },
 ];
 

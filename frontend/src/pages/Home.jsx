@@ -214,7 +214,7 @@ const industries = [
     title: "Recruitment Agencies",
     body: "Candidate screening, CV formatting, interview scheduling and follow-ups, automated end to end. Great candidates get a reply in minutes, not days, so you place roles faster.",
     useCase:
-      "Placement speed is everything. We automate sourcing admin, screening and scheduling so recruiters spend their day talking to people, not formatting CVs or copying data between systems.",
+      "Placement speed is everything. Our custom builds automate sourcing admin, screening and scheduling so recruiters spend their day talking to people, not formatting CVs or copying data between systems.",
     painpoints: [
       "Hundreds of CVs to screen and reformat by hand for every role.",
       "Great candidates go cold before anyone finds time to reply.",
@@ -272,7 +272,7 @@ const industries = [
     title: "Ecommerce & D2C Brands",
     body: "Abandoned carts chased, reviews requested, support triaged. The revenue playbook, finally running 24/7.",
     useCase:
-      "D2C margins live and die on repeat purchases. We automate the revenue plays: abandoned carts, reviews, support and win-backs. Your store sells around the clock without a bigger team.",
+      "D2C margins live and die on repeat purchases. Our custom builds automate the revenue plays: abandoned carts, reviews, support and win-backs. Your store sells around the clock without a bigger team.",
     painpoints: [
       "Abandoned carts are never chased consistently.",
       "Support tickets spike during launches and overwhelm the team.",
@@ -301,7 +301,7 @@ const industries = [
     title: "SaaS & Tech Startups",
     body: "Every trial signup and demo request answered in minutes. Your pipeline updates itself while you ship product.",
     useCase:
-      "For SaaS, speed to lead and time-to-value decide growth. We automate trial onboarding, lead response and health tracking so activation goes up and churn signals surface before it is too late.",
+      "For SaaS, speed to lead and time-to-value decide growth. Our custom builds automate trial onboarding, lead response and health tracking so activation goes up and churn signals surface before it is too late.",
     painpoints: [
       "Demo and trial signups wait too long for a first reply.",
       "Onboarding is one-size-fits-all, so activation lags.",
@@ -330,7 +330,7 @@ const industries = [
     title: "Coaches, Consultants & Online Businesses",
     body: "Discovery calls booked, no-shows reminded, follow-ups sent. You sell and deliver; the admin runs itself.",
     useCase:
-      "Your time is the product. We automate everything around the session: booking, reminders, intake, follow-ups and content. You spend your hours delivering, not doing admin.",
+      "Your time is the product. Our custom builds automate everything around the session: booking, reminders, intake, follow-ups and content. You spend your hours delivering, not doing admin.",
     painpoints: [
       "Discovery calls turn into a scheduling ping-pong match.",
       "No-shows quietly kill the calendar and the revenue.",
@@ -359,7 +359,7 @@ const industries = [
     title: "FinTech, Banking & Insurance",
     body: "Onboarding, KYC checks, reconciliation and compliance reporting, handled automatically. Faster approvals, cleaner audit trails, and a team freed from copy-pasting between systems.",
     useCase:
-      "In financial services, speed and accuracy both matter and manual work costs you on each one. We automate KYC and onboarding, transaction reconciliation and compliance reporting, with a human kept in the loop wherever judgment or regulation demands it.",
+      "In financial services, speed and accuracy both matter and manual work costs you on each one. Our custom builds automate KYC and onboarding, transaction reconciliation and compliance reporting, with a human kept in the loop wherever judgment or regulation demands it.",
     painpoints: [
       "KYC and onboarding checks are slow, manual and easy to get wrong.",
       "Reconciliation across accounts and systems eats analyst hours.",
@@ -388,7 +388,7 @@ const industries = [
     title: "Medical & Healthcare",
     body: "Patient intake, scheduling, reminders and records updates, running on their own. Less time on admin, more time on care, with sensitive data handled carefully.",
     useCase:
-      "Clinics and healthcare teams lose hours to admin that has nothing to do with care. We automate patient intake, scheduling, reminders and records updates, keeping sensitive data secure and a human in the loop for anything clinical.",
+      "Clinics and healthcare teams lose hours to admin that has nothing to do with care. Our custom builds automate patient intake, scheduling, reminders and records updates, keeping sensitive data secure and a human in the loop for anything clinical.",
     painpoints: [
       "Patient intake and forms are collected and re-keyed by hand.",
       "No-shows drain the calendar because reminders go out inconsistently.",
@@ -982,7 +982,7 @@ export default function Home() {
                           <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: "var(--weha-teal-soft)", color: "var(--weha-teal)" }}>
                             <LayoutDashboard size={16} />
                           </span>
-                          <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">Processes we automate</h4>
+                          <h4 className="text-xs font-semibold tracking-[0.18em] uppercase text-weha-faint">Processes our builds automate</h4>
                         </div>
                         <div className="mt-4 flex flex-wrap gap-2">
                           {industries[expandedIndustry].departments.map((d) => (

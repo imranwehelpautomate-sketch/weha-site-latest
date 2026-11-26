@@ -21,9 +21,9 @@ const offers = [
     body: "Your AI SEO director and his crew of specialists, installed on your own server and trained on your data. Ragnar sends you a brief every day. You approve what goes live.",
     cta: "Meet Ragnar",
   },
-  { to: "/services", title: "Sales Automation", body: "Custom builds: leads routed, followed up and logged without anyone copying notes.", cta: "See Sales" },
-  { to: "/services", title: "Marketing Automation", body: "Custom builds: campaigns, content and reporting that run on a schedule.", cta: "See Marketing" },
-  { to: "/services", title: "RevOps Automation", body: "Custom builds: one clean pipeline, tidy CRM data and reports that build themselves.", cta: "See RevOps" },
+  { to: "/custom-automation", title: "Sales Automation", body: "Custom builds: leads routed, followed up and logged without anyone copying notes.", cta: "See Sales" },
+  { to: "/custom-automation", title: "Marketing Automation", body: "Custom builds: campaigns, content and reporting that run on a schedule.", cta: "See Marketing" },
+  { to: "/custom-automation", title: "RevOps Automation", body: "Custom builds: one clean pipeline, tidy CRM data and reports that build themselves.", cta: "See RevOps" },
   { to: "/ai-workforce", title: "AI Workforce", body: "AI agents that take on the repeat work across your team.", cta: "See AI Workforce" },
 ];
 
@@ -48,7 +48,7 @@ const columns = [
     heading: "Company",
     links: [
       { to: "/about", label: "About" },
-      { to: "/services", label: "Custom Automation", id: "services" },
+      { to: "/custom-automation", label: "Custom Automation", id: "services" },
       { to: "/success-stories", label: "Success Stories" },
     ],
   },

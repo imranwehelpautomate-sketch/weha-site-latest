@@ -223,7 +223,7 @@ export default function AIWorkforce() {
                 Scope a custom build <ArrowRight size={15} />
               </button>
             </Magnetic>
-            <Link to="/services" className="btn-ghost" data-cursor="hover">
+            <Link to="/custom-automation" className="btn-ghost" data-cursor="hover">
               See custom automation <ArrowUpRight size={15} />
             </Link>
           </div>

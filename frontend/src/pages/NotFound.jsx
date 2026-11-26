@@ -211,7 +211,7 @@ export default function NotFound() {
           </Link>
           <span className="hidden sm:inline text-weha-faint">·</span>
           <Link
-            to="/services"
+            to="/custom-automation"
             data-testid="notfound-services"
             className="inline-flex items-center gap-2 font-medium text-weha-muted transition-colors hover:text-weha-teal"
           >

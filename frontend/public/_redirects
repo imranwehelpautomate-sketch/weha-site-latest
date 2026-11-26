@@ -7,3 +7,6 @@
 #
 # API requests are routed to Pages Functions via public/_routes.json
 # ("include": ["/api/*"]) and are never served the SPA shell.
+
+# D665: the custom automation page moved; old links keep working
+/services  /custom-automation  301
